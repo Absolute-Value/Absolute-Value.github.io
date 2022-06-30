@@ -8,7 +8,7 @@
     <header>
       <div class="container">
         <div class="header-left">
-          <img class="logo" src="">
+          <img class="logo" src="/assets/images/kei.png">
           <a href="/">軸屋敬介 | Keisuke Jikuya</a>
         </div>
         <div class="header-right">
@@ -23,9 +23,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   </head>
   <body>
-    <img src="GRAF/1.png">
+    <img src="/assets/images/posts/GRAF/1.png">
     <h1>GRAF: Generative Radiance Fields for 3D-Aware Image Synthesis</h1>
-    <p>NeRF</p>
+    <p><span class="fa fa-flag"></span> NeRF GAN </p>
     <h2 id="概要">概要</h2>
 
 <ul>
@@ -38,7 +38,7 @@
 
 <h3 id="モデルの概要">モデルの概要</h3>
 
-<p><img src="assets/images/posts/GRAF/1.png" alt="" /></p>
+<p><img src="/assets/assets/images/posts/GRAF/1.png" alt="" /></p>
 <ul>
   <li>生成器$G_\theta$はカメラ行列K，カメラ姿勢ξ，サンプリングパターンν，形状$z_s$，外観$z_a$を入力とし，画像パッチ$P’$を予測する</li>
   <li>識別機$D_\phi$は生成画像のパッチ$P’$と実画像のパッチPを比較する
@@ -50,7 +50,7 @@
 
 <h4 id="ray-sampling">Ray Sampling</h4>
 
-<p><img src="assets/images/posts/GRAF/2.png" alt="" /></p>
+<p><img src="/assets/images/posts/GRAF/2.png" alt="" /></p>
 <ul>
   <li>カメラ姿勢ξから$K\times K$パッチの連続2次元変換<strong>u</strong>とスケールsを決定する</li>
   <li>画像解像度に依存せずに識別機を使用できる</li>
@@ -64,7 +64,7 @@
 
 <h4 id="conditional-radiance-field">Conditional Radiance Field</h4>
 
-<p><img src="assets/images/posts/GRAF/3.png" alt="" /></p>
+<p><img src="/assets/images/posts/GRAF/3.png" alt="" /></p>
 <ul>
   <li>NeRF箇所</li>
   <li>密度σは座標xと形状$z_s$のみに依存し，色<strong>c</strong>は視線dと外観$z_a$にも依存する</li>
@@ -72,7 +72,7 @@
 
 <h2 id="結果">結果</h2>
 
-<p><img src="assets/images/posts/GRAF/4.png" alt="" /></p>
+<p><img src="/assets/images/posts/GRAF/4.png" alt="" /></p>
 
 <h2 id="課題">課題</h2>
 

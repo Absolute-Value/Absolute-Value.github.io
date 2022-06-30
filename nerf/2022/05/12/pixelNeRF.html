@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  </head>
+  <body>
+    <img src="/assets/images/posts/pixelNeRF/1.png">
+    <h1>pixelNeRF: Neural Radiance Fields from One or Few Images</h1>
+    <p><span class="fa fa-flag"></span> NeRF </p>
+    <h2 id="概要">概要</h2>
+
+<ul>
+  <li>1枚または数枚の画像からNeRFを生成するpixelNeRFを提案</li>
+  <li>NeRFは入力画像が少ない場合 、汎化できず、性能が低下する</li>
+  <li>それに対し、pixelNeRFではCNNで抽出した特徴量で条件付けることで解決した</li>
+</ul>
+
+<h2 id="アイデア">アイデア</h2>
+
+<h3 id="入力画像が１つの場合">入力画像が１つの場合</h3>
+<p><img src="/assets/images/posts/pixelNeRF/2.png" alt="" /></p>
+<ul>
+  <li>入力画像$I$をCNN Encoderに通し特徴量$W=E(I)$を取得</li>
+  <li>ターゲットカメラ光線上の点xを画像平面上に投影した座標$\pi(x)$の特徴量$W(\pi(x))$を取得</li>
+  <li>$x$の位置符号化$\gamma(x)$と視線方向$d$と特徴量$W(\pi(x))$を<br />
+NeRFニューラルネットワーク $f()$に入力することで$x$での色と密度を取得<br />
+$(\sigma,c) = f(\gamma(x),d; W(\pi(x)))$</li>
+  <li>ボリュームレンダリングによってターゲット画像を生成</li>
+</ul>
+
+<h3 id="入力画像が数枚の場合">入力画像が数枚の場合</h3>
+<ul>
+  <li>i番目の入力画像に対し，ワールド座標からカメラ座標へ変換した$x^{(i)}$と$d^{(i)}$について
+1つの場合と同様にしてニューラルネットワーク $f_1()$に入力することで
+中間ベクトル$V^{(i)}$を取得
+$V^{(i)} = f_1(\gamma(x^{(i)}),d^{(i)};W^{(i)}(\pi(x^{(i)})))$</li>
+  <li>n個の中間ベクトル$V^{(i)}$をアベレージプーリング$\psi$で集約し
+ニューラルネットワーク $f_2()$に入力することで色と密度を取得
+$(\sigma,c) = f_2(\psi(V^{(1)},…,V^{(n)}))$</li>
+  <li>ボリュームレンダリングによってターゲット画像を生成
+<img src="/assets/images/posts/pixelNeRF/3.png" alt="" /></li>
+</ul>
+
+<h2 id="結果">結果</h2>
+
+<h3 id="入力画像が１つの場合-1">入力画像が１つの場合</h3>
+<p><img src="/assets/images/posts/pixelNeRF/4.png" alt="" />
+<img src="/assets/images/posts/pixelNeRF/5.png" alt="" /></p>
+
+<h3 id="入力画像が数枚の場合-1">入力画像が数枚の場合</h3>
+<p><img src="/assets/images/posts/pixelNeRF/6.png" alt="" />
+<img src="/assets/images/posts/pixelNeRF/7.png" alt="" /></p>
+
+  </body>
+</html>
+  </body>
+</html>

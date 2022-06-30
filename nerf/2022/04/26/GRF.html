@@ -8,7 +8,7 @@
     <header>
       <div class="container">
         <div class="header-left">
-          <img class="logo" src="">
+          <img class="logo" src="/assets/images/kei.png">
           <a href="/">軸屋敬介 | Keisuke Jikuya</a>
         </div>
         <div class="header-right">
@@ -23,9 +23,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   </head>
   <body>
-    <img src="GRF/1.png">
+    <img src="/assets/images/posts/GRF/1.png">
     <h1>GRF: Learning a General Radiance Field for 3D Scene Representation and Rendering</h1>
-    <p>NeRF</p>
+    <p><span class="fa fa-flag"></span> NeRF </p>
     <h2 id="概要">概要</h2>
 
 <ul>
@@ -41,27 +41,27 @@
   <li>M枚の入力画像（と座標と視点）をCNNに通し特徴抽出
     <ul>
       <li>CNNはすべての画像で共有<br />
-<img src="images/2.png" alt="" /></li>
+<img src="/assets/images/posts/GRF/2.png" alt="" /></li>
     </ul>
   </li>
   <li>抽出した特徴をmulti-view geometryに従い3次元空間に投影<br />
-<img src="images/3.png" alt="" /></li>
+<img src="/assets/images/posts/GRF/3.png" alt="" /></li>
   <li>画像特徴$F_p$と座標pをMLPに通すことで位置認識特徴量$\hat F_p$を取得</li>
   <li>これをAttention機構に通すことで座標 pに対して一意の特徴ベクトル$\bar F_p$を計算
     <ul>
       <li>特徴集約のためのAttention機構
-<img src="images/4.png" alt="" /></li>
+<img src="/assets/images/posts/GRF/4.png" alt="" /></li>
     </ul>
   </li>
   <li>特徴ベクトル$\bar F_p$と視点$\nu_p$からNeRF同様にRGBと密度を予測
-<img src="images/5.png" alt="" /></li>
+<img src="/assets/images/posts/GRF/5.png" alt="" /></li>
 </ul>
 
 <h2 id="結果">結果</h2>
 
-<p><img src="images/6.png" alt="" />
-<img src="images/7.png" alt="" />
-<img src="images/8.png" alt="" /></p>
+<p><img src="/assets/images/posts/GRF/6.png" alt="" />
+<img src="/assets/images/posts/GRF/7.png" alt="" />
+<img src="/assets/images/posts/GRF/8.png" alt="" /></p>
 
   </body>
 </html>
