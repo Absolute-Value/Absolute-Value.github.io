@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  </head>
+  <body>
+    <img src="images/1.png">
+    <h1>pi-GAN: Periodic Implicit Generative Adversarial Networks for 3D-Aware Image Synthesis</h1>
+    <p>NeRF</p>
+    <h2 id="概要">概要</h2>
+
+<ul>
+  <li>3Dを考慮した高品質な画像合成のためのSIRENベースのπ-GANと呼ばれる新しい生成モデルを提案
+    <ul>
+      <li>GANはマルチビューの一貫性を保証できない</li>
+    </ul>
+  </li>
+  <li>周期的な活性化関数を持つニューラル表現と古典的なボリュームレンダリングを活用している</li>
+  <li>複数の3Dを考慮した画像合成において最先端の結果</li>
+</ul>
+
+<h2 id="アイデア">アイデア</h2>
+
+<h3 id="generator">Generator</h3>
+<p><img src="images/2.png" alt="" /></p>
+<ul>
+  <li>通常のGANのGeneratorは潜在変数から直接2次元画像を生成する</li>
+  <li>StyleGANを模倣したMapping Networkを追加した
+    <ul>
+      <li>潜在変数$z$から周波数$\gamma_i$と位相シフト$\beta_i$を出力し，SIRENの各層を条件付ける</li>
+    </ul>
+  </li>
+  <li>MLPの各層$\phi_i(x_i)$は下式で表される（図b）
+    <ul>
+      <li>$\phi_i(x_i)=sin(\gamma_i\cdot(W_ix_i+b_i)+\beta_i)$</li>
+    </ul>
+  </li>
+  <li>これを繰り返した出力を$\phi(x)$とすると，密度$\sigma$と色$c$は下式で表される（図a）
+    <ul>
+      <li>$\sigma(x)=W_\sigma\phi(x)+b_\sigma$</li>
+      <li>$c=W_c\phi_c((\phi(x),d)^T)+b_c$</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="discriminator">Discriminator</h3>
+<ul>
+  <li>ProgressiveGANのように，初めは低解像度から学習し，学習が進むにつれて解像度を上げて新しい層を追加する</li>
+  <li>Generatorでは代わりに光線の密度を上げていく</li>
+</ul>
+
+<h2 id="結果">結果</h2>
+
+<p><img src="images/3.png" alt="" /></p>
+
+  </body>
+</html>
+  </body>
+</html>

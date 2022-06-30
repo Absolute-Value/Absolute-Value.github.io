@@ -1,0 +1,37 @@
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.fa {
+  margin-left: 10px;
+}
+
+.myposts {
+  margin: 20px;
+}
+
+.post {
+  background-color: whitesmoke;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  height: fit-content;
+  display: flex;
+}
+
+.post b {
+  font-size: xx-large;
+}
+
+.post_detail {
+  margin-left: 10px;
+  height: max-content;
+  float: right;
+}
+
+.post_img {
+  height: 100px;
+  width: 100px;
+  float: left;
+}

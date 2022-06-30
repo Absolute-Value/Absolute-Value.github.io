@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  </head>
+  <body>
+    <img src="GRAF/1.png">
+    <h1>GRAF: Generative Radiance Fields for 3D-Aware Image Synthesis</h1>
+    <p>NeRF</p>
+    <h2 id="概要">概要</h2>
+
+<ul>
+  <li>畳み込みGANは高解像度で優秀だが，3次元形状や視点などの生成要因の分離に苦しんでいる</li>
+  <li>そこで，NeRFを用いた生成モデルGRAFを提案</li>
+  <li>視覚的忠実性と3次元的一貫性の点で最先端手法と比較して有効</li>
+</ul>
+
+<h2 id="アイデア">アイデア</h2>
+
+<h3 id="モデルの概要">モデルの概要</h3>
+
+<p><img src="assets/images/posts/GRAF/1.png" alt="" /></p>
+<ul>
+  <li>生成器$G_\theta$はカメラ行列K，カメラ姿勢ξ，サンプリングパターンν，形状$z_s$，外観$z_a$を入力とし，画像パッチ$P’$を予測する</li>
+  <li>識別機$D_\phi$は生成画像のパッチ$P’$と実画像のパッチPを比較する
+    <ul>
+      <li>推論時にはピクセル毎，学習時には高速化のため$K\times K$の固定パッチを予測する</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="ray-sampling">Ray Sampling</h4>
+
+<p><img src="assets/images/posts/GRAF/2.png" alt="" /></p>
+<ul>
+  <li>カメラ姿勢ξから$K\times K$パッチの連続2次元変換<strong>u</strong>とスケールsを決定する</li>
+  <li>画像解像度に依存せずに識別機を使用できる</li>
+</ul>
+
+<h4 id="3d-point-sampling">3D Point Sampling</h4>
+
+<ul>
+  <li>NaRFの計算のためにN個の点をサンプリング</li>
+</ul>
+
+<h4 id="conditional-radiance-field">Conditional Radiance Field</h4>
+
+<p><img src="assets/images/posts/GRAF/3.png" alt="" /></p>
+<ul>
+  <li>NeRF箇所</li>
+  <li>密度σは座標xと形状$z_s$のみに依存し，色<strong>c</strong>は視線dと外観$z_a$にも依存する</li>
+</ul>
+
+<h2 id="結果">結果</h2>
+
+<p><img src="assets/images/posts/GRAF/4.png" alt="" /></p>
+
+<h2 id="課題">課題</h2>
+
+<p>単一の物体の単純なシーンに限定される</p>
+
+  </body>
+</html>
+  </body>
+</html>

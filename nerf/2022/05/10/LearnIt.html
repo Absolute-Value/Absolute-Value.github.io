@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <div class="top-wrapper">
+      <div class="container">
+        <h1>Learned Initializations for Optimizing Coordinate-Based Neural Representations</h1>
+      </div>
+    </div>
+    <h2 id="概要">概要</h2>
+
+<ul>
+  <li>ランダム初期化した重みからの学習は非効率</li>
+  <li>そこで，NeRFにメタ学習アルゴリズムを適用</li>
+  <li>学習の収束が速くなり、強力な事前分布によって部分的な入力の場合でもより良い汎化性能を得る</li>
+</ul>
+
+<h2 id="アイデア">アイデア</h2>
+
+<ul>
+  <li>メタ学習アルゴリズムのMAML(Model-Agnostic Meta Learning)とReptileを使用した</li>
+  <li>MAML：各タスクで今の初期値からSGDでの更新後にうまくいくような良い初期値を求める</li>
+</ul>
+
+<h2 id="結果">結果</h2>
+
+<p><img src="images/2.png" alt="" /></p>
+<ul>
+  <li>メタ学習していないStandardに比べてメタ学習Metaは早く収束している</li>
+  <li>また、メタ学習で人に特化した重みから他の自然画像(ホルン)の収束を早める役に立っている
+<img src="images/3.png" alt="" /></li>
+  <li>SV Meta(オブジェクトごとに複数のビューをメタ学習)，MV Meta(オブジェクトごとに単一のビューをメタ学習)では，1枚の画像から生成できているが，メタ学習していないStandardでは生成できていない</li>
+</ul>
+
+  </body>
+</html>
+  </body>
+</html>
