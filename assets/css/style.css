@@ -11,6 +11,18 @@ a {
   text-decoration: none;
 }
 
+footer p {
+  color: #b3aeb5;
+  font-size: 12px;
+}
+
+footer {
+  border-top: 1px solid #eee;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
 header {
   height: 65px;
   width: 100%;
@@ -95,6 +107,18 @@ header {
   background-size: cover;
   color: white;
   text-align: center;
+}
+
+.email {
+  background-color: #191970;
+}
+
+.twitter {
+  background-color: #55acee;
+}
+
+.github {
+  background-color: #333333;
 }
 
 @media all and (max-width: 670px) {
