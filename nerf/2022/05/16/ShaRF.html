@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <img src="/assets/images/posts/ShaRF/1.png">
+    <h1>ShaRF: Shape-conditioned Radiance Fields from a Single View</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2102.08860">https://arxiv.org/abs/2102.08860</a></p>
+    <p><span class="fa fa-calendar"></span> May 16, 2022</p>
+    <p><span class="fa fa-flag"></span> NeRF Sparse Views </p>
+    <p><span class="fa fa-graduation-cap"></span> ICML (2021) </p>
+    <h2 id="概要">概要</h2>
+
+<ul>
+  <li>1枚の画像からのNeRFの生成</li>
+  <li>形状表現と外観表現を分離したことで性能向上</li>
+  <li>学習領域外の画像にも汎化可</li>
+</ul>
+
+<h2 id="アイデア">アイデア</h2>
+
+<p><img src="/assets/images/posts/ShaRF/1.png" alt="" /></p>
+<ul>
+  <li>形状ネットワーク$G$は潜在コード$\theta$から$128^3$のボクセルグリッドを生成する
+    <ul>
+      <li>ボクセル一つ一つには0~1の占有率$\alpha$が含まれている</li>
+    </ul>
+  </li>
+  <li>外観ネットワーク$F$は座標$p$と方向$d$に加えて、占有率と先程の占有率$\alpha$と外観コード$\phi$から、色$c$と密度$\sigma$を推定する</li>
+  <li>テスト時には2段階の最適化手順
+    <ol>
+      <li>外観ネットワーク$F$の重みを固定し、形状コード$\theta$と形状ネットワーク$G$と外観コード$\phi$を最適化する
+        <ul>
+          <li>形状コードのみの最適化との比較<br />
+  <img src="/assets/images/posts/ShaRF/2.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>形状コード$\theta$と形状ネットワーク$G$の重みを固定し、外観コード$\phi$と外観ネットワーク$F$を最適化する
+        <ul>
+          <li>外観コードのみの最適化との比較<br />
+  <img src="/assets/images/posts/ShaRF/3.png" alt="" /></li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="結果">結果</h2>
+
+<ul>
+  <li>
+    <p>ShapeNet-SRN<br />
+<img src="/assets/images/posts/ShaRF/4.png" alt="" />
+<img src="/assets/images/posts/ShaRF/5.png" alt="" /></p>
+  </li>
+  <li>
+    <p>pixelNeRFに勝っている例<br />
+<img src="/assets/images/posts/ShaRF/6.png" alt="" /></p>
+  </li>
+</ul>
+
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
