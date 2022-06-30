@@ -41,7 +41,7 @@ header {
 }
 
 .btn:hover {
-  opacity: 1;
+  font-size: large;
 }
 
 .btn-wrapper {
@@ -69,6 +69,10 @@ header {
   font-size: x-large;
 }
 
+.header-left a:hover{
+  color:aquamarine
+}
+
 .header-right {
   float: right;
   margin-right: -25px;
@@ -81,6 +85,10 @@ header {
   display: block;
   float: left;
   transition: all 0.5s;
+}
+
+.header-right a:hover{
+  color:aquamarine
 }
 
 .icon {
@@ -107,6 +115,10 @@ header {
   background-size: cover;
   color: white;
   text-align: center;
+}
+
+.fa {
+  margin-right: 5px;
 }
 
 .email {

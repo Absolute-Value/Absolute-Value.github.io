@@ -30,6 +30,10 @@ a {
   float: right;
 }
 
+.post_detail:hover {
+  color: darkblue;
+}
+
 .post_img {
   height: 200px;
   width: 200px;
