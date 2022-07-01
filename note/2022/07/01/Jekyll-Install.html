@@ -3,6 +3,7 @@
   <head>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
   </head>
   <body>
     <header>
@@ -36,19 +37,23 @@
 <h1 id="インストール-macos">インストール (macOS)</h1>
 
 <h2 id="rubyのインストール">Rubyのインストール</h2>
-<p>brew install chruby ruby-install
-ruby-install ruby</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install chruby ruby-install
+ruby-install ruby
+</code></pre></div></div>
 
-<p>echo “source $(brew –prefix)/opt/chruby/share/chruby/chruby.sh” » ~/.zshrc
-echo “source $(brew –prefix)/opt/chruby/share/chruby/auto.sh” » ~/.zshrc
-echo “chruby ruby-3.1.2” » ~/.zshrc
-3.1.2の場所はインストールしたバージョンに変更</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" &gt;&gt; ~/.zshrc
+echo "source $(brew --prefix)/opt/chruby/share/chruby/auto.sh" &gt;&gt; ~/.zshrc
+echo "chruby ruby-3.1.2" &gt;&gt; ~/.zshrc
+</code></pre></div></div>
+<p>3.1.2の場所はインストールしたバージョンに変更</p>
 
-<p>ruby -v
-Rubyのバージョンが2など最新でない場合は端末を再起動</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ruby -v
+</code></pre></div></div>
+<p>Rubyのバージョンが2など最新でない場合は端末を再起動</p>
 
 <h2 id="jekyllのインストール">jekyllのインストール</h2>
-<p>gem install jekyll</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install jekyll
+</code></pre></div></div>
 
 <p><a href="https://qiita.com/memakura/items/e4d2de379f98ad7be498">Markdownで数式を使用する方法</a></p>
 
