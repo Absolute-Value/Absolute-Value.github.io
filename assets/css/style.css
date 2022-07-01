@@ -44,6 +44,17 @@ header {
   font-size: large;
 }
 
+.back_btn {
+  margin: 10px;
+  color: black;
+  background-color: whitesmoke;
+}
+
+.back_btn:hover {
+  color: darkblue;
+  font-size: medium;
+}
+
 .btn-wrapper {
   text-align: center;
 }
@@ -89,6 +100,11 @@ header {
 
 .header-right a:hover{
   color:aquamarine
+}
+
+.hero {
+  margin-top: 64px;
+  max-height: 400px;
 }
 
 .icon {

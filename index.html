@@ -80,62 +80,112 @@
   </li>
 </ul>
 
-<h1 id="困りごと">困りごと</h1>
-<ul>
-  <li>Hugoで作成したサイトがアップデートで壊れたため，ホームページをhtmlで一から作成中..</li>
-</ul>
-
     <h1>Recent Posts</h1>
     <div class="myposts">
       
-        <div class="post">
-          <a href="/perceptual%20metrics/2022/06/28/LPIPS.html">
-            <img class="post_img" src="/assets/images/posts/LPIPS/1.png">
-            <div class="post_detail">
-              <p>
-                <b>The Unreasonable Effectiveness of Deep Features as a Perceptual Metric</b>
-              </p>
-              <p>
-                <span class="fa fa-calendar"></span> Jun 28, 2022
-                <span class="fa fa-folder"></span> Perceptual Metrics
-                <span class="fa fa-graduation-cap"></span> CVPR (2018)
-              </p>
-            </div>
-          </a>
-        </div>
       
-        <div class="post">
-          <a href="/nerf/2022/05/16/ShaRF.html">
-            <img class="post_img" src="/assets/images/posts/ShaRF/1.png">
-            <div class="post_detail">
-              <p>
-                <b>ShaRF: Shape-conditioned Radiance Fields from a Single View</b>
-              </p>
-              <p>
-                <span class="fa fa-calendar"></span> May 16, 2022
-                <span class="fa fa-folder"></span> NeRF
-                <span class="fa fa-graduation-cap"></span> ICML (2021)
-              </p>
-            </div>
-          </a>
-        </div>
+        
       
-        <div class="post">
-          <a href="/nerf/2022/05/13/PortraitNeRF.html">
-            <img class="post_img" src="/assets/images/posts/PortraitNeRF/1.png">
-            <div class="post_detail">
-              <p>
-                <b>Portrait Neural Radiance Fields from a Single Image</b>
-              </p>
-              <p>
-                <span class="fa fa-calendar"></span> May 13, 2022
-                <span class="fa fa-folder"></span> NeRF
-                <span class="fa fa-graduation-cap"></span> arXiv (2020)
-              </p>
-            </div>
-          </a>
-        </div>
+        
       
+        
+          
+            <div class="post">
+              <a href="/perceptual%20metrics/2022/06/28/LPIPS.html">
+                <img class="post_img" src="/assets/images/posts/LPIPS/1.png">
+                <div class="post_detail">
+                  <p>
+                    <b>The Unreasonable Effectiveness of Deep Features as a Perceptual Metric</b>
+                  </p>
+                  <p><h2 id=""></h2>
+
+<ul>
+  <li>知覚的な類似性としてPSNRやSSIMが広く使われているが、浅い関数のため人間の知覚の多くのニュアンスを説明することができない</li>
+  <li>そこで、学習済みモデルの特徴を使用</li>
+  <li>教師あり、自己教師あり、教師なしを問わずに学習済みモデルの特徴がこれまでの指標を凌駕し、人間の知覚的判断に対応していることを確認</li>
+</ul>
+</p>
+                  <p>
+                    <span class="fa fa-calendar"></span> Jun 28, 2022
+                    <span class="fa fa-folder"></span> Perceptual Metrics
+                    <span class="fa fa-graduation-cap"></span> CVPR (2018)
+                  </p>
+                </div>
+              </a>
+            </div>
+            
+          
+        
+      
+        
+          
+            <div class="post">
+              <a href="/nerf/2022/05/16/ShaRF.html">
+                <img class="post_img" src="/assets/images/posts/ShaRF/1.png">
+                <div class="post_detail">
+                  <p>
+                    <b>ShaRF: Shape-conditioned Radiance Fields from a Single View</b>
+                  </p>
+                  <p><h2 id=""></h2>
+
+<ul>
+  <li>1枚の画像からのNeRFの生成</li>
+  <li>形状表現と外観表現を分離したことで性能向上</li>
+  <li>学習領域外の画像にも汎化可</li>
+</ul>
+</p>
+                  <p>
+                    <span class="fa fa-calendar"></span> May 16, 2022
+                    <span class="fa fa-folder"></span> NeRF
+                    <span class="fa fa-graduation-cap"></span> ICML (2021)
+                  </p>
+                </div>
+              </a>
+            </div>
+            
+          
+        
+      
+        
+          
+            <div class="post">
+              <a href="/nerf/2022/05/13/PortraitNeRF.html">
+                <img class="post_img" src="/assets/images/posts/PortraitNeRF/1.png">
+                <div class="post_detail">
+                  <p>
+                    <b>Portrait Neural Radiance Fields from a Single Image</b>
+                  </p>
+                  <p><h2 id=""></h2>
+
+<ul>
+  <li>メタ学習を活用した1枚の顔写真からのNeRF生成
+    <ul>
+      <li>顔だけでなく、頭頂部、髪、胴体、眼鏡などのアクセサリを含む</li>
+    </ul>
+  </li>
+  <li>世界座標からの剛体変換を用いて、顔空間においてNeRFを事前学習させるアルゴリズムを提案
+    <ul>
+      <li>学習データ間の形状のばらつき補正により、未見の被験者に対するモデルの汎化が大幅に改善</li>
+    </ul>
+  </li>
+  <li>照明ステージでの制御されたキャプチャからなる多視点ポートレートデータセットを提供</li>
+</ul>
+</p>
+                  <p>
+                    <span class="fa fa-calendar"></span> May 13, 2022
+                    <span class="fa fa-folder"></span> NeRF
+                    <span class="fa fa-graduation-cap"></span> arXiv (2020)
+                  </p>
+                </div>
+              </a>
+            </div>
+            
+          
+        
+      
+        
+          
+            
     </div>
     <a href="/posts">View more</a>
   </body>

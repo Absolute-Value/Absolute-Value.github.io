@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <img src="http://jekyllrb-ja.github.io/img/logo-2x.png" class="hero">
+    <h1>Jekyllによるホームページ構築メモ</h1>
+    <p><span class="fa fa-calendar"></span> Jul 1, 2022</p>
+    <p><span class="fa fa-flag"></span> Note </p>
+    <p>以前，Hugoで作成していたホームページがアップデートをしたところGithub pagesで認識しなくなり困ったので<br />
+再度同じことが起こっても大丈夫なように，構築方法をまとめておきます</p>
+
+<!--more-->
+
+<h1 id="インストール-macos">インストール (macOS)</h1>
+
+<h2 id="rubyのインストール">Rubyのインストール</h2>
+<p>brew install chruby ruby-install
+ruby-install ruby</p>
+
+<p>echo “source $(brew –prefix)/opt/chruby/share/chruby/chruby.sh” » ~/.zshrc
+echo “source $(brew –prefix)/opt/chruby/share/chruby/auto.sh” » ~/.zshrc
+echo “chruby ruby-3.1.2” » ~/.zshrc
+3.1.2の場所はインストールしたバージョンに変更</p>
+
+<p>ruby -v
+Rubyのバージョンが2など最新でない場合は端末を再起動</p>
+
+<h2 id="jekyllのインストール">jekyllのインストール</h2>
+<p>gem install jekyll</p>
+
+<p><a href="https://qiita.com/memakura/items/e4d2de379f98ad7be498">Markdownで数式を使用する方法</a></p>
+
+<h1 id="その他メモ">その他メモ</h1>
+<p><a href="Jekyll.html">Jekyll ホームページ 個人的メモ</a></p>
+
+    <div class="btn-wrapper">
+      <a href="/notes" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

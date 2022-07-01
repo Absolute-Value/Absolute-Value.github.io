@@ -22,11 +22,50 @@
   <head>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
   </head>
   <body>
-    <img src="/assets/images/posts/3D-GAN/1.png">
+    <img src="/assets/images/posts/3D-GAN/1.png" class="hero">
     <h1>Unsupervised 3D Brain Anomaly Detection</h1>
-    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2010.04717">https://arxiv.org/abs/2010.04717</a></p>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2010.04717"> https://arxiv.org/abs/2010.04717</a></p>
     <p><span class="fa fa-calendar"></span> Apr 24, 2022</p>
     <p><span class="fa fa-flag"></span> Anomaly Detection Unsupervised Learning GAN </p>
     <p><span class="fa fa-graduation-cap"></span> MICCAI (2020) </p>
@@ -52,8 +91,8 @@
 <ul>
   <li>通常のGANとは異なる損失関数を使用
     <ul>
-      <li>$L_D = \mathbb{E}<em>{\tilde{x}\sim\mathbb{P}_g}[D(\tilde{x})] - \mathbb{E}</em>{\tilde{x}\sim\mathbb{P}<em>r}[D(x)] + \mathbb{E}</em>{\tilde{x}\sim\mathbb{P}<em>{\tilde{x}}}[(| \nabla</em>{\tilde{x}} D(\tilde{x})|_2-1)^2]$</li>
-      <li>$L_G=-\mathbb{E}_{\tilde{x}\sim\mathbb{P}_g}[D(\tilde{x})]$</li>
+      <li>$ \begin{align<em>} L_D = \mathbb{E}_{\tilde{x}\sim\mathbb{P}_g}[D(\tilde{x})] - \mathbb{E}_{\tilde{x}\sim\mathbb{P}_r}[D(x)] + \mathbb{E}_{\tilde{x}\sim\mathbb{P}_{\tilde{x}}}[(| \nabla_{\tilde{x}} D(\tilde{x})|_2-1)^2] \end{align</em>} $</li>
+      <li>$ L_G=-\mathbb{E}_{\tilde{x}\sim\mathbb{P}_g}[D(\tilde{x})] $</li>
     </ul>
   </li>
 </ul>
@@ -86,6 +125,9 @@
 <img src="/assets/images/posts/3D-GAN/5.png" alt="" /></li>
 </ul>
 
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
   </body>
 </html>
     <footer>
