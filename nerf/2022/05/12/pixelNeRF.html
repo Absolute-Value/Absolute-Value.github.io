@@ -35,7 +35,8 @@
 <ul>
   <li>1枚または数枚の画像からNeRFを生成するpixelNeRFを提案</li>
   <li>NeRFは入力画像が少ない場合 、汎化できず、性能が低下する</li>
-  <li>それに対し、pixelNeRFではCNNで抽出した特徴量で条件付けることで解決した</li>
+  <li>それに対し、pixelNeRFではCNNで抽出した特徴量で条件付けることで解決した
+<!--more--></li>
 </ul>
 
 <h2 id="アイデア">アイデア</h2>
@@ -60,18 +61,18 @@ $V^{(i)} = f_1(\gamma(x^{(i)}),d^{(i)};W^{(i)}(\pi(x^{(i)})))$</li>
   <li>n個の中間ベクトル$V^{(i)}$をアベレージプーリング$\psi$で集約し
 ニューラルネットワーク $f_2()$に入力することで色と密度を取得
 $(\sigma,c) = f_2(\psi(V^{(1)},…,V^{(n)}))$</li>
-  <li>ボリュームレンダリングによってターゲット画像を生成
+  <li>ボリュームレンダリングによってターゲット画像を生成<br />
 <img src="/assets/images/posts/pixelNeRF/3.png" alt="" /></li>
 </ul>
 
 <h2 id="結果">結果</h2>
 
 <h3 id="入力画像が１つの場合-1">入力画像が１つの場合</h3>
-<p><img src="/assets/images/posts/pixelNeRF/4.png" alt="" />
+<p><img src="/assets/images/posts/pixelNeRF/4.png" alt="" /><br />
 <img src="/assets/images/posts/pixelNeRF/5.png" alt="" /></p>
 
 <h3 id="入力画像が数枚の場合-1">入力画像が数枚の場合</h3>
-<p><img src="/assets/images/posts/pixelNeRF/6.png" alt="" />
+<p><img src="/assets/images/posts/pixelNeRF/6.png" alt="" /><br />
 <img src="/assets/images/posts/pixelNeRF/7.png" alt="" /></p>
 
   </body>

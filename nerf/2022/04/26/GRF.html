@@ -36,7 +36,8 @@
   <li>NeRFの問題点：単一構造しか表現できない、豊富な幾何パターンを持たない</li>
   <li>2次元画像の各画素の局所的な特徴を学習し、<br />
 その特徴を3次元の点に投影することで、一般的で豊富な点表現を得る</li>
-  <li>複数の2次元画像から画素の特徴を集約するためのAttention機構を組み込んだ</li>
+  <li>複数の2次元画像から画素の特徴を集約するためのAttention機構を組み込んだ
+<!--more--></li>
 </ul>
 
 <h2 id="アイデア">アイデア</h2>
@@ -53,11 +54,11 @@
   <li>画像特徴$F_p$と座標pをMLPに通すことで位置認識特徴量$\hat F_p$を取得</li>
   <li>これをAttention機構に通すことで座標 pに対して一意の特徴ベクトル$\bar F_p$を計算
     <ul>
-      <li>特徴集約のためのAttention機構
+      <li>特徴集約のためのAttention機構<br />
 <img src="/assets/images/posts/GRF/4.png" alt="" /></li>
     </ul>
   </li>
-  <li>特徴ベクトル$\bar F_p$と視点$\nu_p$からNeRF同様にRGBと密度を予測
+  <li>特徴ベクトル$\bar F_p$と視点$\nu_p$からNeRF同様にRGBと密度を予測<br />
 <img src="/assets/images/posts/GRF/5.png" alt="" /></li>
 </ul>
 

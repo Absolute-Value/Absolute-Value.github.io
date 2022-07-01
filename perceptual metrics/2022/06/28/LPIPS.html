@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <img src="/assets/images/posts/LPIPS/1.png">
+    <h1>The Unreasonable Effectiveness of Deep Features as a Perceptual Metric</h1>
+    <p><span class="fa fa-link"></span><a href="https://github.com/richzhang/PerceptualSimilarity">https://github.com/richzhang/PerceptualSimilarity</a></p>
+    <p><span class="fa fa-calendar"></span> Jun 28, 2022</p>
+    <p><span class="fa fa-flag"></span> Perceptual Metrics </p>
+    <p><span class="fa fa-graduation-cap"></span> CVPR (2018) </p>
+    <h2 id="概要">概要</h2>
+
+<!--less-->
+<ul>
+  <li>知覚的な類似性としてPSNRやSSIMが広く使われているが、浅い関数のため人間の知覚の多くのニュアンスを説明することができない</li>
+  <li>そこで、学習済みモデルの特徴を使用</li>
+  <li>教師あり、自己教師あり、教師なしを問わずに学習済みモデルの特徴がこれまでの指標を凌駕し、人間の知覚的判断に対応していることを確認
+<!--more--></li>
+</ul>
+
+<h2 id="アイデア">アイデア</h2>
+
+<ul>
+  <li>既存手法の特徴量を用いて、どちらのパッチが元の画像に近いかを答える
+    <ul>
+      <li>教師なしのK-means</li>
+      <li>自己教師ありのBiGANなど</li>
+      <li>教師ありのAlexNetなど</li>
+    </ul>
+  </li>
+  <li>LPIPS (Learned Perceptual Image Patch Similarity)
+    <ul>
+      <li>一般的に使われるVGG、人間の視覚野に近いAlexNet、AlexNetと同等の性能ながら軽量であるSqueezeNetの3つのネットワークを使用</li>
+      <li>比較したいパッチごとにネットワークに通し、特徴量から距離を算出</li>
+      <li>算出した二つの距離から、知覚的判断を小さなネットワークで算出</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/images/posts/LPIPS/2.png" alt="" /></p>
+
+<h2 id="結果">結果</h2>
+
+<ul>
+  <li>どちらが元のパッチに近いかを答える問題</li>
+</ul>
+
+<p><img src="/assets/images/posts/LPIPS/3.png" alt="" /></p>
+
+<ul>
+  <li>分類と検出性能の高い特徴ほど、知覚的類似性を判断するモデルとしての性能が高い</li>
+</ul>
+
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

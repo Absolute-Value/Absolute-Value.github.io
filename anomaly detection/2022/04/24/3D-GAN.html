@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <img src="/assets/images/posts/3D-GAN/1.png">
+    <h1>Unsupervised 3D Brain Anomaly Detection</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2010.04717">https://arxiv.org/abs/2010.04717</a></p>
+    <p><span class="fa fa-calendar"></span> Apr 24, 2022</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection Unsupervised Learning GAN </p>
+    <p><span class="fa fa-graduation-cap"></span> MICCAI (2020) </p>
+    <h2 id="概要">概要</h2>
+
+<ul>
+  <li>3Dデータをf-AnoGANで扱うために拡張</li>
+  <li>外傷性脳損傷患者のCT画像の実験においてAUROC 約75%で検出できる
+<!--more--></li>
+</ul>
+
+<h2 id="新規性差分">新規性・差分</h2>
+
+<ul>
+  <li>GANで3Dデータのまま扱うこと</li>
+</ul>
+
+<h2 id="手法">手法</h2>
+
+<h3 id="ganの学習">GANの学習</h3>
+<p><img src="/assets/images/posts/3D-GAN/2.png" alt="" /></p>
+
+<ul>
+  <li>通常のGANとは異なる損失関数を使用
+    <ul>
+      <li>$L_D = \mathbb{E}<em>{\tilde{x}\sim\mathbb{P}_g}[D(\tilde{x})] - \mathbb{E}</em>{\tilde{x}\sim\mathbb{P}<em>r}[D(x)] + \mathbb{E}</em>{\tilde{x}\sim\mathbb{P}<em>{\tilde{x}}}[(| \nabla</em>{\tilde{x}} D(\tilde{x})|_2-1)^2]$</li>
+      <li>$L_G=-\mathbb{E}_{\tilde{x}\sim\mathbb{P}_g}[D(\tilde{x})]$</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="encoderの学習">Encoderの学習</h3>
+<p><img src="/assets/images/posts/3D-GAN/3.png" alt="" /></p>
+
+<ul>
+  <li>二乗誤差と識別器の特徴量誤差
+    <ul>
+      <li>$L_E = L_{img} + \kappa \cdot L_{feat}$
+        <ul>
+          <li>$L_{img} = \frac{1}{n} | x-\tilde{x}|^2$</li>
+          <li>$L_{feat} = \frac{1}{m} | f(x) - f(\tilde{x})|$</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="結果">結果</h2>
+
+<ul>
+  <li>
+    <p>2Dに比べAUROCが4%向上<br />
+<img src="/assets/images/posts/3D-GAN/4.png" alt="" /></p>
+  </li>
+  <li>病変の種類によらず性能はほぼ同じ</li>
+  <li>ラベル付けされていない異常を見つけることができている<br />
+<img src="/assets/images/posts/3D-GAN/5.png" alt="" /></li>
+</ul>
+
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

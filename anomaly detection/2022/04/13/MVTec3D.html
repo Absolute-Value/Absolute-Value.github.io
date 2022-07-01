@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <img src="/assets/images/posts/MVTec3D/1.png">
+    <h1>The MVTec 3D-AD Dataset for Unsupervised 3D Anomaly Detection and Localization</h1>
+    <p><span class="fa fa-link"></span><a href="https://www.mvtec.com/company/research/datasets">https://www.mvtec.com/company/research/datasets</a></p>
+    <p><span class="fa fa-calendar"></span> Apr 13, 2022</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection Dataset Unsupervised Learning </p>
+    <p><span class="fa fa-graduation-cap"></span> VISAPP (2022) </p>
+    <h2 id="概要">概要</h2>
+
+<ul>
+  <li>教師なし異常検出とローカライズ用の3Dデータセットを発表</li>
+  <li>工業用高解像度3Dセンサを用い、10種類のカテゴリの4000以上の点群から構成される</li>
+  <li>テストには、傷、へこみ、穴、汚染、変形など様々な欠陥とGTアノテーション</li>
+  <li>いくつかの手法でベンチマークをし，実用性が不十分であることを確認したため、優れた手法の設計を期待している
+<!--more--></li>
+</ul>
+
+<h2 id="新規性差分">新規性・差分</h2>
+
+<ul>
+  <li>教師なし異常検出とローカライズ用の最初の包括的な3Dデータセット</li>
+</ul>
+
+<h2 id="手法">手法</h2>
+
+<ul>
+  <li>VoxelとDepthデータに対して
+    <ul>
+      <li>f-AnoGAN</li>
+      <li>VAE</li>
+      <li>Variation Model
+        <ul>
+          <li>3D:ボクセルごとに平均と標準偏差を取り，マハラノビス距離を取る</li>
+          <li>2D:ピクセルごとに平均と標準偏差を取り，マハラノビス距離を取る</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="結果">結果</h2>
+
+<ul>
+  <li>AUPROが以下のように<br />
+<img src="/assets/images/posts/MVTec3D/2.png" alt="" />
+    <ul>
+      <li>実用上不十分である</li>
+    </ul>
+  </li>
+</ul>
+
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

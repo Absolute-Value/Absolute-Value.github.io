@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <img src="/assets/images/posts/MVTec3DADSeg/1.png">
+    <h1>An Empirical Investigation of 3D Anomaly Detection and Segmentation</h1>
+    <p><span class="fa fa-link"></span><a href="https://www.vision.huji.ac.il/3d_ads/">https://www.vision.huji.ac.il/3d_ads/</a></p>
+    <p><span class="fa fa-calendar"></span> Apr 15, 2022</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection Unsupervised Learning Anomaly Segmentation </p>
+    <p><span class="fa fa-graduation-cap"></span> arXiv (2022) </p>
+    <h2 id="概要">概要</h2>
+
+<ul>
+  <li>MVTec 3D-ADに対して以下の4つを調査した
+    <ul>
+      <li>「3D手法&gt;2D手法」か</li>
+      <li>3D情報は必要か</li>
+      <li>3D手法について広範囲の調査
+        <ul>
+          <li>HoGなど古典的な方法含む</li>
+        </ul>
+      </li>
+      <li>3Dと2D(色)の併用は必要か
+<!--more--></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="新規性差分">新規性・差分</h2>
+
+<p>• MVTec 3D-ADを作成したMVTec以外で初めて調査</p>
+
+<h2 id="手法">手法</h2>
+
+<ul>
+  <li>PatchCore</li>
+  <li>NSA</li>
+  <li>Histogram of Oriented Gradients (HoG)</li>
+  <li>Dense Scale-Invariant Feature Transform (D-SIFT)</li>
+  <li>Fast Point Feature Histograms (FPFH)</li>
+</ul>
+
+<h2 id="結果">結果</h2>
+
+<ul>
+  <li>「3D手法&gt;2D手法」か
+    <ul>
+      <li>2D手法(PatchCore)が3D手法(Voxel GAN)を超えた<br />
+  <img src="/assets/images/posts/MVTec3DADSeg/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>3D情報は必要か
+    <ul>
+      <li>特定の方向からしか発見できないデータがある<br />
+  <img src="/assets/images/posts/MVTec3DADSeg/3.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>3D手法について広範囲の調査
+    <ul>
+      <li>FPFHが最良<br />
+  <img src="/assets/images/posts/MVTec3DADSeg/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>3Dと2D(色)の併用は必要か
+    <ul>
+      <li>3D(FPFH)と2D(PatchCore)がかなり有用
+        <ul>
+          <li>
+            <p>PRO<br />
+  <img src="/assets/images/posts/MVTec3DADSeg/5.png" alt="" /></p>
+          </li>
+          <li>
+            <p>I-ROCAUC<br />
+  <img src="/assets/images/posts/MVTec3DADSeg/6.png" alt="" /></p>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
