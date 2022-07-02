@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="https://www.opst.co.jp/wp/wp-content/uploads/2021/09/report200708_01-1024x224.jpeg" class="hero">
+    <h1>Unsupervised Anomaly Detection with Generative Adversarial Networks to Guide Marker Discovery</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/1703.05921"> https://arxiv.org/abs/1703.05921</a></p>
+    <p><span class="fa fa-calendar"></span> Jul 29, 2021</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection, Unsupervised Learning, GAN, </p>
+    <p><span class="fa fa-graduation-cap"></span> IPMI (2017) </p>
+    <h2 id="1-どんなもの">1. どんなもの?</h2>
+<!-- 概要・貢献等 100-200字程度 -->
+<ul>
+  <li>GANを使用した教師なし異常検知</li>
+  <li>画像空間から潜在空間へのマッピングに基づく新しい異常スコアリングスキームを伴う</li>
+  <li>網膜の光コヒーレンス・トモグラフィー画像を用いた結果、網膜液や反射率の高い病巣を含む画像などの異常画像を正しく識別することができた
+<!--more--></li>
+</ul>
+
+<h2 id="2-先行研究と比べてどこがすごい">2. 先行研究と比べてどこがすごい？</h2>
+<!-- related worksとの差分 -->
+<ul>
+  <li>GANを異常や新規性の検出に初めて使用</li>
+</ul>
+
+<h2 id="3-技術や手法のキモはどこ">3. 技術や手法の”キモ”はどこ？</h2>
+<!-- キモを箇条書きでまとめる -->
+<p><img src="https://www.opst.co.jp/wp/wp-content/uploads/2021/09/report200708_01-1024x224.jpeg" alt="" /></p>
+
+<h3 id="変数定義">変数定義</h3>
+<!--
+学習・推論で使う変数をまとめる
+* $x$: 入力画像
+* $y$: 教師信号
+-->
+<ul>
+  <li>$x$: 入力画像</li>
+  <li>$z$: 潜在空間</li>
+  <li>$p_g$: 分布</li>
+  <li>$G()$: Generator</li>
+  <li>$D()$: Discriminator</li>
+  <li>$f()$: 中間層の出力</li>
+  <li>$R(x)$: 残差スコア</li>
+  <li>$D(x)$: 識別スコア</li>
+  <li>$A(x)$ 異常スコア</li>
+</ul>
+
+<h3 id="学習">学習</h3>
+<!-- キモの中の学習に関する内容 -->
+<ul>
+  <li>通常のGANと同じ2プレイヤーのミニマックスゲーム</li>
+  <li>生成器Generatorは生成する能力を向上させる</li>
+  <li>識別機Discriminatorは実画像と生成された画像を識別する能力を向上させる<br />
+\(\min \_G \max \_D V(D, G) = \mathbb{E}_{\bf x \rm \sim p\_{data}(\bf x \rm)} [\log D(\bf x \rm)] + \mathbb{E}\_{\bf z \rm \sim p\_{\bf z \rm}(\bf z \rm)} [\log (1 - D(G(\bf z \rm)))]\)</li>
+</ul>
+
+<h3 id="推論異常度の算出">推論（異常度の算出）</h3>
+<!-- キモの中の推論に関する内容 -->
+<ul>
+  <li>Residual loss
+    <ul>
+      <li>
+\[\mathcal{L}_R (\bf z\rm\_{\gamma}) = \sum |\bf x\rm - G(\bf z\rm\_{\gamma}) |\]
+      </li>
+      <li>クエリ画像$x$と生成画像$G(z_\gamma)$の色覚的非類似性を測定</li>
+    </ul>
+  </li>
+  <li>discrimination loss
+    <ul>
+      <li>
+\[\mathcal{L}_{D} (\bf z\rm\_{\gamma}) = \sum | f(\bf x\rm ) - f(G(z\rm\_{\gamma}))|\]
+      </li>
+      <li>識別機Dの中間層の出力$f()$を使用することによって、Dが学習した特徴表現の情報を考慮に入れる</li>
+      <li>識別機Dを分類機ではなく特徴抽出器として使用</li>
+    </ul>
+  </li>
+  <li>
+    <p>これら二つのLossの加重和の損失関数
+\(\mathcal{L} (z\rm\_{\gamma}) = (1-\lambda) \cdot \mathcal{L}_R (\bf z\rm\_{\gamma}) + \lambda \cdot \mathcal{L}_{D} (\bf z\rm\_{\gamma})\)を用いて<br />
+$\gamma$回のバックプロパゲーションを繰り返すことにより最適な潜在変数$z_\gamma$を得る。</p>
+  </li>
+  <li>その潜在変数$z_{\gamma}$を用いて、残差スコア$R(x) = \mathcal{L}_R (\bf z\rm_{\gamma})$と識別スコア$D(x) = \mathcal{L}_D (z\rm_{\gamma}) $と定義したとき、</li>
+  <li>
+    <p>クエリ画像$x$の異常スコア$A(x)$は
+\(A(\bf x\rm) = (1- \lambda) \cdot R(\bf x\rm) + \lambda \cdot D(\bf x\rm)\)
+となる。</p>
+  </li>
+  <li>基準異常スコア
+\(\hat{A}(\bf x\rm) = (1- \lambda) \cdot R(\bf x\rm) + \lambda \cdot \hat{D}(\bf x\rm)\qquad(\because \hat{D}(x) = \mathcal{L_{\hat{D}}} (z\rm\_{\gamma}))\)
+    <h2 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h2>
+    <!-- 実験の精度，結果画像など -->
+  </li>
+  <li>網膜の臨床高解像度SD-OCTボリューム</li>
+  <li><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/a/aotamasaki/20180414/20180414211624.png" alt="" />
+    <ul>
+      <li>上から1行ごとに元画像、生成画像、異常個所、アノテーション</li>
+      <li>左から1ブロックごとに学習正常、テスト正常、テスト異常</li>
+    </ul>
+  </li>
+  <li><img src="https://www.researchgate.net/profile/Thomas-Schlegl-3/publication/318017139/figure/fig3/AS:473842939371520@1489984368215/Image-level-anomaly-detection-performance-and-suitability-evaluation-a-Model.png" alt="" />
+    <ul>
+      <li>(a) 他モデルとの比較</li>
+      <li>(b) 残差スコア(緑)、識別スコア(黒)、基準識別スコア(赤)に基づく異常検知精度</li>
+      <li>(c) 残差スコアの分布</li>
+      <li>(d) 判別スコアの分布</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="5-議論はあるか">5. 議論はあるか？</h2>
+<!-- 自分なりの考察や疑問-->
+<p>基準異常スコア
+\(\hat{A}(\bf x\rm) = (1- \lambda) \cdot R(\bf x\rm) + \lambda \cdot \hat{D}(\bf x\rm)\)<br />
+異常判断スコア\(\hat{D}(x) = \mathcal{L_{\hat{D}}} (z\rm_{\gamma})\)<br />
+Yehら<a href="https://arxiv.org/abs/1607.07539">https://arxiv.org/abs/1607.07539</a>とは</p>
+
+<h2 id="6-関連文献">6. 関連文献</h2>
+<!--
+1. D. P. Kingma and J. Ba: “Adam: A method for stochastic optimization,”arXiv preprint arXiv:1412.6980,(2014).
+2. P. Isola,J. Y. Zhu,T. Zhou,and A. A. Efros: “Image-to-image translation with conditional adversarial networks,” in Proceedings of the IEEE conference on computer vision and pattern recognition, (2017), 1125.
+-->
+<ol>
+  <li>Yeh, R., Chen, C., Lim, T.Y., Hasegawa-Johnson, M., Do, M.N.: Semantic image inpainting with perceptual and contextual losses. arXiv:1607.07539 (2016)</li>
+</ol>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
