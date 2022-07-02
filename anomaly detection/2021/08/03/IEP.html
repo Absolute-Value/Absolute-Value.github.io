@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="https://salty-vanilla.github.io/portfolio/post/iterative_energy-based_projection_on_a_normal_data_manifold_for_anomaly_localization/img/arch.png" class="hero">
+    <h1>Iterative energy-based projection on a normal data manifold for anomaly localization</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2002.03734"> https://arxiv.org/abs/2002.03734</a></p>
+    <p><span class="fa fa-calendar"></span> Aug 3, 2021</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection, Unsupervised Learning, VAE, Anomaly Localization, </p>
+    <p><span class="fa fa-graduation-cap"></span> ICLR (2020) </p>
+    <h2 id="1-どんなもの">1. どんなもの?</h2>
+<!-- 概要・貢献等 100-200字程度 -->
+<ul>
+  <li>オートエンコーダで画像を再構成する際に画像全体を悪化させることがあるため、セグメンテーションを困難にしているという問題がある</li>
+  <li>そこで、異常データを勾配降下法で正常データ多様体に投影することで、その問題を解決した
+<!--more--></li>
+</ul>
+
+<h2 id="2-先行研究と比べてどこがすごい">2. 先行研究と比べてどこがすごい？</h2>
+<!-- related worksとの差分 -->
+<ul>
+  <li>似た潜在変数から持ってくるAnoGANは学習が難しかったり、モード崩壊に悩まされるが、この手法はAEベースなのでそういったことが少ない</li>
+</ul>
+
+<h2 id="3-技術や手法のキモはどこ">3. 技術や手法の”キモ”はどこ？</h2>
+<!-- キモを箇条書きでまとめる -->
+
+<h3 id="変数定義">変数定義</h3>
+<!--
+学習・推論で使う変数をまとめる
+* $x$: 入力画像
+* $y$: 教師信号
+-->
+<ul>
+  <li>$E()$: エネルギー関数</li>
+  <li>$x_0$: 入力テスト画像</li>
+  <li>$x_t$: t回更新したテスト画像</li>
+  <li>$f_{VAE}$: 再構成画像</li>
+</ul>
+
+<h3 id="学習">学習</h3>
+<!-- キモの中の学習に関する内容 -->
+<ul>
+  <li>通常のVAE</li>
+</ul>
+
+<h3 id="推論異常度の算出">推論（異常度の算出）</h3>
+<!-- キモの中の推論に関する内容 -->
+<ul>
+  <li>
+    <p>概略図
+<img src="https://salty-vanilla.github.io/portfolio/post/iterative_energy-based_projection_on_a_normal_data_manifold_for_anomaly_localization/img/arch.png" alt="" /></p>
+  </li>
+  <li>エネルギー関数
+    <ul>
+      <li>左の項は再構成誤差でt時点の入力と出力を近づける、右の項は正則化項でtの入力と現画像を近づける
+  \(E(x\_t) = \mathcal{L}\_r(x_t) + \lambda \cdot || x\_t - x\_0 ||\_1\)</li>
+    </ul>
+  </li>
+  <li>
+    <p>このエネルギー関数を最小化するように画像をt回更新
+\(x\_{t+1} = x\_t - \alpha \cdot \nabla\_x E(x\_t)\)</p>
+  </li>
+  <li>さらにエネルギー関数と再構成二乗誤差の要素積で更新することで、誤差が大きい箇所を更新でき、収束を早くすることができる
+\(x\_{t+1} = x\_t - \alpha \cdot \big(\nabla\_x E(x\_t) \otimes \big(x\_t-f_{VAE}(x_t)\big)^2\big)\)</li>
+</ul>
+
+<h2 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h2>
+<!-- 実験の精度，結果画像など -->
+<ul>
+  <li>MVTecデータセット
+    <ul>
+      <li>-gradが提案手法
+<img src="https://salty-vanilla.github.io/portfolio/post/iterative_energy-based_projection_on_a_normal_data_manifold_for_anomaly_localization/img/res.png" alt="" /></li>
+      <li>異常箇所検知
+<img src="https://salty-vanilla.github.io/portfolio/post/iterative_energy-based_projection_on_a_normal_data_manifold_for_anomaly_localization/img/seg.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="5-議論はあるか">5. 議論はあるか？</h2>
+<!-- 自分なりの考察や疑問-->
+<p>エネルギー関数の再構成誤差の中身</p>
+<ul>
+  <li>実装ではバイナリークロスエントロピー</li>
+</ul>
+
+<h2 id="6-関連文献">6. 関連文献</h2>
+<!--
+1. D. P. Kingma and J. Ba: “Adam: A method for stochastic optimization,”arXiv preprint arXiv:1412.6980,(2014).
+2. P. Isola,J. Y. Zhu,T. Zhou,and A. A. Efros: “Image-to-image translation with conditional adversarial networks,” in Proceedings of the IEEE conference on computer vision and pattern recognition, (2017), 1125.
+-->
+<ol>
+  <li>Takashi Matsubara, Ryosuke Tachibana, and Kuniaki Uehara. Anomaly machine component detec- tion by deep generative model with unregularized score. CoRR, abs/1807.05800, 2018.</li>
+  <li>Diederik P. Kingma and Jimmy Ba. Adam: A method for stochastic optimization. In Yoshua Bengio and Yann LeCun (eds.), 3rd International Conference on Learning Representations, ICLR 2015, San Diego, CA, USA, May 7-9, 2015, Conference Track Proceedings, 2015.</li>
+  <li>Thomas Schlegl, Philipp Seeböck, Sebastian M Waldstein, Ursula Schmidt-Erfurth, and Georg Langs. Unsupervised anomaly detection with generative adversarial networks to guide marker discovery. In International Conference on Information Processing in Medical Imaging, pp. 146– 157. Springer, 2017.</li>
+</ol>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
