@@ -112,20 +112,20 @@
 <!-- キモの中の推論に関する内容 -->
 <ul>
   <li>
-    <p>概略図
+    <p>概略図<br />
 <img src="https://salty-vanilla.github.io/portfolio/post/iterative_energy-based_projection_on_a_normal_data_manifold_for_anomaly_localization/img/arch.png" alt="" /></p>
   </li>
   <li>エネルギー関数
     <ul>
-      <li>左の項は再構成誤差でt時点の入力と出力を近づける、右の項は正則化項でtの入力と現画像を近づける
+      <li>左の項は再構成誤差でt時点の入力と出力を近づける、右の項は正則化項でtの入力と現画像を近づける<br />
   \(E(x\_t) = \mathcal{L}\_r(x_t) + \lambda \cdot || x\_t - x\_0 ||\_1\)</li>
     </ul>
   </li>
   <li>
-    <p>このエネルギー関数を最小化するように画像をt回更新
+    <p>このエネルギー関数を最小化するように画像をt回更新<br />
 \(x\_{t+1} = x\_t - \alpha \cdot \nabla\_x E(x\_t)\)</p>
   </li>
-  <li>さらにエネルギー関数と再構成二乗誤差の要素積で更新することで、誤差が大きい箇所を更新でき、収束を早くすることができる
+  <li>さらにエネルギー関数と再構成二乗誤差の要素積で更新することで、誤差が大きい箇所を更新でき、収束を早くすることができる<br />
 \(x\_{t+1} = x\_t - \alpha \cdot \big(\nabla\_x E(x\_t) \otimes \big(x\_t-f_{VAE}(x_t)\big)^2\big)\)</li>
 </ul>
 
@@ -134,10 +134,10 @@
 <ul>
   <li>MVTecデータセット
     <ul>
-      <li>-gradが提案手法
-<img src="https://salty-vanilla.github.io/portfolio/post/iterative_energy-based_projection_on_a_normal_data_manifold_for_anomaly_localization/img/res.png" alt="" /></li>
-      <li>異常箇所検知
-<img src="https://salty-vanilla.github.io/portfolio/post/iterative_energy-based_projection_on_a_normal_data_manifold_for_anomaly_localization/img/seg.png" alt="" /></li>
+      <li>-gradが提案手法<br />
+  <img src="https://salty-vanilla.github.io/portfolio/post/iterative_energy-based_projection_on_a_normal_data_manifold_for_anomaly_localization/img/res.png" alt="" /></li>
+      <li>異常箇所検知<br />
+  <img src="https://salty-vanilla.github.io/portfolio/post/iterative_energy-based_projection_on_a_normal_data_manifold_for_anomaly_localization/img/seg.png" alt="" /></li>
     </ul>
   </li>
 </ul>

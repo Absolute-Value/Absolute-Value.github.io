@@ -105,9 +105,9 @@
 <h3 id="学習">学習</h3>
 <!-- キモの中の学習に関する内容 -->
 <ul>
-  <li>生成器(オートエンコーダ)は自由形式のマスクを付与した画像を復元し、識別器をだますように学習
+  <li>生成器(オートエンコーダ)は自由形式のマスクを付与した画像を復元し、識別器をだますように学習<br />
 \(L_G = -E_{x \sim P_{data}(x),M \sim P(M)}\big[D^{sn}\big(G(\hat{x} = M \otimes x, M)\big)\big]\)</li>
-  <li>識別器は元画像とマスク付与して復元した画像を見分けるように学習
+  <li>識別器は元画像とマスク付与して復元した画像を見分けるように学習<br />
 \(L_D = E_{x \sim P_{data}(x)}\big[ReLU\big(1-D^{sn}(x)\big)\big] + E_{x \sim P_{data},M \sim P(M)}\big[ReLU \big(1+D^{sn} \big(G(\hat{x} = M \otimes x, M)\big)\big)\big]\)</li>
 </ul>
 
@@ -138,13 +138,13 @@
 <ul>
   <li>MVTecデータセット
     <ul>
-      <li>オートエンコーダとの比較
+      <li>オートエンコーダとの比較<br />
   <img src="/assets/images/posts/I3AD/AEauc.png" alt="" /></li>
-      <li>AnoGANとの比較
+      <li>AnoGANとの比較<br />
   <img src="/assets/images/posts/I3AD/GANauc.png" alt="" /></li>
       <li>異常箇所検知
         <ul>
-          <li>赤線が正解、緑が検知箇所
+          <li>赤線が正解、緑が検知箇所<br />
   <img src="/assets/images/posts/I3AD/local.png" alt="" /></li>
         </ul>
       </li>
