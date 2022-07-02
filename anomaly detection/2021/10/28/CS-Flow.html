@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/CS-Flow/hero.png" class="hero">
+    <h1>Fully Convolutional Cross-Scale-Flows for Image-based Defect Detection</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2110.02855"> https://arxiv.org/abs/2110.02855</a></p>
+    <p><span class="fa fa-calendar"></span> Oct 28, 2021</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection, Flow, </p>
+    <p><span class="fa fa-graduation-cap"></span> WACV (2022) </p>
+    <h2 id="1-どんなもの">1. どんなもの?</h2>
+<!-- 概要・貢献等 100-200字程度 -->
+<ul>
+  <li>正規化フローと事前学習済みニューラルネットワークを用いた半教師あり学習</li>
+  <li>異なるスケールの画像を事前学習のネットワークに通した特徴マップを同時に学習することで、精度を向上
+<!--more--></li>
+</ul>
+
+<h2 id="2-先行研究と比べてどこがすごい">2. 先行研究と比べてどこがすごい？</h2>
+<!-- related worksとの差分 -->
+<ul>
+  <li>他の手法は正規分布を仮定しているが、本手法では最尤推定によって真の分布を学習する</li>
+  <li>特徴マップに平均プーリングを適用したベクトルを処理すると重要な文脈情報や位置情報が失われてしまうが、本手法では完全な畳み込みアーキテクチャによって空間的な配置も保持</li>
+</ul>
+
+<h2 id="3-技術や手法のキモはどこ">3. 技術や手法の”キモ”はどこ？</h2>
+<!-- キモを箇条書きでまとめる -->
+<p><img src="/assets/images/posts/CS-Flow/csflow-NF.png" alt="" /></p>
+
+<ul>
+  <li>異なるスケールを同時に学習する正規化フローブロック。
+    <ul>
+      <li>これをいくつか重ねる</li>
+      <li>実験ではサブネット内の畳み込みカーネルを3x3にしたものを3回、5x5にしたものを1回</li>
+    </ul>
+  </li>
+  <li>詳細
+    <ul>
+      <li>異なるスケールにした画像を事前学習済みネットワークに通した特徴量（実験ではEfficientNet-B5の36層目） をランダムに並べて半分に分ける</li>
+      <li>それぞれを $y^{(i)}_{in,1}, y^{(i)}_{in,2}$ とする</li>
+      <li>$y^{(i)}_{in,2}$ と、 $y^{(i)}_{in,1}$ を後述のサブネット $r_1$ に通した $s_1(y_{in,1}), t_1(y_{in,1})$ を用いて $y_{out,2}$ は以下のようになる<br />
+  \(y_{out,2} = y_{in,2} \odot e^{\gamma_1 s_1(y_{in,1})} + \gamma_1 t_1(y_{in,1})\)
+        <ul>
+          <li>$\gamma_1$ は安定して初期化するためのスカラー係数</li>
+        </ul>
+      </li>
+      <li>$y^{(i)}_{in,1}$ と、 $y_{out,2}$ を同様にサブネット $r_2$ に通した $s_2(y_{out,2}), t_2(y_{out,2})$ を用いて $y_{out,1}$ は以下のようになる<br />
+  \(y_{out,1} = y_{in,1} \odot e^{\gamma_2 s_2(y_{out,2})} + \gamma_2 t_2(y_{out,2})\)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/images/posts/CS-Flow/csflow-block.png" alt="" /></p>
+<ul>
+  <li>サブネットの内部
+    <ul>
+      <li>畳み込みをしている他、異なるスケールの特徴をアップサンプリングやストライド2での畳み込みにより、サイズを合わせて足し合わせることで、関連させている</li>
+      <li>最後に半分にして前述の$s$と$t$に分けている</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="変数定義">変数定義</h3>
+<!--
+学習・推論で使う変数をまとめる
+* $x$: 入力画像
+* $y$: 教師信号
+-->
+<ul>
+  <li>$x$: 入力画像</li>
+  <li>$y$: 入力画像$x$を事前学習ニューラルネットワークに通した特徴量</li>
+  <li>$p_Y(y)$: $y$の尤度</li>
+  <li>$L(y)$: 目的関数</li>
+</ul>
+
+<h3 id="学習">学習</h3>
+<!-- キモの中の学習に関する内容 -->
+<ul>
+  <li>入力画像 $x$ を事前学習ニューラルネットワークに通した特徴量 $y=f_{fe}(x)$ の尤度 $p_Y(y)$を最大化したい</li>
+  <li>$y$ を正規化フローに通した $z=f_{NF}(y)$から、尤度 $p_Y(y)$ を変数変換すると
+\(p_Y(y) = p_Z(z) \big|det \frac{\partial z}{\partial y} \big|\)</li>
+  <li>$p_Y(y)$の最大化、すなわち負の対数尤度 $-\log p_Y(y)$ を最小化すれば良いので、目的関数は
+\(L(y) = -\log p_Y(y) 
+= - \big( \log p_Z(z) + \log \big|det \frac{\partial z}{\partial y} \big| \big)\\
+= \frac{|| z ||^2_2}{2} - \log \big|det \frac{\partial z}{\partial y} \big|\)</li>
+</ul>
+
+<h3 id="推論異常度の算出">推論（異常度の算出）</h3>
+<!-- キモの中の推論に関する内容 -->
+<ul>
+  <li>尤度 $p_z(z)$ が閾値 $\theta$ より低いものを異常、高いものを正常とする<br />
+<img src="/assets/images/posts/CS-Flow/csflow-ano.png" width="200px" /></li>
+</ul>
+
+<blockquote>
+  <h2 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h2>
+  <!-- 実験の精度，結果画像など -->
+  <ul>
+    <li>MVTec Detection
+      <ul>
+        <li>4つのクラスでAUROC100%
+<img src="/assets/images/posts/CS-Flow/csflow-detection.png" alt="" /></li>
+      </ul>
+    </li>
+  </ul>
+</blockquote>
+
+<ul>
+  <li>
+    <p>MVTec Localization
+<img src="/assets/images/posts/CS-Flow/csflow-local.png" alt="" /></p>
+  </li>
+  <li>
+    <p>Magnetic Tile Defects (MTD) Datasets<br />
+<img src="/assets/images/posts/CS-Flow/csflow-mtd.png" width="400px" /></p>
+  </li>
+</ul>
+
+<h2 id="6-関連文献">6. 関連文献</h2>
+<!--
+1. D. P. Kingma and J. Ba: “Adam: A method for stochastic optimization,”arXiv preprint arXiv:1412.6980,(2014).
+2. P. Isola,J. Y. Zhu,T. Zhou,and A. A. Efros: “Image-to-image translation with conditional adversarial networks,” in Proceedings of the IEEE conference on computer vision and pattern recognition, (2017), 1125.
+-->
+<ol>
+  <li>Laurent Dinh, Jascha Sohl-Dickstein, and Samy Bengio.
+Density estimation using real nvp. ICLR 2017, 2016.</li>
+  <li>Marco Rudolph, Bastian Wandt, and Bodo Rosenhahn. Same
+same but differnet: Semi-supervised defect detection with
+normalizing flows. In Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision, pages
+1907–1916, 2021.</li>
+</ol>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
