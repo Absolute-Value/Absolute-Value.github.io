@@ -66,58 +66,49 @@
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
   </head>
   <body>
-    <img src="/assets/images/posts/piGAN/1.png" class="hero">
-    <h1>pi-GAN: Periodic Implicit Generative Adversarial Networks for 3D-Aware Image Synthesis</h1>
-    <p><span class="fa fa-link"></span><a href="https://marcoamonteiro.github.io/pi-GAN-website/"> https://marcoamonteiro.github.io/pi-GAN-website/</a></p>
-    <p><span class="fa fa-calendar"></span> May 9, 2022</p>
-    <p><span class="fa fa-flag"></span> NeRF, GAN, </p>
-    <p><span class="fa fa-graduation-cap"></span> CVPR (2020) </p>
-    <h2 id="概要">概要</h2>
-
+    <img src="/assets/images/posts/DeClaW/pretrained.png" class="hero">
+    <h1>Using Anomaly Feature Vectors for Detecting, Classifying and Warning of Outlier Adversarial Examples</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2107.00561"> https://arxiv.org/abs/2107.00561</a></p>
+    <p><span class="fa fa-calendar"></span> Sep 16, 2021</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection, Pretrained, </p>
+    <p><span class="fa fa-graduation-cap"></span> ICML (2021) </p>
+    <h2 id="1-どんなもの">1. どんなもの?</h2>
+<!-- 概要・貢献等 100-200字程度 -->
 <ul>
-  <li>3Dを考慮した高品質な画像合成のためのSIRENベースのπ-GANと呼ばれる新しい生成モデルを提案
-    <ul>
-      <li>GANはマルチビューの一貫性を保証できない</li>
-    </ul>
-  </li>
-  <li>周期的な活性化関数を持つニューラル表現と古典的なボリュームレンダリングを活用している</li>
-  <li>複数の3Dを考慮した画像合成において最先端の結果
+  <li>敵対的入力を検出、分類、警告するシステム（DeClaW）</li>
+  <li>異常（攻撃）検知
 <!--more--></li>
 </ul>
 
-<h2 id="アイデア">アイデア</h2>
-
-<h3 id="generator">Generator</h3>
-<p><img src="/assets/images/posts/piGAN/2.png" alt="" /></p>
+<h2 id="2-先行研究と比べてどこがすごい">2. 先行研究と比べてどこがすごい？</h2>
+<!-- related worksとの差分 -->
 <ul>
-  <li>通常のGANのGeneratorは潜在変数から直接2次元画像を生成する</li>
-  <li>StyleGANを模倣したMapping Networkを追加した
-    <ul>
-      <li>潜在変数$z$から周波数$\gamma_i$と位相シフト$\beta_i$を出力し，SIRENの各層を条件付ける</li>
-    </ul>
-  </li>
-  <li>MLPの各層$\phi_i(x_i)$は下式で表される（図b）
-    <ul>
-      <li>$\phi_i(x_i)=sin(\gamma_i\cdot(W_ix_i+b_i)+\beta_i)$</li>
-    </ul>
-  </li>
-  <li>これを繰り返した出力を$\phi(x)$とすると，密度$\sigma$と色$c$は下式で表される（図a）
-    <ul>
-      <li>$\sigma(x)=W_\sigma\phi(x)+b_\sigma$</li>
-      <li>$c=W_c\phi_c((\phi(x),d)^T)+b_c$</li>
-    </ul>
-  </li>
+  <li>先行研究では攻撃の検出のみに焦点を当てており、分類は未解決の問題</li>
+  <li>潜在特徴が16Kから176に削減</li>
 </ul>
 
-<h3 id="discriminator">Discriminator</h3>
+<h2 id="3-技術や手法のキモはどこ">3. 技術や手法の”キモ”はどこ？</h2>
+<!-- キモを箇条書きでまとめる -->
+
+<h3 id="学習">学習</h3>
+<!-- キモの中の学習に関する内容 -->
+
 <ul>
-  <li>ProgressiveGANのように，初めは低解像度から学習し，学習が進むにつれて解像度を上げて新しい層を追加する</li>
-  <li>Generatorでは代わりに光線の密度を上げていく</li>
+  <li>事前学習済み分類機の出力を使って特徴ベクトルを抽出<br />
+<img src="/assets/images/posts/DeClaW/pretrained.png" alt="" /></li>
+  <li>2つ目のネットワークで分類を学習<br />
+<img src="/assets/images/posts/DeClaW/second.png" alt="" /></li>
 </ul>
 
-<h2 id="結果">結果</h2>
+<h2 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h2>
+<!-- 実験の精度，結果画像など -->
 
-<p><img src="/assets/images/posts/piGAN/3.png" alt="" /></p>
+<ul>
+  <li>検出精度 93~96%<br />
+<img src="/assets/images/posts/DeClaW/Attack.png" alt="" /></li>
+  <li>分類精度 90~99%<br />
+<img src="/assets/images/posts/DeClaW/class.png" alt="" /></li>
+</ul>
 
     <div class="btn-wrapper">
       <a href="/posts" class="btn back_btn">一覧へ戻る</a>

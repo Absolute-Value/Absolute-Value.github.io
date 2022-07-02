@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/ALRS/lr.png" class="hero">
+    <h1>Automated Learning Rate Scheduler for Large-batch Training</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2107.05855"> https://arxiv.org/abs/2107.05855</a></p>
+    <p><span class="fa fa-calendar"></span> Sep 16, 2021</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection, </p>
+    <p><span class="fa fa-graduation-cap"></span> ICML (2021) </p>
+    <h2 id="1-どんなもの">1. どんなもの?</h2>
+<!-- 概要・貢献等 100-200字程度 -->
+<ul>
+  <li>大規模なデータやモデルを使用する際に計算効率からバッチサイズを大きくする</li>
+  <li>しかし、バッチサイズを大きくすると小さいものと同等の性能を出すのに特別設計の学習率が必要となることがある</li>
+  <li>そこで、train_lossが減少しなくなるまで学習率を増加させ、終了までに０に減少させるというアルゴリズムを開発</li>
+  <li>バッチサイズでチューニング済みのベースラインと同等以上の性能を達成
+<!--more--></li>
+</ul>
+
+<h2 id="2-先行研究と比べてどこがすごい">2. 先行研究と比べてどこがすごい？</h2>
+<!-- related worksとの差分 -->
+<ul>
+  <li>バッチサイズに合わせた学習率のチューニングが必要なくなる</li>
+</ul>
+
+<h2 id="3-技術や手法のキモはどこ">3. 技術や手法の”キモ”はどこ？</h2>
+<!-- キモを箇条書きでまとめる -->
+<p><img src="/assets/images/posts/ALRS/lr.png" alt="" /></p>
+
+<h3 id="変数定義">変数定義</h3>
+<!--
+学習・推論で使う変数をまとめる
+* $x$: 入力画像
+* $y$: 教師信号
+-->
+<ul>
+  <li>$\theta$: 平均</li>
+  <li>$K_{l,\sigma_f}$: 共分散カーネル</li>
+  <li>$\sigma^2_n$: ノイズレベル</li>
+</ul>
+
+<blockquote>
+  <blockquote>
+    <h3 id="ウォームアップ段階">ウォームアップ段階</h3>
+  </blockquote>
+</blockquote>
+
+<ul>
+  <li>
+    <p>train_lossが減少しなくなるまで学習率を増加させる</p>
+  </li>
+  <li>Lossが減少する限り、$\rho_\omega T$ ステップの間 $\eta_t$ は$\eta_{max}$まで更新し続ける
+<img src="/assets/images/posts/ALRS/func1.png" alt="" />
+    <ul>
+      <li>指数関数的な成長をする
+        <ul>
+          <li>大規模バッチにおいて安定してきめ細かい学習率探索を可能にしている</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>GP回帰を用いてLoss曲線を平滑化したものでLossが減少しているか判定する
+<img src="/assets/images/posts/ALRS/2.png" alt="" />
+    <ul>
+      <li>局所的変動対策</li>
+    </ul>
+  </li>
+  <li>下の数式で終了したいが、計算が簡単ではないので、
+<img src="/assets/images/posts/ALRS/3.png" alt="" /></li>
+  <li>下のような下界を計算する
+<img src="/assets/images/posts/ALRS/4.png" alt="" /></li>
+</ul>
+
+<h3 id="減衰段階">減衰段階</h3>
+
+<ul>
+  <li>終了までに0に減衰させる</li>
+  <li>以下の二つでスケジュール
+    <ul>
+      <li>cosine減衰のみ</li>
+      <li>途中まで一定の学習率で、最後の20%でcosine減衰</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h2>
+<!-- 実験の精度，結果画像など -->
+
+<ul>
+  <li>学習率とLoss
+<img src="/assets/images/posts/ALRS/lr_loss.png" alt="" /></li>
+</ul>
+
+<h2 id="5-議論はあるか">5. 議論はあるか？</h2>
+<!-- 自分なりの考察や疑問-->
+
+<blockquote>
+  <h2 id="6-関連文献">6. 関連文献</h2>
+  <!--
+1. D. P. Kingma and J. Ba: “Adam: A method for stochastic optimization,”arXiv preprint arXiv:1412.6980,(2014).
+2. P. Isola,J. Y. Zhu,T. Zhou,and A. A. Efros: “Image-to-image translation with conditional adversarial networks,” in Proceedings of the IEEE conference on computer vision and pattern recognition, (2017), 1125.
+-->
+  <ol>
+    <li>Byeongho Heo, Sanghyuk Chun, Seong Joon Oh, Dongyoon Han, Sangdoo Yun, Gyuwan
+Kim, Youngjung Uh, and Jung-Woo Ha. Adamp: Slowing down the slowdown for momentum optimizers on scale-invariant weights. In International Conference on Learning
+Representations, 2021. URL https://openreview.net/forum?id=Iz3zU3M316D.</li>
+  </ol>
+</blockquote>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

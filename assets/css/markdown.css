@@ -1,8 +1,17 @@
-h1, h2, h3, p, ul, .hero, table {
+h1, h2, h3, h4, p, ul, .hero, table {
   margin-left: 5%;
   margin-right: 5%;
   padding-left: 1%;
   padding-right: 1%;
+}
+
+img {
+  max-width: 100%;
+}
+
+li {
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 th,td {

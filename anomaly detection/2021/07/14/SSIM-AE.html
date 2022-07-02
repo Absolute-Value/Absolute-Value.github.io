@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="https://media.arxiv-vanity.com/render-output/5811705/SSIM_L2_COMPARISON.png" class="hero">
+    <h1>Improving Unsupervised Defect Segmentation by Applying Structural Similarity to Autoencoders</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2107.05855"> https://arxiv.org/abs/2107.05855</a></p>
+    <p><span class="fa fa-calendar"></span> Jul 14, 2021</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection, Unsupervised Learning, Defect Segmentation, Autoencoder, </p>
+    <p><span class="fa fa-graduation-cap"></span> VISAPP (2019) </p>
+    <h2 id="1-どんなもの">1. どんなもの?</h2>
+<!-- 概要・貢献等 100-200字程度 -->
+<p>通常の畳み込みオートエンコーダで使用されるピクセルLossは位置ズレに弱く、強度の値が一定の場合に弱い。<br />
+そこで、輝度、コントラスト、構造情報を考慮した構造的類似性(SSIM)Lossを代わりに使用した。
+<!--more--></p>
+
+<h2 id="2-先行研究と比べてどこがすごい">2. 先行研究と比べてどこがすごい？</h2>
+<!-- related worksとの差分 -->
+<ul>
+  <li>エッジの整列にあまり影響されない</li>
+  <li>入力と再構成の間の顕著な違いを重要視する</li>
+</ul>
+
+<h2 id="3-技術や手法のキモはどこ">3. 技術や手法の”キモ”はどこ？</h2>
+<!-- キモを箇条書きでまとめる -->
+<ul>
+  <li>Pixel L2 Lossの代わりにSSIM Lossを使用</li>
+</ul>
+
+<h3 id="変数定義">変数定義</h3>
+<!--
+学習・推論で使う変数をまとめる
+* $x$:入力画像
+* $\hat{x}$:再構成画像
+-->
+<ul>
+  <li>$p$:画像パッチp</li>
+  <li>$q$:画像パッチq</li>
+  <li>$l$:輝度</li>
+  <li>$c$:コントラスト</li>
+  <li>$s$:構造情報</li>
+  <li>$\alpha,\beta,\gamma,c_1,c_2$:パラメータ</li>
+</ul>
+
+<h3 id="学習">学習</h3>
+<!-- キモの中の学習に関する内容 
+-->
+<ul>
+  <li>SSIM Loss
+    <ul>
+      <li>$ SSIM(p,q) = \frac{(2 \mu_p \mu_q + C_1)(2 \sigma_{pq} + C_2)}{(\mu_p ^2 + \mu_q ^2 + C_1)(\sigma_p ^2 + \sigma_q ^2 + C_2)} $
+        <ul>
+          <li>輝度の比較：
+  $ l(p, q) = \frac{(2\mu_{p}\mu_{q} + C_{1})}{(\mu_{p}^2 + \mu_{q}^2 + C_{1})} $，
+  コントラストの比較：
+  $ c(p, q) = \frac{(2\sigma_{p}\sigma_{q} + C_{2})}{(\sigma_{p}^2 + \sigma_{q}^2 + C_{2})} $，
+  構造の比較：
+  $ s(p, q) = \frac{(2\sigma_{pq} + C_{3})}{(\sigma_{p}\sigma_{q} + C_{3})} $
+  を
+  $ SSIM(p, q) = [l(p, q)]^\alpha \times [c(p, q)]^\beta \times [s(p, q)]^\gamma $
+  に代入して算出</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>エンコーダの構造</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Output Size</th>
+      <th>Kernel</th>
+      <th>Stride</th>
+      <th>Padding</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Input</td>
+      <td>128×128×1</td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>Conv1</td>
+      <td>64×64×32</td>
+      <td>4×4</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Conv2</td>
+      <td>32×32×32</td>
+      <td>4×4</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Conv3</td>
+      <td>32×32×32</td>
+      <td>3×3</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Conv4</td>
+      <td>16×16×64</td>
+      <td>4×4</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Conv5</td>
+      <td>16×16×64</td>
+      <td>3×3</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Conv6</td>
+      <td>8×8×128</td>
+      <td>4×4</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Conv7</td>
+      <td>8×8×64</td>
+      <td>3×3</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Conv8</td>
+      <td>8×8×32</td>
+      <td>3×3</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Conv9</td>
+      <td>1×1×d</td>
+      <td>8×8</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="推論異常度の算出">推論（異常度の算出）</h3>
+<!-- キモの中の推論に関する内容 -->
+<ul>
+  <li>テスト画像と学習したオートエンコーダを用いて再構成した画像の残差マップを計算</li>
+</ul>
+
+<h2 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h2>
+<!-- 実験の精度，結果画像など -->
+
+<ul>
+  <li>織布テクスチャ
+    <ul>
+      <li>再構成，残差マップ，検出結果のL2とSSIMの比較
+  <img src="https://media.arxiv-vanity.com/render-output/5811705/SSIM_L2_COMPARISON.png" alt="" /></li>
+      <li>L2を使用したAE,VAE,FM-AEとSSIMを使用したAEのROC曲線
+  <img src="https://media.arxiv-vanity.com/render-output/5811705/x1.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <h2 id="6-関連文献">6. 関連文献</h2>
+  <ol>
+    <li>Zhou Wang, Alan C Bovik, Hamid R Sheikh, and Eero P Simoncelli. Image quality assessment: from error visibility to structural similarity. IEEE transactions on image processing, 13(4):600–612, 2004.</li>
+  </ol>
+</blockquote>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="https://qiita-image-store.s3.amazonaws.com/0/261752/ee9522e0-ce28-c904-d3c9-b3adee14fa97.jpeg" class="hero">
+    <h1>Deep Autoencoding Gaussian Mixture Model for Unsupervised Anomaly Detection</h1>
+    <p><span class="fa fa-link"></span><a href="https://openreview.net/forum?id=BJJLHbb0-"> https://openreview.net/forum?id=BJJLHbb0-</a></p>
+    <p><span class="fa fa-calendar"></span> Jul 15, 2021</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection, Unsupervised Learning, Autoencoder, Gaussian Mixture mMdeling, Density Estimation, </p>
+    <p><span class="fa fa-graduation-cap"></span> ICLR (2018) </p>
+    <h2 id="1-どんなもの">1. どんなもの?</h2>
+<!-- 概要・貢献等 100-200字程度 -->
+<ul>
+  <li>画像を深層オートエンコーダを使用して次元削減したものをガウス混合モデルで密度推定して異常検知を行う
+<!--more--></li>
+</ul>
+
+<h2 id="2-先行研究と比べてどこがすごい">2. 先行研究と比べてどこがすごい？</h2>
+<!-- related worksとの差分 -->
+<ul>
+  <li>深層オートエンコーダの学習による次元削減とEMアルゴリズムによるガウス混合モデルを別々で学習していた</li>
+  <li>別々で学習すると、異常検知で重要なデータが次元削減の段階で取り除かれてしまう可能性がある</li>
+  <li>そこで、次元削減と密度推定を同時に学習</li>
+</ul>
+
+<h2 id="3-技術や手法のキモはどこ">3. 技術や手法の”キモ”はどこ？</h2>
+<!-- キモを箇条書きでまとめる -->
+<p><img src="https://qiita-image-store.s3.amazonaws.com/0/261752/ee9522e0-ce28-c904-d3c9-b3adee14fa97.jpeg" alt="" /></p>
+
+<h3 id="変数定義">変数定義</h3>
+<!--
+学習・推論で使う変数をまとめる
+* $x$: 入力画像
+* $y$: 教師信号
+-->
+<h4 id="目的関数">目的関数</h4>
+<ul>
+  <li>$L()$: 再構成誤差を求める損失関数(L2ノルムなど)</li>
+  <li>$E(z_i)$: 入力サンプルの観測確率のモデル化</li>
+  <li>$P()$: 特異点問題(共分散行列の対角線上のエントリが０に縮退すると、矮小な解が誘発される問題)を回避するためのペナルティ</li>
+  <li>$\lambda_1,\lambda_2$: メタ・パラメータ</li>
+  <li>$Q_{\theta m}$: メンバーシップ予測の推定ネットワーク</li>
+  <li>$p(z_i,k)$: $z_i$が与えられた混合成分kの事後確率分布</li>
+</ul>
+
+<h4 id="compression-network">COMPRESSION NETWORK</h4>
+<ul>
+  <li>$x$: 入力画像</li>
+  <li>$z_c$: AEの潜在変数</li>
+  <li>$x’$: 再構成画像</li>
+  <li>$z_r$: 絶対ユークリッド距離、相対ユークリッド距離、コサイン類似度などの複数の距離指標を考慮した多次元</li>
+  <li>$f()$: 再構成誤差を計算する関数</li>
+  <li>$z$: COMPRESSION NETWORKが抽出した低次元特徴</li>
+</ul>
+
+<h4 id="estimation-network">ESTIMATION NETWORK</h4>
+<ul>
+  <li>$MLN()$: 推論に使用するネットワーク</li>
+  <li>$\hat{\gamma}$: メンバーシップ予測のためのK次元ベクトル</li>
+  <li>$\hat{\phi}_k$: GMMにおける成分kの混合確率</li>
+  <li>$\hat{\mu}_k$: GMMにおける成分kの平均</li>
+  <li>$\hat{\Sigma}_k$: GMMにおける成分kの共分散</li>
+  <li>$E(z)$: 異常予測に使用するサンプルエネルギー</li>
+</ul>
+
+<h3 id="学習">学習</h3>
+<!-- キモの中の学習に関する内容 -->
+<h3 id="目的関数-1">目的関数</h3>
+<ul>
+  <li>N個のサンプルのデータセットにおける目的関数
+    <ul>
+      <li>再構成誤差$L$と下述$E$とペナルティ$P$
+<img src="/assets/images/posts/DAGMM/7.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>$E$は$z_i$が与えられた混合成分kの事後確率分布$p(z_i,k)$to
+メンバーシップ予測の推定ネットワーク$Q_{\theta m}$の分布を(8)を最小化することで近づける
+<img src="/assets/images/posts/DAGMM/8.png" alt="" /></li>
+</ul>
+
+<h3 id="推論異常度の算出">推論（異常度の算出）</h3>
+<!-- キモの中の推論に関する内容 -->
+
+<h3 id="compression-network-1">COMPRESSION NETWORK</h3>
+<ul>
+  <li>エンコーダから潜在変数$z_c$を取得<br />
+\(z_c = Encoder(x)\)</li>
+  <li>入力画像とデコーダの再構成画像の誤差を計算<br />
+\(x' = Decoder(z_c)\)<br />
+\(z_r = f(x,x')\)</li>
+  <li>抽出した$z_c$と$z_r$を組み合わせて$z$を作成<br />
+\(z = [z_c, z_r]\)</li>
+</ul>
+
+<h3 id="estimation-network-1">ESTIMATION NETWORK</h3>
+<ul>
+  <li>推定ネットワークを利用してメンバーシップ予測のためのK次元ベクトル$\hat{\gamma}$を予測<br />
+\(\hat{\gamma} = softmax(MLN(z))\)</li>
+  <li>それを用いてGMMのパラメータ、混合確率$\hat{\phi}_k$・平均$\hat{\mu}_k$・共分散$\hat{\Sigma}_k$を推定<br />
+<img src="/assets/images/posts/DAGMM/5.png" alt="" /></li>
+  <li>上のパラメータを用いて、サンプルエネルギー(確率密度のエントロピー？)を推定
+    <ul>
+      <li>閾値より高いサンプルエネルギーのものを異常と予測
+<img src="/assets/images/posts/DAGMM/6.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h2>
+<!-- 実験の精度，結果画像など -->
+<ul>
+  <li>KDDCUP, Thyroid, Arrhythmia, KDDCUP-Revで実験
+    <ul>
+      <li>異常検知のF1スコアが最大で14％向上
+<img src="https://d3i71xaburhd42.cloudfront.net/dbc7401e3e75c40d3c720e7db3c906d48bd742d7/10-Table2-1.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="6-関連文献">6. 関連文献</h2>
+<!--
+1. D. P. Kingma and J. Ba: “Adam: A method for stochastic optimization,”arXiv preprint arXiv:1412.6980,(2014).
+2. P. Isola,J. Y. Zhu,T. Zhou,and A. A. Efros: “Image-to-image translation with conditional adversarial networks,” in Proceedings of the IEEE conference on computer vision and pattern recognition, (2017), 1125.
+-->
+<ol>
+  <li>Shuangfei Zhai, Yu Cheng, Weining Lu, and Zhongfei Zhang. Deep structured energy based models for anomaly detection. In International Conference on Machine Learning, pp. 1100–1109, 2016.</li>
+</ol>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
