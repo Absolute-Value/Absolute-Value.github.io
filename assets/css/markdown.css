@@ -1,8 +1,27 @@
-h1, h2, h3, p, ul, .hero {
+h1, h2, h3, p, ul, .hero, table {
   margin-left: 5%;
   margin-right: 5%;
   padding-left: 1%;
   padding-right: 1%;
+}
+
+th,td {
+  border: solid 1px;  /* 枠線指定 */
+  padding: 10px;      /* 余白指定 */
+  border-color: rgb(104, 95, 95);
+}
+
+th {
+  background-color:darkcyan;
+  color: white;
+}
+
+tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+table {
+  border-collapse:  collapse; /* セルの線を重ねる */
 }
 
 .highlight {

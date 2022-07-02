@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <img src="/assets/images/note.jpg" class="hero">
+    <h1>vi 早見表</h1>
+    <p><span class="fa fa-calendar"></span> Jul 2, 2022</p>
+    <p><span class="fa fa-flag"></span> Note </p>
+    <p>vi早見表の紙があり，残さず捨てるのはもったいないので載せておきます
+<!--more--></p>
+
+<p>viにはカーソル移動モード（コマンドモード）と入力モードがある．
+起動直後はカーソル移動モードである．
+動作がおかしくなったら，カーソル移動モードに移行すればよい．</p>
+
+<h1 id="起動">起動</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>コマンド操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>vi “ファイル名”</td>
+      <td>編集対象のファイルを開く</td>
+    </tr>
+    <tr>
+      <td>vi +n “ファイル名”</td>
+      <td>n行目から表示する</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="モードの移行">モードの移行</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ESC</td>
+      <td>カーソル移動モード（コマンドモード）へ移行</td>
+    </tr>
+    <tr>
+      <td>a</td>
+      <td>カーソルの右から入力開始（add）</td>
+    </tr>
+    <tr>
+      <td>i</td>
+      <td>カーソルの左から入力開始（insert）</td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>行末から入力開始（Add）</td>
+    </tr>
+    <tr>
+      <td>I</td>
+      <td>行頭から入力開始（Insert）</td>
+    </tr>
+    <tr>
+      <td>o</td>
+      <td>現在の行の下に１行挿入して入力開始</td>
+    </tr>
+    <tr>
+      <td>O</td>
+      <td>現在の行の上に１行挿入して入力開始（Insert）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="カーソルの移動">カーソルの移動</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー操作</th>
+      <th>説明</th>
+      <th> </th>
+      <th>キー操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>h, BackSpace</td>
+      <td>カーソル左</td>
+      <td> </td>
+      <td>H</td>
+      <td>画面の（High）</td>
+    </tr>
+    <tr>
+      <td>j, Ctrl+n</td>
+      <td>カーソル下（next）</td>
+      <td> </td>
+      <td>M</td>
+      <td>画面の（Middle）</td>
+    </tr>
+    <tr>
+      <td>k, Ctrl+p</td>
+      <td>カーソル上（previous）</td>
+      <td> </td>
+      <td>L</td>
+      <td>画面の（Low）</td>
+    </tr>
+    <tr>
+      <td>l, SPACE</td>
+      <td>カーソル右</td>
+      <td> </td>
+      <td>G</td>
+      <td>ファイルの最終行</td>
+    </tr>
+    <tr>
+      <td>e</td>
+      <td>単語の末尾</td>
+      <td> </td>
+      <td>nG</td>
+      <td>ファイルのn行目</td>
+    </tr>
+    <tr>
+      <td>w</td>
+      <td>単語の先頭</td>
+      <td> </td>
+      <td>Ctrl+f</td>
+      <td>次画面までスクロール（forward）</td>
+    </tr>
+    <tr>
+      <td>^</td>
+      <td>行の先頭</td>
+      <td> </td>
+      <td>Ctrl+b</td>
+      <td>前画面までスクロール（back）</td>
+    </tr>
+    <tr>
+      <td>$</td>
+      <td>行の末尾</td>
+      <td> </td>
+      <td>Ctrl+d</td>
+      <td>画面半分下にスクロール（down）</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td>Ctrl+u</td>
+      <td>画面半分上にスクロール（up）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="削除">削除</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>x</td>
+      <td>カーソル上の１文字を削除</td>
+    </tr>
+    <tr>
+      <td>X</td>
+      <td>カーソルの左の１文字を削除</td>
+    </tr>
+    <tr>
+      <td>dd</td>
+      <td>現在の行を削除（バッファにコピーされpでペーストできる）</td>
+    </tr>
+    <tr>
+      <td>ndd</td>
+      <td>n行分削除</td>
+    </tr>
+    <tr>
+      <td>dw</td>
+      <td>カーソル上の１単語を削除</td>
+    </tr>
+    <tr>
+      <td>df 文字</td>
+      <td>カーソルの位置から指定した文字までを削除</td>
+    </tr>
+    <tr>
+      <td>d$</td>
+      <td>カーソル位置から行の最後までを削除</td>
+    </tr>
+    <tr>
+      <td>d^</td>
+      <td>カーソル位置から行の先頭までを削除</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="置換">置換</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>r</td>
+      <td>カーソル上の１文字を他の１文字に置換</td>
+    </tr>
+    <tr>
+      <td>R</td>
+      <td>カーソル上の文字からESCが押されるまでの文字列を置換</td>
+    </tr>
+    <tr>
+      <td>s</td>
+      <td>カーソルのある１文字を他の文字列で置換</td>
+    </tr>
+    <tr>
+      <td>S</td>
+      <td>現在行を他の文字列で置換</td>
+    </tr>
+    <tr>
+      <td>cw</td>
+      <td>カーソル位置から単語の最後までを置換（change word）</td>
+    </tr>
+    <tr>
+      <td>cf “文字”</td>
+      <td>カーソル位置から指定した文字までを置換</td>
+    </tr>
+    <tr>
+      <td>C</td>
+      <td>カーソル位置から行の最後までを置換</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="カットペースト">カット＆ペースト</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>yy</td>
+      <td>現在行をバッファにコピー</td>
+    </tr>
+    <tr>
+      <td>nyy</td>
+      <td>n行分をバッファにコピー</td>
+    </tr>
+    <tr>
+      <td>yw</td>
+      <td>単語をバッファにコピー</td>
+    </tr>
+    <tr>
+      <td>p</td>
+      <td>バッファ内のテキストを挿入</td>
+    </tr>
+    <tr>
+      <td>P</td>
+      <td>バッファ内のテキストを挿入</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="検索">検索</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>コマンド操作</th>
+      <th>説明</th>
+      <th> </th>
+      <th>キー操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>/ “正規表現”</td>
+      <td>前方検索</td>
+      <td> </td>
+      <td>n</td>
+      <td>次候補</td>
+    </tr>
+    <tr>
+      <td>? “正規表現”</td>
+      <td>広報検索</td>
+      <td> </td>
+      <td>N</td>
+      <td>前候補</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="その他">その他</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>.</td>
+      <td>直前の操作の繰り返し</td>
+    </tr>
+    <tr>
+      <td>u</td>
+      <td>直前の操作の取り消し（undo）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="ファイル操作">ファイル操作</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>コマンド操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>:w</td>
+      <td>現在のファイルに上書き保存</td>
+    </tr>
+    <tr>
+      <td>:w “ファイル名”</td>
+      <td>名前を付けて保存</td>
+    </tr>
+    <tr>
+      <td>:w! “ファイル名”</td>
+      <td>ファイル名を指定して強制保存</td>
+    </tr>
+    <tr>
+      <td>:r “ファイル名”</td>
+      <td>現在の行の次の行にファイルを読み込み挿入する</td>
+    </tr>
+    <tr>
+      <td>:n</td>
+      <td>複数のファイルを編集時，次のファイルを編集対象とする</td>
+    </tr>
+    <tr>
+      <td>:args</td>
+      <td>編集中のファイルの一覧表示</td>
+    </tr>
+    <tr>
+      <td>:e “ファイル名”</td>
+      <td>指定ファイルを編集対象とする</td>
+    </tr>
+    <tr>
+      <td>:e#</td>
+      <td>ひとつ前の編集ファイルに戻る</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="終了">終了</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>コマンド操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ZZ, :wq</td>
+      <td>viを終了（内容が変更されている場合は保存）</td>
+    </tr>
+    <tr>
+      <td>:q</td>
+      <td>viを終了（内容が変更されている場合は警告）</td>
+    </tr>
+    <tr>
+      <td>:q!</td>
+      <td>viを強制終了（内容が変更されていても保存されない）</td>
+    </tr>
+    <tr>
+      <td>:x!</td>
+      <td>viを強制終了（書き換え禁止ファイルも強制的に保存）</td>
+    </tr>
+  </tbody>
+</table>
+
+    <div class="btn-wrapper">
+      <a href="/notes" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
