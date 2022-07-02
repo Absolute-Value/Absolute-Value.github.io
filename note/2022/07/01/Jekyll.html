@@ -4,6 +4,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/markdown.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
   </head>
   <body>
     <header>
@@ -37,32 +39,34 @@
 
 <h1 id="jekyllの新規作成">Jekyllの新規作成</h1>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new {name}
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>jekyll new <span class="o">{</span>name<span class="o">}</span>
 </code></pre></div></div>
 <p>{name}は任意のプロジェクト名</p>
 
 <h1 id="jekyllの起動">Jekyllの起動</h1>
 
 <p>ローカルでサーバーを立ち上げる時</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll serve
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>jekyll serve
 </code></pre></div></div>
 
 <p>サイトをプロダクションとして生成する時</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll build
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>jekyll build
 </code></pre></div></div>
 
-<p>起動後のURL：<img src="http://127.0.0.1:4000/" alt="http://127.0.0.1:4000/" /></p>
+<p>起動後のURL：<a href="http://127.0.0.1:4000/">http://127.0.0.1:4000/</a></p>
 
 <h1 id="githubへの投稿方法">Githubへの投稿方法</h1>
 
 <p>_siteディレクトリへ移動する</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd _site
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>_site
 </code></pre></div></div>
 
 <p>いつものgit操作</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add .
-git commit -m "Comment"
-git push
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>git add <span class="nb">.</span>
+<span class="gp">$</span><span class="w"> </span>git commit <span class="nt">-m</span> <span class="s2">"Comment"</span>
+<span class="gp">$</span><span class="w"> </span>git push
 </code></pre></div></div>
 
 <h1 id="markdown記法">Markdown記法</h1>

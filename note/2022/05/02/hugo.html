@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <img src="https://d33wubrfki0l68.cloudfront.net/c38c7334cc3f23585738e40334284fddcaf03d5e/2e17c/images/hugo-logo-wide.svg" class="hero">
+    <h1>Hugoによるホームページ構築メモ</h1>
+    <p><span class="fa fa-calendar"></span> May 2, 2022</p>
+    <p><span class="fa fa-flag"></span> Note </p>
+    <h3 id="現在はhugoを使用していません"><span style="color: red; ">現在はHugoを使用していません　</span></h3>
+
+<p>以前Githubのpagesデフォルトで作ったホームページが寂しく，ポストのページの見栄えが悪かったので、<br />
+https://zenn.dev/okaponta/articles/c302f58507febc を参考にHugoを使ったホームページに作り直しました。<br />
+<!--more--></p>
+
+<h2 id="hugoテーマ">Hugoテーマ</h2>
+
+<p>Hugoにはデザインのテンプレートがあるので、色々と吟味した結果、<br />
+https://hugo-toha.github.io/
+のような見た目になる<br />
+https://github.com/hugo-toha/hugo-toha.github.io
+を選択しました</p>
+
+<h2 id="使用方法">使用方法</h2>
+
+<p>使用方法のリンクを今後の自分のためにも貼っておきます。<br />
+https://toha-guides.netlify.app/posts/getting-started/<br />
+この通りにやれば誰でもできると思います。（多少の英語力が要りますが）</p>
+
+<h3 id="ローカルでのサイトへのアクセス">ローカルでのサイトへのアクセス</h3>
+<p>ターミナルでリポジトリを開き、</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hugo server -t toha -w
+</code></pre></div></div>
+<p>を入力することで
+http://localhost:1313/
+にてアクセスできる</p>
+
+<h3 id="一連のgit操作">一連のGit操作</h3>
+<p>ターミナルでリポジトリを開き、</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add .
+</code></pre></div></div>
+<p>で追加した後、</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit -m "コメント"
+</code></pre></div></div>
+<p>でコミットし、</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin source
+</code></pre></div></div>
+<p>でリモートにプッシュ</p>
+
+    <div class="btn-wrapper">
+      <a href="/notes" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

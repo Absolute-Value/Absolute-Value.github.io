@@ -4,6 +4,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/markdown.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
   </head>
   <body>
     <header>
@@ -37,28 +39,38 @@
 <h1 id="インストール-macos">インストール (macOS)</h1>
 
 <h2 id="rubyのインストール">Rubyのインストール</h2>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install chruby ruby-install
-ruby-install ruby
+
+<p><b>chruby</b>と<b>ruby-install</b>のインストール</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>brew <span class="nb">install </span>chruby ruby-install
 </code></pre></div></div>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "source $(brew --prefix)/opt/chruby/share/chruby/chruby.sh" &gt;&gt; ~/.zshrc
-echo "source $(brew --prefix)/opt/chruby/share/chruby/auto.sh" &gt;&gt; ~/.zshrc
-echo "chruby ruby-3.1.2" &gt;&gt; ~/.zshrc
-</code></pre></div></div>
-<p>3.1.2の場所はインストールしたバージョンに変更</p>
+<p>rubyのインストール</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ruby -v
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>ruby-install ruby
+</code></pre></div></div>
+
+<p>Pathを通す<br />
+(3.1.2の場所はインストールしたバージョンに変更)</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">echo</span> <span class="s2">"source </span><span class="si">$(</span>brew <span class="nt">--prefix</span><span class="si">)</span><span class="s2">/opt/chruby/share/chruby/chruby.sh"</span> <span class="o">&gt;&gt;</span> ~/.zshrc
+<span class="gp">$</span><span class="w"> </span><span class="nb">echo</span> <span class="s2">"source </span><span class="si">$(</span>brew <span class="nt">--prefix</span><span class="si">)</span><span class="s2">/opt/chruby/share/chruby/auto.sh"</span> <span class="o">&gt;&gt;</span> ~/.zshrc
+<span class="gp">$</span><span class="w"> </span><span class="nb">echo</span> <span class="s2">"chruby ruby-3.1.2"</span> <span class="o">&gt;&gt;</span> ~/.zshrc
+</code></pre></div></div>
+<p>Rubyのバージョン確認</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>ruby <span class="nt">-v</span>
 </code></pre></div></div>
 <p>Rubyのバージョンが2など最新でない場合は端末を再起動</p>
 
 <h2 id="jekyllのインストール">jekyllのインストール</h2>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install jekyll
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gem install jekyll
 </code></pre></div></div>
-
-<p><a href="https://qiita.com/memakura/items/e4d2de379f98ad7be498">Markdownで数式を使用する方法</a></p>
-
-<h1 id="その他メモ">その他メモ</h1>
+<h2 id="jekyll使い方はコチラ">Jekyll使い方はコチラ</h2>
 <p><a href="Jekyll.html">Jekyll ホームページ 個人的メモ</a></p>
+
+<h1 id="その他設定">その他設定</h1>
+<p><a href="https://qiita.com/memakura/items/e4d2de379f98ad7be498">Markdownで数式を使用する方法</a></p>
 
     <div class="btn-wrapper">
       <a href="/notes" class="btn back_btn">一覧へ戻る</a>
