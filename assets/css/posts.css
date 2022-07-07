@@ -41,7 +41,7 @@ a {
   float: left;
 }
 
-@media all and (max-width: 900px) {
+@media all and (max-width: 1000px) {
   .post_detail {
     width: 100%;
   }
