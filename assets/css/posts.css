@@ -17,7 +17,7 @@ a {
   margin-bottom: 10px;
   width: 100%;
   height: fit-content;
-  display: flex;
+  display: inline-block;
 }
 
 .post b {
@@ -27,6 +27,7 @@ a {
 .post_detail {
   margin-left: 10px;
   height: max-content;
+  width: 70%;
   float: right;
 }
 
@@ -35,7 +36,17 @@ a {
 }
 
 .post_img {
-  height: 210px;
-  width: 280px;
+  height: 280px;
+  width: 28%;
   float: left;
+}
+
+@media all and (max-width: 900px) {
+  .post_detail {
+    width: 100%;
+  }
+
+  .post_img {
+    width: 100%;
+  }
 }
