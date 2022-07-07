@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/Fingertips/hero.png" class="hero">
+    <h1>Affine transformation of virtual 3D object using 2D localization of fingertips</h1>
+    <p><span class="fa fa-link"></span><a href="https://www.sciencedirect.com/science/article/pii/S2096579620300917"> https://www.sciencedirect.com/science/article/pii/S2096579620300917</a></p>
+    <p><span class="fa fa-calendar"></span> Jul 8, 2022</p>
+    <p><span class="fa fa-flag"></span> Virtual Reality, Affine transformation, Detection of fingertips, Detection of hand, Human-computer interaction, </p>
+    <p><span class="fa fa-graduation-cap"></span> Virtual Reality & Intelligent Hardware (2020) </p>
+    <h2 id="概要">概要</h2>
+
+<ul>
+  <li>VR環境のオブジェクトの指先での操作を目指す</li>
+  <li>手の検出と指先の検出の２段階CNNを用いて、親指と人差し指のジェスチャーを検出</li>
+  <li>ジェスチャーでVR環境内の物体をアフィン変換
+<!--more--></li>
+</ul>
+
+<h2 id="新規性差分">新規性・差分</h2>
+<ul>
+  <li>指先を2Dカメラで撮影し，AR/VR/MR空間のオブジェクトの操作が可能に</li>
+</ul>
+
+<h2 id="手法">手法</h2>
+
+<p><img src="/assets/images/posts/Fingertips/1.png" alt="" /></p>
+<ul>
+  <li>指先検出システム
+    <ul>
+      <li>Hand Detection
+        <ul>
+          <li>物体検出モデル(YOLO)で手を検出</li>
+        </ul>
+      </li>
+      <li>Cropped &amp; Resized
+        <ul>
+          <li>手の領域で切り取り、指定のサイズに</li>
+        </ul>
+      </li>
+      <li>Feature Learning
+        <ul>
+          <li>分類モデル(VGG-16, InceptionV3, Xception, MobileNetV2)の特徴マップを平滑化し、NNで(親指のx,y座標, 人差し指のx,y座標)を出力するように学習</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="/assets/images/posts/Fingertips/2.png" alt="" /></p>
+<ul>
+  <li>Vuforiaを使用したインタラクションシステム
+    <ul>
+      <li>手の検出</li>
+      <li>指の検出</li>
+      <li>指の距離、角度、重心を計算</li>
+      <li>計算値からVRオブジェクトをアフィン変換（拡大縮小、回転、平行移動）</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="結果">結果</h2>
+
+<ul>
+  <li>分類モデルごとの性能比較
+    <ul>
+      <li>VGG16の損失関数(Loss)と座標の平均絶対誤差(MAE)が最小 = 最も良い
+<img src="/assets/images/posts/Fingertips/3.png" alt="" />
+<img src="/assets/images/posts/Fingertips/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>既存の指先検出手法との比較
+    <ul>
+      <li>提案手法(Proposed Method)の座標のMAEが最小 = 最も良い</li>
+      <li>ただし、ネットワークが重いため一番遅い</li>
+      <li>30FPSの33.33msは下回っているため問題なし<br />
+<img src="/assets/images/posts/Fingertips/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>オブジェクト操作のリアルタイムデモ
+    <ul>
+      <li>拡大縮小、回転、平行移動<br />
+<img src="https://user-images.githubusercontent.com/37298971/78501859-96a26b00-777f-11ea-9f33-977ea8feda09.gif" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
