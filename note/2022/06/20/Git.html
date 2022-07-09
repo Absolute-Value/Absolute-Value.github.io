@@ -40,7 +40,9 @@
 <p>以下のgit.shを.gitと同階層に置いた上で実行</p>
 
 <h2 id="gitsh">git.sh</h2>
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nb">.</span>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+git add <span class="nb">.</span>
 <span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span><span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
     </span>git commit <span class="nt">-m</span> <span class="s2">"Update"</span>
 <span class="k">else
