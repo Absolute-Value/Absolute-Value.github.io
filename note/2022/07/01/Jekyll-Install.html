@@ -64,8 +64,16 @@
 <p>Rubyのバージョンが2など最新でない場合は端末を再起動</p>
 
 <h2 id="jekyllのインストール">jekyllのインストール</h2>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gem install jekyll
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>gem <span class="nb">install </span>jekyll
 </code></pre></div></div>
+
+<h1 id="エラー対処">エラー対処</h1>
+<p>コマンドライン起動時に
+‘'’chruby: unknown Ruby: ruby-3.1.1’’’
+と表示される場合</p>
+
+<p>./.zshrc内に誤ったバージョンを追加してしまっているため，<a href="../02/vi.html">vi</a>などで文を削除すると解決する</p>
+
 <h2 id="jekyll使い方はコチラ">Jekyll使い方はコチラ</h2>
 <p><a href="Jekyll.html">Jekyll ホームページ 個人的メモ</a></p>
 
