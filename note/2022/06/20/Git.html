@@ -35,11 +35,27 @@
 
 <!--more-->
 
-<h1 id="git-addを省略してgit-commit">git addを省略してgit commit</h1>
+<h1 id="gitの一連の流れを自動化するbashファイル">gitの一連の流れを自動化するbashファイル</h1>
 
-<p>’'’console
-$ git commit -am “commit message”
-‘’’</p>
+<p>以下のgit.shを.gitと同階層に置いた上で実行</p>
+
+<h2 id="gitsh">git.sh</h2>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="nb">.</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span><span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span>git commit <span class="nt">-m</span> <span class="s2">"Update"</span>
+<span class="k">else
+    </span>git commit <span class="nt">-m</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
+<span class="k">fi
+</span>git push
+</code></pre></div></div>
+
+<h2 id="実行方法">実行方法</h2>
+<p>コミットメッセージがUpdateで良い場合</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bash git.sh
+</code></pre></div></div>
+<p>コミットメッセージを指定する場合</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bash git.sh &lt;commit message&gt;
+</code></pre></div></div>
 
     <div class="btn-wrapper">
       <a href="/notes" class="btn back_btn">一覧へ戻る</a>
