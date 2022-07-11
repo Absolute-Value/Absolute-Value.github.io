@@ -37,17 +37,17 @@
 <!--more-->
 <h2 id="仮想環境の確認">仮想環境の確認</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda info -e
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>conda info <span class="nt">-e</span>
 </code></pre></div></div>
 
 <h2 id="仮想環境の作成">仮想環境の作成</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda create -n [name] (python=[version])
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>conda create <span class="nt">-n</span> &lt;name&gt; <span class="o">(</span><span class="nv">python</span><span class="o">=</span>&lt;version&gt;<span class="o">)</span>
 </code></pre></div></div>
 
 <p>name に環境名、version に好きなバージョン (例：python=3.7)</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda create -n [name] anaconda
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>conda create <span class="nt">-n</span> &lt;name&gt; anaconda
 </code></pre></div></div>
 <p>のように末に anaconda を付けると、<br />
 Anacondaの全部のライブラリをインストールできる</p>
@@ -63,36 +63,36 @@ Anacondaの全部のライブラリをインストールできる</p>
 
 <h2 id="仮想環境の起動">仮想環境の起動</h2>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source activate [name]
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">source </span>activate &lt;name&gt;
 </code></pre></div></div>
 
 <h2 id="環境の保存と再構築">環境の保存と再構築</h2>
 <h3 id="同じosアーキテクチャの場合">同じOS・アーキテクチャの場合</h3>
 
 <p>pip での requirements.txt の作り方</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip freeze &gt; requirements.txt
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>pip freeze <span class="o">&gt;</span> requirements.txt
 </code></pre></div></div>
 
 <p>conda での requirements.txt の作り方</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda list -e &gt; conda_requirements.txt
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>conda list <span class="nt">-e</span> <span class="o">&gt;</span> conda_requirements.txt
 </code></pre></div></div>
 
 <p>新規再構築</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda create -n [name] --file requirements.txt
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>conda create <span class="nt">-n</span> &lt;name&gt; <span class="nt">--file</span> requirements.txt
 </code></pre></div></div>
 
 <p>既存環境への再構築</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda install -n [name] --file requirements.txt
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>conda <span class="nb">install</span> <span class="nt">-n</span> &lt;name&gt; <span class="nt">--file</span> requirements.txt
 </code></pre></div></div>
 
 <h1 id="別のosアーキテクチャの場合">別のOS・アーキテクチャの場合</h1>
 
 <p>conda での requirements.txt の作り方</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda env export -n [name] &gt; requirements.txt
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>conda <span class="nb">env export</span> <span class="nt">-n</span> &lt;name&gt; <span class="o">&gt;</span> requirements.txt
 </code></pre></div></div>
 
 <p>再構築</p>
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>conda env create -f=requirements.txt
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>conda <span class="nb">env </span>create <span class="nt">-f</span><span class="o">=</span>requirements.txt
 </code></pre></div></div>
 
     <div class="btn-wrapper">
