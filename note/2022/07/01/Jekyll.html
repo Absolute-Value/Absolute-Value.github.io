@@ -72,7 +72,26 @@
 
 <h2 id="元のプロジェクトとサイト用のプロジェクトに対してgit操作するの面倒だったので自動化するbashを作成しました">元のプロジェクトとサイト用のプロジェクトに対してgit操作するの面倒だったので自動化するbashを作成しました</h2>
 <h3 id="gitsh">git.sh</h3>
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre></td><td class="code"><pre><span class="c">#!/bin/sh</span>
 
 git add <span class="nb">.</span>
 <span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span><span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
@@ -90,7 +109,7 @@ git add <span class="nb">.</span>
 <span class="k">fi
 </span>git push
 <span class="nb">cd</span> ../
-</code></pre></div></div>
+</pre></td></tr></tbody></table></code></pre></figure>
 
 <h3 id="実行">実行</h3>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bash git.sh
