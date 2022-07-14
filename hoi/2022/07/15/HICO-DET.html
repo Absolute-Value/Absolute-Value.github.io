@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">　
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/HICO-DET/1.png" class="hero">
+    <h1>Learning to Detect Human-Object Interactions</h1>
+    <p><span class="fa fa-link"></span><a href="http://websites.umich.edu/~ywchao/hico/"> http://websites.umich.edu/~ywchao/hico/</a></p>
+    <p><span class="fa fa-calendar"></span> Jul 15, 2022</p>
+    <p><span class="fa fa-flag"></span> Human-Object Interaction Detection, Dataset, </p>
+    <p><span class="fa fa-graduation-cap"></span> WACV (2018) </p>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>HOI検出 (Human-Object Interaction detection) 用の大規模データセットHICO-DETを提供</li>
+  <li>HICO-DET用のモデルHuman-Object Region-based Convolutional Neural Networks (HO-RCNN)を提案</li>
+  <li>HO-RCNNでは人間と物の空間的関係を利用することで、ベースラインよりも性能を大幅に向上
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>人間と物のインタラクションの検出だけでなく位置を推定するHOI検出という研究の提案とデータセットの提供</li>
+</ul>
+
+<h1 id="手法">手法</h1>
+
+<p><img src="/assets/images/posts/HICO-DET/2.png" alt="" /></p>
+
+<ul>
+  <li>MSCOCOで事前学習したFast-RCNNで人間と物を検出し、以下の3つのStramで使用（DNNはImageNetで事前学習されたCaffeNetを使用している）
+    <ul>
+      <li>Human Stream
+        <ul>
+          <li>Fast-RCNNが検出した人間の領域を切り取ってリサイズし、それをDNNでベクトルに</li>
+        </ul>
+      </li>
+      <li>Object Stream
+        <ul>
+          <li>Fast-RCNNが検出した物体の領域を切り取ってリサイズし、それをDNNでベクトルに</li>
+        </ul>
+      </li>
+      <li>Pairwise Stream
+  <img src="/assets/images/posts/HICO-DET/3.png" alt="Pairwise Stream" />
+        <ul>
+          <li>Fast-RCNNが検出した人間と物体を含む領域で切り取りリサイズし、それをDNNでベクトルに</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>3つのStreamで作成したベクトルを足し合わせることで60個のクラススコアを予測</li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>mAPの比較
+    <ul>
+      <li><img src="/assets/images/posts/HICO-DET/4.png" alt="mAP" /></li>
+      <li>Known Objectは曖昧と未知の画像を除いている
+        <ul>
+          <li>曖昧：クラウドワーカーで意見が割れた画像</li>
+          <li>未知：人物と他のオブジェクトカテゴリが含まれる画像</li>
+        </ul>
+      </li>
+      <li>Fullはすべてのクラス(600)、Rareは学習データが10未満の滅多にないクラス(138)、Non-Rareは学習データが10以上のクラス(462)</li>
+      <li>Randomはランダムにスコアを当てる、unionは人間と物を合わせた領域をDNNでベクトルにしてスコアを算出、scoreは人間と物それぞれの領域をDNNでベクトルにしてから足し合わせてスコアを算出、IP1はPairwise Streamのリサイズでゼロパディングあり、+Sは物体検出スコアとHOIスコアを結ぶニューロン経路をつなぐ</li>
+    </ul>
+  </li>
+  <li>画像の比較
+  <img src="/assets/images/posts/HICO-DET/5.png" alt="image" />
+    <ul>
+      <li>左：正しく検出、右：過検出</li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
