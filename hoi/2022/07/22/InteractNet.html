@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">　
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/InteractNet/7.png" class="hero">
+    <h1>Detecting and Recognizing Human-Object Interactions</h1>
+    <p><span class="fa fa-link"></span><a href="https://gkioxari.github.io/InteractNet/index.html"> https://gkioxari.github.io/InteractNet/index.html</a></p>
+    <p><span class="fa fa-calendar"></span> Jul 22, 2022</p>
+    <p><span class="fa fa-flag"></span> Human-Object Interaction Detection, Dataset, </p>
+    <p><span class="fa fa-graduation-cap"></span> CVPR (2018) </p>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>人物を中心としたHuman-Object InteractionモデルInteractNetを提案</li>
+  <li>人物の領域から対象物体の位置推定を行うことで物体の探索空間を狭めた</li>
+  <li>V-COCOとHICO-DETデータセットにおいて性能向上、1画像あたり135msで実行可能
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>人間の外観を使うことで物体の探索空間を減らし、精度向上かつ高速化</li>
+</ul>
+
+<h1 id="手法">手法</h1>
+
+<p><img src="/assets/images/posts/InteractNet/1.png" alt="" /></p>
+
+<ul>
+  <li>Object Detection branch
+    <ul>
+      <li>Faster-RCNNと同様にして、RoiAliginで特徴を抽出し、人$s_h$と物体$s_o$のクラス分類と領域の予測を行う</li>
+    </ul>
+  </li>
+  <li>Human-centric branch
+    <ul>
+      <li>以下の二つの役割を持つ
+        <ol>
+          <li>Object Detection branchと同様に、人間についてRoiAliginで特徴を抽出し、人間の行動$s^a_h$をマルチクラス分類（人間は同時に様々な行動を行うことができるため）</li>
+          <li>人間の外観から目標物の位置を予測したいが、正確な位置の予測は難しい</li>
+        </ol>
+        <ul>
+          <li>そこで、人間についてRoiAliginで特徴を抽出し、目標物の位置に対する密度(下画像の赤で可視化)をガウス関数でモデル化し、その平均位置$\mu^a_h$を予測<br />
+  <img src="/assets/images/posts/InteractNet/2.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Interaction branch
+    <ul>
+      <li>人間と物体の外観を考慮するため、人間と物体についてRoiAliginで特徴を抽出し合計することで、Human-Object Interactionの行動$s^a_{h,o}$のクラス分類を行う</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>V-COCO
+    <ul>
+      <li>26%改善（3.18AP → 40AP）<br />
+  <img src="/assets/images/posts/InteractNet/3.png" alt="" /></li>
+      <li>一つの画像に一つのHOI<br />
+  <img src="/assets/images/posts/InteractNet/4.png" alt="" /></li>
+      <li>一つの画像に複数のHOI<br />
+  <img src="/assets/images/posts/InteractNet/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>HICO-DET
+    <ul>
+      <li>27%改善<br />
+  <img src="/assets/images/posts/InteractNet/6.png" alt="" />
+  <img src="/assets/images/posts/InteractNet/7.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
