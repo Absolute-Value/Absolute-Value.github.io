@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">　
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/DAAD/frame.png" class="hero">
+    <h1>Divide-and-Assemble: Learning Block-wise Memory for Unsupervised Anomaly Detection</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2107.13118"> https://arxiv.org/abs/2107.13118</a></p>
+    <p><span class="fa fa-calendar"></span> Nov 4, 2021</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection, Unsupervised Learning, GAN, </p>
+    <p><span class="fa fa-graduation-cap"></span> ICCV (2021) </p>
+    <h1 id="1-どんなもの">1. どんなもの?</h1>
+<!-- 概要・貢献等 100-200字程度 -->
+<ul>
+  <li>UNet構造にメモリを取り入れ、敵対的学習も行う再構成ベース異常検知
+<!--more--></li>
+</ul>
+
+<h1 id="2-先行研究と比べてどこがすごい">2. 先行研究と比べてどこがすごい？</h1>
+<!-- related worksとの差分 -->
+<ul>
+  <li>AEではニューラルネットの汎化性を制御することが困難</li>
+  <li>マルチスケール・ブロックワイズ・メモリー・モジュールによって、正常の良い再構成と異常の不十分な再構成のトレードオフを実現</li>
+  <li>敵対的学習を導入することで、微小な異常検知性能も上昇</li>
+</ul>
+
+<h1 id="3-技術や手法のキモはどこ">3. 技術や手法の”キモ”はどこ？</h1>
+<!-- キモを箇条書きでまとめる -->
+<p><img src="/assets/images/posts/DAAD/frame.png" alt="" /></p>
+
+<ul>
+  <li>マルチスケール・ブロックワイズ・メモリー・モジュール
+    <ul>
+      <li>正常なパターンの記憶に使用</li>
+      <li>細かい仕組み
+        <ul>
+          <li>特徴マップを$Q=r_h \times r_w \times r_c$に分割
+            <ul>
+              <li>クエリ $q_k$</li>
+            </ul>
+          </li>
+          <li>平滑化</li>
+          <li>アテンション重み $w$ を計算
+            <ul>
+              <li>
+\[w_i = \frac{exp(\frac{q^k \quad m^T_i}{\| q^k \| \quad \| m_i \|})}{\sum^N_{j=1} exp(\frac{q^k \quad m^T_j}{\| q^k \| \quad \| m_j \|})}\]
+              </li>
+            </ul>
+          </li>
+          <li>$w$ を用いて、クエリ $q_k$ に最も関連するメモリアイテムを探索し対応する $\hat{q}^k$ を生成
+            <ul>
+              <li>
+\[\hat{q}^k = wM = \sum^N_{i=1} w_im_i\]
+              </li>
+            </ul>
+          </li>
+          <li>形を戻してDecoderへ</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="変数定義">変数定義</h2>
+<!--
+学習・推論で使う変数をまとめる
+* $x$: 入力画像
+* $y$: 教師信号
+-->
+
+<h2 id="学習">学習</h2>
+<!-- キモの中の学習に関する内容 -->
+<ul>
+  <li>ネットワーク構造
+    <ul>
+      <li><img src="/assets/images/posts/DAAD/train.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Loss関数
+    <ul>
+      <li>
+\[\mathcal{L} = \lambda_{rec} \mathcal{L}_{rec} + \lambda_{adv} \mathcal{L}_{adv} + \lambda_{ali} \mathcal{L}_{ali}\]
+      </li>
+      <li>再構成Loss
+        <ul>
+          <li>
+\[\mathcal{L}_{rec} = \mathbb{E}_{x \sim p_x} \| x - \hat{x} \|_2\]
+          </li>
+          <li>L2距離</li>
+        </ul>
+      </li>
+      <li>敵対的Loss
+        <ul>
+          <li>
+\[\mathcal{L}_{adv} = \mathbb{E}_{x \sim p_x} [\log D(x)] + \mathbb{E}_{x \sim p_x} [\log (1-D(G(x)))]\]
+          </li>
+          <li>識別器の学習用に使用する、GANで提案されたLoss</li>
+        </ul>
+      </li>
+      <li>アライメントLoss
+        <ul>
+          <li>
+\[\mathcal{L}_{ali} = \mathbb{E}_{x \sim p_x} \| f_D(x) - f_D(\hat{x}) \|_2\]
+          </li>
+          <li>識別機の中間特徴の一致</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="推論異常度の算出">推論（異常度の算出）</h2>
+<!-- キモの中の推論に関する内容 -->
+<ul>
+  <li>ネットワーク構造
+    <ul>
+      <li><img src="/assets/images/posts/DAAD/test.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>異常度の算出
+    <ul>
+      <li>
+\[A(x) = \gamma R(x) + (1-\gamma) L(x)\]
+        <ul>
+          <li>$R(x)$ は再構成Lossと同じ</li>
+          <li>$L(x)$ はアライメントLossと同じ</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h1>
+<!-- 実験の精度，結果画像など -->
+<ul>
+  <li>MNIST / Cifar10
+    <ul>
+      <li><img src="/assets/images/posts/DAAD/mnist.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>MVTec
+    <ul>
+      <li><img src="/assets/images/posts/DAAD/mvtec.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="5-関連文献">5. 関連文献</h1>
+<!--
+1. D. P. Kingma and J. Ba: “Adam: A method for stochastic optimization,”arXiv preprint arXiv:1412.6980,(2014).
+2. P. Isola,J. Y. Zhu,T. Zhou,and A. A. Efros: “Image-to-image translation with conditional adversarial networks,” in Proceedings of the IEEE conference on computer vision and pattern recognition, (2017), 1125.
+-->
+<ol>
+  <li>Dong Gong, Lingqiao Liu, Vuong Le, Budhaditya Saha,
+Moussa Reda Mansour, Svetha Venkatesh, and Anton
+van den Hengel. Memorizing normality to detect anomaly:
+Memory-augmented deep autoencoder for unsupervised
+anomaly detection. In Proceedings of the IEEE International
+Conference on Computer Vision, pages 1705–1714, 2019. 2,</li>
+</ol>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
