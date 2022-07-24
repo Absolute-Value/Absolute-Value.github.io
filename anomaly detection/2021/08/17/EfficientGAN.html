@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">　
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="https://arxiv.org/PS_cache/arxiv/ps/1802/1802.06222v2.bigan.png" class="hero">
+    <h1>Efficient GAN-based anomaly detection</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/1802.06222"> https://arxiv.org/abs/1802.06222</a></p>
+    <p><span class="fa fa-calendar"></span> Aug 17, 2021</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection, Unsupervised Learning, GAN, </p>
+    <p><span class="fa fa-graduation-cap"></span> ICDM (2018) </p>
+    <h1 id="1-どんなもの">1. どんなもの?</h1>
+<!-- 概要・貢献等 100-200字程度 -->
+<ul>
+  <li>GANベースの異常検知手法</li>
+  <li>学習中に生成器Gと識別器Dとともに、入力サンプルxを潜在表現$z$にマッピングするエンコーダEを同時に学習</li>
+  <li>これにより、計算量の多い潜在表現$z$の探索を回避</li>
+  <li>識別器は、画像だけでなく潜在表現$z$も考慮
+<!--more--></li>
+</ul>
+
+<h1 id="2-先行研究と比べてどこがすごい">2. 先行研究と比べてどこがすごい？</h1>
+<!-- related worksとの差分 -->
+<ul>
+  <li>画像から潜在表現$z$を探すEncoderも同時に学習することで、AnoGANでネックになっていた探索の手間を省き数百倍高速に</li>
+</ul>
+
+<h1 id="3-技術や手法のキモはどこ">3. 技術や手法の”キモ”はどこ？</h1>
+<!-- キモを箇条書きでまとめる -->
+<h2 id="変数定義">変数定義</h2>
+<!--
+学習・推論で使う変数をまとめる
+* $x$: 入力画像
+* $y$: 教師信号
+-->
+<ul>
+  <li>$D$: 判別機</li>
+  <li>$E$: エンコーダ</li>
+  <li>$G$: 生成器</li>
+  <li>$x \sim p_{X} (x)$: データの分布</li>
+  <li>$z \sim p_{E} (z|x)$: データをエンコーダに通した分布</li>
+  <li>$z \sim p_{Z} (z)$: 潜在変数の分布</li>
+  <li>$x \sim p_{G} (x|z)$: 潜在変数をジェネレータに通した分布</li>
+  <li>$A(x)$: 異常スコア関数</li>
+  <li>$L_G$: 再構成誤差</li>
+  <li>$L_D$: 分類機ベース誤差</li>
+</ul>
+
+<h2 id="学習">学習</h2>
+<!-- キモの中の学習に関する内容 -->
+
+<p><img src="https://arxiv.org/PS_cache/arxiv/ps/1802/1802.06222v2.bigan_train.png" alt="" /></p>
+<ul>
+  <li>BiGANの構造を用いたmin maxゲーム</li>
+  <li>
+\[\min_{E,G} \max_{D} V(D,E,G) = \mathbb{E}_{x \sim p_X} [\mathbb{E}_{z \sim p_{E}(\cdot | x)}[\log D(x,z)]] + \mathbb{E}_{z \sim p_Z} [\mathbb{E}_{x \sim p_G(\cdot | z)}[1 - \log D(x,z)]]\]
+    <ul>
+      <li>右辺第一項 \(\mathbb{E}_{x \sim p_{X}} [\mathbb{E}_{z \sim p_{E}(\cdot \| x)}[\log D(x,z)]]\)
+        <ul>
+          <li>元画像$x$とそれをエンコーダに通した潜在変数$E(x)$を識別器に入れている</li>
+          <li>識別器は元画像なので、これを本物1と出力するように学習</li>
+          <li>エンコーダは本物なのに識別機に偽物0であると騙すように学習</li>
+        </ul>
+      </li>
+      <li>右辺第二項 \(\mathbb{E}_{z \sim p_{Z}} [\mathbb{E}_{x \sim p_{G}(\cdot \| z)}[1 - \log D(x,z)]]\)
+        <ul>
+          <li>潜在変数$z$とそれを生成器に通した画像$G(z)$を識別機に入れている</li>
+          <li>識別機は生成画像なので、これを偽物0と出力するように学習</li>
+          <li>生成器は生成画像を識別機が本物1と騙されるように学習</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="推論異常度の算出">推論（異常度の算出）</h2>
+<!-- キモの中の推論に関する内容 -->
+<p><img src="https://arxiv.org/PS_cache/arxiv/ps/1802/1802.06222v2.bigan_test.png" alt="" /></p>
+<ul>
+  <li>異常度$A(x)$は以下のように定義できる
+    <ul>
+      <li>
+\[A(x) = \alpha L_G(x) + (1 - \alpha ) L_D(x)\]
+      </li>
+      <li>
+\[L_G(x) = \| x - G(E(x)) \|_1\]
+        <ul>
+          <li>元画像と画像をエンコーダに通して見つけた潜在変数zから生成した画像との再構成誤差</li>
+        </ul>
+      </li>
+      <li>$L_D(x)$は2種類
+        <ol>
+          <li>識別機がデータ分布から得られたか判断する交差エントロピー誤差
+            <ul>
+              <li>
+\[L_D(x) = \sigma \big( D \big(x,E(x)\big) , 1 \big)\]
+              </li>
+            </ul>
+          </li>
+          <li>識別機の中間層を比較し正常と似た特徴を持つか判断する特徴マッチング誤差
+            <ul>
+              <li>
+\[L_D(x) = \| f_D(x,E(x)) - f_D(G(E(x)),E(x)) \|_1\]
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h1>
+<!-- 実験の精度，結果画像など -->
+<ul>
+  <li>MNIST
+    <ul>
+      <li><img src="/assets/images/posts/EfficientGAN/MNIST.png" alt="" /></li>
+      <li>$\sigma$ が交差エントロピー誤差</li>
+      <li>$FM$ が特徴マッチング誤差</li>
+    </ul>
+  </li>
+  <li>KDDCUP99
+    <ul>
+      <li><img src="/assets/images/posts/EfficientGAN/KDD99.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>かかる時間のAnoGANとの比較
+    <ul>
+      <li><img src="/assets/images/posts/EfficientGAN/AnoGAN.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
