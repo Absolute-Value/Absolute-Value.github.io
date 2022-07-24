@@ -3,6 +3,15 @@ a {
   color: black;
 }
 
+li {
+  margin: 0 0 0 16px;
+}
+
+p, ul {
+  padding: 0;
+  margin: 10px 20px;
+}
+
 .fa {
   margin-left: 10px;
 }
@@ -25,7 +34,6 @@ a {
 }
 
 .post_detail {
-  margin-left: 10px;
   height: max-content;
   width: 70%;
   float: right;
@@ -37,16 +45,18 @@ a {
 
 .post_img {
   height: 280px;
-  width: 28%;
+  width: 30%;
   float: left;
 }
 
 @media all and (max-width: 1000px) {
+
   .post_detail {
     width: 100%;
   }
 
   .post_img {
-    width: 100%;
+    margin-left: 5%;
+    width: 90%;
   }
 }
