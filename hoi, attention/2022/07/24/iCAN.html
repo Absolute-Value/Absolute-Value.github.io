@@ -67,75 +67,74 @@
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
   </head>
   <body>
-    <img src="/assets/images/posts/HICO-DET/1.png" class="hero">
-    <h1>Learning to Detect Human-Object Interactions</h1>
-    <p><span class="fa fa-link"></span><a href="http://websites.umich.edu/~ywchao/hico/"> http://websites.umich.edu/~ywchao/hico/</a></p>
-    <p><span class="fa fa-calendar"></span> Jul 15, 2022</p>
+    <img src="http://chengao.vision/iCAN/images/overview.png" class="hero">
+    <h1>iCAN: Instance-Centric Attention Network for Human-Object Interaction Detection</h1>
+    <p><span class="fa fa-link"></span><a href="http://chengao.vision/iCAN/"> http://chengao.vision/iCAN/</a></p>
+    <p><span class="fa fa-calendar"></span> Jul 24, 2022</p>
     <p><span class="fa fa-flag"></span> Human-Object Interaction Detection, Dataset, </p>
-    <p><span class="fa fa-graduation-cap"></span> WACV (2018) </p>
+    <p><span class="fa fa-graduation-cap"></span> BMVC (2018) </p>
     <h1 id="概要">概要</h1>
 
 <ul>
-  <li>HOI検出 (Human-Object Interaction detection) 用の大規模データセットHICO-DETを提供</li>
-  <li>HICO-DET用のモデルHuman-Object Region-based Convolutional Neural Networks (HO-RCNN)を提案</li>
-  <li>HO-RCNNでは人間と物の空間的関係を利用することで、ベースラインよりも性能を大幅に向上
+  <li>検出された人や物体のインスタンスごとに、タスクに関連する領域を強調するattentionマップを動的に生成する、HOI検出用ネットワークiCANを提案</li>
+  <li>V-COCOで10%、HICO-DETで49%の性能向上
 <!--more--></li>
 </ul>
 
 <h1 id="新規性差分">新規性・差分</h1>
 
 <ul>
-  <li>人間と物のインタラクションの検出だけでなく位置を推定するHOI検出という研究の提案とデータセットの提供</li>
+  <li>HOI検出に画像レベルの分類タスクで使われるattentionモジュールを導入</li>
 </ul>
 
-<h1 id="手法">手法</h1>
+<h1 id="アイデア">アイデア</h1>
 
-<p><img src="/assets/images/posts/HICO-DET/2.png" alt="" /></p>
+<p><img src="http://chengao.vision/iCAN/images/overview.png" alt="" /></p>
 
 <ul>
-  <li>MSCOCOで事前学習したFast-RCNNで人間と物を検出し、以下の3つのStramで使用（DNNはImageNetで事前学習されたCaffeNetを使用している）
+  <li>Faster R-CNNを用いて、すべての人と物体のインスタンスを検出</li>
+  <li>Human/Object Stream
     <ul>
-      <li>Human Stream
+      <li>人と物体のインスタンスの外観特徴をiCANモジュールに入れ、2層の全結合層に通して人スコア$s^a_o$と物体スコア$s^a_o$を取得</li>
+      <li>iCANモジュール
         <ul>
-          <li>Fast-RCNNが検出した人間の領域の特徴を切り取ってリサイズし、DNNでベクトルに</li>
-        </ul>
-      </li>
-      <li>Object Stream
-        <ul>
-          <li>Fast-RCNNが検出した物体の領域の特徴を切り取ってリサイズし、DNNでベクトルに</li>
-        </ul>
-      </li>
-      <li>Pairwise Stream
-  <img src="/assets/images/posts/HICO-DET/3.png" alt="Pairwise Stream" />
-        <ul>
-          <li>Fast-RCNNが検出した人間と物体の領域で切り取り、人間と物体の領域を1それ以外を0とする2値画像をリサイズorPadding埋めして、DNNでベクトルに</li>
+          <li>図の処理を行うことで、類似度などを使ってattentionマップを作成し、外観特徴$x^h_{inst}$と文脈特徴$x^h_{context}$を取得して、連結したものを出力する<br />
+  <img src="http://chengao.vision/iCAN/images/iCAN.png" alt="" /></li>
         </ul>
       </li>
     </ul>
   </li>
-  <li>3つのStreamで作成したベクトルを足し合わせることで60個のクラススコアを予測</li>
+  <li>Pairwise stream
+    <ul>
+      <li>人間の領域を1，それ以外を0とした2値画像と物体の領域を1，それ以外を0とした2値画像をCNNに入力して特徴抽出
+        <ul>
+          <li>空間特徴を得ている</li>
+        </ul>
+      </li>
+      <li>空間特徴のみではうまくいかないため，人間の外観特徴$x^h_{inst}$を連結してから2層の全結合層に通してペアスコア$s^a_{sp}$を取得</li>
+    </ul>
+  </li>
+  <li>スコアの算出
+    <ul>
+      <li>Late fusion：人スコア$s^a_o$と物体スコア$s^a_o$を足して、ペアスコア$s^a_{sp}$を掛けることでスコアを算出</li>
+      <li>Early fusion：すべてのStreamのスコアを連結して、２つの全結合層に通してスコアを算出</li>
+    </ul>
+  </li>
 </ul>
 
 <h1 id="結果">結果</h1>
 
 <ul>
-  <li>mAPの比較
+  <li>V-COCO
     <ul>
-      <li><img src="/assets/images/posts/HICO-DET/4.png" alt="mAP" /></li>
-      <li>Known Objectは曖昧と未知の画像を除いている
-        <ul>
-          <li>曖昧：クラウドワーカーで意見が割れた画像</li>
-          <li>未知：人物と他のオブジェクトカテゴリが含まれる画像</li>
-        </ul>
-      </li>
-      <li>Fullはすべてのクラス(600)、Rareは学習データが10未満の滅多にないクラス(138)、Non-Rareは学習データが10以上のクラス(462)</li>
-      <li>Randomはランダムにスコアを当てる、unionは人間と物を合わせた領域をDNNでベクトルにしてスコアを算出、scoreは人間と物それぞれの領域をDNNでベクトルにしてから足し合わせてスコアを算出、IP1はPairwise Streamのリサイズでゼロパディングあり、+Sは物体検出スコアとHOIスコアを結ぶニューロン経路をつなぐ</li>
+      <li><img src="http://chengao.vision/iCAN/images/VCOCO_quantitative.png" alt="VCOCO_quantitative.png" /></li>
+      <li><img src="http://chengao.vision/iCAN/images/VCOCO.png" alt="VCOCO.png" /></li>
     </ul>
   </li>
-  <li>画像の比較
+  <li>HICO-DET
     <ul>
-      <li>左：正しく検出、右：過検出<br />
-  <img src="/assets/images/posts/HICO-DET/5.png" alt="image" /></li>
+      <li><img src="http://chengao.vision/iCAN/images/HICO-DET_quantitative.png" alt="HICO-DET_quantitative.png" /></li>
+      <li><img src="http://chengao.vision/iCAN/images/HICO.png" alt="HICO.png" /></li>
     </ul>
   </li>
 </ul>
