@@ -22,6 +22,7 @@ th,td {
 
 th {
   background-color:darkcyan;
+  color: white;
 }
 
 tr:nth-of-type(even) {
