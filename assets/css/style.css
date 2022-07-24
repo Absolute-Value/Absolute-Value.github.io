@@ -40,10 +40,6 @@ header {
   text-align: center;
 }
 
-.btn:hover {
-  font-size: large;
-}
-
 .back_btn {
   margin: 10px;
   color: black;
@@ -137,16 +133,20 @@ header {
   margin-right: 5px;
 }
 
-.email {
-  background-color: #191970;
+.email:hover {
+  color: lightsalmon;
 }
 
-.twitter {
+.twitter:hover {
+  color: #55acee;
+}
+
+.twitter-share {
   background-color: #55acee;
 }
 
-.github {
-  background-color: #333333;
+.github:hover {
+  color: gray;
 }
 
 @media all and (max-width: 670px) {
