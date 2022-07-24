@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">　
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/CFLOW-AD/overview.png" class="hero">
+    <h1>CFLOW-AD: Real-Time Unsupervised Anomaly Detection with Localization via Conditional Normalizing Flows</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2107.12571"> https://arxiv.org/abs/2107.12571</a></p>
+    <p><span class="fa fa-calendar"></span> Oct 21, 2021</p>
+    <p><span class="fa fa-flag"></span> Anomaly Detection, Flow, </p>
+    <p><span class="fa fa-graduation-cap"></span> WACV (2022) </p>
+    <h1 id="1-どんなもの">1. どんなもの?</h1>
+<!-- 概要・貢献等 100-200字程度 -->
+<ul>
+  <li>事前学習済みのCNNのEncoderの階層ごとに出力をPositional Encoderで条件付きの正規化Flow(Decoder)で尤度を求め、確率を出し異常度を算出
+<!--more--></li>
+</ul>
+
+<h1 id="2-先行研究と比べてどこがすごい">2. 先行研究と比べてどこがすごい？</h1>
+<!-- related worksとの差分 -->
+<ul>
+  <li>FlowなのでPaDiM等より計算コストが低く時間が少ない</li>
+  <li>しかも、PaDiM等より精度が出た</li>
+</ul>
+
+<h1 id="3-技術や手法のキモはどこ">3. 技術や手法の”キモ”はどこ？</h1>
+<!-- キモを箇条書きでまとめる -->
+<p><img src="/assets/images/posts/CFLOW-AD/overview.png" alt="" /></p>
+
+<h2 id="変数定義">変数定義</h2>
+<!--
+学習・推論で使う変数をまとめる
+* $x$: 入力画像
+* $y$: 教師信号
+-->
+<ul>
+  <li>$u_i$: ランダム変数</li>
+  <li>$j_i$: CFLOW Decoderのヤコビアン</li>
+</ul>
+
+<h2 id="学習">学習</h2>
+<!-- キモの中の学習に関する内容 -->
+<ul>
+  <li>デコーダの学習
+    <ul>
+      <li>
+\[L(\theta) = D_{KL}[p\_z(z) | \hat{p}\_z(z,c,\theta)] \approx \frac{1}{N}\sum^N_{i=1} \big[\frac{||u||^2}{2} - log |det J_i | \big] + const\]
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="推論異常度の算出">推論（異常度の算出）</h2>
+<!-- キモの中の推論に関する内容 -->
+<ul>
+  <li>テストデータの対数尤度を推定
+    <ul>
+      <li>
+\[\log \hat{p}_z (z_i, c_i, \hat{\theta}) = - \frac{|| u_i ||^2 + D \log 2\pi}{2} + \log |det J_i|\]
+      </li>
+    </ul>
+  </li>
+  <li>各kスケールの確率に変換
+    <ul>
+      <li>
+\[p^k_i = e^{\log \hat{p}_z (z^k_i, c^k_i, \hat{\theta}_k)}\]
+      </li>
+    </ul>
+  </li>
+  <li>双線形補間でアップサンプリングしてすべての確率を集約して異常マップに
+    <ul>
+      <li>
+\[S = max{\sum^K_{k=1}P_k} - \sum^K_{k=1}P_k\]
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h1>
+<!-- 実験の精度，結果画像など -->
+<ul>
+  <li>MVTec データセット
+    <ul>
+      <li><img src="/assets/images/posts/CFLOW-AD/mvtec-auc.png" alt="" /></li>
+      <li><img src="/assets/images/posts/CFLOW-AD/mvtec.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>STC データセット
+    <ul>
+      <li>監視カメラの映像</li>
+      <li><img src="/assets/images/posts/CFLOW-AD/stc-auc.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope"></span>Email</a>
+        <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter"></span>Twitter</a>
+        <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github"></span>Github</a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
