@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/index">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Human-Object Interaction Detection: A Quick Survey and Examination of Methods</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/HOI-Survey/10.png" class="hero">
+    <h1>Human-Object Interaction Detection: A Quick Survey and Examination of Methods</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2009.12950"> https://arxiv.org/abs/2009.12950</a></p>
+    <p><span class="fa fa-calendar"></span> Jul 13, 2022</p>
+    <p><span class="fa fa-flag"></span> Human-Object Interaction Detection, Survey, </p>
+    <p><span class="fa fa-graduation-cap"></span> ACM Multimedia (2020) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Human-Object Interaction Detection: A Quick Survey and Examination of Methods&url=https://absolute-value.github.io/hoi/2022/07/13/HOI-Survey.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/hoi/2022/07/13/HOI-Survey.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/hoi/2022/07/13/HOI-Survey.html&title=Human-Object Interaction Detection: A Quick Survey and Examination of Methods" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Human-Object Interaction Detection: A Quick Survey and Examination of Methods&body=Human-Object Interaction Detection: A Quick Survey and Examination of Methods https://absolute-value.github.io/hoi/2022/07/13/HOI-Survey.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>Human-Object Interaction Detection(HOI)分野についてサーベイ</li>
+  <li>HOI分野の基礎研究であるHORCNNアーキテクチャを検証</li>
+  <li>HOI分野のベースラインとして一般的に使用されているHICO-DETデータセットを分析
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>Human-Object Interaction Detectionにおける初めてのサーベイ論文</li>
+</ul>
+
+<h1 id="手法">手法</h1>
+
+<ul>
+  <li>Multi-stream convolutional neural networks
+    <ul>
+      <li>複数のCNNでHOIをクラス分類</li>
+      <li>Human-Object Region-based Convolutional Neural Networks
+  (HORCNN)
+        <ul>
+          <li><img src="/assets/images/posts/HOI-Survey/1.png" alt="" /></li>
+          <li>RCNNで物体検出し、3つのStramで使用
+            <ul>
+              <li>Human Stream
+                <ul>
+                  <li>RCNNが検出した人間の領域を切り取ってリサイズし、それをCNNでベクトルに</li>
+                </ul>
+              </li>
+              <li>Object Stream
+                <ul>
+                  <li>RCNNが検出した物体の領域を切り取ってリサイズし、それをCNNでベクトルに</li>
+                </ul>
+              </li>
+              <li>Pairwise Stream
+                <ul>
+                  <li>RCNNが検出した人間と物体を含む領域で切り取りリサイズし、それをCNNでベクトルに</li>
+                </ul>
+              </li>
+              <li>CNNとはImageNetで事前学習されたCaffeNet</li>
+            </ul>
+          </li>
+          <li>3つのStreamで作成したベクトルを足し合わせることでクラススコアを予測</li>
+        </ul>
+      </li>
+      <li>InteractNet
+        <ul>
+          <li><img src="/assets/images/posts/HOI-Survey/2.png" alt="" /></li>
+          <li>Faster R-CNNで物体検出し、3つブランチで使用
+            <ul>
+              <li>object detection branch
+                <ul>
+                  <li>予測した物体の領域の特徴量をRoiAlignで切り取ってリサイズし、1024dのNNでバウンディングボックスと人と物体のクラススコアを予測</li>
+                </ul>
+              </li>
+              <li>human-centric branch
+                <ul>
+                  <li>予測した人間の領域の特徴量をRoiAlignで切り取ってリサイズし、1024dのNNで人間の行動ラベルと対応する物体の場所の確率密度を予測</li>
+                </ul>
+              </li>
+              <li>interaction branch
+                <ul>
+                  <li>予測した物体と人間の領域の特徴量をRoiAlignで切り取ってリサイズし、1024dのNNで人間と物体の相互関係のラベルを予測</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Instance Centric Attention Network (iCAN)
+        <ul>
+          <li><img src="/assets/images/posts/HOI-Survey/3.png" alt="" /></li>
+          <li><img src="/assets/images/posts/HOI-Survey/4.png" alt="" /></li>
+          <li>基本はHORCNNと同じで、Human StreamとObject StreamにおいてCNNの代わりにAttentionを使用</li>
+        </ul>
+      </li>
+      <li>Transferable Interactiveness Network（TIN）
+        <ul>
+          <li><img src="/assets/images/posts/HOI-Survey/5.png" alt="" /></li>
+          <li>HORCNNにIntract度を計算するInteractiveness Moduleを追加
+            <ul>
+              <li>HORCNNの三つのモジュールに加えてポーズ推定を入力とし、Intract度を計算</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Pose-aware Multilevel Feature Network（PMFNet）
+        <ul>
+          <li><img src="/assets/images/posts/HOI-Survey/6.png" alt="" /></li>
+          <li>Faster R-CNNを用いて人、物体、ユニオン（相互作用領域）を検出し、 CNNを用いて取得した外観特徴と
+  CPNポーズ推定器を用いて取得したポーズをHolistic ModuleとZoom-in Moduleに入力する</li>
+          <li>Holistic Module
+            <ul>
+              <li>オブジェクトレベルと関連するコンテキスト情報を取得する</li>
+              <li>人間、オブジェクト、ユニオン、空間構成の4つのストリームから構成</li>
+              <li>これらを連結して全体的な特徴表現を得る</li>
+            </ul>
+          </li>
+          <li>Zoom-in Module
+            <ul>
+              <li>人体部位の特徴から、きめ細かい情報を抽出する</li>
+              <li>人体部位ごとの外観特徴・空間構成特徴、関連するAttentionを抽出する</li>
+            </ul>
+          </li>
+          <li>Fusion Module
+            <ul>
+              <li>Holistic Moduleの全体的特徴とZoom-in Moduleの局所的特徴の両方からHOIスコアを算出</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Intention Driven Human-Object Interaction Detection（iHOI）
+        <ul>
+          <li>Faster-RCNNで人間と物を検出し、以下の３つのstreamへ</li>
+          <li>人間と物をそれぞれ特徴抽出するseparate streams</li>
+          <li>人間と物を一緒に特徴抽出するpairwise stream</li>
+          <li>人体の関節位置と視線から人間の焦点を推測するgaze driven context-aware branch</li>
+          <li>これら３つを組み合わせて予測</li>
+        </ul>
+      </li>
+      <li>Cascaded HOI
+        <ul>
+          <li>言語の事前分布、幾何学的特徴、視覚特徴を組み込んだネットワーク
+            <ul>
+              <li>視覚特徴には姿勢推定徳亮だけでなく視線キューも使用する</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Parallel Point Detection and Matching (PPDM)
+        <ul>
+          <li>空間的特徴を使用し、砂時計型のニューラルネットワークのバックボーンを実装</li>
+          <li>HICO-DETで高性能</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Graph Neural Networks
+    <ul>
+      <li>人間と物をノードとし、エッジが関係を表すシーングラフで相互作用を表現</li>
+      <li>Graph Parsing Neural Network (GPNN)
+        <ul>
+          <li>人間と物をすべて結び、存在しない関係を削除する</li>
+        </ul>
+      </li>
+      <li>Relation Parsing Neural Network (RPNN)
+        <ul>
+          <li><img src="/assets/images/posts/HOI-Survey/7.png" alt="" /></li>
+          <li>object body part graph
+            <ul>
+              <li>体の部位と周囲の物の関係を予測</li>
+            </ul>
+          </li>
+          <li>human body part graph
+            <ul>
+              <li>人間と体の部位から行動を予測</li>
+            </ul>
+          </li>
+          <li>HICO-DETとV-COCOで高性能</li>
+        </ul>
+      </li>
+      <li>VS-GAT
+        <ul>
+          <li>意味的情報と視覚情報との二重グラフ戦略</li>
+          <li>HICO-DETで最高mAP</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>弱教師あり
+    <ul>
+      <li>HOIのデータセットは一般的な例が一般的ではない例よりも多く存在するロングテール分布のため弱教師やゼロショットに向いている</li>
+      <li>HICOではテストされていない
+        <ul>
+          <li>ゼロショット：Weaklysupervised learning of visual relations</li>
+          <li>弱教師あり：Weakly supervised learning of interactions between humans and objects</li>
+        </ul>
+      </li>
+      <li>Visual Compositional Learning (VCL)
+        <ul>
+          <li><img src="/assets/images/posts/HOI-Survey/8.png" alt="" /></li>
+          <li>人間と物のBBの和から動詞とクラスの特徴を抽出している</li>
+        </ul>
+      </li>
+      <li>Detecting Human-Object Interactions via Functional Generalization
+        <ul>
+          <li>word2vecを用いて物体間の類似性を出し、インタラクションの可能性を出す</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>データセット
+    <ul>
+      <li><img src="/assets/images/posts/HOI-Survey/9.png" alt="" /></li>
+      <li>HICO
+        <ul>
+          <li>MS-COCOの80物体カテゴリとよく使用される動詞で600個のインタラクションカテゴリを作成</li>
+          <li>画像単位で予測すればよいだけという問題がある
+            <ul>
+              <li>多人数のうち、一人を検出すればよい</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>HICO-DET (HICO with Detection)
+        <ul>
+          <li>HICOを拡張して、出てくるすべての人間と物に対してラベルがつけられている</li>
+        </ul>
+      </li>
+      <li>V-COCO (verbs in COCO)
+        <ul>
+          <li>MS-COCOの物体クラスだけでなく、COCOの画像を使用して、26個のインタラクションカテゴリを作成</li>
+        </ul>
+      </li>
+      <li>HCVRD
+        <ul>
+          <li>1824種の物体のラベルとBBと物体の関係が含まれているVisual Genomeデータセットから抽出した</li>
+          <li>類似性の高い動作を１つのインタラクションカテゴリに結合した</li>
+        </ul>
+      </li>
+      <li>UnRel
+        <ul>
+          <li>人間と物の非現実的なインタラクション</li>
+          <li>ゼロショットや弱教師ありに役立つ可能性がある</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>評価指標
+    <ul>
+      <li>mAP
+        <ul>
+          <li>「Known Object」
+            <ul>
+              <li>未知の画像とあいまいな画像をスキップする</li>
+              <li>「Rare」データが10個未満</li>
+            </ul>
+          </li>
+          <li>HICOとHICO-DET</li>
+          <li>V-COCO
+            <ul>
+              <li>agent検出
+                <ul>
+                  <li>行動をしている人間を検出</li>
+                </ul>
+              </li>
+              <li>role検出
+                <ul>
+                  <li>インタラクションに参加している人間と物を検出</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>HCVRD
+            <ul>
+              <li>述語認識
+                <ul>
+                  <li>インタラクションを検出</li>
+                </ul>
+              </li>
+              <li>Phrase検出
+                <ul>
+                  <li>インタラクションと、人間と物を包括するBBを予測</li>
+                </ul>
+              </li>
+              <li>関係性検出
+                <ul>
+                  <li>人間と物をローカライズ＋Phrase検出</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>HICO-DETにはラベル付けされていないインタラクションがあった
+    <ul>
+      <li><img src="/assets/images/posts/HOI-Survey/10.png" alt="" /></li>
+      <li>人間とグラスのholdされていない</li>
+    </ul>
+  </li>
+  <li>人間の映っていないデータがあった
+    <ul>
+      <li><img src="/assets/images/posts/HOI-Survey/11.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>HICO-DETのmAP比較
+    <ul>
+      <li><img src="/assets/images/posts/HOI-Survey/12.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>V-COCOのAP比較
+    <ul>
+      <li><img src="/assets/images/posts/HOI-Survey/13.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
