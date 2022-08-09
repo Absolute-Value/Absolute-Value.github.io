@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/index">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>HOTR: End-to-End Human-Object Interaction Detection with Transformers</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/HOTR/1.png" class="hero">
+    <h1>HOTR: End-to-End Human-Object Interaction Detection with Transformers</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2104.13682"> https://arxiv.org/abs/2104.13682</a></p>
+    <p><span class="fa fa-calendar"></span> Aug 8, 2022</p>
+    <p><span class="fa fa-flag"></span> Human-Object Interaction Detection, Transformer, </p>
+    <p><span class="fa fa-graduation-cap"></span> CVPR (2021) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=HOTR: End-to-End Human-Object Interaction Detection with Transformers&url=https://absolute-value.github.io/hoi/2022/08/08/HOTR.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/hoi/2022/08/08/HOTR.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/hoi/2022/08/08/HOTR.html&title=HOTR: End-to-End Human-Object Interaction Detection with Transformers" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=HOTR: End-to-End Human-Object Interaction Detection with Transformers&body=HOTR: End-to-End Human-Object Interaction Detection with Transformers https://absolute-value.github.io/hoi/2022/08/08/HOTR.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>transformerを初めてHuman-Object Interactionに利用した手法HOTRを提案</li>
+  <li>オブジェクト検出とHOI検出の二段階の処理や、重複の削除などの後処理などが必要ない</li>
+  <li>Self-Attentionにより文脈的関係を理解している</li>
+  <li>V-COCOとHICO-DETデータセットにおいて最先端の性能かつ大幅に高速化
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>重複した予測の排除や閾値設定などの後処理が不要に</li>
+  <li>これまでの検出器が5~9msかかる推論を1ms以下に高速化</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+<p><img src="/assets/images/posts/HOTR/1.png" alt="" /></p>
+
+<ul>
+  <li>アーキテクチャ
+    <ul>
+      <li>1つの共有Encoderと2つの並列Decoder(Instance Decoder, Interaction Decoder)から成る
+        <ul>
+          <li>Encoderの共有は別々よりも有効だった</li>
+        </ul>
+      </li>
+      <li>EncoderとInstance DecoderはDETRと同様にBackbone CNNで抽出した特徴をtransformerに通して、FFNで人と物体のバウンディングボックスとクラスを検出する</li>
+      <li>Interaction Decoderは、FFNでポインタを用いてInstance Decoderの人と物体を指し示し、HOIを予測する
+  <img src="/assets/images/posts/HOTR/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>学習
+    <ul>
+      <li>マッチングコストを計算してマッチングしたペアについてハンガリーLossを計算する</li>
+      <li>DETRではNone Objectを設定できたが、HOIは複数の予測を同時に行うマルチラベル分類のため設定できない
+        <ul>
+          <li>そこで、対話性を予測するクラスを設定して、対話性の低いものは予測を抑制するようにした</li>
+        </ul>
+      </li>
+      <li>Backbone、Encoder、Instance EncoderはMSCOCOで事前学習する</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>V-COCO
+    <ul>
+      <li>高性能&amp;高速化
+        <ul>
+          <li><img src="/assets/images/posts/HOTR/3.png" alt="" /></li>
+          <li><img src="/assets/images/posts/HOTR/4.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>HICO-DET
+    <ul>
+      <li><img src="/assets/images/posts/HOTR/5.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

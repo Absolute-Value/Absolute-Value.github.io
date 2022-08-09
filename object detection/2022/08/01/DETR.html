@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/index">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>End-to-End Object Detection with Transformers</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/DETR/1.png" class="hero">
+    <h1>End-to-End Object Detection with Transformers</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2005.12872"> https://arxiv.org/abs/2005.12872</a></p>
+    <p><span class="fa fa-calendar"></span> Aug 1, 2022</p>
+    <p><span class="fa fa-flag"></span> Object Detection, Transformer, </p>
+    <p><span class="fa fa-graduation-cap"></span> ECCV (2020) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=End-to-End Object Detection with Transformers&url=https://absolute-value.github.io/object%20detection/2022/08/01/DETR.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/object%20detection/2022/08/01/DETR.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/object%20detection/2022/08/01/DETR.html&title=End-to-End Object Detection with Transformers" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=End-to-End Object Detection with Transformers&body=End-to-End Object Detection with Transformers https://absolute-value.github.io/object%20detection/2022/08/01/DETR.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>Transformerと二部マッチングロスに基づく物体検出モデルDETRを提案</li>
+  <li>すべての物体を一度に予測し、End-to-endで学習される</li>
+  <li>COCOでチューニングされたFaster R-CNNと同等の性能で、大きい物体に強い
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>NMSやアンカーを使用しない</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/DETR/1.png" alt="" /></p>
+
+<ul>
+  <li>Backbone
+    <ul>
+      <li>画像$x_{img}$をバックボーンCNN(ResNetなど)に通して低解像度の活性化マップ$f$を得る(幅・高さが元の$\frac{1}{32}$、チャンネルが$2048$が一般的)</li>
+    </ul>
+  </li>
+  <li>Transformer
+    <ul>
+      <li><img src="/assets/images/posts/DETR/2.png" alt="" /></li>
+      <li>$f$を$1\times1$畳み込みで次元を$d$まで減らす</li>
+      <li>空間次元を1次元にし($d \times H \times W \rightarrow d\times HW$)、Encoderへ入力</li>
+      <li>$N$個のObject queriesを入力するDecoderを通じて、$N$個の$d$次元特徴を出力</li>
+    </ul>
+  </li>
+  <li>Prediction feed-forward networks (FFNs)
+    <ul>
+      <li>Decoderの出力を3層パーセプトロンに通してバウンディングボックスの中心座標、高さ・幅を予測</li>
+      <li>Decoderの出力を別の3層パーセプトロンに通して$N$個のクラスラベルを予測
+        <ul>
+          <li>「オブジェクト数$&gt;N$」の場合、過剰分は背景$\phi$を出力</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Loss
+    <ul>
+      <li>予測とGTを1対1で対応させ、ハンガリーLossを計算
+        <ul>
+          <li>
+\[L_{Hungarian} (y,\hat{y}) = \sum^N_{i=1} [- \log \hat{p}_{\sigma (i)} (C_i) + 1_{c_i\neq \phi} L_{box} (b_i, \hat{b}_{\hat{\sigma}} (i))]\]
+          </li>
+        </ul>
+      </li>
+      <li>バウンディングボックスロス
+        <ul>
+          <li>直接ボックスの予測を行うため、ボックスのサイズによってLossが変わってしまう
+            <ul>
+              <li>そこで、$L_{iou}$の線形結合を行いスケール不変にする</li>
+            </ul>
+          </li>
+          <li>
+\[L_{box} = \lambda_{iou} L_{iou} (b_i, \hat{b}_{\sigma (i)}) + \lambda_{L1} \| b_i - \hat{b}_{\sigma (i)} \|_1\]
+          </li>
+          <li>
+\[L_{iou} = 1 - (\frac{b_{\sigma(i)  } \cap \hat{b}_i}{b_{\sigma(i)} \cup \hat{b}_i} - \frac{B (b_{\sigma(i)  }, \hat{b}_i) \backslash  b_{\sigma(i)  } \cup \hat{b}_i}{B(b_{\sigma(i)  }, \hat{b}_i)})\]
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>COCO Validationの結果
+    <ul>
+      <li>小さい物体はFaster RCNNが強く、それ以外はDETRが勝っている
+  <img src="/assets/images/posts/DETR/1.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

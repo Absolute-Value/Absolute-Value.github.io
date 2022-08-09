@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/index">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Efficient Two-Stage Detection of Human–Object Interactionswith a Novel Unary–Pairwise Transformer</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/Unary%E2%80%93Pairwise-Transformer/1.png" class="hero">
+    <h1>Efficient Two-Stage Detection of Human–Object Interactionswith a Novel Unary–Pairwise Transformer</h1>
+    <p><span class="fa fa-link"></span><a href="https://fredzzhang.com/unary-pairwise-transformers/"> https://fredzzhang.com/unary-pairwise-transformers/</a></p>
+    <p><span class="fa fa-calendar"></span> Aug 9, 2022</p>
+    <p><span class="fa fa-flag"></span> Human-Object Interaction Detection, Transformer, </p>
+    <p><span class="fa fa-graduation-cap"></span> CVPR (2022) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Efficient Two-Stage Detection of Human–Object Interactionswith a Novel Unary–Pairwise Transformer&url=https://absolute-value.github.io/hoi/2022/08/09/Unary-Pairwise-Transformer.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/hoi/2022/08/09/Unary-Pairwise-Transformer.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/hoi/2022/08/09/Unary-Pairwise-Transformer.html&title=Efficient Two-Stage Detection of Human–Object Interactionswith a Novel Unary–Pairwise Transformer" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Efficient Two-Stage Detection of Human–Object Interactionswith a Novel Unary–Pairwise Transformer&body=Efficient Two-Stage Detection of Human–Object Interactionswith a Novel Unary–Pairwise Transformer https://absolute-value.github.io/hoi/2022/08/09/Unary-Pairwise-Transformer.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>DETRの出力特徴量にHOI分類用のtransformer層を追加した2段階モデルを提案</li>
+  <li>最新の手法を凌駕し、学習時間とメモリ消費量を大幅に削減
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>2段階HOI検出器で、2段階ともtransformerを使用
+    <ul>
+      <li>1段階目にDETRを使用したSCGは存在する</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/Unary–Pairwise-Transformer/1.png" alt="" /></p>
+<ul>
+  <li>Backbone CNNで抽出した特徴をパッチに分割し、positional encodingをしてDETRのencoder–decoderへ入力し、新たな特徴を得る
+    <ul>
+      <li>この特徴をMLPに入力することで、バウンディングボックスとクラスラベルを得る
+  <img src="/assets/images/posts/Unary–Pairwise-Transformer/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>
+    <p>さらにこの特徴をUnaryトークンとしてInteraction Headに渡す
+  <img src="/assets/images/posts/Unary–Pairwise-Transformer/3.png" alt="" /></p>
+  </li>
+  <li>Interaction Headは2種類のtransformer encoderから成り、第1層は協力層と呼ばれ正解のHOIスコアを増加させる
+    <ul>
+      <li>すでに位置情報は含んでいるため、バウンディングボックスを使用してペアの空間情報を入れるようなpositional encodingを行う</li>
+      <li>しかし、通常のpositional encodingの与え方ではうまくいかないため、下図のようなencoderへ変更をした
+        <ul>
+          <li>$X$：Unary token</li>
+          <li>$Y$：positional encoding</li>
+        </ul>
+      </li>
+      <li><img src="/assets/images/posts/Unary–Pairwise-Transformer/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>第2層は競争層と呼ばれ、不正解のHOIスコアを減少させる
+    <ul>
+      <li>第2層に入力する前に、第1層の出力の人と物体以外のペアを削除し、マルチブランチフージョンでペアとなる人と物体のトークンとpositional encodingを融合してPairwiseトークンにする
+  <img src="/assets/images/posts/Unary–Pairwise-Transformer/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>最後にMLPに入力することでHOI分類を行う
+    <ul>
+      <li>物体検出を活用するため、最終スコアには人と物体の信頼度を掛け合わせる</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>HICO-DETとV-COCO
+    <ul>
+      <li>軽量なResNet-50でほとんどのカテゴリで既存手法を上回っており、ResNet-101を使用すると全てのカテゴリで既存手法を上回る
+        <ul>
+          <li><img src="/assets/images/posts/Unary–Pairwise-Transformer/6.png" alt="" /></li>
+          <li><img src="/assets/images/posts/Unary–Pairwise-Transformer/7.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>ResNet第5層の畳み込みのストライドをなくすと、特徴マップが高解像度になり、小さな物体に対する性能が向上する(DETR)</li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
