@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/index">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>退屈なことはPythonにやらせよう③</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="https://github.com/oreilly-japan/automatestuff-ja/raw/master/automate-the-boring-stuff-with-python.png" class="hero">
+    <h1>退屈なことはPythonにやらせよう③</h1>
+    <p><span class="fa fa-calendar"></span> Jul 20, 2022</p>
+    <p><span class="fa fa-flag"></span> python, </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=退屈なことはPythonにやらせよう③&url=https://absolute-value.github.io/blogs/python-boring-3.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/blogs/python-boring-3.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/blogs/python-boring-3.html&title=退屈なことはPythonにやらせよう③" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=退屈なことはPythonにやらせよう③&body=退屈なことはPythonにやらせよう③ https://absolute-value.github.io/blogs/python-boring-3.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/">退屈なことはPythonにやらせよう Automate the boring stuff with python</a>」（原書名『<a href="https://www.nostarch.com/automatestuff">Automate the Boring Stuff with Python</a>』）のpythonプログラムの実装の続きです．</p>
+
+<!--more-->
+
+<h1 id="9章-ファイルの管理">9章 ファイルの管理</h1>
+<h2 id="94-フォルダをzipファイルにバックアップする">9.4 フォルダをZIPファイルにバックアップする</h2>
+<p>指定したフォルダ全体をバックアップする<br />
+過去のバージョンを残すために連番が付くようにする<br />
+引数 “&lt;folder&gt;“： フォルダを指定</p>
+
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.4_BackupToZip.py">9.4_BackupToZip.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">zipfile</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">sys</span>
+
+<span class="c1"># クリップボードの内容を保存
+</span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"ZIPにしたいフォルダを入力してください"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">backup_to_zip</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+    <span class="c1">#folder = os.path.abspath(folder) # folderを絶対パスに
+</span>
+    <span class="c1"># 既存のファイル名からファイル名の連番を決める
+</span>    <span class="n">number</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">zip_filename</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">basename</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">'_'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">+</span> <span class="s">'.zip'</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">):</span>
+            <span class="k">break</span>
+        <span class="n">number</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># ZIPファイルを作成する
+</span>    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Creating </span><span class="si">{</span><span class="n">zip_filename</span><span class="si">}</span><span class="s">...'</span><span class="p">)</span>
+    <span class="n">backup_zip</span> <span class="o">=</span> <span class="n">zipfile</span><span class="p">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_filename</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span>
+
+    <span class="c1"># フォルダのツリーを渡り歩いてその中のファイルを圧縮する
+</span>    <span class="k">for</span> <span class="n">foldername</span><span class="p">,</span> <span class="n">subfolders</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+        <span class="n">foldername2</span> <span class="o">=</span> <span class="n">foldername</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'..'</span><span class="p">,</span><span class="s">'.'</span><span class="p">)</span>
+
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Adding files in </span><span class="si">{</span><span class="n">foldername2</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+        <span class="c1"># 現在のフォルダをZIPファイルに追加する
+</span>        <span class="c1">#backup_zip.write(foldername)
+</span>        <span class="c1"># 現在のフォルダの中の全ファイルをZIPファイルに追加する
+</span>        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="n">new_base</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">basename</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="o">+</span> <span class="s">'_'</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">new_base</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">filename</span><span class="p">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">new_base</span><span class="p">)</span> <span class="ow">and</span> <span class="n">filename</span><span class="p">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">'.zip'</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">backup_zip</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">foldername</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">foldername2</span><span class="p">,</span><span class="n">filename</span><span class="p">))</span>
+
+    <span class="n">backup_zip</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Done."</span><span class="p">)</span>
+
+<span class="n">backup_to_zip</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>出力</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 9.4_BackupToZip.py ../08
+<span class="go">Creating 08_1.zip...
+Adding files in ./08
+8.7_MultiClipBoard.py
+8.10.3_RegexSearcher.py
+8.10.1_MultiClipBoard.py
+8.10.2_CompositionGenerator.py
+Adding files in ./08/Composition
+Origin.txt
+Generated.txt
+Done.
+</span></code></pre></div></div>
+<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08">08</a>の中身を丸ごと、zipファイルにすることができた。</p>
+
+<h2 id="97-演習">9.7 演習</h2>
+<h3 id="971選択コピー">9.7.1　選択コピー</h3>
+<p>ディレクトリツリーを渡り歩いて、.pdfや.jpgなどの特定の拡張子のファイルを見つけて、新しいフォルダにコピーする<br />
+引数 “&lt;folder&gt; &lt;extention&gt;“： コピーするフォルダと拡張子</p>
+
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.1_SelectCopy.py">9.7.1_SelectCopy.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">shutil</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">sys</span>
+
+<span class="c1"># クリップボードの内容を保存
+</span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"コピーにしたいフォルダと拡張子を入力してください"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">select_copy</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">extention</span><span class="p">):</span>
+    <span class="c1">#folder = os.path.abspath(folder) # folderを絶対パスに
+</span>
+    <span class="c1"># フォルダのツリーを渡り歩いてその中のファイルを圧縮する
+</span>    <span class="k">for</span> <span class="n">foldername</span><span class="p">,</span> <span class="n">subfolders</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+        <span class="n">new_foldername</span> <span class="o">=</span> <span class="n">foldername</span><span class="p">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'..'</span><span class="p">,</span><span class="s">'.'</span><span class="p">)</span>
+
+        <span class="c1"># 現在のフォルダの中の全ファイルをZIPファイルに追加する
+</span>        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">extention</span><span class="p">)</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+                <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">new_foldername</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Making folder: </span><span class="si">{</span><span class="n">new_foldername</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+                <span class="n">newfile_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_foldername</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">foldername</span><span class="p">,</span> <span class="n">filename</span><span class="p">),</span> <span class="n">newfile_path</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'Copy file: </span><span class="si">{</span><span class="n">newfile_path</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"Done."</span><span class="p">)</span>
+
+<span class="n">select_copy</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>出力</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
+</span></code></pre></div></div>
+
+<h3 id="972-巨大なフォイルを探す">9.7.2 巨大なフォイルを探す</h3>
+<p>ディレクトリツリーを渡り歩いて、サイズの大きなサイズのフォルダを探し出す<br />
+引数 “&lt;folder&gt;“： フォルダを指定<br />
+引数 “&lt;folder&gt; &lt;size&gt;“： サイズも指定<br />
+引数 “&lt;folder&gt; &lt;size&gt; &lt;unit&gt;“： 単位も指定(B,KB,MB,GB)</p>
+
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.2_SearchLargeFile.py">9.7.2_SearchLargeFile.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span><span class="p">,</span> <span class="n">sys</span>
+
+<span class="c1"># クリップボードの内容を保存
+</span>
+<span class="k">def</span> <span class="nf">search_file</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">'KB'</span><span class="p">):</span>
+    <span class="n">folder</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="c1"># folderを絶対パスに
+</span>
+    <span class="c1"># フォルダのツリーを渡り歩いてその中のファイルを圧縮する
+</span>    <span class="k">for</span> <span class="n">foldername</span><span class="p">,</span> <span class="n">subfolders</span><span class="p">,</span> <span class="n">filenames</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">walk</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+
+        <span class="c1"># 現在のフォルダの中の全ファイルをZIPファイルに追加する
+</span>        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="n">file_path</span> <span class="o">=</span> <span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">foldername</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+            
+            <span class="n">file_size</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="s">'KB'</span><span class="p">:</span>
+                <span class="n">file_size</span> <span class="o">=</span> <span class="n">file_size</span> <span class="o">/</span> <span class="mi">1000</span>
+            <span class="k">elif</span> <span class="n">unit</span> <span class="o">==</span> <span class="s">'MB'</span><span class="p">:</span>
+                <span class="n">file_size</span> <span class="o">=</span> <span class="n">file_size</span> <span class="o">/</span> <span class="mi">1000</span> <span class="o">/</span> <span class="mi">1000</span>
+            <span class="k">elif</span> <span class="n">unit</span> <span class="o">==</span> <span class="s">'GB'</span><span class="p">:</span>
+                <span class="n">file_size</span> <span class="o">==</span> <span class="n">file_size</span> <span class="o">/</span> <span class="mi">1000</span> <span class="o">/</span> <span class="mi">1000</span> <span class="o">/</span> <span class="mi">1000</span>
+
+            <span class="k">if</span>  <span class="n">file_size</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+                <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s"> : </span><span class="si">{</span><span class="n">file_size</span><span class="si">:</span><span class="p">.</span><span class="mi">2</span><span class="n">f</span><span class="si">}</span><span class="s"> </span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+    <span class="k">print</span><span class="p">(</span><span class="s">"Done."</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"サイズの大きいファイルを探したいフォルダを入力してください"</span><span class="p">)</span>
+<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">search_file</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="n">search_file</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">search_file</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>出力</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
+</span></code></pre></div></div>
+
+<h3 id="973-飛びつき連番の作成">9.7.3 飛びつき連番の作成</h3>
+<p>9.7.3.1の準備用に番号の飛んだ連番を作成する</p>
+
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.3_Prepare.py">9.7.3_Prepare.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">prepare_serial_number</span><span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="s">'Files'</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="s">'spam'</span><span class="p">):</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">23</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">10</span> <span class="ow">or</span> <span class="n">i</span><span class="o">==</span><span class="mi">11</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">head</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">zfill</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="s">'.txt'</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">head</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">zfill</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="s">'.txt'</span><span class="p">),</span> <span class="s">'a'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+
+<span class="n">prepare_serial_number</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>出力</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 9.7.3_Prepare.py
+<span class="go">spam001.txt
+spam002.txt
+spam003.txt
+spam005.txt
+spam006.txt
+spam007.txt
+spam008.txt
+spam009.txt
+spam012.txt
+spam013.txt
+spam014.txt
+spam015.txt
+spam016.txt
+spam017.txt
+spam018.txt
+spam019.txt
+spam020.txt
+spam021.txt
+spam022.txt
+spam023.txt
+</span></code></pre></div></div>
+<p>4, 10, 11が飛ばされたファイルを作成することができた。</p>
+
+<h3 id="9731-連番の飛びを埋める">9.7.3.1 連番の飛びを埋める</h3>
+<p>指定した接頭語を持つ連番ファイルを探し出し、連番が飛んでいる箇所を見つけ、後に続くファイルの名前を変更する</p>
+
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.3.1_FillSerialNumber.py">9.7.3.1_FillSerialNumber.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span><span class="p">,</span> <span class="n">os</span>
+
+<span class="k">def</span> <span class="nf">fill_searial_number</span><span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="s">'Files'</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="s">'spam'</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'フォルダーが存在しません'</span><span class="p">)</span>
+
+    <span class="k">while</span><span class="p">(</span><span class="bp">True</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">filenames</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+                <span class="k">continue</span>
+            
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+                <span class="n">num_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">head</span><span class="p">))[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">before_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+                <span class="n">after_filename</span> <span class="o">=</span> <span class="n">head</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">).</span><span class="n">zfill</span><span class="p">(</span><span class="n">num_length</span><span class="p">)</span> <span class="o">+</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">after_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">after_filename</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">before_filepath</span><span class="p">,</span> <span class="n">after_filepath</span><span class="p">)</span>
+                <span class="n">os</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">before_filepath</span><span class="p">,</span> <span class="n">after_filepath</span><span class="p">)</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="p">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">break</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">fill_searial_number</span><span class="p">()</span>
+<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">fill_searial_number</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">fill_searial_number</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>出力</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 9.7.3.1_FillSerialNumber.py 
+<span class="go">Files/spam005.txt Files/spam004.txt
+Files/spam006.txt Files/spam005.txt
+Files/spam007.txt Files/spam006.txt
+Files/spam008.txt Files/spam007.txt
+Files/spam009.txt Files/spam008.txt
+Files/spam012.txt Files/spam009.txt
+Files/spam013.txt Files/spam010.txt
+Files/spam014.txt Files/spam011.txt
+Files/spam015.txt Files/spam012.txt
+Files/spam016.txt Files/spam013.txt
+Files/spam017.txt Files/spam014.txt
+Files/spam018.txt Files/spam015.txt
+Files/spam019.txt Files/spam016.txt
+Files/spam020.txt Files/spam017.txt
+Files/spam021.txt Files/spam018.txt
+Files/spam022.txt Files/spam019.txt
+Files/spam023.txt Files/spam020.txt
+</span></code></pre></div></div>
+<p>左が変更前、右が変更後。<br />
+連番の隙間を埋めることができた。</p>
+
+<h3 id="9732-連番の隙間を開ける9731の逆">9.7.3.2 連番の隙間を開ける(9.7.3.1の逆)</h3>
+<p>連番ファイルの間に隙間を開けて、他の連番ファイルを入れられるようにする</p>
+
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.3.2_ExpandSerialNumber.py">9.7.3.2_ExpandSerialNumber.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span><span class="p">,</span> <span class="n">os</span>
+
+<span class="k">def</span> <span class="nf">expand_serial_number</span><span class="p">(</span><span class="n">expand_num</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s">'Files'</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="s">'spam'</span><span class="p">):</span>
+    <span class="n">filenames</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filenames</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">expand_num</span><span class="p">:</span>
+        <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+        <span class="n">before_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">head</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">after_filename</span> <span class="o">=</span> <span class="n">head</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">).</span><span class="n">zfill</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">))</span> <span class="o">+</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">after_filepath</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">after_filename</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">before_filepath</span><span class="p">,</span> <span class="n">after_filepath</span><span class="p">)</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">rename</span><span class="p">(</span><span class="n">before_filepath</span><span class="p">,</span> <span class="n">after_filepath</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">==</span> <span class="n">expand_num</span><span class="p">:</span>
+            <span class="k">break</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">expand_serial_number</span><span class="p">()</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">expand_serial_number</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<p>出力</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>Files/spam020.txt Files/spam021.txt
+<span class="go">Files/spam019.txt Files/spam020.txt
+Files/spam018.txt Files/spam019.txt
+Files/spam017.txt Files/spam018.txt
+Files/spam016.txt Files/spam017.txt
+Files/spam015.txt Files/spam016.txt
+Files/spam014.txt Files/spam015.txt
+Files/spam013.txt Files/spam014.txt
+Files/spam012.txt Files/spam013.txt
+Files/spam011.txt Files/spam012.txt
+Files/spam010.txt Files/spam011.txt
+Files/spam009.txt Files/spam010.txt
+Files/spam008.txt Files/spam009.txt
+Files/spam007.txt Files/spam008.txt
+Files/spam006.txt Files/spam007.txt
+Files/spam005.txt Files/spam006.txt
+Files/spam004.txt Files/spam005.txt
+Files/spam003.txt Files/spam004.txt
+</span></code></pre></div></div>
+<p>左が変更前、右が変更後。<br />
+3以降がずれたため、連番に隙間ができた。</p>
+
+    <div class="btn-wrapper">
+      <a href="/blogs" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
