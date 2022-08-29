@@ -25,7 +25,7 @@
     </header>
     <!DOCTYPE html>
 <html>
-  <title>Learned Initializations for Optimizing Coordinate-Based Neural Representations</title>
+  <title>退屈なことはPythonにやらせよう②</title>
   <head>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -70,46 +70,47 @@
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
   </head>
   <body>
-    <img src="/assets/images/posts/LearnIt/1.png" class="hero">
-    <h1>Learned Initializations for Optimizing Coordinate-Based Neural Representations</h1>
-    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2012.02189"> https://arxiv.org/abs/2012.02189</a></p>
-    <p><span class="fa fa-calendar"></span> May 10, 2022</p>
-    <p><span class="fa fa-flag"></span> NeRF, Meta Learning, Sparse Views, </p>
-    <p><span class="fa fa-graduation-cap"></span> CVPR (2020) </p>
+    <img src="https://github.com/oreilly-japan/automatestuff-ja/raw/master/automate-the-boring-stuff-with-python.png" class="hero">
+    <h1>退屈なことはPythonにやらせよう②</h1>
+    <p><span class="fa fa-calendar"></span> Jul 18, 2022</p>
+    <p><span class="fa fa-flag"></span> python, </p>
     <div class="share-btn-wrapper">
-      <a href="https://twitter.com/share?text=Learned Initializations for Optimizing Coordinate-Based Neural Representations&url=https://absolute-value.github.io/nerf/2022/05/10/LearnIt.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
-      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/nerf/2022/05/10/LearnIt.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
-      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/nerf/2022/05/10/LearnIt.html&title=Learned Initializations for Optimizing Coordinate-Based Neural Representations" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
-      <a href="mailto:?subject=Learned Initializations for Optimizing Coordinate-Based Neural Representations&body=Learned Initializations for Optimizing Coordinate-Based Neural Representations https://absolute-value.github.io/nerf/2022/05/10/LearnIt.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+      <a href="https://twitter.com/share?text=退屈なことはPythonにやらせよう②&url=https://absolute-value.github.io/blogs/python-boring-2.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/blogs/python-boring-2.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/blogs/python-boring-2.html&title=退屈なことはPythonにやらせよう②" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=退屈なことはPythonにやらせよう②&body=退屈なことはPythonにやらせよう② https://absolute-value.github.io/blogs/python-boring-2.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
     </div>
-    <h2 id="概要">概要</h2>
+    <p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/">退屈なことはPythonにやらせよう Automate the boring stuff with python</a>」（原書名『<a href="https://www.nostarch.com/automatestuff">Automate the Boring Stuff with Python</a>』）のpythonプログラムを実装していきます．</p>
 
-<ul>
-  <li>ランダム初期化した重みからの学習は非効率</li>
-  <li>そこで，NeRFにメタ学習アルゴリズムを適用</li>
-  <li>学習の収束が速くなり、強力な事前分布によって部分的な入力の場合でもより良い汎化性能を得る
-<!--more--></li>
-</ul>
+<!--more-->
 
-<h2 id="アイデア">アイデア</h2>
+<h1 id="7章正規表現によるパターンマッチング">7章　正規表現によるパターンマッチング</h1>
+<h3 id="7181-強いパスワードの検出">7.18.1 強いパスワードの検出</h3>
+<p>正規表現を用いて，パスワードの強さを判定<br />
+強いパスワード（８文字以上，大文字と小文字を含む，１つ以上の数字を含む）</p>
 
-<ul>
-  <li>メタ学習アルゴリズムのMAML(Model-Agnostic Meta Learning)とReptileを使用した</li>
-  <li>MAML：各タスクで今の初期値からSGDでの更新後にうまくいくような良い初期値を求める</li>
-</ul>
+<p>プログラム（<a href=""></a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
 
-<h2 id="結果">結果</h2>
+<p>出力</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
+</span></code></pre></div></div>
 
-<p><img src="/assets/images/posts/LearnIt/2.png" alt="" /></p>
-<ul>
-  <li>メタ学習していないStandardに比べてメタ学習Metaは早く収束している</li>
-  <li>また、メタ学習で人に特化した重みから他の自然画像(ホルン)の収束を早める役に立っている<br />
-<img src="/assets/images/posts/LearnIt/3.png" alt="" /></li>
-  <li>SV Meta(オブジェクトごとに複数のビューをメタ学習)，MV Meta(オブジェクトごとに単一のビューをメタ学習)では，1枚の画像から生成できているが，メタ学習していないStandardでは生成できていない</li>
-</ul>
+<h3 id="7182-正規表現を用いたstripメソッド">7.18.2 正規表現を用いたstrip()メソッド</h3>
+<p>文字列メソッドのstrip()と同等の動きをする関数を定義<br />
+文字列の先頭と末尾から指定した文字を除去（デフォルトは空白文字）</p>
+
+<p>プログラム（<a href=""></a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<p>出力</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
+</span></code></pre></div></div>
 
     <div class="btn-wrapper">
-      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+      <a href="/blogs" class="btn back_btn">一覧へ戻る</a>
     </div>
   </body>
 </html>
