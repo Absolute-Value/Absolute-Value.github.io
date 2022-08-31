@@ -82,6 +82,11 @@
     </div>
     <p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/">退屈なことはPythonにやらせよう Automate the boring stuff with python</a>」（原書名『<a href="https://www.nostarch.com/automatestuff">Automate the Boring Stuff with Python</a>』）のpythonプログラムの実装の続き（10・11章）です．</p>
 
+<p>これまで：<br />
+<a href="/blogs/python-boring-1">退屈なことはPythonにやらせよう①</a><br />
+<a href="/blogs/python-boring-2">退屈なことはPythonにやらせよう②</a><br />
+<a href="/blogs/python-boring-3">退屈なことはPythonにやらせよう③</a></p>
+
 <!--more-->
 
 <h1 id="10章デバッグ">10章　デバッグ</h1>
@@ -89,7 +94,7 @@
 <h3 id="1057-ブレークポイント">10.5.7 ブレークポイント</h3>
 <p>1000回のコイン投げをシミュレーション</p>
 
-<p>プログラム（<a href=""></a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.5.7_coinFlip.py">10.5.7_coinFlip.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
 
 <span class="n">heads</span> <span class="o">=</span> <span class="mi">0</span>
@@ -111,7 +116,7 @@
 <h3 id="1081-コイン投げゲームをデバッグする">10.8.1 コイン投げゲームをデバッグする</h3>
 <p>コインを投げて裏と表を当てるゲームにバグがあるため、バグを見つける</p>
 
-<p>オリジナルのバグありプログラム（<a href="">10.8.1_CoinGame.py</a>）</p>
+<p>オリジナルのバグありプログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.8.1_CoinGame.py">10.8.1_CoinGame.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
 
 <span class="n">guess</span> <span class="o">=</span> <span class="s">''</span>
@@ -142,11 +147,10 @@
 裏
 はずれ。このゲームは苦手ですね。
 </span></code></pre></div></div>
-<p>入力は表か裏なのに、答えは0か1である。
-当たるわけがない。
-そこで、裏と表を0と1に変換する関数を追加した。</p>
+<p>入力は表か裏ですが、答えは0か1であるため当たるわけがないですね<br />
+そこで、裏と表を0と1に変換する関数を追加しました</p>
 
-<p>バグを修正したプログラム（<a href="">10.8.1_CoinGameDebug.py</a>）</p>
+<p>バグを修正したプログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.8.1_CoinGameDebug.py">10.8.1_CoinGameDebug.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
 
 <span class="k">def</span> <span class="nf">StrToNum</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
@@ -190,31 +194,96 @@
 <h2 id="111-webbrowserモジュールを用いたmapitpy">11.1 webbrowserモジュールを用いたmapIt.py</h2>
 <p>コマンドラインやクリップボードに指定した住所の地図を開く</p>
 
-<p>プログラム（<a href=""></a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.1_mapIt.py">11.1_mapIt.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">webbrowser</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">pyperclip</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="c1"># コマンドラインから住所を取得する
+</span>    <span class="n">address</span> <span class="o">=</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># クリップボードから住所を取得する
+</span>    <span class="n">address</span> <span class="o">=</span> <span class="n">pyperclip</span><span class="p">.</span><span class="n">paste</span><span class="p">()</span>
+
+<span class="n">webbrowser</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s">'https://www.google.com/maps/place/</span><span class="si">{</span><span class="n">address</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>出力</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
-</span></code></pre></div></div>
+<p>「870 Valencia St, San Francisco, CA 94110」を検索します</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 11.1_mapIt.py 870 Valencia St, San Francisco, CA 94110
+</code></pre></div></div>
+
+<p>Googleマップで開くことができました<br />
+<img src="/assets/images/blogs/python-boring-4/11.1.png" alt="" /></p>
 
 <h2 id="115-google検索-im-feeling-lucky">11.5 Google検索 “I’m Feeling Lucky”</h2>
-<p>コマンドラインから検索をし、上位の検索結果をタブに開く<br />
+<p>コマンドラインからGoogle検索をし、上位の検索結果をタブに開く<br />
 引数 “&lt;keyword&gt;“：検索したいワード</p>
 
-<p>プログラム（<a href=""></a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.5_lucky.py">11.5_lucky.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">webbrowser</span><span class="p">,</span> <span class="n">bs4</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'Googling...'</span><span class="p">)</span> <span class="c1"># Googleページをダウンロード中にテキストを表示
+</span><span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://google.com/search?q='</span> <span class="o">+</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+<span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+<span class="c1"># 上位の検索結果のリンクを取得する
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="s">'html5lib'</span><span class="p">)</span>
+<span class="n">link_elems</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">".egMi0 a"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">link_elems</span><span class="p">)</span>
+
+<span class="c1"># 各結果をブラウザのタブで開く
+</span><span class="n">num_open</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">link_elems</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_open</span><span class="p">):</span>
+    <span class="n">webbrowser</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'http://google.com'</span> <span class="o">+</span> <span class="n">link_elems</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">get</span><span class="p">(</span><span class="s">'href'</span><span class="p">))</span>
 </code></pre></div></div>
 
-<p>出力</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
+<p>「python」でGoogle検索をします</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 11.5_lucky.py python       
+<span class="go">Googling...
 </span></code></pre></div></div>
+<p>「python」での上位検索5つをタブで開くことができました<br />
+<img src="/assets/images/blogs/python-boring-4/11.5.png" alt="" /></p>
 
 <h2 id="116-xkcdコミックをダウンロードする">11.6 XKCDコミックをダウンロードする</h2>
 <p>XKCDコミックをひとつずつダウンロードする</p>
 
-<p>プログラム（<a href=""></a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.6_DownloadXkcd.py">11.6_DownloadXkcd.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">bs4</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">'http://xkcd.com/'</span>               <span class="c1"># 開始URL
+</span><span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s">'xkcd'</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>    <span class="c1"># ./xkcdに保存する
+</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">url</span><span class="p">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">'#'</span><span class="p">):</span>
+    <span class="c1"># ページをダウンロードする
+</span>    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'ページをダウンロード中 </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">...'</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="c1"># コミック画像のURLを見つける
+</span>    <span class="n">comic_elem</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">'#comic img'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">comic_elem</span> <span class="o">==</span> <span class="p">[]:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">'コミック画像が見つかりませんでした。'</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">comic_url</span> <span class="o">=</span> <span class="s">'http:'</span> <span class="o">+</span> <span class="n">comic_elem</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">get</span><span class="p">(</span><span class="s">'src'</span><span class="p">)</span>
+        <span class="c1"># 画像をダウンロードする
+</span>        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'画像をダウンロード中 </span><span class="si">{</span><span class="n">comic_url</span><span class="si">}</span><span class="s">...'</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">comic_url</span><span class="p">)</span>
+        <span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+        <span class="c1"># 画像を./xkcdに保存する
+</span>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="s">'xkcd'</span><span class="p">,</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">basename</span><span class="p">(</span><span class="n">comic_url</span><span class="p">)),</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">image_file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">res</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
+                <span class="n">image_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+        
+    <span class="c1"># PrevボタンのURLを取得する
+</span>    <span class="n">prev_link</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">'a[rel="prev"]'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s">'http://xkcd.com'</span> <span class="o">+</span> <span class="n">prev_link</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'href'</span><span class="p">)</span>
+
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'完了'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>出力</p>
@@ -223,50 +292,207 @@
 
 <h2 id="1110-演習">11.10 演習</h2>
 <h3 id="11101-コマンドライン電子メーラー">11.10.1 コマンドライン電子メーラー</h3>
-<p>コマンドラインから電子メールアドレスと本文テキストを受け取り、電子メールを送信する
+<p>コマンドラインから電子メールアドレスと本文テキストを受け取り、電子メールを送信する<br />
 引数 “&lt;address&gt; &lt;text&gt;“：アドレスとテキスト</p>
 
-<p>プログラム（<a href=""></a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.1_CommandLineMailer.py">11.10.1_CommandLineMailer.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+
+<span class="k">def</span> <span class="nf">send_email</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+    <span class="n">browser</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">()</span>
+    <span class="n">browser</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://sute.jp/'</span><span class="p">)</span>
+
+    <span class="n">MAIL_ADDRESS</span> <span class="o">=</span> <span class="s">'c0l9tcja2q'</span>
+    <span class="n">input_text</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s">'user[login]'</span><span class="p">)</span>
+    <span class="n">input_text</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">MAIL_ADDRESS</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    
+    <span class="n">make_address</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s">'btn-warning'</span><span class="p">)</span>
+    <span class="n">make_address</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">make_mail</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s">'btn-success'</span><span class="p">)</span>
+    <span class="n">make_mail</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">input_address</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s">'draft[to]'</span><span class="p">)</span>
+    <span class="n">input_address</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="n">input_text</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s">'draft[body]'</span><span class="p">)</span>
+    <span class="n">input_text</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">send_mail</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s">'button'</span><span class="p">)</span>
+    <span class="n">send_mail</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="n">send_mail</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s">'confirm'</span><span class="p">)</span>
+    <span class="n">send_mail</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'使い方：python3 11.10.1_CommandLineMailer.py 電子メールアドレス 本文テキスト'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">send_email</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:]))</span>
 </code></pre></div></div>
 
-<p>出力</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
-</span></code></pre></div></div>
+<p><a href="https://sute.jp/">https://sute.jp/</a>
+でメアドを２つ作成し、メールを送信しました</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 11.10.1_CommandLineMailer.py bk5h6t5109@sute.jp <span class="nb">test </span>mail
+</code></pre></div></div>
+
+<p>プログラムで送ったメールを受信することができました（悪用厳禁）<br />
+<img src="/assets/images/blogs/python-boring-4/11.10.1.png" alt="" /></p>
 
 <h3 id="11102-画像サイトのダウンローダー">11.10.2 画像サイトのダウンローダー</h3>
 <p>写真共有サイトFlickeで画像を検索し、検索結果の画像をすべてダウンロード<br />
 引数 “&lt;keyword&gt;“：検索したいワード</p>
 
-<p>プログラム（<a href=""></a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.2_Downloader.py">11.10.2_Downloader.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">bs4</span><span class="p">,</span> <span class="n">re</span>
+
+<span class="n">DIR</span> <span class="o">=</span> <span class="s">'downloads'</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://www.flickr.com/search/?text='</span> <span class="o">+</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'ページをダウンロード中 </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">...'</span><span class="p">)</span> <span class="c1"># Googleページをダウンロード中にテキストを表示
+</span><span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+<span class="c1"># 上位の検索結果のリンクを取得する
+</span><span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="s">'html5lib'</span><span class="p">)</span>
+<span class="n">link_elems</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">".view .awake"</span><span class="p">)</span>
+<span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s">'//.*\.jpg'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">link_elems</span><span class="p">))</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'画像が見つかりませんでした。'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">DIR</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">reg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">regex</span><span class="p">):</span>
+        <span class="n">img_url</span> <span class="o">=</span> <span class="s">'https:'</span> <span class="o">+</span> <span class="n">reg</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'画像をダウンロード中 </span><span class="si">{</span><span class="n">img_url</span><span class="si">}</span><span class="s">...'</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">img_url</span><span class="p">)</span>
+        <span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">DIR</span><span class="p">,</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">_</span><span class="si">{</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">basename</span><span class="p">(</span><span class="n">img_url</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">),</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">image_file</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">res</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
+                <span class="n">image_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'完了'</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>出力</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
+<p>実行</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 11.10.2_Downloader.py Japan
+<span class="go">ページをダウンロード中 https://www.flickr.com/search/?text=Japan...
+画像をダウンロード中 https://live.staticflickr.com/65535/7233537156_7546d38a71_n.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/50769174478_f618e20094.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/39325597891_b69989ab42.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/50770324997_16ba316b85_n.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/51216227505_d4e64ceeb1_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/50802096183_7a685f709e_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/50769170818_4f92565fc7_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/476/31990069875_8d811676a0_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/50770219306_47571a0ccc_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/50769346926_ddb9cffa6f_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/4591/39325572391_acfd87ab68_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/773/31117610484_bfe9e1a43c_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/49267624826_375d2996ee_n.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/51215370313_b60132d2ce_n.jpg...
+画像をダウンロード中 https://live.staticflickr.com/313/31604636710_ac45346519_n.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/31757464976_e446ce2c27_n.jpg...
+画像をダウンロード中 https://live.staticflickr.com/4506/36981300983_da007674d8_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/50729177132_5324bc0a5f_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/4505/37620021932_64e90ee51b_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/50777955348_f52fc4c132_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/50735464301_0a32b99529_w.jpg...
+画像をダウンロード中 https://live.staticflickr.com/65535/49267862687_2870bf2b8c_w.jpg...
+完了
 </span></code></pre></div></div>
+<p>「Japan」で検索した結果、日本っぽい富士山や建物の画像を取得することができました<br />
+画像例：<br />
+<img src="/assets/images/blogs/python-boring-4/11.10.2_1.jpg" alt="" />
+<img src="/assets/images/blogs/python-boring-4/11.10.2_2.jpg" alt="" />
+<img src="/assets/images/blogs/python-boring-4/11.10.2_3.jpg" alt="" /></p>
 
 <h3 id="11103-2048">11.10.3 2048</h3>
 <p>2048というゲームを自動的に上右下左を繰り返し入力して遊ぶ</p>
 
-<p>プログラム（<a href=""></a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.3_2048.py">11.10.3_2048.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.common.keys</span> <span class="kn">import</span> <span class="n">Keys</span>
+
+<span class="n">browser</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">()</span>
+<span class="n">browser</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://play2048.co/'</span><span class="p">)</span>
+<span class="n">html_elem</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s">'html'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">html_elem</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">UP</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">html_elem</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">RIGHT</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">html_elem</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">DOWN</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">html_elem</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">LEFT</span><span class="p">)</span>
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">browser</span><span class="p">.</span><span class="n">quit</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>出力</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
-</span></code></pre></div></div>
+<p>自動的に実行され、3008点を稼ぐことができました</p>
+
+<p><img src="/assets/images/blogs/python-boring-4/11.10.3_1.png" width="30%" />
+<img src="/assets/images/blogs/python-boring-4/11.10.3_2.png" width="30%" />
+<img src="/assets/images/blogs/python-boring-4/11.10.3_3.png" width="30%" /></p>
 
 <h3 id="11104-リンクの検査">11.10.4 リンクの検査</h3>
 <p>指定したURLのページからリンクされたすべてのページをダウンロードする</p>
 
-<p>プログラム（<a href=""></a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.4_LinkSearch.py">11.10.4_LinkSearch.py</a>）</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">bs4</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">os</span>
+
+<span class="k">def</span> <span class="nf">link_search</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s">'Downloads'</span><span class="p">):</span>
+    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span> <span class="p">,</span><span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="s">'html5lib'</span><span class="p">)</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">"a"</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
+        <span class="n">href</span> <span class="o">=</span> <span class="n">link</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'href'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">href</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">href</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">href</span><span class="si">}</span><span class="s"> はリンク切れです．'</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">href</span><span class="p">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">'.html'</span><span class="p">):</span>
+            <span class="n">href</span> <span class="o">+=</span> <span class="s">'.html'</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">basename</span><span class="p">(</span><span class="n">href</span><span class="p">)),</span> <span class="s">'a'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">href</span><span class="si">}</span><span class="s">を</span><span class="si">{</span><span class="n">save_dir</span><span class="si">}</span><span class="s">に保存しました'</span><span class="p">)</span>
+        
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">'URLを入力してください'</span><span class="p">)</span>
+
+<span class="n">link_search</span><span class="p">(</span><span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
 </code></pre></div></div>
 
 <p>出力</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
 </span></code></pre></div></div>
+
+<h1 id="つづき">つづき</h1>
+<p>作成中…</p>
 
     <div class="btn-wrapper">
       <a href="/blogs" class="btn back_btn">一覧へ戻る</a>
