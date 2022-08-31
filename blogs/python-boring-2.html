@@ -157,32 +157,51 @@ Text
 
 <h1 id="8章ファイルの読み書き">8章　ファイルの読み書き</h1>
 <h2 id="87-マルチクリップボード">8.7 マルチクリップボード</h2>
-<p>クリップボードのテキストを保存・復元<br />
-引数 “save &lt;keyword&gt;“：クリップボードをキーワードに紐づけて保存<br />
-引数 “&lt;keyword&gt;“：キーワードに紐づけられたテキストをクリップボードにコピー<br />
-引数 “list”：全キーワードをクリップボードにコピー</p>
+<p>クリップボードのテキストを保存・読込を行うプログラム</p>
 
 <p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.7_MultiClipBoard.py">8.7_MultiClipBoard.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">shelve</span><span class="p">,</span> <span class="n">pyperclip</span><span class="p">,</span> <span class="n">sys</span>
 
 <span class="n">mcb_shelf</span> <span class="o">=</span> <span class="n">shelve</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'mcb'</span><span class="p">)</span>
 
+<span class="n">mode</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">clip_board</span> <span class="o">=</span> <span class="n">pyperclip</span><span class="p">.</span><span class="n">paste</span><span class="p">()</span>
+
 <span class="c1"># クリップボードの内容を保存
-</span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'save'</span><span class="p">:</span>
-    <span class="n">mcb_shelf</span><span class="p">[</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pyperclip</span><span class="p">.</span><span class="n">paste</span><span class="p">()</span>
+</span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'save'</span><span class="p">:</span>
+    <span class="n">keyword</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">mcb_shelf</span><span class="p">[</span><span class="n">keyword</span><span class="p">]</span> <span class="o">=</span> <span class="n">clip_board</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"クリップボード上の </span><span class="si">{</span><span class="n">clip_board</span><span class="si">}</span><span class="s"> を </span><span class="si">{</span><span class="n">keyword</span><span class="si">}</span><span class="s">　として保存しました"</span><span class="p">)</span>
+
 <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
     <span class="c1"># キーワード一覧と，内容の読み込み
-</span>    <span class="k">if</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'list'</span><span class="p">:</span>
+</span>    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'list'</span><span class="p">:</span>
         <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mcb_shelf</span><span class="p">.</span><span class="n">keys</span><span class="p">())))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"全キーワードをクリップボードにコピーしました"</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">mcb_shelf</span><span class="p">:</span>
-        <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">mcb_shelf</span><span class="p">[</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">mcb_shelf</span><span class="p">[</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="s"> をクリップボードにコピーしました"</span><span class="p">)</span>
 
 <span class="n">mcb_shelf</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>出力</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
+<p>クリップ上の python を 1 として保存します</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 8.7_MultiClipBoard.py save 1
+<span class="go">クリップボード上の python を 1　として保存しました
 </span></code></pre></div></div>
+
+<p>1をクリップボードに読み込みます</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 8.7_MultiClipBoard.py 1
+<span class="go">python をクリップボードにコピーしました
+</span></code></pre></div></div>
+
+<p>先ほど保存した python をクリップボードに読み込むことができました<br />
+キーワード一覧も取得してみます</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 8.7_MultiClipBoard.py list
+<span class="go">全キーワードをクリップボードにコピーしました
+</span></code></pre></div></div>
+<p>クリップボードには正しく [‘1’] が入っていました。</p>
 
 <h2 id="810-演習">8.10 演習</h2>
 <h3 id="8101-マルチクリップボードを拡張">8.10.1 マルチクリップボードを拡張</h3>
@@ -193,26 +212,39 @@ Text
 
 <span class="n">mcb_shelf</span> <span class="o">=</span> <span class="n">shelve</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'mcb'</span><span class="p">)</span>
 
+<span class="n">mode</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span>
+<span class="n">clip_board</span> <span class="o">=</span> <span class="n">pyperclip</span><span class="p">.</span><span class="n">paste</span><span class="p">()</span>
+
 <span class="c1"># クリップボードの内容を保存
 </span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'save'</span><span class="p">:</span>
-        <span class="n">mcb_shelf</span><span class="p">[</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">pyperclip</span><span class="p">.</span><span class="n">paste</span><span class="p">()</span>
-    <span class="k">elif</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'delete'</span><span class="p">:</span>
-        <span class="n">mcb_shelf</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">keyword</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'save'</span><span class="p">:</span>
+        <span class="n">mcb_shelf</span><span class="p">[</span><span class="n">keyword</span><span class="p">]</span> <span class="o">=</span> <span class="n">clip_board</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"クリップボード上の </span><span class="si">{</span><span class="n">clip_board</span><span class="si">}</span><span class="s"> を </span><span class="si">{</span><span class="n">keyword</span><span class="si">}</span><span class="s">　として保存しました"</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'delete'</span><span class="p">:</span>
+        <span class="n">mcb_shelf</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">keyword</span><span class="si">}</span><span class="s">を削除しました"</span><span class="p">)</span>
 
 <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
     <span class="c1"># キーワード一覧と，内容の読み込み
-</span>    <span class="k">if</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s">'list'</span><span class="p">:</span>
+</span>    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'list'</span><span class="p">:</span>
         <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mcb_shelf</span><span class="p">.</span><span class="n">keys</span><span class="p">())))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"全キーワードをクリップボードにコピーしました"</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">mcb_shelf</span><span class="p">:</span>
-        <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">mcb_shelf</span><span class="p">[</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">mcb_shelf</span><span class="p">[</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="s"> をクリップボードにコピーしました"</span><span class="p">)</span>
 
 <span class="n">mcb_shelf</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>出力</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
+<p>先ほど保存した 1 を削除し、一覧をクリップボードに取得しました</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 8.10.1_MultiClipBoard.py delete 1
+<span class="go">1を削除しました
+</span><span class="gp">$</span><span class="w"> </span>python3 8.10.1_MultiClipBoard.py list    
+<span class="go">全キーワードをクリップボードにコピーしました
 </span></code></pre></div></div>
+<p>クリップボードには [] が入っており、1 が正しく消えていました</p>
 
 <h3 id="8102-作文ジェネレータ">8.10.2 作文ジェネレータ</h3>
 <p>テキストファイルを読み込み，ADJECTIVE(形容詞),NOUN(名詞),ADVERB(副詞),VERB(動詞)を書き換える作文ジェネレータ</p>
