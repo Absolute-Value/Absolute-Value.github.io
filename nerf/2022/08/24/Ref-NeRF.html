@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <img class="logo" src="/assets/images/kei.png">
+          <a href="/index">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/Ref-NeRF/2.png" class="hero">
+    <h1>Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields</h1>
+    <p><span class="fa fa-link"></span><a href="https://dorverbin.github.io/refnerf/"> https://dorverbin.github.io/refnerf/</a></p>
+    <p><span class="fa fa-calendar"></span> Aug 24, 2022</p>
+    <p><span class="fa fa-flag"></span> NeRF, </p>
+    <p><span class="fa fa-graduation-cap"></span> CVPR (2022) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields&url=https://absolute-value.github.io/nerf/2022/08/24/Ref-NeRF.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/nerf/2022/08/24/Ref-NeRF.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/nerf/2022/08/24/Ref-NeRF.html&title=Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields&body=Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields https://absolute-value.github.io/nerf/2022/08/24/Ref-NeRF.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>既存のNeRFは光沢のある表面の外観を正確に再現できない場合が多い</li>
+  <li>そこで、NeRFの視点から色を出力する箇所に手を加えたRef-NeRFを提案</li>
+  <li>鏡面反射の精度を大幅に改善した
+<!--more--></li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>NeRFは座標を与えると、空間(Spatial) MLPが密度を出力し、方向(Directional) MLPが視点の方向に従った放射輝度（色）を出力する（下図）
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/1.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>鏡面では見る方向によって色が急激に変化するため、学習した方向しかうまくいかなく、鏡面反射を霧がかかったようにして偽造する</li>
+  <li>そこで、下図のようなネットワークを提案
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Reflectionは法線ベクトルを使用することで鏡面反射の処理を行う
+    <ul>
+      <li>$\hat{\omega}_r = 2 (\hat{\omega}_o \cdot \hat{n} ) \hat{n} - \hat{\omega}_o$
+        <ul>
+          <li>$\hat{\omega}_o$はある点からカメラに向かう単位ベクトル</li>
+          <li>$\hat{n}$はその点での法線ベクトル</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>IDEは粗い素材の見え方がゆっくり変化し、滑らかな素材の見え方が急激に変化することに対応するためのIntegrated Directional Encoding
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/3.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Dot productは視点と法線ベクトルの角度を考慮させるために存在
+    <ul>
+      <li>$\hat{n}\cdot\hat{\omega}_o$</li>
+    </ul>
+  </li>
+  <li>IDEとDot productの出力、照明に対応するために空間MLPの出力$b$を方向MLPに入力して鏡面色$c_s$を得る</li>
+  <li>Toneで分離した拡散色と鏡面色$c_s$を組み合わせて放射輝度（色）を出力する
+    <ul>
+      <li>$c=\gamma (c_d + s \odot c_s)$
+        <ul>
+          <li>$c_d$は空間MLPが出力した拡散色</li>
+          <li>$\gamma$はRGBに変換し、値を0~1に収める関数</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>ペナルティ項
+    <ul>
+      <li>法線ベクトルのノイズ対策
+        <ul>
+          <li>$R_p = \sum_i \omega_i | \hat{n}_i - \hat{n}^{\prime}_i | ^2$</li>
+        </ul>
+      </li>
+      <li>カメラから離れる裏向き法線対策
+        <ul>
+          <li>$R_o = \sum_i \omega_i \max (0, \hat{n}^{\prime}_i \cdot \hat{d})^2$</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>
+    <p>Shiny Blender</p>
+
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Blender
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>garden spheres (PSNR)
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/6.png" alt="" /></li>
+      <li><img src="/assets/images/posts/Ref-NeRF/7.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
