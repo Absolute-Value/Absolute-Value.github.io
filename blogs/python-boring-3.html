@@ -146,7 +146,7 @@ Origin.txt
 Generated.txt
 Done.
 </span></code></pre></div></div>
-<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08">08</a>の中身を丸ごと、zipファイルにすることができた。</p>
+<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08">08</a>の中身を丸ごと、zipファイルにすることができました</p>
 
 <h2 id="97-演習">9.7 演習</h2>
 <h3 id="971選択コピー">9.7.1　選択コピー</h3>
@@ -183,8 +183,18 @@ Done.
 </code></pre></div></div>
 
 <p>出力</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 9.7.1_SelectCopy.py ../08 py
+<span class="go">Making folder: ./08
+Copy file: ./08/8.7_MultiClipBoard.py
+Making folder: ./08
+Copy file: ./08/8.10.3_RegexSearcher.py
+Making folder: ./08
+Copy file: ./08/8.10.1_MultiClipBoard.py
+Making folder: ./08
+Copy file: ./08/8.10.2_CompositionGenerator.py
+Done.
 </span></code></pre></div></div>
+<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08">08</a>の中の .py ファイルをコピーすることができました</p>
 
 <h3 id="972-巨大なフォイルを探す">9.7.2 巨大なフォイルを探す</h3>
 <p>ディレクトリツリーを渡り歩いて、サイズの大きなサイズのフォルダを探し出す<br />
@@ -230,9 +240,16 @@ Done.
     <span class="n">search_file</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 </code></pre></div></div>
 
-<p>出力</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> 
+<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08">08</a>の中で、1KBを超えているファイルを探します</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 9.7.2_SearchLargeFile.py ../08 1 KB
+<span class="go">./08/8.7_MultiClipBoard.py : 1.24 KB
+./08/8.10.1_MultiClipBoard.py : 1.40 KB
+Done.
 </span></code></pre></div></div>
+
+<p>1.24KBの8.7_MultiClipBoard.pyと<br />
+1.40KBの8.10.1_MultiClipBoard.pyを見つけることができました</p>
 
 <h3 id="973-飛びつき連番の作成">9.7.3 飛びつき連番の作成</h3>
 <p>9.7.3.1の準備用に番号の飛んだ連番を作成する</p>
@@ -276,7 +293,7 @@ spam021.txt
 spam022.txt
 spam023.txt
 </span></code></pre></div></div>
-<p>4, 10, 11が飛ばされたファイルを作成することができた。</p>
+<p>4, 10, 11が飛ばされたファイルを作成することができました</p>
 
 <h3 id="9731-連番の飛びを埋める">9.7.3.1 連番の飛びを埋める</h3>
 <p>指定した接頭語を持つ連番ファイルを探し出し、連番が飛んでいる箇所を見つけ、後に続くファイルの名前を変更する</p>
@@ -339,7 +356,7 @@ Files/spam022.txt Files/spam019.txt
 Files/spam023.txt Files/spam020.txt
 </span></code></pre></div></div>
 <p>左が変更前、右が変更後。<br />
-連番の隙間を埋めることができた。</p>
+連番の隙間を埋めることができました</p>
 
 <h3 id="9732-連番の隙間を開ける9731の逆">9.7.3.2 連番の隙間を開ける(9.7.3.1の逆)</h3>
 <p>連番ファイルの間に隙間を開けて、他の連番ファイルを入れられるようにする</p>
@@ -388,7 +405,7 @@ Files/spam004.txt Files/spam005.txt
 Files/spam003.txt Files/spam004.txt
 </span></code></pre></div></div>
 <p>左が変更前、右が変更後。<br />
-3以降がずれたため、連番に隙間ができた。</p>
+3以降がずれたため、連番に隙間ができました</p>
 
 <h1 id="つづき">つづき</h1>
 <p>作成中…</p>
