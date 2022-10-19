@@ -56,46 +56,8 @@ header {
 }
 
 .container {
-  width: 100%;
   padding: 0 15px;
   margin: 0 auto;
-}
-
-.header-left {
-  float: left;
-  margin-left: -5px;
-}
-
-.header-left a {
-  line-height: 65px;
-  padding: 0 10px;
-  color: white;
-  display: block;
-  float: right;
-  transition: all 0.5s;
-  font-size: x-large;
-}
-
-.header-left a:hover{
-  color:aquamarine
-}
-
-.header-right {
-  float: right;
-  margin-right: -25px;
-}
-
-.header-right a {
-  line-height: 65px;
-  padding: 0 25px;
-  color: white;
-  display: block;
-  float: left;
-  transition: all 0.5s;
-}
-
-.header-right a:hover{
-  color:aquamarine
 }
 
 .hero {
@@ -105,12 +67,6 @@ header {
 
 .icon {
   width: 256px;
-}
-
-.logo {
-  width: 54px;
-  height: 54px;
-  margin-top: 6px;
 }
 
 .menu-icon {
@@ -170,10 +126,4 @@ header {
 
 .share-btn:hover {
   background-color: rgba(34,49,52,0.9);
-}
-
-@media all and (max-width: 670px) {
-  .header-left a {
-    display: none;
-  }
 }

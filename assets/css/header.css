@@ -1,0 +1,54 @@
+
+.header-left {
+    float: left;
+    margin-left: -5px;
+  }
+  
+.header-logo {
+    max-width: max-content;
+    float: left;
+}
+
+.header-name {
+    line-height: 65px;
+    padding: 0 5px;
+    color: white;
+    display: block;
+    float: left;
+    transition: all 0.5s;
+    font-size: x-large;
+}
+
+.header-left a:hover{
+    color:aquamarine
+}
+
+.header-right {
+float: right;
+margin-right: -25px;
+}
+
+.header-right a {
+line-height: 65px;
+padding: 0 25px;
+color: white;
+display: block;
+float: left;
+transition: all 0.5s;
+}
+
+.header-right a:hover{
+color:aquamarine
+}
+
+.logo {
+width:60px;
+height: 54px;
+margin-top: 6px;
+}
+
+@media all and (max-width: 670px) {
+.header-name {
+    display: none;
+}
+}
