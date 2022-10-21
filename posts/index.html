@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <div class="top-wrapper">
+      <div class="container">
+        <h1>Posts</h1>
+        <p>読んだ論文をまとめておく場所です</p>
+      </div>
+    </div>
+    <!DOCTYPE html>
+<html>
+  <title>Posts</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/posts.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    
+    <div class="myposts">
+      
+        
+        <div class="post">
+          <a href="/hoi/2022/10/20/QPIC.html">
+            <img class="post_img" src="/assets/images/posts/QPIC/1.png">
+            <div class="post_detail"> 
+              <p><b>QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>CNNベースのHOI手法ではCNNの局所性により全体の特徴を使用できず、手動で設定した関心領域に依存し、複数のHOIを混在する欠点がある</li>
+  <li>transformerベースの特徴抽出器を利用することで、画像全体を集約し複数のHOIの混在を避けることができる</li>
+  <li>効果的なtransformerベースの特徴抽出器によって検出ヘッドがシンプルで直感的になり、文脈上重要な特徴をうまく抽出し、既存手法を大きく上回った
+    <ul>
+      <li>HICO-DETで5.37mAP↑,V-COCOで5.7mAP↑</li>
+    </ul>
+  </li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Oct 20, 2022
+                <span class="fa fa-folder"></span> HOI
+                <span class="fa fa-graduation-cap"></span> CVPR (2021)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/object%20detection/2022/10/17/Passengers.html">
+            <img class="post_img" src="/assets/images/posts/Passengers/6.png">
+            <div class="post_detail"> 
+              <p><b>Correlating Belongings with Passengers in a Simulated Airport Security Checkpoint</b></p>
+              <p class="post_p"><h1 id=""></h1>
+<ul>
+  <li>空港の保安検査場における乗客と持ち物のトラッキング・関連付けのアルゴリズムを提示し、その有効性を実証</li>
+  <li>手作業とディープラーニングベースのアプローチの両方を活用</li>
+  <li>現実のデータセットで、乗客と持ち物を検出、トラッキング、関連付けることができた</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Oct 17, 2022
+                <span class="fa fa-folder"></span> Object Detection
+                <span class="fa fa-graduation-cap"></span> ICDSC (2018)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/hoi/2022/09/05/EgocentricHOI.html">
+            <img class="post_img" src="/assets/images/posts/EgocentricHOI/5.png">
+            <div class="post_detail"> 
+              <p><b>Egocentric Human-Object Interaction Detection Exploiting Synthetic Data</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<p>産業環境（電気基板のテストおよび修理作業）においてHOI検出を行う際に、大量のデータの収集・ラベリングは困難である。そこで、自動的にラベリングされた合成一人称画像を生成するパイプラインとツールを提案する。生成した合成データで事前学習をし、実データでファインチューニングをすることで、実データでのHOI検出の性能を向上させた。</p>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Sep 5, 2022
+                <span class="fa fa-folder"></span> HOI
+                <span class="fa fa-graduation-cap"></span> arXiv (2022)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/nerf/2022/08/24/Ref-NeRF.html">
+            <img class="post_img" src="/assets/images/posts/Ref-NeRF/2.png">
+            <div class="post_detail"> 
+              <p><b>Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>既存のNeRFは光沢のある表面の外観を正確に再現できない場合が多い</li>
+  <li>そこで、NeRFの視点から色を出力する箇所に手を加えたRef-NeRFを提案</li>
+  <li>鏡面反射の精度を大幅に改善した</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Aug 24, 2022
+                <span class="fa fa-folder"></span> NeRF
+                <span class="fa fa-graduation-cap"></span> CVPR (2022)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/hoi/2022/08/09/Unary-Pairwise-Transformer.html">
+            <img class="post_img" src="/assets/images/posts/Unary%E2%80%93Pairwise-Transformer/1.png">
+            <div class="post_detail"> 
+              <p><b>Efficient Two-Stage Detection of Human–Object Interactionswith a Novel Unary–Pairwise Transformer</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>DETRの出力特徴量にHOI分類用のtransformer層を追加した2段階モデルを提案</li>
+  <li>最新の手法を凌駕し、学習時間とメモリ消費量を大幅に削減</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Aug 9, 2022
+                <span class="fa fa-folder"></span> HOI
+                <span class="fa fa-graduation-cap"></span> CVPR (2022)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/hoi/2022/08/08/HOTR.html">
+            <img class="post_img" src="/assets/images/posts/HOTR/1.png">
+            <div class="post_detail"> 
+              <p><b>HOTR: End-to-End Human-Object Interaction Detection with Transformers</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>transformerを初めてHuman-Object Interactionに利用した手法HOTRを提案</li>
+  <li>オブジェクト検出とHOI検出の二段階の処理や、重複の削除などの後処理などが必要ない</li>
+  <li>Self-Attentionにより文脈的関係を理解している</li>
+  <li>V-COCOとHICO-DETデータセットにおいて最先端の性能かつ大幅に高速化</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Aug 8, 2022
+                <span class="fa fa-folder"></span> HOI
+                <span class="fa fa-graduation-cap"></span> CVPR (2021)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/object%20detection/2022/08/01/DETR.html">
+            <img class="post_img" src="/assets/images/posts/DETR/1.png">
+            <div class="post_detail"> 
+              <p><b>End-to-End Object Detection with Transformers</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>Transformerと二部マッチングロスに基づく物体検出モデルDETRを提案</li>
+  <li>すべての物体を一度に予測し、End-to-endで学習される</li>
+  <li>COCOでチューニングされたFaster R-CNNと同等の性能で、大きい物体に強い</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Aug 1, 2022
+                <span class="fa fa-folder"></span> Object Detection
+                <span class="fa fa-graduation-cap"></span> ECCV (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/hoi/2022/07/24/iCAN.html">
+            <img class="post_img" src="/assets/images/posts/iCAN/iCAN.png">
+            <div class="post_detail"> 
+              <p><b>iCAN: Instance-Centric Attention Network for Human-Object Interaction Detection</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>検出された人や物体のインスタンスごとに、タスクに関連する領域を強調するattentionマップを動的に生成する、HOI検出用ネットワークiCANを提案</li>
+  <li>V-COCOで10%、HICO-DETで49%の性能向上</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 24, 2022
+                <span class="fa fa-folder"></span> HOI
+                <span class="fa fa-graduation-cap"></span> BMVC (2018)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+    </div>
+    
+    <div class="btn-wrapper">
+      
+      
+      <a href="/posts/2/" class="btn back_btn next">></a>
+      <a href="/posts/5/" class="btn back_btn previous">>>></a>
+      
+    
+    </div>
+  </body>
+</html>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

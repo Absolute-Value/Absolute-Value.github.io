@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <div class="top-wrapper">
+      <div class="container">
+        <h1> Posts - 2</h1>
+        <p>読んだ論文をまとめておく場所です</p>
+      </div>
+    </div>
+    <!DOCTYPE html>
+<html>
+  <title> Posts - 2</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/posts.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    
+    <div class="myposts">
+      
+        
+        <div class="post">
+          <a href="/hoi/2022/07/22/InteractNet.html">
+            <img class="post_img" src="/assets/images/posts/InteractNet/1.png">
+            <div class="post_detail"> 
+              <p><b>Detecting and Recognizing Human-Object Interactions</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>人物を中心としたHuman-Object InteractionモデルInteractNetを提案</li>
+  <li>人物の領域から対象物体の位置推定を行うことで物体の探索空間を狭めた</li>
+  <li>V-COCOとHICO-DETデータセットにおいて性能向上、1画像あたり135msで実行可能</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 22, 2022
+                <span class="fa fa-folder"></span> HOI
+                <span class="fa fa-graduation-cap"></span> CVPR (2018)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/hoi/2022/07/15/HICO-DET.html">
+            <img class="post_img" src="/assets/images/posts/HICO-DET/1.png">
+            <div class="post_detail"> 
+              <p><b>Learning to Detect Human-Object Interactions</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>HOI検出 (Human-Object Interaction detection) 用の大規模データセットHICO-DETを提供</li>
+  <li>HICO-DET用のモデルHuman-Object Region-based Convolutional Neural Networks (HO-RCNN)を提案</li>
+  <li>HO-RCNNでは人間と物の空間的関係を利用することで、ベースラインよりも性能を大幅に向上</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 15, 2022
+                <span class="fa fa-folder"></span> HOI
+                <span class="fa fa-graduation-cap"></span> WACV (2018)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/hoi/2022/07/14/HICO.html">
+            <img class="post_img" src="/assets/images/posts/HICO/1.png">
+            <div class="post_detail"> 
+              <p><b>HICO: A Benchmark for Recognizing Human-Object Interactions in Images</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>HOI (Human-Object Interaction) 分類用の大規模データセットHICOを紹介</li>
+  <li>HICOを用いて、DNNを含む代表的な行動認識手法を比較</li>
+  <li>手法を詳細に分析して、課題と研究方向を明らかにした</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 14, 2022
+                <span class="fa fa-folder"></span> HOI
+                <span class="fa fa-graduation-cap"></span> ICCV (2015)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/hoi/2022/07/13/HOI-Survey.html">
+            <img class="post_img" src="/assets/images/posts/HOI-Survey/10.png">
+            <div class="post_detail"> 
+              <p><b>Human-Object Interaction Detection: A Quick Survey and Examination of Methods</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>Human-Object Interaction Detection(HOI)分野についてサーベイ</li>
+  <li>HOI分野の基礎研究であるHORCNNアーキテクチャを検証</li>
+  <li>HOI分野のベースラインとして一般的に使用されているHICO-DETデータセットを分析</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 13, 2022
+                <span class="fa fa-folder"></span> HOI
+                <span class="fa fa-graduation-cap"></span> ACM Multimedia (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/vr/2022/07/08/Fingertips.html">
+            <img class="post_img" src="/assets/images/posts/Fingertips/hero.png">
+            <div class="post_detail"> 
+              <p><b>Affine transformation of virtual 3D object using 2D localization of fingertips</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>VR環境のオブジェクトの指先での操作を目指す</li>
+  <li>手の検出と指先の検出の２段階CNNを用いて、親指と人差し指のジェスチャーを検出</li>
+  <li>ジェスチャーでVR環境内の物体をアフィン変換</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 8, 2022
+                <span class="fa fa-folder"></span> VR
+                <span class="fa fa-graduation-cap"></span> Virtual Reality & Intelligent Hardware (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/perceptual%20metrics/2022/06/28/LPIPS.html">
+            <img class="post_img" src="/assets/images/posts/LPIPS/1.png">
+            <div class="post_detail"> 
+              <p><b>The Unreasonable Effectiveness of Deep Features as a Perceptual Metric</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>知覚的な類似性としてPSNRやSSIMが広く使われているが、浅い関数のため人間の知覚の多くのニュアンスを説明することができない</li>
+  <li>そこで、学習済みモデルの特徴を使用</li>
+  <li>教師あり、自己教師あり、教師なしを問わずに学習済みモデルの特徴がこれまでの指標を凌駕し、人間の知覚的判断に対応していることを確認</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jun 28, 2022
+                <span class="fa fa-folder"></span> Perceptual Metrics
+                <span class="fa fa-graduation-cap"></span> CVPR (2018)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/nerf/2022/05/16/ShaRF.html">
+            <img class="post_img" src="/assets/images/posts/ShaRF/1.png">
+            <div class="post_detail"> 
+              <p><b>ShaRF: Shape-conditioned Radiance Fields from a Single View</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>1枚の画像からのNeRFの生成</li>
+  <li>形状表現と外観表現を分離したことで性能向上</li>
+  <li>学習領域外の画像にも汎化可</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> May 16, 2022
+                <span class="fa fa-folder"></span> NeRF
+                <span class="fa fa-graduation-cap"></span> ICML (2021)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/nerf/2022/05/13/PortraitNeRF.html">
+            <img class="post_img" src="/assets/images/posts/PortraitNeRF/1.png">
+            <div class="post_detail"> 
+              <p><b>Portrait Neural Radiance Fields from a Single Image</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>メタ学習を活用した1枚の顔写真からのNeRF生成
+    <ul>
+      <li>顔だけでなく、頭頂部、髪、胴体、眼鏡などのアクセサリを含む</li>
+    </ul>
+  </li>
+  <li>世界座標からの剛体変換を用いて、顔空間においてNeRFを事前学習させるアルゴリズムを提案
+    <ul>
+      <li>学習データ間の形状のばらつき補正により、未見の被験者に対するモデルの汎化が大幅に改善</li>
+    </ul>
+  </li>
+  <li>照明ステージでの制御されたキャプチャからなる多視点ポートレートデータセットを提供</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> May 13, 2022
+                <span class="fa fa-folder"></span> NeRF
+                <span class="fa fa-graduation-cap"></span> arXiv (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+    </div>
+    
+    <div class="btn-wrapper">
+      
+      <a href="/posts" class="btn back_btn previous"><<<</a>
+      <a href="/posts/" class="btn back_btn previous"><</a>
+      
+      
+      <a href="/posts/3/" class="btn back_btn next">></a>
+      <a href="/posts/5/" class="btn back_btn previous">>>></a>
+      
+    
+    </div>
+  </body>
+</html>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <div class="top-wrapper">
+      <div class="container">
+        <h1> Posts - 5</h1>
+        <p>読んだ論文をまとめておく場所です</p>
+      </div>
+    </div>
+    <!DOCTYPE html>
+<html>
+  <title> Posts - 5</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/posts.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    
+    <div class="myposts">
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/08/05/I3-AD.html">
+            <img class="post_img" src="/assets/images/posts/I3AD/method1.png">
+            <div class="post_detail"> 
+              <p><b>Iterative Image Inpainting with Structural Similarity Mask for Anomaly Detection</b></p>
+              <p class="post_p"><h2 id="1-どんなもの"></h2>
+<!-- ・貢献等 100-200字程度 -->
+<p>オートエンコーダで再構成して異常と判断された領域をマスキングして再構成、ということを繰り返すことで再構成品質を向上させた</p>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Aug 5, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> ICLR (2021)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/08/03/IEP.html">
+            <img class="post_img" src="https://salty-vanilla.github.io/portfolio/post/iterative_energy-based_projection_on_a_normal_data_manifold_for_anomaly_localization/img/arch.png">
+            <div class="post_detail"> 
+              <p><b>Iterative energy-based projection on a normal data manifold for anomaly localization</b></p>
+              <p class="post_p"><h2 id="1-どんなもの"></h2>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>オートエンコーダで画像を再構成する際に画像全体を悪化させることがあるため、セグメンテーションを困難にしているという問題がある</li>
+  <li>そこで、異常データを勾配降下法で正常データ多様体に投影することで、その問題を解決した</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Aug 3, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> ICLR (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/07/29/ND-VAE.html">
+            <img class="post_img" src="https://media.springernature.com/lw785/springer-static/image/chp%3A10.1007%2F978-3-030-52893-5_10/MediaObjects/490452_1_En_10_Fig1_HTML.png">
+            <div class="post_detail"> 
+              <p><b>q-Space Novelty Detection with Variational Autoencoders</b></p>
+              <p class="post_p"><h2 id="1-どんなもの"></h2>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>正常なデータを用いた変分オートエンコーダー（VAE）の学習に基づく多発性硬化症（MS）患者のdMRIスキャンにおける新規性検出法</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 29, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> CDMRI (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/07/29/AnoGAN.html">
+            <img class="post_img" src="https://www.opst.co.jp/wp/wp-content/uploads/2021/09/report200708_01-1024x224.jpeg">
+            <div class="post_detail"> 
+              <p><b>Unsupervised Anomaly Detection with Generative Adversarial Networks to Guide Marker Discovery</b></p>
+              <p class="post_p"><h2 id="1-どんなもの"></h2>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>GANを使用した教師なし異常検知</li>
+  <li>画像空間から潜在空間へのマッピングに基づく新しい異常スコアリングスキームを伴う</li>
+  <li>網膜の光コヒーレンス・トモグラフィー画像を用いた結果、網膜液や反射率の高い病巣を含む画像などの異常画像を正しく識別することができた</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 29, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> IPMI (2017)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/07/15/DAGMM.html">
+            <img class="post_img" src="https://qiita-image-store.s3.amazonaws.com/0/261752/ee9522e0-ce28-c904-d3c9-b3adee14fa97.jpeg">
+            <div class="post_detail"> 
+              <p><b>Deep Autoencoding Gaussian Mixture Model for Unsupervised Anomaly Detection</b></p>
+              <p class="post_p"><h2 id="1-どんなもの"></h2>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>画像を深層オートエンコーダを使用して次元削減したものをガウス混合モデルで密度推定して異常検知を行う</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 15, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> ICLR (2018)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/07/14/SSIM-AE.html">
+            <img class="post_img" src="https://media.arxiv-vanity.com/render-output/5811705/SSIM_L2_COMPARISON.png">
+            <div class="post_detail"> 
+              <p><b>Improving Unsupervised Defect Segmentation by Applying Structural Similarity to Autoencoders</b></p>
+              <p class="post_p"><h2 id="1-どんなもの"></h2>
+<!-- ・貢献等 100-200字程度 -->
+<p>通常の畳み込みオートエンコーダで使用されるピクセルLossは位置ズレに弱く、強度の値が一定の場合に弱い。<br />
+そこで、輝度、コントラスト、構造情報を考慮した構造的類似性(SSIM)Lossを代わりに使用した。</p>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 14, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> VISAPP (2019)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+    </div>
+    
+    <div class="btn-wrapper">
+      
+      <a href="/posts" class="btn back_btn previous"><<<</a>
+      <a href="/posts/4/" class="btn back_btn previous"><</a>
+      
+      
+    
+    </div>
+  </body>
+</html>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

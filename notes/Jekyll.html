@@ -125,13 +125,64 @@ git add <span class="nb">.</span>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bash git.sh
 </code></pre></div></div>
 
-<p>引数にコミットメッセージ入れれえます</p>
+<p>引数にコミットメッセージ入れれます</p>
 
 <h1 id="markdown記法">Markdown記法</h1>
 <h2 id="インラインコード">インラインコード</h2>
-<p>'で囲む (Shift + @)</p>
+<p>`で囲む (Shift + @)</p>
 <h2 id="コード">コード</h2>
-<p>'''で囲む</p>
+<p>```で囲む</p>
+
+<h1 id="postsのページの作成">Postsのページの作成</h1>
+<h2 id="参考サイト">参考サイト</h2>
+<p><a href="https://github.com/sverrirs/jekyll-paginate-v2">Jekyll:Paginate V2</a></p>
+
+<h2 id="jekyllpaginate-v2をダウンロード">Jekyll:Paginate V2をダウンロード</h2>
+<p>gemfileを作成</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">bundle init
+</span></code></pre></div></div>
+
+<p>gemfileを編集</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">vim gemfile
+</span></code></pre></div></div>
+<p>以下を追加する</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">group</span> <span class="ss">:jekyll_plugins</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s2">"jekyll-paginate-v2"</span>
+  <span class="n">gem</span> <span class="s2">"jekyll-feed"</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>一括インストール</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">bundle install
+</span></code></pre></div></div>
+
+<h2 id="_configymlを編集">_config.ymlを編集</h2>
+<p>_config.ymlに以下を追加する</p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">gems</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-paginate-v2</span>
+<span class="c1"># Pagination Settings</span>
+<span class="na">pagination</span><span class="pi">:</span>
+  <span class="na">enabled</span><span class="pi">:</span> <span class="no">true</span>
+  <span class="na">per_page</span><span class="pi">:</span> <span class="m">8</span> <span class="c1"># 一つのページに表示するPostの数</span>
+  <span class="na">permalink</span><span class="pi">:</span> <span class="s1">'</span><span class="s">/:num/'</span>
+  <span class="na">title</span><span class="pi">:</span> <span class="s1">'</span><span class="nv"> </span><span class="s">Title</span><span class="nv"> </span><span class="s">-</span><span class="nv"> </span><span class="s">:num'</span>
+  <span class="na">limit</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="na">sort_field</span><span class="pi">:</span> <span class="s1">'</span><span class="s">date'</span>
+  <span class="na">sort_reverse</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
+
+<h2 id="表示させたいページのmarkdownの編集">表示させたいページのmarkdownの編集</h2>
+<p>表示させたいページのマークダウンの頭に以下を追加</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">permalink</span><span class="pi">:</span> <span class="s1">'</span><span class="s">/link/'</span> <span class="c1"># ページのURL末尾を設定してください</span>
+<span class="na">pagination</span><span class="pi">:</span>
+  <span class="na">enabled</span><span class="pi">:</span> <span class="no">true</span>
+<span class="nn">---</span>
+</code></pre></div></div>
+
+<h2 id="表示させたいページのhtmlの編集">表示させたいページのhtmlの編集</h2>
+<p>表示させたいページのhtmlを<a href="https://github.com/sverrirs/jekyll-paginate-v2/blob/master/examples/01-typicalblog/_layouts/home.html">コチラ</a>を参考に記述<br />
+ここにコードを載せると誤認識するので無理でした…</p>
 
 <h1 id="お役立ちリンク">お役立ちリンク</h1>
 <ul>

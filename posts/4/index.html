@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <div class="top-wrapper">
+      <div class="container">
+        <h1> Posts - 4</h1>
+        <p>読んだ論文をまとめておく場所です</p>
+      </div>
+    </div>
+    <!DOCTYPE html>
+<html>
+  <title> Posts - 4</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/posts.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    
+    <div class="myposts">
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2022/04/13/MVTec3D.html">
+            <img class="post_img" src="/assets/images/posts/MVTec3D/1.png">
+            <div class="post_detail"> 
+              <p><b>The MVTec 3D-AD Dataset for Unsupervised 3D Anomaly Detection and Localization</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>教師なし異常検出とローカライズ用の3Dデータセットを発表</li>
+  <li>工業用高解像度3Dセンサを用い、10種類のカテゴリの4000以上の点群から構成される</li>
+  <li>テストには、傷、へこみ、穴、汚染、変形など様々な欠陥とGTアノテーション</li>
+  <li>いくつかの手法でベンチマークをし，実用性が不十分であることを確認したため、優れた手法の設計を期待している</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Apr 13, 2022
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> VISAPP (2022)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/11/04/DAAD.html">
+            <img class="post_img" src="/assets/images/posts/DAAD/frame.png">
+            <div class="post_detail"> 
+              <p><b>Divide-and-Assemble: Learning Block-wise Memory for Unsupervised Anomaly Detection</b></p>
+              <p class="post_p"><h1 id="1-どんなもの"></h1>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>UNet構造にメモリを取り入れ、敵対的学習も行う再構成ベース異常検知</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Nov 4, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> ICCV (2021)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/10/28/CS-Flow.html">
+            <img class="post_img" src="/assets/images/posts/CS-Flow/hero.png">
+            <div class="post_detail"> 
+              <p><b>Fully Convolutional Cross-Scale-Flows for Image-based Defect Detection</b></p>
+              <p class="post_p"><h2 id="1-どんなもの"></h2>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>正規化フローと事前学習済みニューラルネットワークを用いた半教師あり学習</li>
+  <li>異なるスケールの画像を事前学習のネットワークに通した特徴マップを同時に学習することで、精度を向上</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Oct 28, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> WACV (2022)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/10/21/CFLOW-AD.html">
+            <img class="post_img" src="/assets/images/posts/CFLOW-AD/overview.png">
+            <div class="post_detail"> 
+              <p><b>CFLOW-AD: Real-Time Unsupervised Anomaly Detection with Localization via Conditional Normalizing Flows</b></p>
+              <p class="post_p"><h1 id="1-どんなもの"></h1>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>事前学習済みのCNNのEncoderの階層ごとに出力をPositional Encoderで条件付きの正規化Flow(Decoder)で尤度を求め、確率を出し異常度を算出</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Oct 21, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> WACV (2022)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/09/16/DeClaW.html">
+            <img class="post_img" src="/assets/images/posts/DeClaW/pretrained.png">
+            <div class="post_detail"> 
+              <p><b>Using Anomaly Feature Vectors for Detecting, Classifying and Warning of Outlier Adversarial Examples</b></p>
+              <p class="post_p"><h2 id="1-どんなもの"></h2>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>敵対的入力を検出、分類、警告するシステム（DeClaW）</li>
+  <li>異常（攻撃）検知</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Sep 16, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> ICML (2021)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/09/16/ALRS.html">
+            <img class="post_img" src="/assets/images/posts/ALRS/lr.png">
+            <div class="post_detail"> 
+              <p><b>Automated Learning Rate Scheduler for Large-batch Training</b></p>
+              <p class="post_p"><h2 id="1-どんなもの"></h2>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>大規模なデータやモデルを使用する際に計算効率からバッチサイズを大きくする</li>
+  <li>しかし、バッチサイズを大きくすると小さいものと同等の性能を出すのに特別設計の学習率が必要となることがある</li>
+  <li>そこで、train_lossが減少しなくなるまで学習率を増加させ、終了までに０に減少させるというアルゴリズムを開発</li>
+  <li>バッチサイズでチューニング済みのベースラインと同等以上の性能を達成</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Sep 16, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> ICML (2021)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/08/18/GANomaly.html">
+            <img class="post_img" src="/assets/images/posts/GANomaly/overview.png">
+            <div class="post_detail"> 
+              <p><b>GANomaly: Semi-supervised Anomaly Detection via Adversarial Training</b></p>
+              <p class="post_p"><h1 id="1-どんなもの"></h1>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>オートエンコーダとGANを組み合わせた異常検知</li>
+  <li>ジェネレータをオートエンコーダのような構造にし、生成画像に判別機とは別にエンコーダをつけた</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Aug 18, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> ACCV (2018)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/08/17/EfficientGAN.html">
+            <img class="post_img" src="https://arxiv.org/PS_cache/arxiv/ps/1802/1802.06222v2.bigan.png">
+            <div class="post_detail"> 
+              <p><b>Efficient GAN-based anomaly detection</b></p>
+              <p class="post_p"><h1 id="1-どんなもの"></h1>
+<!-- ・貢献等 100-200字程度 -->
+<ul>
+  <li>GANベースの異常検知手法</li>
+  <li>学習中に生成器Gと識別器Dとともに、入力サンプルxを潜在表現$z$にマッピングするエンコーダEを同時に学習</li>
+  <li>これにより、計算量の多い潜在表現$z$の探索を回避</li>
+  <li>識別器は、画像だけでなく潜在表現$z$も考慮</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Aug 17, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> ICDM (2018)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+    </div>
+    
+    <div class="btn-wrapper">
+      
+      <a href="/posts" class="btn back_btn previous"><<<</a>
+      <a href="/posts/3/" class="btn back_btn previous"><</a>
+      
+      
+      <a href="/posts/5/" class="btn back_btn next">></a>
+      <a href="/posts/5/" class="btn back_btn previous">>>></a>
+      
+    
+    </div>
+  </body>
+</html>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

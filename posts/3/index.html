@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <div class="top-wrapper">
+      <div class="container">
+        <h1> Posts - 3</h1>
+        <p>読んだ論文をまとめておく場所です</p>
+      </div>
+    </div>
+    <!DOCTYPE html>
+<html>
+  <title> Posts - 3</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/posts.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    
+    <div class="myposts">
+      
+        
+        <div class="post">
+          <a href="/nerf/2022/05/12/pixelNeRF.html">
+            <img class="post_img" src="/assets/images/posts/pixelNeRF/1.png">
+            <div class="post_detail"> 
+              <p><b>pixelNeRF: Neural Radiance Fields from One or Few Images</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>1枚または数枚の画像からNeRFを生成するpixelNeRFを提案</li>
+  <li>NeRFは入力画像が少ない場合 、汎化できず、性能が低下する</li>
+  <li>それに対し、pixelNeRFではCNNで抽出した特徴量で条件付けることで解決した</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> May 12, 2022
+                <span class="fa fa-folder"></span> NeRF
+                <span class="fa fa-graduation-cap"></span> CVPR (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/nerf/2022/05/10/LearnIt.html">
+            <img class="post_img" src="/assets/images/posts/LearnIt/1.png">
+            <div class="post_detail"> 
+              <p><b>Learned Initializations for Optimizing Coordinate-Based Neural Representations</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>ランダム初期化した重みからの学習は非効率</li>
+  <li>そこで，NeRFにメタ学習アルゴリズムを適用</li>
+  <li>学習の収束が速くなり、強力な事前分布によって部分的な入力の場合でもより良い汎化性能を得る</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> May 10, 2022
+                <span class="fa fa-folder"></span> NeRF
+                <span class="fa fa-graduation-cap"></span> CVPR (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/nerf/2022/05/09/piGAN.html">
+            <img class="post_img" src="/assets/images/posts/piGAN/1.png">
+            <div class="post_detail"> 
+              <p><b>pi-GAN: Periodic Implicit Generative Adversarial Networks for 3D-Aware Image Synthesis</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>3Dを考慮した高品質な画像合成のためのSIRENベースのπ-GANと呼ばれる新しい生成モデルを提案
+    <ul>
+      <li>GANはマルチビューの一貫性を保証できない</li>
+    </ul>
+  </li>
+  <li>周期的な活性化関数を持つニューラル表現と古典的なボリュームレンダリングを活用している</li>
+  <li>複数の3Dを考慮した画像合成において最先端の結果</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> May 9, 2022
+                <span class="fa fa-folder"></span> NeRF
+                <span class="fa fa-graduation-cap"></span> CVPR (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/nerf/2022/04/26/GRF.html">
+            <img class="post_img" src="/assets/images/posts/GRF/1.png">
+            <div class="post_detail"> 
+              <p><b>GRF: Learning a General Radiance Field for 3D Scene Representation and Rendering</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>NeRFの問題点：単一構造しか表現できない、豊富な幾何パターンを持たない</li>
+  <li>2次元画像の各画素の局所的な特徴を学習し、<br />
+その特徴を3次元の点に投影することで、一般的で豊富な点表現を得る</li>
+  <li>複数の2次元画像から画素の特徴を集約するためのAttention機構を組み込んだ</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Apr 26, 2022
+                <span class="fa fa-folder"></span> NeRF
+                <span class="fa fa-graduation-cap"></span> ICCV (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2022/04/25/3D-VAE.html">
+            <img class="post_img" src="/assets/images/posts/3D-VAE/1.png">
+            <div class="post_detail"> 
+              <p><b>Three-dimensional deep learning with spatial erasing for unsupervised anomaly segmentation in brain MRI</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>MRIボリュームは3Dだが，教師なし異常検知の手法はほとんどが2Dである</li>
+  <li>そこで，3D VAEを提案し，2D VAEに比べ性能が向上した</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Apr 25, 2022
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> IJCARS (2021)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2022/04/24/3D-GAN.html">
+            <img class="post_img" src="/assets/images/posts/3D-GAN/1.png">
+            <div class="post_detail"> 
+              <p><b>Unsupervised 3D Brain Anomaly Detection</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>3Dデータをf-AnoGANで扱うために拡張</li>
+  <li>外傷性脳損傷患者のCT画像の実験においてAUROC 約75%で検出できる</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Apr 24, 2022
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> MICCAI (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/nerf/2022/04/18/GRAF.html">
+            <img class="post_img" src="/assets/images/posts/GRAF/1.png">
+            <div class="post_detail"> 
+              <p><b>GRAF: Generative Radiance Fields for 3D-Aware Image Synthesis</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>畳み込みGANは高解像度で優秀だが，3次元形状や視点などの生成要因の分離に苦しんでいる</li>
+  <li>そこで，NeRFを用いた生成モデルGRAFを提案</li>
+  <li>視覚的忠実性と3次元的一貫性の点で最先端手法と比較して有効</li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Apr 18, 2022
+                <span class="fa fa-folder"></span> NeRF
+                <span class="fa fa-graduation-cap"></span> NeurIPS (2020)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2022/04/15/MVTec3DADSeg.html">
+            <img class="post_img" src="/assets/images/posts/MVTec3DADSeg/1.png">
+            <div class="post_detail"> 
+              <p><b>An Empirical Investigation of 3D Anomaly Detection and Segmentation</b></p>
+              <p class="post_p"><h2 id=""></h2>
+
+<ul>
+  <li>MVTec 3D-ADに対して以下の4つを調査した
+    <ul>
+      <li>「3D手法&gt;2D手法」か</li>
+      <li>3D情報は必要か</li>
+      <li>3D手法について広範囲の調査
+        <ul>
+          <li>HoGなど古典的な方法含む</li>
+        </ul>
+      </li>
+      <li>3Dと2D(色)の併用は必要か</li>
+    </ul>
+  </li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Apr 15, 2022
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> arXiv (2022)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+    </div>
+    
+    <div class="btn-wrapper">
+      
+      <a href="/posts" class="btn back_btn previous"><<<</a>
+      <a href="/posts/2/" class="btn back_btn previous"><</a>
+      
+      
+      <a href="/posts/4/" class="btn back_btn next">></a>
+      <a href="/posts/5/" class="btn back_btn previous">>>></a>
+      
+    
+    </div>
+  </body>
+</html>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

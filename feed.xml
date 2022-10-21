@@ -1,0 +1,858 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-21T11:35:33+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information</title><link href="http://localhost:4000/hoi/2022/10/20/QPIC.html" rel="alternate" type="text/html" title="QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information" /><published>2022-10-20T12:00:00+09:00</published><updated>2022-10-20T12:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/10/20/QPIC</id><content type="html" xml:base="http://localhost:4000/hoi/2022/10/20/QPIC.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>CNNベースのHOI手法ではCNNの局所性により全体の特徴を使用できず、手動で設定した関心領域に依存し、複数のHOIを混在する欠点がある</li>
+  <li>transformerベースの特徴抽出器を利用することで、画像全体を集約し複数のHOIの混在を避けることができる</li>
+  <li>効果的なtransformerベースの特徴抽出器によって検出ヘッドがシンプルで直感的になり、文脈上重要な特徴をうまく抽出し、既存手法を大きく上回った
+    <ul>
+      <li>HICO-DETで5.37mAP↑,V-COCOで5.7mAP↑
+<!--more--></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>transformerを使用し、文脈特徴をペアワイズで集約</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/QPIC/1.png" alt="" /></p>
+
+<ul>
+  <li>アーキテクチャ
+    <ul>
+      <li>事前学習済みCNNで特徴マップを取得し、畳み込みでチャンネル数を調整</li>
+      <li>Positional Encodingを追加し、Transformer encoder, decoderに通す
+        <ul>
+          <li>decoderの入力(Query vectors)は学習</li>
+          <li>Query vectorsの数はインタラクション数</li>
+        </ul>
+      </li>
+      <li>Interaction detection heads
+        <ul>
+          <li>Human box FFN
+            <ul>
+              <li>人間のバウンディングボックスを予測</li>
+            </ul>
+          </li>
+          <li>Object box FFN
+            <ul>
+              <li>物体のバウンディングボックスを予測</li>
+            </ul>
+          </li>
+          <li>Object class FFN
+            <ul>
+              <li>物体のクラスを予測</li>
+            </ul>
+          </li>
+          <li>Action class FFN
+            <ul>
+              <li>行動のクラスを予測</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Loss
+    <ul>
+      <li>予測と正解のに分割マッチング
+        <ul>
+          <li>DETRのHungarianアルゴリズム</li>
+        </ul>
+      </li>
+      <li>マッチングされたペアに対するlossの計算
+        <ul>
+          <li>$L = \lambda_b L_b + \lambda_u L_u + \lambda_c L_c + \lambda_a L_a$L_
+            <ul>
+              <li>$L_b$：人と物体のバウンディングボックスの座標のLoss
+                <ul>
+                  <li><img src="/assets/images/posts/QPIC/2.png" alt="" /></li>
+                </ul>
+              </li>
+              <li>$L_u$：人と物体のバウンディングボックスのIoUのLoss
+                <ul>
+                  <li><img src="/assets/images/posts/QPIC/3.png" alt="" /></li>
+                </ul>
+              </li>
+              <li>$L_c$：物体のクラス分類Loss
+                <ul>
+                  <li><img src="/assets/images/posts/QPIC/4.png" alt="" /></li>
+                </ul>
+              </li>
+              <li>$L_a$：行動のクラス分類Loss
+                <ul>
+                  <li><img src="/assets/images/posts/QPIC/5.png" alt="" /></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>HICO-DET
+    <ul>
+      <li>5.37mAP↑
+        <ul>
+          <li><img src="/assets/images/posts/QPIC/6.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>V-COCO
+    <ul>
+      <li>5.7mAP↑
+        <ul>
+          <li><img src="/assets/images/posts/QPIC/7.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>既存手法との比較
+    <ul>
+      <li><img src="/assets/images/posts/QPIC/8.png" alt="" /></li>
+      <li>既存手法
+        <ul>
+          <li>(a)(b)はDRF, (c)(d)はPPDM→行動の検出に失敗</li>
+        </ul>
+      </li>
+      <li>QPIC
+        <ul>
+          <li>下段のAttentionマップからわかるように物体を見て検出できた</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Transformer" /><summary type="html"><![CDATA[概要 CNNベースのHOI手法ではCNNの局所性により全体の特徴を使用できず、手動で設定した関心領域に依存し、複数のHOIを混在する欠点がある transformerベースの特徴抽出器を利用することで、画像全体を集約し複数のHOIの混在を避けることができる 効果的なtransformerベースの特徴抽出器によって検出ヘッドがシンプルで直感的になり、文脈上重要な特徴をうまく抽出し、既存手法を大きく上回った HICO-DETで5.37mAP↑,V-COCOで5.7mAP↑]]></summary></entry><entry><title type="html">Correlating Belongings with Passengers in a Simulated Airport Security Checkpoint</title><link href="http://localhost:4000/object%20detection/2022/10/17/Passengers.html" rel="alternate" type="text/html" title="Correlating Belongings with Passengers in a Simulated Airport Security Checkpoint" /><published>2022-10-17T00:00:00+09:00</published><updated>2022-10-17T00:00:00+09:00</updated><id>http://localhost:4000/object%20detection/2022/10/17/Passengers</id><content type="html" xml:base="http://localhost:4000/object%20detection/2022/10/17/Passengers.html"><![CDATA[<h1 id="概要">概要</h1>
+<ul>
+  <li>空港の保安検査場における乗客と持ち物のトラッキング・関連付けのアルゴリズムを提示し、その有効性を実証</li>
+  <li>手作業とディープラーニングベースのアプローチの両方を活用</li>
+  <li>現実のデータセットで、乗客と持ち物を検出、トラッキング、関連付けることができた
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>自然光があり実世界に近く、物があり複雑な空港監視システムにおける初めての追跡と関連付け</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/Passengers/1.png" alt="" /></p>
+<ul>
+  <li>乗客の検出とトラッキング
+    <ul>
+      <li>オプティカルフローでフローが閾値以上の画素を得ることで、乗客の位置を荒く推定</li>
+      <li>Faster R-CNNで精密な位置をバウンディングボックスで得る</li>
+      <li>オプティカルフローの大きさと方向で移動方向を予測し、トラッキング</li>
+      <li><img src="/assets/images/posts/Passengers/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>持ち物の検出とトラッキング
+    <ul>
+      <li>はじめビン（持ち物を入れる容器）は灰色で背景は暗いので、強度の変化で検出できる</li>
+      <li>一意のIDとバウンディングボックスを割り当てる</li>
+      <li>相関フィルタでモデル化し畳み込みで追跡
+        <ul>
+          <li>Background Aware Correlation Filterを採用
+            <ul>
+              <li>ターゲットの周囲の背景をネガティブサンプルとして使用</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Best-Buddies Similarity (BBS) テンプレートマッチングでビン内に離脱物があるか判定
+        <ul>
+          <li>ビンの色の急激な変化（乗客の手や日陰に入ることが原因）に対応するため</li>
+          <li>類似度が閾値以下で空と判定</li>
+          <li><img src="/assets/images/posts/Passengers/3.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>乗客と持ち物（ビン）の関連付け
+    <ul>
+      <li>単純な距離だと、複数の乗客が近接していると失敗する</li>
+      <li>カメラ2（置く）
+        <ul>
+          <li>VGG19の特徴量で上半身をポーズ推定</li>
+          <li>手のひらの座標がビンに最も近い乗客を追跡</li>
+          <li>ビンから離れたときに、最も手が近い乗客を所有者に割り当て
+            <ul>
+              <li>所有者以外がビンを一時的に移動させた際に対応</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>カメラ4（拾う）
+        <ul>
+          <li>手のひらの座標がビンに最も近い乗客を受取人に
+            <ul>
+              <li>その際に受取人のラベルが所有者と同じかを判定</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><img src="/assets/images/posts/Passengers/4.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>結果
+    <ul>
+      <li>評価方法
+        <ul>
+          <li>PD：全イベントのうち、正しく検出できたもの↑</li>
+          <li>PFA：全イベントのうち、誤って検出したもの↓</li>
+          <li>Switch：乗客か持ち物のラベルに変更があったか↓</li>
+          <li>Mismatch：乗客と持ち物の関連付けが不一致↓</li>
+        </ul>
+      </li>
+      <li>対象
+        <ul>
+          <li>PAX：乗客</li>
+          <li>DVI：持ち物</li>
+          <li>XFR：記載なし</li>
+        </ul>
+      </li>
+      <li>
+        <ul>
+          <li><img src="/assets/images/posts/Passengers/5.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>評価結果の例
+    <ul>
+      <li>見方
+        <ul>
+          <li>緑：GT</li>
+          <li>赤：アルゴリズムの予測</li>
+          <li>黄色：アルゴリズムの間違い</li>
+        </ul>
+      </li>
+      <li>フレーム
+        <ul>
+          <li>(a)~(c)：正しく検出</li>
+          <li>(d)~(e)：乗客の誤検出（見切れているもの）</li>
+          <li>(f)：ビンの見落とし（出てきたばかりのため）</li>
+        </ul>
+      </li>
+      <li><img src="/assets/images/posts/Passengers/6.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><category term="Tracking" /><summary type="html"><![CDATA[概要 空港の保安検査場における乗客と持ち物のトラッキング・関連付けのアルゴリズムを提示し、その有効性を実証 手作業とディープラーニングベースのアプローチの両方を活用 現実のデータセットで、乗客と持ち物を検出、トラッキング、関連付けることができた]]></summary></entry><entry><title type="html">Egocentric Human-Object Interaction Detection Exploiting Synthetic Data</title><link href="http://localhost:4000/hoi/2022/09/05/EgocentricHOI.html" rel="alternate" type="text/html" title="Egocentric Human-Object Interaction Detection Exploiting Synthetic Data" /><published>2022-09-05T00:00:00+09:00</published><updated>2022-09-05T00:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/09/05/EgocentricHOI</id><content type="html" xml:base="http://localhost:4000/hoi/2022/09/05/EgocentricHOI.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<p>産業環境（電気基板のテストおよび修理作業）においてHOI検出を行う際に、大量のデータの収集・ラベリングは困難である。そこで、自動的にラベリングされた合成一人称画像を生成するパイプラインとツールを提案する。生成した合成データで事前学習をし、実データでファインチューニングをすることで、実データでのHOI検出の性能を向上させた。
+<!--more--></p>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>産業界を対象とした手と物体のラベルやセグメンテーションを含む、HOI検出用の合成一人称データセットを提示</li>
+  <li>Understanding human hands in contact at internet scale (CVPR 2020)を全ての物体を検出できるように拡張した手法を提案</li>
+  <li>合成データの有用性を実験でベースライン手法と比較</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>合成データの作成
+    <ul>
+      <li><img src="/assets/images/posts/EgocentricHOI/1.png" alt="" /></li>
+      <li>3Dスキャナ(対象物：Artec Eva 5, 環境：MatterPort 6)を用いて物体や環境の3Dモデルを取得</li>
+      <li>3Dモデルから、RGB画像・深度マップ・セグメンテーション・物体のBBとカテゴリ・手のBBとオブジェクトとの接触状態を生成するツールをBlenderで作成した
+        <ul>
+          <li><img src="/assets/images/posts/EgocentricHOI/2.png" alt="" /></li>
+          <li>カメラ位置・照明 ・手の色など、仮想シーンをカスタマイズして自動撮影することも可能</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>実データの作成
+    <ul>
+      <li>7人の被験者の工業用実験室での電気基板の試験・修理作業を8本、Microsoft Hololens 2を用いて撮影し、手動でアノテーション</li>
+      <li>操作をMRで指示（操作に一貫性を持たせ、自然に行うため）</li>
+    </ul>
+  </li>
+  <li>HOI検出手法
+    <ul>
+      <li><img src="/assets/images/posts/EgocentricHOI/3.png" alt="" /></li>
+      <li>Understanding human hands in contact at internet scale (CVPR 2020)を基本に、画像中の全ての物体を検出するようにした
+        <ul>
+          <li>Faster RCNNベースの手法</li>
+          <li>ResNet101がBackbone</li>
+          <li><img src="/assets/images/posts/EgocentricHOI/4.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>Hand side classification module
+        <ul>
+          <li>左右の手のどちらかを予測</li>
+        </ul>
+      </li>
+      <li>Hand state classification module
+        <ul>
+          <li>手が物体と接触しているかを予測</li>
+        </ul>
+      </li>
+      <li>Offset vector regression module
+        <ul>
+          <li>手のBBと物体のBBの中心をリンクさせるOffset vectorを予測</li>
+        </ul>
+      </li>
+      <li>RGB 画像から、物体のカテゴリ・手の側面・手の接触状態・HOIを&lt;手、 接触状態、アクティブ物体、<他の物体>&gt;の4重項として推論</他の物体></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<p><img src="/assets/images/posts/EgocentricHOI/5.png" alt="" /></p>
+
+<ul>
+  <li>物体検出性能
+    <ul>
+      <li><img src="/assets/images/posts/EgocentricHOI/6.png" alt="" /></li>
+      <li>事前学習にSynthetic（合成データ）を使用し、実データ50%でファインチューニングした結果が1位</li>
+      <li>事前学習にSynthetic（合成データ）を使用し、実データ100%でファインチューニングした結果が2位</li>
+    </ul>
+  </li>
+  <li>HOI検出性能（データ配分比較）
+    <ul>
+      <li>
+        <p><img src="/assets/images/posts/EgocentricHOI/7.png" alt="" /></p>
+      </li>
+      <li>
+        <p>事前学習にSynthetic（合成データ）を使用し、実データ100%でファインチューニングした結果がほとんどで1位</p>
+      </li>
+    </ul>
+  </li>
+  <li>HOI検出性能（既存手法との比較）
+    <ul>
+      <li><img src="/assets/images/posts/EgocentricHOI/8.png" alt="" /></li>
+      <li>物体には強いが、合成データの手のリアリティが低いためか性能が低い
+        <ul>
+          <li>BS1：単一オブジェクト</li>
+          <li>BS2：実データからのサンプリング画像</li>
+          <li>BS3：合成データ</li>
+          <li>BS4：合成データと実データ両方</li>
+          <li>BS5：YOLOv5でラベリング</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Dataset" /><summary type="html"><![CDATA[概要 産業環境（電気基板のテストおよび修理作業）においてHOI検出を行う際に、大量のデータの収集・ラベリングは困難である。そこで、自動的にラベリングされた合成一人称画像を生成するパイプラインとツールを提案する。生成した合成データで事前学習をし、実データでファインチューニングをすることで、実データでのHOI検出の性能を向上させた。]]></summary></entry><entry><title type="html">Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields</title><link href="http://localhost:4000/nerf/2022/08/24/Ref-NeRF.html" rel="alternate" type="text/html" title="Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields" /><published>2022-08-24T00:00:00+09:00</published><updated>2022-08-24T00:00:00+09:00</updated><id>http://localhost:4000/nerf/2022/08/24/Ref-NeRF</id><content type="html" xml:base="http://localhost:4000/nerf/2022/08/24/Ref-NeRF.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>既存のNeRFは光沢のある表面の外観を正確に再現できない場合が多い</li>
+  <li>そこで、NeRFの視点から色を出力する箇所に手を加えたRef-NeRFを提案</li>
+  <li>鏡面反射の精度を大幅に改善した
+<!--more--></li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>NeRFは座標を与えると、空間(Spatial) MLPが密度を出力し、方向(Directional) MLPが視点の方向に従った放射輝度（色）を出力する（下図）
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/1.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>鏡面では見る方向によって色が急激に変化するため、学習した方向しかうまくいかなく、鏡面反射を霧がかかったようにして偽造する</li>
+  <li>そこで、下図のようなネットワークを提案
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Reflectionは法線ベクトルを使用することで鏡面反射の処理を行う
+    <ul>
+      <li>$\hat{\omega}_r = 2 (\hat{\omega}_o \cdot \hat{n} ) \hat{n} - \hat{\omega}_o$
+        <ul>
+          <li>$\hat{\omega}_o$はある点からカメラに向かう単位ベクトル</li>
+          <li>$\hat{n}$はその点での法線ベクトル</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>IDEは粗い素材の見え方がゆっくり変化し、滑らかな素材の見え方が急激に変化することに対応するためのIntegrated Directional Encoding
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/3.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Dot productは視点と法線ベクトルの角度を考慮させるために存在
+    <ul>
+      <li>$\hat{n}\cdot\hat{\omega}_o$</li>
+    </ul>
+  </li>
+  <li>IDEとDot productの出力、照明に対応するために空間MLPの出力$b$を方向MLPに入力して鏡面色$c_s$を得る</li>
+  <li>Toneで分離した拡散色と鏡面色$c_s$を組み合わせて放射輝度（色）を出力する
+    <ul>
+      <li>$c=\gamma (c_d + s \odot c_s)$
+        <ul>
+          <li>$c_d$は空間MLPが出力した拡散色</li>
+          <li>$\gamma$はRGBに変換し、値を0~1に収める関数</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>ペナルティ項
+    <ul>
+      <li>法線ベクトルのノイズ対策
+        <ul>
+          <li>$R_p = \sum_i \omega_i | \hat{n}_i - \hat{n}^{\prime}_i | ^2$</li>
+        </ul>
+      </li>
+      <li>カメラから離れる裏向き法線対策
+        <ul>
+          <li>$R_o = \sum_i \omega_i \max (0, \hat{n}^{\prime}_i \cdot \hat{d})^2$</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>
+    <p>Shiny Blender</p>
+
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Blender
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>garden spheres (PSNR)
+    <ul>
+      <li><img src="/assets/images/posts/Ref-NeRF/6.png" alt="" /></li>
+      <li><img src="/assets/images/posts/Ref-NeRF/7.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="NeRF" /><category term="NeRF" /><summary type="html"><![CDATA[概要 既存のNeRFは光沢のある表面の外観を正確に再現できない場合が多い そこで、NeRFの視点から色を出力する箇所に手を加えたRef-NeRFを提案 鏡面反射の精度を大幅に改善した]]></summary></entry><entry><title type="html">Efficient Two-Stage Detection of Human–Object Interactionswith a Novel Unary–Pairwise Transformer</title><link href="http://localhost:4000/hoi/2022/08/09/Unary-Pairwise-Transformer.html" rel="alternate" type="text/html" title="Efficient Two-Stage Detection of Human–Object Interactionswith a Novel Unary–Pairwise Transformer" /><published>2022-08-09T00:00:00+09:00</published><updated>2022-08-09T00:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/08/09/Unary%E2%80%93Pairwise-Transformer</id><content type="html" xml:base="http://localhost:4000/hoi/2022/08/09/Unary-Pairwise-Transformer.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>DETRの出力特徴量にHOI分類用のtransformer層を追加した2段階モデルを提案</li>
+  <li>最新の手法を凌駕し、学習時間とメモリ消費量を大幅に削減
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>2段階HOI検出器で、2段階ともtransformerを使用
+    <ul>
+      <li>1段階目にDETRを使用したSCGは存在する</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/Unary–Pairwise-Transformer/1.png" alt="" /></p>
+<ul>
+  <li>Backbone CNNで抽出した特徴をパッチに分割し、positional encodingをしてDETRのencoder–decoderへ入力し、新たな特徴を得る
+    <ul>
+      <li>この特徴をMLPに入力することで、バウンディングボックスとクラスラベルを得る
+  <img src="/assets/images/posts/Unary–Pairwise-Transformer/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>
+    <p>さらにこの特徴をUnaryトークンとしてInteraction Headに渡す
+  <img src="/assets/images/posts/Unary–Pairwise-Transformer/3.png" alt="" /></p>
+  </li>
+  <li>Interaction Headは2種類のtransformer encoderから成り、第1層は協力層と呼ばれ正解のHOIスコアを増加させる
+    <ul>
+      <li>すでに位置情報は含んでいるため、バウンディングボックスを使用してペアの空間情報を入れるようなpositional encodingを行う</li>
+      <li>しかし、通常のpositional encodingの与え方ではうまくいかないため、下図のようなencoderへ変更をした
+        <ul>
+          <li>$X$：Unary token</li>
+          <li>$Y$：positional encoding</li>
+        </ul>
+      </li>
+      <li><img src="/assets/images/posts/Unary–Pairwise-Transformer/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>第2層は競争層と呼ばれ、不正解のHOIスコアを減少させる
+    <ul>
+      <li>第2層に入力する前に、第1層の出力の物体と物体のペアを削除し、マルチブランチフージョンでペアとなる人と物体のトークンとpositional encodingを融合してPairwiseトークンにする
+  <img src="/assets/images/posts/Unary–Pairwise-Transformer/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>最後にMLPに入力することでHOI分類を行う
+    <ul>
+      <li>物体検出を活用するため、最終スコアには人と物体の信頼度を掛け合わせる</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>HICO-DETとV-COCO
+    <ul>
+      <li>軽量なResNet-50でほとんどのカテゴリで既存手法を上回っており、ResNet-101を使用すると全てのカテゴリで既存手法を上回る
+        <ul>
+          <li><img src="/assets/images/posts/Unary–Pairwise-Transformer/6.png" alt="" /></li>
+          <li><img src="/assets/images/posts/Unary–Pairwise-Transformer/7.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>ResNet第5層の畳み込みのストライドをなくすと、特徴マップが高解像度になり、小さな物体に対する性能が向上する(DETR)</li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Transformer" /><summary type="html"><![CDATA[概要 DETRの出力特徴量にHOI分類用のtransformer層を追加した2段階モデルを提案 最新の手法を凌駕し、学習時間とメモリ消費量を大幅に削減]]></summary></entry><entry><title type="html">HOTR: End-to-End Human-Object Interaction Detection with Transformers</title><link href="http://localhost:4000/hoi/2022/08/08/HOTR.html" rel="alternate" type="text/html" title="HOTR: End-to-End Human-Object Interaction Detection with Transformers" /><published>2022-08-08T00:00:00+09:00</published><updated>2022-08-08T00:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/08/08/HOTR</id><content type="html" xml:base="http://localhost:4000/hoi/2022/08/08/HOTR.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>transformerを初めてHuman-Object Interactionに利用した手法HOTRを提案</li>
+  <li>オブジェクト検出とHOI検出の二段階の処理や、重複の削除などの後処理などが必要ない</li>
+  <li>Self-Attentionにより文脈的関係を理解している</li>
+  <li>V-COCOとHICO-DETデータセットにおいて最先端の性能かつ大幅に高速化
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>重複した予測の排除や閾値設定などの後処理が不要に</li>
+  <li>これまでの検出器が5~9msかかる推論を1ms以下に高速化</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+<p><img src="/assets/images/posts/HOTR/1.png" alt="" /></p>
+
+<ul>
+  <li>アーキテクチャ
+    <ul>
+      <li>1つの共有Encoderと2つの並列Decoder(Instance Decoder, Interaction Decoder)から成る
+        <ul>
+          <li>Encoderの共有は別々よりも有効だった</li>
+        </ul>
+      </li>
+      <li>EncoderとInstance DecoderはDETRと同様にBackbone CNNで抽出した特徴をtransformerに通して、FFNで人と物体のバウンディングボックスとクラスを検出する</li>
+      <li>Interaction Decoderは、FFNでポインタを用いてInstance Decoderの人と物体を指し示し、HOIを予測する
+  <img src="/assets/images/posts/HOTR/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>学習
+    <ul>
+      <li>マッチングコストを計算してマッチングしたペアについてハンガリーLossを計算する</li>
+      <li>DETRではNone Objectを設定できたが、HOIは複数の予測を同時に行うマルチラベル分類のため設定できない
+        <ul>
+          <li>そこで、対話性を予測するクラスを設定して、対話性の低いものは予測を抑制するようにした</li>
+        </ul>
+      </li>
+      <li>Backbone、Encoder、Instance DecoderはMSCOCOで事前学習する</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>V-COCO
+    <ul>
+      <li>高性能&amp;高速化
+        <ul>
+          <li><img src="/assets/images/posts/HOTR/3.png" alt="" /></li>
+          <li><img src="/assets/images/posts/HOTR/4.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>HICO-DET
+    <ul>
+      <li><img src="/assets/images/posts/HOTR/5.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Transformer" /><summary type="html"><![CDATA[概要 transformerを初めてHuman-Object Interactionに利用した手法HOTRを提案 オブジェクト検出とHOI検出の二段階の処理や、重複の削除などの後処理などが必要ない Self-Attentionにより文脈的関係を理解している V-COCOとHICO-DETデータセットにおいて最先端の性能かつ大幅に高速化]]></summary></entry><entry><title type="html">End-to-End Object Detection with Transformers</title><link href="http://localhost:4000/object%20detection/2022/08/01/DETR.html" rel="alternate" type="text/html" title="End-to-End Object Detection with Transformers" /><published>2022-08-01T00:00:00+09:00</published><updated>2022-08-01T00:00:00+09:00</updated><id>http://localhost:4000/object%20detection/2022/08/01/DETR</id><content type="html" xml:base="http://localhost:4000/object%20detection/2022/08/01/DETR.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>Transformerと二部マッチングロスに基づく物体検出モデルDETRを提案</li>
+  <li>すべての物体を一度に予測し、End-to-endで学習される</li>
+  <li>COCOでチューニングされたFaster R-CNNと同等の性能で、大きい物体に強い
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>NMSやアンカーを使用しない</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/DETR/1.png" alt="" /></p>
+
+<ul>
+  <li>Backbone
+    <ul>
+      <li>画像$x_{img}$をバックボーンCNN(ResNetなど)に通して低解像度の活性化マップ$f$を得る(幅・高さが元の$\frac{1}{32}$、チャンネルが$2048$が一般的)</li>
+    </ul>
+  </li>
+  <li>Transformer
+    <ul>
+      <li><img src="/assets/images/posts/DETR/2.png" alt="" /></li>
+      <li>$f$を$1\times1$畳み込みで次元を$d$まで減らす</li>
+      <li>空間次元を1次元にし($d \times H \times W \rightarrow d\times HW$)、Encoderへ入力</li>
+      <li>$N$個のObject queriesを入力するDecoderを通じて、$N$個の$d$次元特徴を出力</li>
+    </ul>
+  </li>
+  <li>Prediction feed-forward networks (FFNs)
+    <ul>
+      <li>Decoderの出力を3層パーセプトロンに通してバウンディングボックスの中心座標、高さ・幅を予測</li>
+      <li>Decoderの出力を別の3層パーセプトロンに通して$N$個のクラスラベルを予測
+        <ul>
+          <li>「オブジェクト数$&gt;N$」の場合、過剰分は背景$\phi$を出力</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Loss
+    <ul>
+      <li>予測とGTを1対1で対応させ、ハンガリーLossを計算
+        <ul>
+          <li>
+\[L_{Hungarian} (y,\hat{y}) = \sum^N_{i=1} [- \log \hat{p}_{\sigma (i)} (C_i) + 1_{c_i\neq \phi} L_{box} (b_i, \hat{b}_{\hat{\sigma}} (i))]\]
+          </li>
+        </ul>
+      </li>
+      <li>バウンディングボックスロス
+        <ul>
+          <li>直接ボックスの予測を行うため、ボックスのサイズによってLossが変わってしまう
+            <ul>
+              <li>そこで、$L_{iou}$の線形結合を行いスケール不変にする</li>
+            </ul>
+          </li>
+          <li>
+\[L_{box} = \lambda_{iou} L_{iou} (b_i, \hat{b}_{\sigma (i)}) + \lambda_{L1} \| b_i - \hat{b}_{\sigma (i)} \|_1\]
+          </li>
+          <li>
+\[L_{iou} = 1 - (\frac{b_{\sigma(i)  } \cap \hat{b}_i}{b_{\sigma(i)} \cup \hat{b}_i} - \frac{B (b_{\sigma(i)  }, \hat{b}_i) \backslash  b_{\sigma(i)  } \cup \hat{b}_i}{B(b_{\sigma(i)  }, \hat{b}_i)})\]
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>COCO Validationの結果
+    <ul>
+      <li>小さい物体はFaster RCNNが強く、それ以外はDETRが勝っている
+  <img src="/assets/images/posts/DETR/1.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><category term="Transformer" /><summary type="html"><![CDATA[概要 Transformerと二部マッチングロスに基づく物体検出モデルDETRを提案 すべての物体を一度に予測し、End-to-endで学習される COCOでチューニングされたFaster R-CNNと同等の性能で、大きい物体に強い]]></summary></entry><entry><title type="html">iCAN: Instance-Centric Attention Network for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2022/07/24/iCAN.html" rel="alternate" type="text/html" title="iCAN: Instance-Centric Attention Network for Human-Object Interaction Detection" /><published>2022-07-24T00:00:00+09:00</published><updated>2022-07-24T00:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/07/24/iCAN</id><content type="html" xml:base="http://localhost:4000/hoi/2022/07/24/iCAN.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>検出された人や物体のインスタンスごとに、タスクに関連する領域を強調するattentionマップを動的に生成する、HOI検出用ネットワークiCANを提案</li>
+  <li>V-COCOで10%、HICO-DETで49%の性能向上
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>HOI検出に画像レベルの分類タスクで使われるattentionモジュールを導入</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/iCAN/overview.png" alt="" /></p>
+
+<ul>
+  <li>Faster R-CNNを用いて、すべての人と物体のインスタンスを検出</li>
+  <li>Human/Object Stream
+    <ul>
+      <li>人と物体のインスタンスの外観特徴をiCANモジュールに入れ、2層の全結合層に通して人スコア$s^a_o$と物体スコア$s^a_o$を取得</li>
+      <li>iCANモジュール
+        <ul>
+          <li>図の処理を行うことで、類似度などを使ってattentionマップを作成し、外観特徴$x^h_{inst}$と文脈特徴$x^h_{context}$を取得して、連結したものを出力する<br />
+  <img src="/assets/images/posts/iCAN/iCAN.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Pairwise stream
+    <ul>
+      <li>人間の領域を1，それ以外を0とした2値画像と物体の領域を1，それ以外を0とした2値画像をCNNに入力して特徴抽出
+        <ul>
+          <li>空間特徴を得ている</li>
+        </ul>
+      </li>
+      <li>空間特徴のみではうまくいかないため，人間の外観特徴$x^h_{inst}$を連結してから2層の全結合層に通してペアスコア$s^a_{sp}$を取得</li>
+    </ul>
+  </li>
+  <li>スコアの算出
+    <ul>
+      <li>Late fusion：人スコア$s^a_o$と物体スコア$s^a_o$を足して、ペアスコア$s^a_{sp}$を掛けることでスコアを算出</li>
+      <li>Early fusion：すべてのStreamのスコアを連結して、２つの全結合層に通してスコアを算出</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>V-COCO
+    <ul>
+      <li><img src="/assets/images/posts/iCAN/VCOCO_quantitative.png" alt="VCOCO_quantitative.png" /></li>
+      <li><img src="/assets/images/posts/iCAN/VCOCO.png" alt="VCOCO.png" /></li>
+    </ul>
+  </li>
+  <li>HICO-DET
+    <ul>
+      <li><img src="/assets/images/posts/iCAN/HICO-DET_quantitative.png" alt="HICO-DET_quantitative.png" /></li>
+      <li><img src="/assets/images/posts/iCAN/HICO.png" alt="HICO.png" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Attention" /><summary type="html"><![CDATA[概要 検出された人や物体のインスタンスごとに、タスクに関連する領域を強調するattentionマップを動的に生成する、HOI検出用ネットワークiCANを提案 V-COCOで10%、HICO-DETで49%の性能向上]]></summary></entry><entry><title type="html">Detecting and Recognizing Human-Object Interactions</title><link href="http://localhost:4000/hoi/2022/07/22/InteractNet.html" rel="alternate" type="text/html" title="Detecting and Recognizing Human-Object Interactions" /><published>2022-07-22T18:00:00+09:00</published><updated>2022-07-22T18:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/07/22/InteractNet</id><content type="html" xml:base="http://localhost:4000/hoi/2022/07/22/InteractNet.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>人物を中心としたHuman-Object InteractionモデルInteractNetを提案</li>
+  <li>人物の領域から対象物体の位置推定を行うことで物体の探索空間を狭めた</li>
+  <li>V-COCOとHICO-DETデータセットにおいて性能向上、1画像あたり135msで実行可能
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>人間の外観を使うことで物体の探索空間を減らし、精度向上かつ高速化</li>
+</ul>
+
+<h1 id="手法">手法</h1>
+
+<p><img src="/assets/images/posts/InteractNet/1.png" alt="" /></p>
+
+<ul>
+  <li>Object Detection branch
+    <ul>
+      <li>Faster-RCNNと同様にして、RoiAliginで特徴を抽出し、人$s_h$と物体$s_o$のクラス分類と領域の予測を行う</li>
+    </ul>
+  </li>
+  <li>Human-centric branch
+    <ul>
+      <li>以下の二つの役割を持つ
+        <ol>
+          <li>Object Detection branchと同様に、人間についてRoiAliginで特徴を抽出し、人間の行動$s^a_h$をマルチクラス分類（人間は同時に様々な行動を行うことができるため）</li>
+          <li>人間の外観から目標物の位置を予測したいが、正確な位置の予測は難しい</li>
+        </ol>
+        <ul>
+          <li>そこで、人間についてRoiAliginで特徴を抽出し、目標物の位置に対する密度(下画像の赤で可視化)をガウス関数でモデル化し、その平均位置$\mu^a_h$を予測<br />
+  <img src="/assets/images/posts/InteractNet/2.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Interaction branch
+    <ul>
+      <li>人間と物体の外観を考慮するため、人間と物体についてRoiAliginで特徴を抽出し合計することで、Human-Object Interactionの行動$s^a_{h,o}$のクラス分類を行う</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>V-COCO
+    <ul>
+      <li>26%改善（3.18AP → 40AP）<br />
+  <img src="/assets/images/posts/InteractNet/3.png" alt="" /></li>
+      <li>一つの画像に一つのHOI<br />
+  <img src="/assets/images/posts/InteractNet/4.png" alt="" /></li>
+      <li>一つの画像に複数のHOI<br />
+  <img src="/assets/images/posts/InteractNet/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>HICO-DET
+    <ul>
+      <li>27%改善<br />
+  <img src="/assets/images/posts/InteractNet/6.png" alt="" />
+  <img src="/assets/images/posts/InteractNet/7.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><summary type="html"><![CDATA[概要 人物を中心としたHuman-Object InteractionモデルInteractNetを提案 人物の領域から対象物体の位置推定を行うことで物体の探索空間を狭めた V-COCOとHICO-DETデータセットにおいて性能向上、1画像あたり135msで実行可能]]></summary></entry><entry><title type="html">Learning to Detect Human-Object Interactions</title><link href="http://localhost:4000/hoi/2022/07/15/HICO-DET.html" rel="alternate" type="text/html" title="Learning to Detect Human-Object Interactions" /><published>2022-07-15T00:00:00+09:00</published><updated>2022-07-15T00:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/07/15/HICO-DET</id><content type="html" xml:base="http://localhost:4000/hoi/2022/07/15/HICO-DET.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>HOI検出 (Human-Object Interaction detection) 用の大規模データセットHICO-DETを提供</li>
+  <li>HICO-DET用のモデルHuman-Object Region-based Convolutional Neural Networks (HO-RCNN)を提案</li>
+  <li>HO-RCNNでは人間と物の空間的関係を利用することで、ベースラインよりも性能を大幅に向上
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>人間と物のインタラクションの検出だけでなく位置を推定するHOI検出という研究の提案とデータセットの提供</li>
+</ul>
+
+<h1 id="手法">手法</h1>
+
+<p><img src="/assets/images/posts/HICO-DET/2.png" alt="" /></p>
+
+<ul>
+  <li>MSCOCOで事前学習したFast-RCNNで人間と物を検出し、以下の3つのStramで使用（DNNはImageNetで事前学習されたCaffeNetを使用している）
+    <ul>
+      <li>Human Stream
+        <ul>
+          <li>Fast-RCNNが検出した人間の領域の特徴を切り取ってリサイズし、DNNでベクトルに</li>
+        </ul>
+      </li>
+      <li>Object Stream
+        <ul>
+          <li>Fast-RCNNが検出した物体の領域の特徴を切り取ってリサイズし、DNNでベクトルに</li>
+        </ul>
+      </li>
+      <li>Pairwise Stream
+  <img src="/assets/images/posts/HICO-DET/3.png" alt="Pairwise Stream" />
+        <ul>
+          <li>Fast-RCNNが検出した人間と物体の領域で切り取り、人間と物体の領域を1それ以外を0とする2値画像をリサイズorPadding埋めして、DNNでベクトルに</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>3つのStreamで作成したベクトルを足し合わせることで60個のクラススコアを予測</li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>mAPの比較
+    <ul>
+      <li><img src="/assets/images/posts/HICO-DET/4.png" alt="mAP" /></li>
+      <li>Known Objectは曖昧と未知の画像を除いている
+        <ul>
+          <li>曖昧：クラウドワーカーで意見が割れた画像</li>
+          <li>未知：人物と他のオブジェクトカテゴリが含まれる画像</li>
+        </ul>
+      </li>
+      <li>Fullはすべてのクラス(600)、Rareは学習データが10未満の滅多にないクラス(138)、Non-Rareは学習データが10以上のクラス(462)</li>
+      <li>Randomはランダムにスコアを当てる、unionは人間と物を合わせた領域をDNNでベクトルにしてスコアを算出、scoreは人間と物それぞれの領域をDNNでベクトルにしてから足し合わせてスコアを算出、IP1はPairwise Streamのリサイズでゼロパディングあり、+Sは物体検出スコアとHOIスコアを結ぶニューロン経路をつなぐ</li>
+    </ul>
+  </li>
+  <li>画像の比較
+    <ul>
+      <li>左：正しく検出、右：過検出<br />
+  <img src="/assets/images/posts/HICO-DET/5.png" alt="image" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Dataset" /><summary type="html"><![CDATA[概要 HOI検出 (Human-Object Interaction detection) 用の大規模データセットHICO-DETを提供 HICO-DET用のモデルHuman-Object Region-based Convolutional Neural Networks (HO-RCNN)を提案 HO-RCNNでは人間と物の空間的関係を利用することで、ベースラインよりも性能を大幅に向上]]></summary></entry></feed>
