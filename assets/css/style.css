@@ -127,3 +127,9 @@ header {
 .share-btn:hover {
   background-color: rgba(34,49,52,0.9);
 }
+
+@media all and (max-width: 720px) {
+  .icon {
+    width: 200px;
+  }
+}

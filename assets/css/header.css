@@ -47,7 +47,7 @@ height: 54px;
 margin-top: 6px;
 }
 
-@media all and (max-width: 670px) {
+@media all and (max-width: 720px) {
 .header-name {
     display: none;
 }
