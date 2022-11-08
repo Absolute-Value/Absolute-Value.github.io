@@ -97,8 +97,8 @@
 <ul>
   <li>HOI用として600カテゴリ,80物体,47,774枚の大規模データセットを公開
     <ul>
-      <li>単語ではなく文のクラス(Sence)と人間が検証した(Clean)の中では最大のHOIデータセット
-  <img src="/assets/images/posts/HICO/2.png" alt="" /></li>
+      <li>単語ではなく文のクラス(Sence)と人間が検証した(Clean)の中では最大のHOIデータセット</li>
+      <li><img src="/assets/images/posts/HICO/2.png" alt="" /></li>
     </ul>
   </li>
 </ul>
@@ -106,12 +106,11 @@
 <h1 id="手法">手法</h1>
 
 <ul>
-  <li>アノテーション作業</li>
-</ul>
-
-<p><img src="/assets/images/posts/HICO/3.png" alt="" /></p>
-
-<ul>
+  <li>アノテーション作業
+    <ul>
+      <li><img src="/assets/images/posts/HICO/3.png" alt="" /></li>
+    </ul>
+  </li>
   <li>評価
     <ul>
       <li>既存手法
@@ -122,9 +121,9 @@
         </ul>
       </li>
       <li>HOCNN
-  <img src="/assets/images/posts/HICO/4.png" alt="" />
-  <img src="/assets/images/posts/HICO/5.png" alt="" />
         <ul>
+          <li><img src="/assets/images/posts/HICO/4.png" alt="" /></li>
+          <li><img src="/assets/images/posts/HICO/5.png" alt="" /></li>
           <li>MS-COCOで学習したR-CNNで80物体のヒートマップを出力</li>
           <li>Chenらの事前学習済み姿勢推定モデルで26の身体部位のヒートマップを出力</li>
           <li>合わせて106のヒートマップを入力とするCNNで600クラスを予測</li>
@@ -138,8 +137,8 @@
 
 <ul>
   <li>mAPの比較
-  <img src="/assets/images/posts/HICO/6.png" alt="" />
     <ul>
+      <li><img src="/assets/images/posts/HICO/6.png" alt="" /></li>
       <li>VOは動詞と物体のペア、Vは動詞だけ、Oは物体だけの分類</li>
       <li>上段は通常、下段は曖昧と未知の画像を除いている
         <ul>
@@ -151,7 +150,10 @@
     </ul>
   </li>
   <li>トップの画像の比較
-<img src="/assets/images/posts/HICO/7.png" alt="" /></li>
+    <ul>
+      <li><img src="/assets/images/posts/HICO/7.png" alt="" /></li>
+    </ul>
+  </li>
 </ul>
 
     <div class="btn-wrapper">
