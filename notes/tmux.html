@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>tmux 個人的メモ</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <img src="/assets/images/notes/tmux/tmux.png" class="hero">
+    <h1>tmux 個人的メモ</h1>
+    <p><span class="fa fa-calendar"></span> Nov 17, 2022</p>
+    <p><span class="fa fa-flag"></span> Memo, tmux, </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=tmux 個人的メモ&url=https://absolute-value.github.io/notes/tmux.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/notes/tmux.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/notes/tmux.html&title=tmux 個人的メモ" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=tmux 個人的メモ&body=tmux 個人的メモ https://absolute-value.github.io/notes/tmux.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <p>tmuxに役立ちそうな個人的メモです。
+tmuxを使用することで、<br />
+ssh接続を終了してもプログラムを動かし続けてログを残すことができる、<br />
+並列で処理を行うことができるなどのメリットがあります。</p>
+
+<h1 id="起動と終了">起動と終了</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 新規セッション開始</span>
+tmux
+
+<span class="c"># 名前をつけて新規セッション開始</span>
+tmux new <span class="nt">-s</span> &lt;セッション名&gt;
+
+<span class="c"># セッションの一覧表示</span>
+tmux <span class="nb">ls</span>
+
+<span class="c"># セッションを再開 ※-t &lt;対象セッション名&gt;でセッション名の指定も可能</span>
+tmux a
+</code></pre></div></div>
+
+<h1 id="キー操作">キー操作</h1>
+<p>はじめにPrefix（デフォルトだとCtrl+B）でキー操作モードにしてから、以下のキーを入力して操作を行う。</p>
+
+<h2 id="セッション操作">セッション操作</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td>キー操作</td>
+      <td>説明</td>
+    </tr>
+    <tr>
+      <td>d</td>
+      <td>セッションから離脱(動かしたまま抜けるときはこれを使う)</td>
+    </tr>
+    <tr>
+      <td>t</td>
+      <td>時計を表示</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="ウインドウ操作">ウインドウ操作</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>c</td>
+      <td>新規ウインドウ作成</td>
+    </tr>
+    <tr>
+      <td>w</td>
+      <td>ウインドウの一覧選択</td>
+    </tr>
+    <tr>
+      <td>0-9</td>
+      <td>指定番号のウインドウへ移動</td>
+    </tr>
+    <tr>
+      <td>p</td>
+      <td>前のウインドウへ移動</td>
+    </tr>
+    <tr>
+      <td>n</td>
+      <td>次のウインドウへ移動</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="ペイン操作">ペイン操作</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー操作</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>%</td>
+      <td>左右にペイン分割</td>
+    </tr>
+    <tr>
+      <td>”</td>
+      <td>上下にペイン分割</td>
+    </tr>
+    <tr>
+      <td>!</td>
+      <td>ペインを解除してウインドウ化</td>
+    </tr>
+    <tr>
+      <td>↑↓←→</td>
+      <td>指定方向のペインへ移動</td>
+    </tr>
+    <tr>
+      <td>o</td>
+      <td>ペインを順に移動</td>
+    </tr>
+    <tr>
+      <td>;</td>
+      <td>以前のペインへ移動</td>
+    </tr>
+    <tr>
+      <td>SPACE</td>
+      <td>レイアウトを変更</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="tmuxconfの変更">tmux.confの変更</h1>
+<p>tmux.confを編集し、ホームディレクトリに配置することで、以下のようにtmuxをカスタマイズすることができます。</p>
+
+<p><img src="/assets/images/notes/tmux/tmux.png" alt="" /></p>
+
+<h2 id="カスタマイズ例">カスタマイズ例</h2>
+
+<p>tmux.conf</p>
+<div class="language-config highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#マウス操作を有効にする
+</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">mouse</span> <span class="n">on</span>
+
+<span class="c"># prefix+r で設定のリロード
+</span><span class="n">bind</span> <span class="n">r</span> <span class="n">source</span>-<span class="n">file</span> ~/.<span class="n">tmux</span>.<span class="n">conf</span> \; <span class="n">display</span> <span class="s2">"Reloaded!"</span>
+
+<span class="c"># windowのインデックスを1から始める
+</span><span class="n">set</span> -<span class="n">g</span> <span class="n">base</span>-<span class="n">index</span> <span class="m">1</span>
+
+<span class="c"># 256色カラーをセット
+</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">default</span>-<span class="n">terminal</span> <span class="n">screen</span>-<span class="m">256</span><span class="n">color</span>
+<span class="n">set</span> -<span class="n">g</span> <span class="n">terminal</span>-<span class="n">overrides</span> <span class="s1">'xterm:colors=256'</span>
+
+<span class="c"># ステータスライン の背景色を指定する。
+</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">bg</span> <span class="s2">"colour130"</span>
+
+<span class="c"># ステータスライン の文字色を指定する。
+</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">fg</span> <span class="s2">"colour255"</span>
+
+<span class="c"># status-left の最大の長さを指定する。
+</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">left</span>-<span class="n">length</span> <span class="m">20</span>
+
+<span class="c"># status-leftの見た目を変更
+</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">left</span> <span class="s2">"#[bg=colour160]  #S  #[default]"</span>
+
+<span class="c"># status-rightの見た目を変更
+</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">right</span> <span class="s2">"#[bg=colour214, fg=colour16] #H #[bg=colour72] %Y/%m/%d #[bg=colour32] %a #[bg=colour56, fg=colour255] %H:%M "</span>
+
+<span class="c"># window-status を中央揃えで配置する
+</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">justify</span> <span class="s2">"centre"</span>
+
+<span class="c"># window-statusの見た目を変更
+</span><span class="n">setw</span> -<span class="n">g</span> <span class="n">window</span>-<span class="n">status</span>-<span class="n">format</span> <span class="s1">'#[bg=colour166, fg=colour246] #I #W '</span>
+
+<span class="c"># prefixを押したときに、押されていることがわかるように
+</span><span class="n">setw</span> -<span class="n">g</span> <span class="n">window</span>-<span class="n">status</span>-<span class="n">current</span>-<span class="n">format</span> <span class="s1">'#[bg=colour208]#{?client_prefix,#[bg=colour214]#[fg=colour16],} #I #W '</span>
+</code></pre></div></div>
+
+<h1 id="参考になるurl">参考になるURL</h1>
+<ul>
+  <li><a href="https://qiita.com/nmrmsys/items/03f97f5eabec18a3a18b">tmuxチートシート</a></li>
+  <li><a href="https://qiita.com/youichiro/items/dd54c38c2f3873348c78">.tmux.confの設定</a></li>
+  <li><a href="https://qiita.com/nojima/items/9bc576c922da3604a72b">tmux の status line の設定方法</a></li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/notes" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
