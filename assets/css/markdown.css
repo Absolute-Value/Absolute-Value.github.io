@@ -5,6 +5,10 @@ h1, h2, h3, h4, p, ul, .hero, table, .highlight {
   padding-right: 1%;
 }
 
+a {
+  color: #42b983;
+}
+
 img {
   max-width: 90%;
 }
@@ -52,6 +56,22 @@ table {
 
 .rouge-table pre {
   padding: 0;
+}
+
+.section-nav {
+  background-color: #e8e8e8;
+  margin: 0px 5%;
+  padding: 15px 1%;
+  border: 0px solid #e8e8e8;
+  border-radius: 3px;
+}
+
+.toc-entry ul{
+  padding: 0;
+}
+
+.section-nav li{
+  padding: 5px 0;
 }
 
 .highlight .hll { background-color: #272822; }

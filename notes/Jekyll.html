@@ -34,7 +34,7 @@
   <body>
     <img src="http://jekyllrb-ja.github.io/img/logo-2x.png" class="hero">
     <h1>Jekyll ホームページ 個人的メモ</h1>
-    <p><span class="fa fa-calendar"></span> Jul 1, 2022<span style="color: blue; "> (Updated: Oct 21, 2022)</span></p>
+    <p><span class="fa fa-calendar"></span> Jul 1, 2022<span style="color: blue; "> (Updated: Nov 20, 2022)</span></p>
     <p><span class="fa fa-flag"></span> Memo, Jekyll, </p>
     <div class="share-btn-wrapper">
       <a href="https://twitter.com/share?text=Jekyll ホームページ 個人的メモ&url=https://absolute-value.github.io/notes/Jekyll.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
@@ -42,19 +42,54 @@
       <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/notes/Jekyll.html&title=Jekyll ホームページ 個人的メモ" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
       <a href="mailto:?subject=Jekyll ホームページ 個人的メモ&body=Jekyll ホームページ 個人的メモ https://absolute-value.github.io/notes/Jekyll.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
     </div>
-    <p>Jekyll関連で役に立ちそうな個人的メモです。</p>
+    <h1>目次</h1>
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#jekyllの新規作成">Jekyllの新規作成</a></li>
+<li class="toc-entry toc-h1"><a href="#jekyllの起動">Jekyllの起動</a></li>
+<li class="toc-entry toc-h1"><a href="#githubへの投稿方法">Githubへの投稿方法</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#git操作の自動化をするbashファイル">Git操作の自動化をするbashファイル</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#markdown記法">Markdown記法</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#インラインコード">インラインコード</a></li>
+<li class="toc-entry toc-h2"><a href="#コード">コード</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#postsのページの作成">Postsのページの作成</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#jekyllpaginate-v2をダウンロード">Jekyll:Paginate V2をダウンロード</a></li>
+<li class="toc-entry toc-h2"><a href="#_configymlを編集">_config.ymlを編集</a></li>
+<li class="toc-entry toc-h2"><a href="#表示させたいページのmarkdownの編集">表示させたいページのmarkdownの編集</a></li>
+<li class="toc-entry toc-h2"><a href="#表示させたいページのhtmlの編集">表示させたいページのhtmlの編集</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#目次の作成">目次の作成</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#jekyll-tocをダウンロード">jekyll-tocをダウンロード</a></li>
+<li class="toc-entry toc-h2"><a href="#_configymlを編集-1">_config.ymlを編集</a></li>
+<li class="toc-entry toc-h2"><a href="#表示させたいページのmarkdownの編集-1">表示させたいページのmarkdownの編集</a></li>
+<li class="toc-entry toc-h2"><a href="#表示させたいページのhtmlの編集-1">表示させたいページのhtmlの編集</a></li>
+<li class="toc-entry toc-h2"><a href="#cssの変更">CSSの変更</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#お役立ちリンク">お役立ちリンク</a></li>
+</ul><p>Jekyll関連で役に立ちそうな個人的メモです。</p>
 
 <!--more-->
 
-<p><a href="/notes/Jekyll-Install">インストール関連</a></p>
+<p><a href="/notes/Jekyll-Install">インストール関連はコチラ</a></p>
 
-<h1 id="jekyllの新規作成">Jekyllの新規作成</h1>
+<h1 id="jekyllの新規作成">
+<a class="anchor" href="#jekyll%E3%81%AE%E6%96%B0%E8%A6%8F%E4%BD%9C%E6%88%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jekyllの新規作成</h1>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>jekyll new &lt;name&gt;
 </code></pre></div></div>
 <p>{name}は任意のプロジェクト名</p>
 
-<h1 id="jekyllの起動">Jekyllの起動</h1>
+<h1 id="jekyllの起動">
+<a class="anchor" href="#jekyll%E3%81%AE%E8%B5%B7%E5%8B%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jekyllの起動</h1>
 
 <p>ローカルでサーバーを立ち上げる時</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>jekyll serve
@@ -66,7 +101,8 @@
 
 <p>起動後のURL：<a href="http://127.0.0.1:4000/">http://127.0.0.1:4000/</a></p>
 
-<h1 id="githubへの投稿方法">Githubへの投稿方法</h1>
+<h1 id="githubへの投稿方法">
+<a class="anchor" href="#github%E3%81%B8%E3%81%AE%E6%8A%95%E7%A8%BF%E6%96%B9%E6%B3%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>Githubへの投稿方法</h1>
 
 <p>_siteディレクトリへ移動する</p>
 
@@ -80,10 +116,14 @@
 <span class="gp">$</span><span class="w"> </span>git push
 </code></pre></div></div>
 
-<h2 id="元のプロジェクトとサイト用のプロジェクトに対してgit操作するの面倒だったので自動化するbashを作成しました">元のプロジェクトとサイト用のプロジェクトに対してgit操作するの面倒だったので自動化するbashを作成しました</h2>
-<h3 id="gitsh">git.sh</h3>
+<h2 id="git操作の自動化をするbashファイル">
+<a class="anchor" href="#git%E6%93%8D%E4%BD%9C%E3%81%AE%E8%87%AA%E5%8B%95%E5%8C%96%E3%82%92%E3%81%99%E3%82%8Bbash%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB" aria-hidden="true"><span class="octicon octicon-link"></span></a>Git操作の自動化をするbashファイル</h2>
+<p>元のプロジェクトとサイト用のプロジェクトに対してgit操作するの面倒だったので自動化するbashを作成しました</p>
 
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
+<p>git.sh</p>
+
+<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><table class="rouge-table"><tbody><tr>
+<td class="gutter gl"><pre class="lineno">1
 2
 3
 4
@@ -101,7 +141,8 @@
 16
 17
 18
-</pre></td><td class="code"><pre><span class="c">#!/bin/sh</span>
+</pre></td>
+<td class="code"><pre><span class="c">#!/bin/sh</span>
 
 git add <span class="nb">.</span>
 <span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span><span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
@@ -119,24 +160,30 @@ git add <span class="nb">.</span>
 <span class="k">fi
 </span>git push
 <span class="nb">cd</span> ../
-</pre></td></tr></tbody></table></code></pre></figure>
+</pre></td>
+</tr></tbody></table></code></pre></figure>
 
-<h3 id="実行">実行</h3>
+<p>実行</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bash git.sh
 </code></pre></div></div>
 
 <p>引数にコミットメッセージ入れれます</p>
 
-<h1 id="markdown記法">Markdown記法</h1>
-<h2 id="インラインコード">インラインコード</h2>
+<h1 id="markdown記法">
+<a class="anchor" href="#markdown%E8%A8%98%E6%B3%95" aria-hidden="true"><span class="octicon octicon-link"></span></a>Markdown記法</h1>
+<h2 id="インラインコード">
+<a class="anchor" href="#%E3%82%A4%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>インラインコード</h2>
 <p>`で囲む (Shift + @)</p>
-<h2 id="コード">コード</h2>
+<h2 id="コード">
+<a class="anchor" href="#%E3%82%B3%E3%83%BC%E3%83%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>コード</h2>
 <p>```で囲む</p>
 
-<h1 id="postsのページの作成">Postsのページの作成</h1>
-<p>参考：<a href="https://github.com/sverrirs/jekyll-paginate-v2">Jekyll:Paginate V2</a></p>
+<h1 id="postsのページの作成">
+<a class="anchor" href="#posts%E3%81%AE%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AE%E4%BD%9C%E6%88%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>Postsのページの作成</h1>
+<p>参考：<a href="https://github.com/sverrirs/jekyll-paginate-v2">sverrirs/jekyll-paginate-v2</a></p>
 
-<h2 id="jekyllpaginate-v2をダウンロード">Jekyll:Paginate V2をダウンロード</h2>
+<h2 id="jekyllpaginate-v2をダウンロード">
+<a class="anchor" href="#jekyllpaginate-v2%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jekyll:Paginate V2をダウンロード</h2>
 <p>gemfileを作成</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">bundle init
 </span></code></pre></div></div>
@@ -156,7 +203,8 @@ git add <span class="nb">.</span>
 </span></code></pre></div></div>
 <p>参考：<a href="https://www.sejuku.net/blog/19603">理解必須！gemsのインストール方法とインストール場所</a></p>
 
-<h2 id="_configymlを編集">_config.ymlを編集</h2>
+<h2 id="_configymlを編集">
+<a class="anchor" href="#_configyml%E3%82%92%E7%B7%A8%E9%9B%86" aria-hidden="true"><span class="octicon octicon-link"></span></a>_config.ymlを編集</h2>
 <p>_config.ymlに以下を追加する</p>
 <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">gems</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="s">jekyll-paginate-v2</span>
@@ -171,7 +219,8 @@ git add <span class="nb">.</span>
   <span class="na">sort_reverse</span><span class="pi">:</span> <span class="no">true</span>
 </code></pre></div></div>
 
-<h2 id="表示させたいページのmarkdownの編集">表示させたいページのmarkdownの編集</h2>
+<h2 id="表示させたいページのmarkdownの編集">
+<a class="anchor" href="#%E8%A1%A8%E7%A4%BA%E3%81%95%E3%81%9B%E3%81%9F%E3%81%84%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AEmarkdown%E3%81%AE%E7%B7%A8%E9%9B%86" aria-hidden="true"><span class="octicon octicon-link"></span></a>表示させたいページのmarkdownの編集</h2>
 <p>表示させたいページのマークダウンの頭に以下を追加</p>
 <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
 <span class="na">permalink</span><span class="pi">:</span> <span class="s1">'</span><span class="s">/link/'</span> <span class="c1"># ページのURL末尾を設定してください</span>
@@ -180,22 +229,92 @@ git add <span class="nb">.</span>
 <span class="nn">---</span>
 </code></pre></div></div>
 
-<h2 id="表示させたいページのhtmlの編集">表示させたいページのhtmlの編集</h2>
-<p>表示させたいページのhtmlを<a href="https://github.com/sverrirs/jekyll-paginate-v2/blob/master/examples/01-typicalblog/_layouts/home.html">コチラ</a>を参考に記述<br />
+<h2 id="表示させたいページのhtmlの編集">
+<a class="anchor" href="#%E8%A1%A8%E7%A4%BA%E3%81%95%E3%81%9B%E3%81%9F%E3%81%84%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AEhtml%E3%81%AE%E7%B7%A8%E9%9B%86" aria-hidden="true"><span class="octicon octicon-link"></span></a>表示させたいページのhtmlの編集</h2>
+<p>表示させたいページのhtmlを<a href="https://github.com/sverrirs/jekyll-paginate-v2/blob/master/examples/01-typicalblog/_layouts/home.html">コチラ</a>を参考に記述<br>
 ここにコードを載せると誤認識するので無理でした…</p>
 
-<h1 id="お役立ちリンク">お役立ちリンク</h1>
+<h1 id="目次の作成">
+<a class="anchor" href="#%E7%9B%AE%E6%AC%A1%E3%81%AE%E4%BD%9C%E6%88%90" aria-hidden="true"><span class="octicon octicon-link"></span></a>目次の作成</h1>
+
+<p>参考：<a href="https://github.com/toshimaru/jekyll-toc">toshimaru/jekyll-toc</a></p>
+
+<h2 id="jekyll-tocをダウンロード">
+<a class="anchor" href="#jekyll-toc%E3%82%92%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89" aria-hidden="true"><span class="octicon octicon-link"></span></a>jekyll-tocをダウンロード</h2>
+<p>gemfileを編集</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">vim gemfile
+</span></code></pre></div></div>
+
+<p>以下を追加する</p>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'jekyll-toc'</span>
+</code></pre></div></div>
+
+<p>インストール</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">bundle install
+</span></code></pre></div></div>
+
+<h2 id="_configymlを編集-1">
+<a class="anchor" href="#_configyml%E3%82%92%E7%B7%A8%E9%9B%86-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>_config.ymlを編集</h2>
+<p>_config.ymlに以下を追加する</p>
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">gems</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-toc</span>
+</code></pre></div></div>
+
+<h2 id="表示させたいページのmarkdownの編集-1">
+<a class="anchor" href="#%E8%A1%A8%E7%A4%BA%E3%81%95%E3%81%9B%E3%81%9F%E3%81%84%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AEmarkdown%E3%81%AE%E7%B7%A8%E9%9B%86-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>表示させたいページのmarkdownの編集</h2>
+<p>表示させたいページのマークダウンの頭に以下を追加</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">toc</span><span class="pi">:</span> <span class="no">true</span>
+<span class="nn">---</span>
+</code></pre></div></div>
+<h2 id="表示させたいページのhtmlの編集-1">
+<a class="anchor" href="#%E8%A1%A8%E7%A4%BA%E3%81%95%E3%81%9B%E3%81%9F%E3%81%84%E3%83%9A%E3%83%BC%E3%82%B8%E3%81%AEhtml%E3%81%AE%E7%B7%A8%E9%9B%86-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>表示させたいページのhtmlの編集</h2>
+
+<p>html内の</p>
+
+<figure class="highlight"><pre><code class="language-html" data-lang="html">{ { content } }</code></pre></figure>
+
+<p>を</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{ { content | toc } }
+</code></pre></div></div>
+<p>に編集（中括弧はくっつけてください）</p>
+
+<h2 id="cssの変更">
+<a class="anchor" href="#css%E3%81%AE%E5%A4%89%E6%9B%B4" aria-hidden="true"><span class="octicon octicon-link"></span></a>CSSの変更</h2>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.section-nav</span> <span class="p">{</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="m">#e8e8e8</span><span class="p">;</span>
+  <span class="nl">margin</span><span class="p">:</span> <span class="m">0px</span> <span class="m">5%</span><span class="p">;</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">15px</span> <span class="m">1%</span><span class="p">;</span>
+  <span class="nl">border</span><span class="p">:</span> <span class="m">0px</span> <span class="nb">solid</span> <span class="m">#e8e8e8</span><span class="p">;</span>
+  <span class="nl">border-radius</span><span class="p">:</span> <span class="m">3px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.toc-entry</span> <span class="nt">ul</span><span class="p">{</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="nc">.section-nav</span> <span class="nt">li</span><span class="p">{</span>
+  <span class="nl">padding</span><span class="p">:</span> <span class="m">5px</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="お役立ちリンク">
+<a class="anchor" href="#%E3%81%8A%E5%BD%B9%E7%AB%8B%E3%81%A1%E3%83%AA%E3%83%B3%E3%82%AF" aria-hidden="true"><span class="octicon octicon-link"></span></a>お役立ちリンク</h1>
 <ul>
   <li><a href="https://prog-8.com/docs/github-pages">自分で作ったWebページをインターネット上に公開しよう！</a></li>
   <li><a href="http://jekyllrb-ja.github.io/docs/">クイックスタート | Jekyll</a></li>
-  <li><a href="https://shopify.github.io/liquid/">テンプレート言語Liquid</a>
+  <li>
+<a href="https://shopify.github.io/liquid/">テンプレート言語Liquid</a>
     <ul>
       <li><a href="https://blackpigtail.com/web-design/2680">Liquidで四則演算</a></li>
     </ul>
   </li>
   <li><a href="https://johobase.com/font-awesome-icon-font-list-free/">アイコン一覧</a></li>
   <li><a href="https://qiita.com/shti_f/items/b819d7fd8cb79ae29687">markdownでの画像リサイズ</a></li>
-  <li><a href="https://techacademy.jp/magazine/30972">ファビコンの設定</a>
+  <li>
+<a href="https://techacademy.jp/magazine/30972">ファビコンの設定</a>
     <ul>
       <li><a href="https://favicon-generator.mintsu-dev.com/">ファビコン生成</a></li>
     </ul>
