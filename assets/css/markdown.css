@@ -58,16 +58,23 @@ table {
   padding: 0;
 }
 
-.section-nav {
+.table-of-contents-h1 {
   background-color: #e8e8e8;
-  margin: 0px 5%;
-  padding: 15px 1%;
-  border: 0px solid #e8e8e8;
-  border-radius: 3px;
+  margin: 15px 5% 0 5%;
+  padding: 5px 1% 0 1%;
 }
 
-.toc-entry ul{
+.toc-entry ul {
   padding: 0;
+  margin: 0;
+}
+
+.section-nav {
+  background-color: #e8e8e8;
+  margin: 0 5% 15px 5%;
+  padding: 0 1% 15px 1%;
+  /* border: 3px solid #e8e8e8; */
+  border-radius: 3px;
 }
 
 .section-nav li{
