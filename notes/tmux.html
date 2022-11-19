@@ -43,6 +43,26 @@
       <a href="mailto:?subject=tmux 個人的メモ&body=tmux 個人的メモ https://absolute-value.github.io/notes/tmux.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
     </div>
     
+    <div id="table-of-contents">
+      <h1 class="table-of-contents-h1">目次</h1>
+      <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#起動と終了">起動と終了</a></li>
+<li class="toc-entry toc-h1"><a href="#キー操作">キー操作</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#セッション操作">セッション操作</a></li>
+<li class="toc-entry toc-h2"><a href="#ウインドウ操作">ウインドウ操作</a></li>
+<li class="toc-entry toc-h2"><a href="#ペイン操作">ペイン操作</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#tmuxconfの変更">tmux.confの変更</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#カスタマイズ例">カスタマイズ例</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#参考になるurl">参考になるURL</a></li>
+</ul>
+    </div>
+    
     <div id="markdown-content">
       <p>tmuxに役立ちそうな個人的メモです。
 tmuxを使用することで、<br />
@@ -70,11 +90,13 @@ tmux a
 <h2 id="セッション操作">セッション操作</h2>
 
 <table>
-  <tbody>
+  <thead>
     <tr>
-      <td>キー操作</td>
-      <td>説明</td>
+      <th>キー操作</th>
+      <th>説明</th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
       <td>d</td>
       <td>セッションから離脱(動かしたまま抜けるときはこれを使う)</td>
