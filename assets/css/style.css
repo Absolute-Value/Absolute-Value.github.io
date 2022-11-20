@@ -11,6 +11,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  color: #42b983;
+}
+
 footer p {
   color: #b3aeb5;
   font-size: 12px;
@@ -126,6 +130,18 @@ header {
 
 .share-btn:hover {
   background-color: rgba(34,49,52,0.9);
+}
+
+.master:hover {
+  color: #325E35;
+}
+
+.bachelor:hover {
+  color: #365CA3;
+}
+
+.labo:hover {
+  color: #FF5126;
 }
 
 @media all and (max-width: 720px) {
