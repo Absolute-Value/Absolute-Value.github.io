@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>テトリス</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="https://1.bp.blogspot.com/-nAt7uz4HQBw/Xbo7hrLz7-I/AAAAAAABV3w/Tww326Yi-I0Psq7wiZcwwnu3qUTbZwPAACNcBGAsYHQ/w1200-h630-p-k-no-nu/shape_polyomino.png" class="hero">
+    <h1>テトリス</h1>
+    <p><span class="fa fa-calendar"></span> Dec 2, 2022</p>
+    <p><span class="fa fa-flag"></span> javascript, </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=テトリス&url=https://absolute-value.github.io/blogs/Tetris.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/blogs/Tetris.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/blogs/Tetris.html&title=テトリス" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=テトリス&body=テトリス https://absolute-value.github.io/blogs/Tetris.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    
+    <div id="markdown-content">
+      <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>テトリス</title>
+  <style>
+    /* テトリスのフィールドのスタイル */
+    #field {
+      width: 200px;
+      height: 400px;
+      border: 2px solid #999;
+      margin-left: 5%;
+    }
+
+    /* テトリスのブロックのスタイル */
+    .block {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #333;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <p><a href="https://chat.openai.com/chat">ChatGPT</a>くん（AI）にJavascriptでテトリスを作ってもらいました</p>
+  <p>スペースキーで最初から、方向キーで左右の操作ができます（できる気がしない）</p>
+  <p>重なりもめちゃくちゃなので修正して行こうと思います。</p>
+  <canvas id="field" width="200" height="400"></canvas>
+  <p>
+    <button type="button" onclick="start()">Start</button>
+    <button type="button" onclick="stop()">Stop</button>
+  </p>
+  <p>SCORE: <span id="score">0</span></p>
+  <p>LEVEL: <span id="level">1</span></p>
+  <script src="Tetris.js"></script>
+</body>
+    </div>
+    <div class="btn-wrapper">
+      <a href="/blogs" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
