@@ -19,10 +19,6 @@
     font-size: x-large;
 }
 
-.header-left a:hover{
-    color:aquamarine
-}
-
 .header-right {
 float: right;
 margin-right: -25px;

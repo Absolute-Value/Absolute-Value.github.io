@@ -121,14 +121,29 @@
     JavaScriptを初めて触りましたが、作成したものがWebで簡単に動かせるので作り甲斐がありますね。<br>
     また時間があったらJavaScriptで何か作ろうと思います。
   </p>
-  <canvas id="field" width="200" height="400"></canvas>
-  <p>
-    <button type="button" onclick="restart()">Restart</button>
-    <button type="button" onclick="stop()">Stop</button>
-  </p>
-  <p>SCORE: <span id="score">0</span></p>
-  <p>LEVEL: <span id="level">1</span></p>
+  <div>
+    <canvas id="field" width="200" height="400" class="left"></canvas>
+    <div class="left">
+      <div class="clear">
+        <p class="left">SCORE: <span id="score">0</span></p>
+        <p>LEVEL: <span id="level">1</span></p>
+      </div>
+      <div>
+        <button type="button" onclick="rotateLeft()">↪︎</button>
+        <button type="button" onclick="moveLeft()">←</button>
+        <button type="button" onclick="dropFunc(FIELD_ROWS)">↓</button>
+        <button type="button" onclick="moveRight()">→</button>
+        <button type="button" onclick="rotateRight()">↩︎</button>
+      </div>
+      <div class="left">
+        <button type="button" onclick="restart()">Restart</button>
+        <button type="button" onclick="stop()">Stop</button>
+      </div>
+    </div>
+  </div>
   <script src="js/Tetris2.js"></script>
+  <div class="clear">
+  </div>
 </body>
     </div>
     <div class="btn-wrapper">
