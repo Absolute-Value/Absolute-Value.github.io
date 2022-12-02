@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/OFA/OFA.png" class="hero">
+    <h1>OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework</h1>
+    <p><span class="fa fa-link"></span><a href="https://github.com/OFA-Sys/OFA"> https://github.com/OFA-Sys/OFA</a></p>
+    <p><span class="fa fa-calendar"></span> Nov 29, 2022</p>
+    <p><span class="fa fa-flag"></span> Multimodal Pretraining, Multitask Learning, Unified Frameworks, Zero-shot Learning, Transformer, </p>
+    <p><span class="fa fa-graduation-cap"></span> ICML (2022) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework&url=https://absolute-value.github.io/hoi/2022/11/29/OFA.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/hoi/2022/11/29/OFA.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/hoi/2022/11/29/OFA.html&title=OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework&body=OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework https://absolute-value.github.io/hoi/2022/11/29/OFA.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案
+    <ul>
+      <li>Text2Image, Visual Grounding, VQA, Image Caption, Image Classification, language modeling</li>
+    </ul>
+  </li>
+  <li>一般に公開されている2000万件の画像テキストペアのデータセットで事前学習</li>
+  <li>自然言語理解（RoBERTa、ELECTRA、DeBERTa）
+自然言語生成（UniLM、Pegasus、 ProphetNet）
+画像分類（MoCo-v3、BEiT、MAE）と同等のパフォーマンスを達成</li>
+  <li>未学習のタスクにも移行できる
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>下流タスクであるVQAや画像キャプションでの性能劣化が起きない</li>
+  <li>画像生成機能を持っている</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>アーキテクチャ
+    <ul>
+      <li><img src="/assets/images/posts/OFA/OFA.png" alt="" /></li>
+      <li>TransformerベースのEncoder Decoderフレームワーク</li>
+      <li>テキストと画像に対して絶対位置埋め込み</li>
+      <li>ハイパラ
+        <ul>
+          <li><img src="/assets/images/posts/OFA/HyperPram.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>事前学習
+    <ul>
+      <li><img src="/assets/images/posts/OFA/PreTrain.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>VQA and visual entailment
+    <ul>
+      <li><img src="/assets/images/posts/OFA/VQA.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>MSCOCO Image Captioning
+    <ul>
+      <li><img src="/assets/images/posts/OFA/ImageCaptioning.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>RefCOCO, RefCOCO+, RefCOCOg
+    <ul>
+      <li><img src="/assets/images/posts/OFA/RefCOCO.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>text-to-image generation task
+    <ul>
+      <li><img src="/assets/images/posts/OFA/Text2Image1.png" alt="" /></li>
+      <li><img src="/assets/images/posts/OFA/Text2Image2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>GLUE benchmark datasets
+    <ul>
+      <li><img src="/assets/images/posts/OFA/GLUE.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Gigaword abstractive summarization
+    <ul>
+      <li><img src="/assets/images/posts/OFA/Gigaword.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>ImageNet-1K
+    <ul>
+      <li><img src="/assets/images/posts/OFA/ImageNet.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>unseen task grounded QA
+    <ul>
+      <li><img src="/assets/images/posts/OFA/UnseenTask.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>unseen domain VQA
+    <ul>
+      <li><img src="/assets/images/posts/OFA/UnseenDomain.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,4 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-11-21T02:08:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information</title><link href="http://localhost:4000/hoi/2022/10/20/QPIC.html" rel="alternate" type="text/html" title="QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information" /><published>2022-10-20T12:00:00+09:00</published><updated>2022-10-20T12:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/10/20/QPIC</id><content type="html" xml:base="http://localhost:4000/hoi/2022/10/20/QPIC.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-02T19:46:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework</title><link href="http://localhost:4000/hoi/2022/11/29/OFA.html" rel="alternate" type="text/html" title="OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework" /><published>2022-11-29T12:00:00+09:00</published><updated>2022-11-29T12:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/11/29/OFA</id><content type="html" xml:base="http://localhost:4000/hoi/2022/11/29/OFA.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案
+    <ul>
+      <li>Text2Image, Visual Grounding, VQA, Image Caption, Image Classification, language modeling</li>
+    </ul>
+  </li>
+  <li>一般に公開されている2000万件の画像テキストペアのデータセットで事前学習</li>
+  <li>自然言語理解（RoBERTa、ELECTRA、DeBERTa）
+自然言語生成（UniLM、Pegasus、 ProphetNet）
+画像分類（MoCo-v3、BEiT、MAE）と同等のパフォーマンスを達成</li>
+  <li>未学習のタスクにも移行できる
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>下流タスクであるVQAや画像キャプションでの性能劣化が起きない</li>
+  <li>画像生成機能を持っている</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>アーキテクチャ
+    <ul>
+      <li><img src="/assets/images/posts/OFA/OFA.png" alt="" /></li>
+      <li>TransformerベースのEncoder Decoderフレームワーク</li>
+      <li>テキストと画像に対して絶対位置埋め込み</li>
+      <li>ハイパラ
+        <ul>
+          <li><img src="/assets/images/posts/OFA/HyperPram.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>事前学習
+    <ul>
+      <li><img src="/assets/images/posts/OFA/PreTrain.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>VQA and visual entailment
+    <ul>
+      <li><img src="/assets/images/posts/OFA/VQA.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>MSCOCO Image Captioning
+    <ul>
+      <li><img src="/assets/images/posts/OFA/ImageCaptioning.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>RefCOCO, RefCOCO+, RefCOCOg
+    <ul>
+      <li><img src="/assets/images/posts/OFA/RefCOCO.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>text-to-image generation task
+    <ul>
+      <li><img src="/assets/images/posts/OFA/Text2Image1.png" alt="" /></li>
+      <li><img src="/assets/images/posts/OFA/Text2Image2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>GLUE benchmark datasets
+    <ul>
+      <li><img src="/assets/images/posts/OFA/GLUE.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Gigaword abstractive summarization
+    <ul>
+      <li><img src="/assets/images/posts/OFA/Gigaword.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>ImageNet-1K
+    <ul>
+      <li><img src="/assets/images/posts/OFA/ImageNet.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>unseen task grounded QA
+    <ul>
+      <li><img src="/assets/images/posts/OFA/UnseenTask.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>unseen domain VQA
+    <ul>
+      <li><img src="/assets/images/posts/OFA/UnseenDomain.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Multimodal Pretraining" /><category term="Multitask Learning" /><category term="Unified Frameworks" /><category term="Zero-shot Learning" /><category term="Transformer" /><summary type="html"><![CDATA[概要 包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案 Text2Image, Visual Grounding, VQA, Image Caption, Image Classification, language modeling 一般に公開されている2000万件の画像テキストペアのデータセットで事前学習 自然言語理解（RoBERTa、ELECTRA、DeBERTa） 自然言語生成（UniLM、Pegasus、 ProphetNet） 画像分類（MoCo-v3、BEiT、MAE）と同等のパフォーマンスを達成 未学習のタスクにも移行できる]]></summary></entry><entry><title type="html">QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information</title><link href="http://localhost:4000/hoi/2022/10/20/QPIC.html" rel="alternate" type="text/html" title="QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information" /><published>2022-10-20T12:00:00+09:00</published><updated>2022-10-20T12:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/10/20/QPIC</id><content type="html" xml:base="http://localhost:4000/hoi/2022/10/20/QPIC.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>CNNベースのHOI手法ではCNNの局所性により全体の特徴を使用できず、手動で設定した関心領域に依存し、複数のHOIを混在する欠点がある</li>
@@ -790,69 +884,4 @@
   <img src="/assets/images/posts/InteractNet/7.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><summary type="html"><![CDATA[概要 人物を中心としたHuman-Object InteractionモデルInteractNetを提案 人物の領域から対象物体の位置推定を行うことで物体の探索空間を狭めた V-COCOとHICO-DETデータセットにおいて性能向上、1画像あたり135msで実行可能]]></summary></entry><entry><title type="html">Learning to Detect Human-Object Interactions</title><link href="http://localhost:4000/hoi/2022/07/15/HICO-DET.html" rel="alternate" type="text/html" title="Learning to Detect Human-Object Interactions" /><published>2022-07-15T00:00:00+09:00</published><updated>2022-07-15T00:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/07/15/HICO-DET</id><content type="html" xml:base="http://localhost:4000/hoi/2022/07/15/HICO-DET.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>HOI検出 (Human-Object Interaction detection) 用の大規模データセットHICO-DETを提供</li>
-  <li>HICO-DET用のモデルHuman-Object Region-based Convolutional Neural Networks (HO-RCNN)を提案</li>
-  <li>HO-RCNNでは人間と物の空間的関係を利用することで、ベースラインよりも性能を大幅に向上
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>人間と物のインタラクションの検出だけでなく位置を推定するHOI検出という研究の提案とデータセットの提供</li>
-</ul>
-
-<h1 id="手法">手法</h1>
-
-<p><img src="/assets/images/posts/HICO-DET/2.png" alt="" /></p>
-
-<ul>
-  <li>MSCOCOで事前学習したFast-RCNNで人間と物を検出し、以下の3つのStramで使用（DNNはImageNetで事前学習されたCaffeNetを使用している）
-    <ul>
-      <li>Human Stream
-        <ul>
-          <li>Fast-RCNNが検出した人間の領域の特徴を切り取ってリサイズし、DNNでベクトルに</li>
-        </ul>
-      </li>
-      <li>Object Stream
-        <ul>
-          <li>Fast-RCNNが検出した物体の領域の特徴を切り取ってリサイズし、DNNでベクトルに</li>
-        </ul>
-      </li>
-      <li>Pairwise Stream
-  <img src="/assets/images/posts/HICO-DET/3.png" alt="Pairwise Stream" />
-        <ul>
-          <li>Fast-RCNNが検出した人間と物体の領域で切り取り、人間と物体の領域を1それ以外を0とする2値画像をリサイズorPadding埋めして、DNNでベクトルに</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>3つのStreamで作成したベクトルを足し合わせることで60個のクラススコアを予測</li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>mAPの比較
-    <ul>
-      <li><img src="/assets/images/posts/HICO-DET/4.png" alt="mAP" /></li>
-      <li>Known Objectは曖昧と未知の画像を除いている
-        <ul>
-          <li>曖昧：クラウドワーカーで意見が割れた画像</li>
-          <li>未知：人物と他のオブジェクトカテゴリが含まれる画像</li>
-        </ul>
-      </li>
-      <li>Fullはすべてのクラス(600)、Rareは学習データが10未満の滅多にないクラス(138)、Non-Rareは学習データが10以上のクラス(462)</li>
-      <li>Randomはランダムにスコアを当てる、unionは人間と物を合わせた領域をDNNでベクトルにしてスコアを算出、scoreは人間と物それぞれの領域をDNNでベクトルにしてから足し合わせてスコアを算出、IP1はPairwise Streamのリサイズでゼロパディングあり、+Sは物体検出スコアとHOIスコアを結ぶニューロン経路をつなぐ</li>
-    </ul>
-  </li>
-  <li>画像の比較
-    <ul>
-      <li>左：正しく検出、右：過検出<br />
-  <img src="/assets/images/posts/HICO-DET/5.png" alt="image" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Dataset" /><summary type="html"><![CDATA[概要 HOI検出 (Human-Object Interaction detection) 用の大規模データセットHICO-DETを提供 HICO-DET用のモデルHuman-Object Region-based Convolutional Neural Networks (HO-RCNN)を提案 HO-RCNNでは人間と物の空間的関係を利用することで、ベースラインよりも性能を大幅に向上]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><summary type="html"><![CDATA[概要 人物を中心としたHuman-Object InteractionモデルInteractNetを提案 人物の領域から対象物体の位置推定を行うことで物体の探索空間を狭めた V-COCOとHICO-DETデータセットにおいて性能向上、1画像あたり135msで実行可能]]></summary></entry></feed>
