@@ -26,7 +26,7 @@
     </header>
     <!DOCTYPE html>
 <html>
-  <title>テトリス</title>
+  <title>テトリス2</title>
   <head>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="/assets/css/style.css">
@@ -71,15 +71,15 @@
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
   </head>
   <body>
-    <img src="https://image.itmedia.co.jp/news/articles/2212/01/l_tm1636144_2212012_1_w490.jpg" class="hero">
-    <h1>テトリス</h1>
-    <p><span class="fa fa-calendar"></span> Dec 2, 2022</p>
+    <img src="/assets/images/blogs/tetris/mine.png" class="hero">
+    <h1>テトリス2</h1>
+    <p><span class="fa fa-calendar"></span> Dec 3, 2022</p>
     <p><span class="fa fa-flag"></span> JavaScript, </p>
     <div class="share-btn-wrapper">
-      <a href="https://twitter.com/share?text=テトリス&url=https://absolute-value.github.io/blogs/Tetris.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
-      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/blogs/Tetris.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
-      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/blogs/Tetris.html&title=テトリス" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
-      <a href="mailto:?subject=テトリス&body=テトリス https://absolute-value.github.io/blogs/Tetris.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+      <a href="https://twitter.com/share?text=テトリス2&url=https://absolute-value.github.io/blogs/Tetris2.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/blogs/Tetris2.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/blogs/Tetris2.html&title=テトリス2" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=テトリス2&body=テトリス2 https://absolute-value.github.io/blogs/Tetris2.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
     </div>
     
     <div id="markdown-content">
@@ -87,14 +87,14 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>テトリス</title>
+  <title>テトリス2</title>
   <style>
     /* テトリスのフィールドのスタイル */
     #field {
       width: 200px;
       height: 400px;
       border: 2px solid #999;
-      margin-left: 5%;
+      margin-left: 7%;
     }
 
     /* テトリスのブロックのスタイル */
@@ -107,17 +107,28 @@
   </style>
 </head>
 <body>
-  <p><a href="https://chat.openai.com/chat">ChatGPT</a>くん（AI）にJavascriptでテトリスを作ってもらいました</p>
-  <p>スペースキーで最初から、方向キーで左右の操作ができます（できる気がしない）</p>
-  <p>重なりもめちゃくちゃなので修正して行こうと思います。</p>
+  <p><a href="https://chat.openai.com/chat">ChatGPT</a>くん（AI）に作ってもらったテトリスを修正しました。</p>
+  <p>
+    落下のスピードを調整しブロックに色をつけた上に、スコアとレベルを実装しました。<br>
+    スコアによってレベルが上がり、落下スピードも上がっていきます。
+  </p>
+  <p>
+    方向キーだとブラウザの幅の変更になってしまうため、Aキーで左・Dキーで右というゲームによくある操作に変更しました。<br>
+    Wキーで一気に落下、Sキーで落下の加速もできます。<br>
+    また、Nキーで左回転、Mキーで右回転できるようにしました（挙動は本家と違います）。
+  </p>
+  <p>
+    JavaScriptを初めて触りましたが、作成したものがWebで簡単に動かせるので作り甲斐がありますね。<br>
+    また時間があったらJavaScriptで何か作ろうと思います。
+  </p>
   <canvas id="field" width="200" height="400"></canvas>
   <p>
-    <button type="button" onclick="start()">Start</button>
+    <button type="button" onclick="restart()">Restart</button>
     <button type="button" onclick="stop()">Stop</button>
   </p>
   <p>SCORE: <span id="score">0</span></p>
   <p>LEVEL: <span id="level">1</span></p>
-  <script src="js/Tetris.js"></script>
+  <script src="js/Tetris2.js"></script>
 </body>
     </div>
     <div class="btn-wrapper">
