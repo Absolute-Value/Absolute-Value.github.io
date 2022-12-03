@@ -58,9 +58,7 @@ let currentY = 0;
 
 // テトリスの現在のブロックの回転角度
 let currentRotation = 0;
-
-// テトリスのゲームオーバーかどうか
-let isGameOver = false;
+let nextRotation = 0;
 
 // テトリスのスコア
 let score = 0;
@@ -80,20 +78,25 @@ function initField() {
     }
   }
 
-  isGameOver = false; // テトリスのゲームオーバーを解除する
+  nextBlock = null;
   score = 0; // テトリスのスコアを初期化する
   level = 1; // テトリスのレベルを初期化する
 }
 
-let rotation = 0;
-let id = 0;
 // テトリスの新しいブロックを生成する
 function createBlock() {
   if (nextBlock == null) {
-    id = Math.floor(Math.random() * BLOCK_TYPE.length);
+    let id = Math.floor(Math.random() * BLOCK_TYPE.length);
     nextBlock = BLOCK_TYPE[id];
+
+    // テトリスの新しいブロックの回転角度をランダムに選ぶ
+    let rotation = Math.floor(Math.random() * 4);
+    for (let c=0; c<rotation; c++) {
+      nextBlock = rotateRight(nextBlock)
+    }
   }
   currentBlock = nextBlock;
+  currentRotation = nextRotation;
   // テトリスの新しいブロックをランダムに選ぶ
   id = Math.floor(Math.random() * BLOCK_TYPE.length);
 
@@ -103,7 +106,7 @@ function createBlock() {
   // テトリスの新しいブロックの回転角度をランダムに選ぶ
   rotation = Math.floor(Math.random() * 4);
   for (let c=0; c<rotation; c++) {
-    rotateRight()
+    nextBlock = rotateRight(nextBlock)
   }
 
   // テトリスの現在のブロックの座標を設定する
@@ -145,42 +148,34 @@ function moveLeft() {
 }
 
 // テトリスのブロックを回転させる
-function rotateRight() {
+function rotateRight(block) {
   // テトリスの現在のブロックの回転角度を更新する
-  currentRotation++;
-  if (currentRotation >= currentBlock.length) {
-    currentRotation = 0;
-  }
-  const ROW = currentBlock.length;
-  const COL = currentBlock[0].length;
+  const ROW = block.length;
+  const COL = block[0].length;
   const row = ROW-1;
-  const a = [];//new Array(COL);
+  let a = [];//new Array(COL);
   for (let c=0; c<COL; c++) {
     a[c] = [];//new Array(ROW);
     for (let r=0; r<ROW; r++) {
-      a[c][r] = currentBlock[row-r][c];
+      a[c][r] = block[row-r][c];
     }
   }
-  currentBlock = a;
+  return a;
 }
 
-function rotateLeft() {
+function rotateLeft(block) {
   // テトリスの現在のブロックの回転角度を更新する
-  currentRotation--;
-  if (currentRotation < 0) {
-    currentRotation = currentBlock.length-1;
-  }
-  const ROW = currentBlock.length;
-  const COL = currentBlock[0].length;
+  const ROW = block.length;
+  const COL = block[0].length;
   const col = COL-1;
-  const a = [];//new Array(COL);
+  let a = [];//new Array(COL);
   for (let c=0; c<COL; c++) {
     a[c] = [];//new Array(ROW);
     for (let r=0; r<ROW; r++) {
-      a[c][r] = currentBlock[r][col-c];
+      a[c][r] = block[r][col-c];
     }
   }
-  currentBlock = a;
+  return a;
 }
 
 // テトリスのブロックがフィールドの右端にいるかどうかを判定する
@@ -437,11 +432,6 @@ start();
 
 // テトリスのキーイベントを処理する
 document.addEventListener("keydown", event => {
-  // テトリスのゲームが終了している場合は、処理を終了する
-  if (isGameOver) {
-    return;
-  }
-
   // テトリスのキーイベントを処理する
   switch (event.key) {
     // テトリスのブロックを一気に落下させる場合
@@ -465,12 +455,12 @@ document.addEventListener("keydown", event => {
 
     // テトリスのブロックを回転させる場合
     case "m":
-      rotateRight();
+      currentBlock = rotateRight(currentBlock);
       break;
 
     // テトリスのブロックを回転させる場合
     case "n":
-      rotateLeft();
+      currentBlock = rotateLeft(currentBlock);
       break;
 
     // テトリスのゲームを停止する場合
