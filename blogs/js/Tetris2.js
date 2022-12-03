@@ -37,17 +37,20 @@ const COLORS = ["White", "SkyBlue", "Red", "Green", "Blue", "Orange", "Purple", 
 
 // テトリスのフィールドの要素
 let fieldElem = document.getElementById("field");
+let nextElem  = document.getElementById("next");
 let scoreElem = document.getElementById("score");
 let levelElem = document.getElementById("level");
 
 // テトリスのフィールドのコンテキスト
 let ctx = fieldElem.getContext("2d");
+let ctx2 = nextElem.getContext("2d");
 
 // テトリスのフィールド
 let field = [];
 
 // テトリスの現在のブロック
 let currentBlock = null;
+let nextBlock = null;
 
 // テトリスの現在のブロックの座標
 let currentX = 0;
@@ -83,14 +86,19 @@ function initField() {
 }
 
 let rotation = 0;
+let id = 0;
 // テトリスの新しいブロックを生成する
 function createBlock() {
+  if (nextBlock == null) {
+    id = Math.floor(Math.random() * BLOCK_TYPE.length);
+    nextBlock = BLOCK_TYPE[id];
+  }
+  currentBlock = nextBlock;
   // テトリスの新しいブロックをランダムに選ぶ
-  let id = Math.floor(Math.random() * BLOCK_TYPE.length);
+  id = Math.floor(Math.random() * BLOCK_TYPE.length);
 
   // テトリスの現在のブロックを設定する
-  currentBlock = BLOCK_TYPE[id];
-  correntColor = COLORS[id]
+  nextBlock = BLOCK_TYPE[id];
 
   // テトリスの新しいブロックの回転角度をランダムに選ぶ
   rotation = Math.floor(Math.random() * 4);
@@ -288,6 +296,35 @@ function renderField() {
   }
 }
 
+function renderNext() {
+  ctx2.clearRect(0, 0, nextElem.width, nextElem.height);
+
+  for (let y = 0; y < 4; y++) {
+    for (let x = 0; x < 4; x++) {
+      ctx2.fillStyle = "white";
+      ctx2.fillRect(x * 20, y * 20, 20, 20);
+      ctx2.fillStyle = "#eee"
+      ctx2.fillRect(x * 20, y * 20, 20, 1);
+      ctx2.fillRect(x * 20, y * 20, 1, 20);
+    }
+  }
+
+  // 次のテトリスを描画する
+  for (let y = 0; y < nextBlock.length; y++) {
+    for (let x = 0; x < nextBlock[y].length; x++) {
+      // 次のフィールドの指定した位置にブロックが存在する場合
+      if (nextBlock[y][x]) {
+        // テトリスのブロックを描画する
+        ctx2.fillStyle = COLORS[nextBlock[y][x]];
+        ctx2.fillRect(x * 20, y * 20, 20, 20);
+        ctx2.fillStyle = "#eee"
+        ctx2.fillRect(x * 20, y * 20, 20, 1);
+        ctx2.fillRect(x * 20, y * 20, 1, 20);
+      }
+    }
+  }
+}
+
 // テトリスの現在のブロックをフィールドに設定する
 function lockBlock() {
   // テトリスの現在のブロックをフィールドに設定する
@@ -358,6 +395,7 @@ function dropFunc(num = 1) {
 function update() {
   // テトリスのフィールドを描画する
   renderField();
+  renderNext();
 
   delayCount++;
   if (delayCount > 300/level+10) {

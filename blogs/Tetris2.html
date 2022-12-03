@@ -97,13 +97,18 @@
       margin-left: 7%;
     }
 
-    /* テトリスのブロックのスタイル */
-    .block {
-      width: 20px;
-      height: 20px;
-      border: 1px solid #333;
-      box-sizing: border-box;
+    #next_label {
+      margin-left: 30px;
+      margin-bottom: 0px;
     }
+
+    #next {
+      width: 80px;
+      height: 80px;
+      border: 2px solid #999;
+      margin: 10px;
+    }
+
   </style>
 </head>
 <body>
@@ -117,6 +122,7 @@
     Wキーで一気に落下、Sキーで落下の加速もできます。<br>
     また、Nキーで左回転、Mキーで右回転できるようにしました（挙動は本家と違います）。
   </p>
+  <p style="color: Red;">次に落ちてくるブロックを表示するようにしました！(2022/12/03)</p>
   <p>
     JavaScriptを初めて触りましたが、作成したものがWebで簡単に動かせるので作り甲斐がありますね。<br>
     また時間があったらJavaScriptで何か作ろうと思います。
@@ -124,8 +130,10 @@
   <div>
     <canvas id="field" width="200" height="400" class="left"></canvas>
     <div class="left">
+      <p id="next_label">Next</p>
+      <canvas id="next" width="80" height="80"></canvas>
       <div class="clear">
-        <p class="left">SCORE: <span id="score">0</span></p>
+        <p>SCORE: <span id="score">0</span></p>
         <p>LEVEL: <span id="level">1</span></p>
       </div>
       <div>
