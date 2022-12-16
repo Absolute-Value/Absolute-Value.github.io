@@ -89,8 +89,277 @@
       
         
         <div class="post">
+          <a href="/lane%20detection/2022/12/15/CLRNet.html">
+            <img class="post_img" src="/assets/images/posts/CLRNet/img1.png">
+            <div class="post_detail"> 
+              <p><b>CLRNet: Cross Layer Refinement Network for Lane Detection</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>特徴抽出したFPN構造の特徴マップを、上位から下位まで複合的に活用する車線検出手法であるCross Layer Refinement Network (CLRNet)を提案</li>
+  <li>CULaneとTuSimpleとLLAMASのデータセットで従来手法を上回る</li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>車線の部分領域と全体を組み合わせて大域的な特徴表現を獲得するROIGatherを使用</li>
+  <li>車線の検出結果に対するIoUとしてLIoU(Line IoU)を定義し、LIoUの最大化を損失関数に含んだ</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/CLRNet/img1.png" alt="" /></li>
+  <li>二次元の点列$𝑃$（レーン事前分布）をネットワークで出力
+    <ul>
+      <li>前景と背景の確率、線の長さ、角度、予測と正解の水平距離</li>
+    </ul>
+  </li>
+  <li>ResNetをBackboneとし、FPN構造から特徴マップ$𝐿_0, 𝐿_1, 𝐿_2$を生成</li>
+  <li>点列$P$と特徴マップ$L$を組み合わせる
+    <ul>
+      <li><img src="/assets/images/posts/CLRNet/img2.png" alt="" /></li>
+      <li>上位から下位の特徴を活用するため</li>
+    </ul>
+  </li>
+  <li>点列Pをもとに特徴マップ$L$をROIAlignで抽出</li>
+  <li>Attentionをとる
+    <ul>
+      <li><img src="/assets/images/posts/CLRNet/img3.png" alt="" /></li>
+      <li><img src="/assets/images/posts/CLRNet/img4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Line IoU Loss
+    <ul>
+      <li>点を別々の変数として扱うため、既存の距離損失を用いると精度が低くなってしまう</li>
+      <li>そこで、車線専用のLossを提案
+        <ul>
+          <li><img src="/assets/images/posts/CLRNet/img5.png" alt="" /></li>
+          <li><img src="/assets/images/posts/CLRNet/img6.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>CULane
+    <ul>
+      <li><img src="/assets/images/posts/CLRNet/img7.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>LLAMAS
+    <ul>
+      <li><img src="/assets/images/posts/CLRNet/img8.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>TuSimple
+    <ul>
+      <li><img src="/assets/images/posts/CLRNet/img9.png" alt="" /></li>
+      <li><img src="/assets/images/posts/CLRNet/img10.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Dec 15, 2022
+                <span class="fa fa-folder"></span> Lane Detection
+                <span class="fa fa-graduation-cap"></span> CVPR (2022)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/lane%20detection/2022/12/14/CondLaneNet.html">
+            <img class="post_img" src="/assets/images/posts/CondLaneNet/img2.png">
+            <div class="post_detail"> 
+              <p><b>CondLaneNet: a Top-to-down Lane Detection Framework Based on Conditional Convolution</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>既存の車線検出は密集線や分岐線のような複雑な場合に苦労している
+    <ul>
+      <li><img src="/assets/images/posts/CondLaneNet/img1.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>車線を検出し、次に各車線の形状を予測する車線検出フレームワークであるCondLaneNetを提案</li>
+  <li>3つのベンチマークデータセットで最先端手法を凌駕</li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>密集線や分岐線などの複雑な車線を検出する問題を克服</li>
+  <li>CULaneでは78.14 F1スコアと220 FPSを達成するなど，精度と効率の両立が可能</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/CondLaneNet/img2.png" alt="" /></li>
+  <li>事前学習済みResNetをBackboneとしてFPNを用いて、マルチスケール特徴を得る
+    <ul>
+      <li>車線は細長いため、文脈特徴の抽出のためにBackboneの最終層にTransformer Encoderを追加
+        <ul>
+          <li><img src="/assets/images/posts/CondLaneNet/img3.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Proposal head
+    <ul>
+      <li>線の始点を予測する
+        <ul>
+          <li>CenterNetに従うが、細長い線は中心を見つけることが難しいため始点</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Recurrent Instance Module
+    <ul>
+      <li><img src="/assets/images/posts/CondLaneNet/img4.png" alt="" /></li>
+      <li>予測した始点の特徴量から動的カーネルパラメータを再帰的に予測</li>
+      <li>密な線や複数の線が同一の始点から始まる場合(ex.分岐)に対応</li>
+    </ul>
+  </li>
+  <li>Conditional shape head
+    <ul>
+      <li>RIMの動的カーネルパラメータを使って畳み込み、マルチスケール特徴から各線の形状を予測
+        <ul>
+          <li><img src="/assets/images/posts/CondLaneNet/img5.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>Location maps：行ごと列ごとに予測</li>
+      <li>Offset maps：行ごとの水平方向の正確な位置を予測</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>可視化
+    <ul>
+      <li>上からCurveLanes、CULane、TuSimple
+        <ul>
+          <li><img src="/assets/images/posts/CondLaneNet/img6.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>CurveLanes
+    <ul>
+      <li><img src="/assets/images/posts/CondLaneNet/img7.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>CULane
+    <ul>
+      <li><img src="/assets/images/posts/CondLaneNet/img8.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>TuSimple
+    <ul>
+      <li><img src="/assets/images/posts/CondLaneNet/img9.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Dec 14, 2022
+                <span class="fa fa-folder"></span> Lane Detection
+                <span class="fa fa-graduation-cap"></span> ICCV (2021)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
+          <a href="/lane%20detection/2022/12/13/LaneATT.html">
+            <img class="post_img" src="/assets/images/posts/LaneATT/img1.png">
+            <div class="post_detail"> 
+              <p><b>Keep your Eyes on the Lane: Real-time Attention-guided Lane Detection</b></p>
+              <p class="post_p"><h1 id=""></h1>
+
+<ul>
+  <li>YOLOv3やSSDのようなアンカーベースのモデルであるLaneATTを提案</li>
+  <li>大域的情報の取得のためにAttentionも使用</li>
+  <li>CULaneとTuSimpleとLLAMASのデータセットで最先端手法を凌駕</li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>高速な学習・推論が可能（250FPSを達成）</li>
+  <li>アンカーベースのAttentionメカニズムは他ドメインでも有用な可能性</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/LaneATT/img1.png" alt="" /></li>
+  <li>画像の境界の1点と方向θで定義される仮想の直線をアンカーと定義する</li>
+  <li>ResNetなどの学習済みCNNで特徴マップを生成</li>
+  <li>アンカーに該当する特徴マップを抽出する</li>
+  <li>抽出した特徴マップ同士でAttentionを取る
+    <ul>
+      <li>局所情報のみだと車で隠れている場合に予測できないため</li>
+    </ul>
+  </li>
+  <li>全結合に通して、クラスラベル（白線、黄線、背景など）とアンカーとの水平距離、長さを予測</li>
+  <li>NMSアルゴリズムを適用</li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>TuSimple
+    <ul>
+      <li><img src="/assets/images/posts/LaneATT/img2.png" alt="" /></li>
+      <li><img src="/assets/images/posts/LaneATT/img3.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>CULane
+    <ul>
+      <li><img src="/assets/images/posts/LaneATT/img4.png" alt="" /></li>
+      <li><img src="/assets/images/posts/LaneATT/img5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>LLAMAS
+    <ul>
+      <li><img src="/assets/images/posts/LaneATT/img6.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>可視化
+    <ul>
+      <li><img src="/assets/images/posts/LaneATT/img7.png" alt="" /></li>
+      <li>青は正解、緑と赤が予測</li>
+      <li>上段がTuSimple、中段がCULane、下段がLLAMAS</li>
+    </ul>
+  </li>
+</ul>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Dec 13, 2022
+                <span class="fa fa-folder"></span> Lane Detection
+                <span class="fa fa-graduation-cap"></span> CVPR (2021)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+        
+        <div class="post">
           <a href="/lane%20detection/2022/12/13/LineNet.html">
-            <img class="post_img" src="/assets/images/posts/LaneDetectionSurvey/img1.png">
+            <img class="post_img" src="/assets/images/posts/LaneDetectionSurvey/img31.png">
             <div class="post_detail"> 
               <p><b>LineNet: a Zoomable CNN for Crowdsourced High Definition Maps Modeling in Urban Environments</b></p>
               <p class="post_p"><h1 id=""></h1>
@@ -218,7 +487,7 @@
         
         <div class="post">
           <a href="/lane%20detection/2022/12/12/LaneDetectionSurvey.html">
-            <img class="post_img" src="/assets/images/posts/LaneDetectionSurvey/img1.png">
+            <img class="post_img" src="/assets/images/posts/LaneDetectionSurvey/img29.png">
             <div class="post_detail"> 
               <p><b>Lane Detection: A Survey with New Results</b></p>
               <p class="post_p"><h1 id=""></h1>
@@ -711,73 +980,6 @@
                 <span class="fa fa-calendar"></span> Oct 17, 2022
                 <span class="fa fa-folder"></span> Object Detection
                 <span class="fa fa-graduation-cap"></span> ICDSC (2018)
-              </p>
-            </div>
-          </a>
-        </div>
-        
-      
-        
-        <div class="post">
-          <a href="/hoi/2022/09/05/EgocentricHOI.html">
-            <img class="post_img" src="/assets/images/posts/EgocentricHOI/5.png">
-            <div class="post_detail"> 
-              <p><b>Egocentric Human-Object Interaction Detection Exploiting Synthetic Data</b></p>
-              <p class="post_p"><h1 id=""></h1>
-
-<p>産業環境（電気基板のテストおよび修理作業）においてHOI検出を行う際に、大量のデータの収集・ラベリングは困難である。そこで、自動的にラベリングされた合成一人称画像を生成するパイプラインとツールを提案する。生成した合成データで事前学習をし、実データでファインチューニングをすることで、実データでのHOI検出の性能を向上させた。</p>
-</p>
-              <p>
-                <span class="fa fa-calendar"></span> Sep 5, 2022
-                <span class="fa fa-folder"></span> HOI
-                <span class="fa fa-graduation-cap"></span> arXiv (2022)
-              </p>
-            </div>
-          </a>
-        </div>
-        
-      
-        
-        <div class="post">
-          <a href="/nerf/2022/08/24/Ref-NeRF.html">
-            <img class="post_img" src="/assets/images/posts/Ref-NeRF/2.png">
-            <div class="post_detail"> 
-              <p><b>Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields</b></p>
-              <p class="post_p"><h1 id=""></h1>
-
-<ul>
-  <li>既存のNeRFは光沢のある表面の外観を正確に再現できない場合が多い</li>
-  <li>そこで、NeRFの視点から色を出力する箇所に手を加えたRef-NeRFを提案</li>
-  <li>鏡面反射の精度を大幅に改善した</li>
-</ul>
-</p>
-              <p>
-                <span class="fa fa-calendar"></span> Aug 24, 2022
-                <span class="fa fa-folder"></span> NeRF
-                <span class="fa fa-graduation-cap"></span> CVPR (2022)
-              </p>
-            </div>
-          </a>
-        </div>
-        
-      
-        
-        <div class="post">
-          <a href="/hoi/2022/08/09/Unary-Pairwise-Transformer.html">
-            <img class="post_img" src="/assets/images/posts/Unary%E2%80%93Pairwise-Transformer/1.png">
-            <div class="post_detail"> 
-              <p><b>Efficient Two-Stage Detection of Human–Object Interactionswith a Novel Unary–Pairwise Transformer</b></p>
-              <p class="post_p"><h1 id=""></h1>
-
-<ul>
-  <li>DETRの出力特徴量にHOI分類用のtransformer層を追加した2段階モデルを提案</li>
-  <li>最新の手法を凌駕し、学習時間とメモリ消費量を大幅に削減</li>
-</ul>
-</p>
-              <p>
-                <span class="fa fa-calendar"></span> Aug 9, 2022
-                <span class="fa fa-folder"></span> HOI
-                <span class="fa fa-graduation-cap"></span> CVPR (2022)
               </p>
             </div>
           </a>
