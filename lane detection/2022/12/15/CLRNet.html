@@ -110,15 +110,21 @@
   <li>ResNetをBackboneとし、FPN構造から特徴マップ$𝐿_0, 𝐿_1, 𝐿_2$を生成</li>
   <li>点列$P$と特徴マップ$L$を組み合わせる
     <ul>
-      <li><img src="/assets/images/posts/CLRNet/img2.png" alt="" /></li>
+      <li>
+\[P_t = P_{t-1} \circ R_t (L_{t-1},P_{t-1})\]
+      </li>
       <li>上位から下位の特徴を活用するため</li>
     </ul>
   </li>
   <li>点列Pをもとに特徴マップ$L$をROIAlignで抽出</li>
   <li>Attentionをとる
     <ul>
-      <li><img src="/assets/images/posts/CLRNet/img3.png" alt="" /></li>
-      <li><img src="/assets/images/posts/CLRNet/img4.png" alt="" /></li>
+      <li>
+\[\mathcal{G} = \mathcal{W}\mathcal{X}^T_f\]
+      </li>
+      <li>
+\[\mathcal{W} = f(\frac{\mathcal{X}^T_p \mathcal{X}_f}{\sqrt{C}})\]
+      </li>
     </ul>
   </li>
   <li>Line IoU Loss
@@ -126,8 +132,12 @@
       <li>点を別々の変数として扱うため、既存の距離損失を用いると精度が低くなってしまう</li>
       <li>そこで、車線専用のLossを提案
         <ul>
-          <li><img src="/assets/images/posts/CLRNet/img5.png" alt="" /></li>
-          <li><img src="/assets/images/posts/CLRNet/img6.png" alt="" /></li>
+          <li>
+\[IoU = \frac{d^\omicron_i}{d^u_i} = \frac{\min(x^p_i+e, x^q_i+e) - \max(x^p_i+e, x^q_i+e)}{\max(x^p_i-e, x^q_i-e) - \min(x^p_i-e, x^q_i-e)}\]
+          </li>
+          <li>
+\[LIoU = \frac{\sum^N_{i=1} d^\omicron_i}{\sum^N_{i=1} d^u_i}\]
+          </li>
         </ul>
       </li>
     </ul>

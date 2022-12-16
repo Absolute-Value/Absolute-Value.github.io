@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-16T18:15:26+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">CLRNet: Cross Layer Refinement Network for Lane Detection</title><link href="http://localhost:4000/lane%20detection/2022/12/15/CLRNet.html" rel="alternate" type="text/html" title="CLRNet: Cross Layer Refinement Network for Lane Detection" /><published>2022-12-15T12:00:00+09:00</published><updated>2022-12-15T12:00:00+09:00</updated><id>http://localhost:4000/lane%20detection/2022/12/15/CLRNet</id><content type="html" xml:base="http://localhost:4000/lane%20detection/2022/12/15/CLRNet.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-16T18:32:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">CLRNet: Cross Layer Refinement Network for Lane Detection</title><link href="http://localhost:4000/lane%20detection/2022/12/15/CLRNet.html" rel="alternate" type="text/html" title="CLRNet: Cross Layer Refinement Network for Lane Detection" /><published>2022-12-15T12:00:00+09:00</published><updated>2022-12-15T12:00:00+09:00</updated><id>http://localhost:4000/lane%20detection/2022/12/15/CLRNet</id><content type="html" xml:base="http://localhost:4000/lane%20detection/2022/12/15/CLRNet.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>特徴抽出したFPN構造の特徴マップを、上位から下位まで複合的に活用する車線検出手法であるCross Layer Refinement Network (CLRNet)を提案</li>
@@ -25,15 +25,21 @@
   <li>ResNetをBackboneとし、FPN構造から特徴マップ$𝐿_0, 𝐿_1, 𝐿_2$を生成</li>
   <li>点列$P$と特徴マップ$L$を組み合わせる
     <ul>
-      <li><img src="/assets/images/posts/CLRNet/img2.png" alt="" /></li>
+      <li>
+\[P_t = P_{t-1} \circ R_t (L_{t-1},P_{t-1})\]
+      </li>
       <li>上位から下位の特徴を活用するため</li>
     </ul>
   </li>
   <li>点列Pをもとに特徴マップ$L$をROIAlignで抽出</li>
   <li>Attentionをとる
     <ul>
-      <li><img src="/assets/images/posts/CLRNet/img3.png" alt="" /></li>
-      <li><img src="/assets/images/posts/CLRNet/img4.png" alt="" /></li>
+      <li>
+\[\mathcal{G} = \mathcal{W}\mathcal{X}^T_f\]
+      </li>
+      <li>
+\[\mathcal{W} = f(\frac{\mathcal{X}^T_p \mathcal{X}_f}{\sqrt{C}})\]
+      </li>
     </ul>
   </li>
   <li>Line IoU Loss
@@ -41,8 +47,12 @@
       <li>点を別々の変数として扱うため、既存の距離損失を用いると精度が低くなってしまう</li>
       <li>そこで、車線専用のLossを提案
         <ul>
-          <li><img src="/assets/images/posts/CLRNet/img5.png" alt="" /></li>
-          <li><img src="/assets/images/posts/CLRNet/img6.png" alt="" /></li>
+          <li>
+\[IoU = \frac{d^\omicron_i}{d^u_i} = \frac{\min(x^p_i+e, x^q_i+e) - \max(x^p_i+e, x^q_i+e)}{\max(x^p_i-e, x^q_i-e) - \min(x^p_i-e, x^q_i-e)}\]
+          </li>
+          <li>
+\[LIoU = \frac{\sum^N_{i=1} d^\omicron_i}{\sum^N_{i=1} d^u_i}\]
+          </li>
         </ul>
       </li>
     </ul>
