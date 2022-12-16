@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>LineNet: a Zoomable CNN for Crowdsourced High Definition Maps Modeling in Urban Environments</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/LaneDetectionSurvey/img1.png" class="hero">
+    <h1>LineNet: a Zoomable CNN for Crowdsourced High Definition Maps Modeling in Urban Environments</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/1807.05696"> https://arxiv.org/abs/1807.05696</a></p>
+    <p><span class="fa fa-calendar"></span> Dec 13, 2022</p>
+    <p><span class="fa fa-flag"></span> Lane Detection, </p>
+    <p><span class="fa fa-graduation-cap"></span> arXiv (2018) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=LineNet: a Zoomable CNN for Crowdsourced High Definition Maps Modeling in Urban Environments&url=https://absolute-value.github.io/lane%20detection/2022/12/13/LineNet.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/lane%20detection/2022/12/13/LineNet.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/lane%20detection/2022/12/13/LineNet.html&title=LineNet: a Zoomable CNN for Crowdsourced High Definition Maps Modeling in Urban Environments" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=LineNet: a Zoomable CNN for Crowdsourced High Definition Maps Modeling in Urban Environments&body=LineNet: a Zoomable CNN for Crowdsourced High Definition Maps Modeling in Urban Environments https://absolute-value.github.io/lane%20detection/2022/12/13/LineNet.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>現在のCNNを用いた車線検出の研究はセグメンテーションに限定されており、直感的でなく不正確である</li>
+  <li>HDマップのモデリングのために、LP層とZoomモジュールを持つCNN手法のLineNetを提案</li>
+  <li>車線検出用のデータセットTTLaneを紹介</li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>LineNetとTTLaneを組み合わせることで、HDマップのモデリングを行うパイプラインを初めて提案</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>Line Prediction(LP)層
+    <ul>
+      <li>車線の位置決めと分類のために設計された追加層</li>
+      <li>Mask、Position、Direction、Confidence、Distance、Typeの6つのブランチがある
+        <ul>
+          <li><img src="/assets/images/posts/LaneDetectionSurvey/img30.png" alt="" /></li>
+          <li>Mask
+            <ul>
+              <li>一定の幅（32pixel）で描かれたストローク</li>
+            </ul>
+          </li>
+          <li>Position
+            <ul>
+              <li>アンカーポイントから線への最小距離のベクトル</li>
+            </ul>
+          </li>
+          <li>Direction
+            <ul>
+              <li>車線の向き</li>
+            </ul>
+          </li>
+          <li>Confidence
+            <ul>
+              <li>ネットワークが車線を見れているかの信頼度</li>
+            </ul>
+          </li>
+          <li>Distance
+            <ul>
+              <li>アンカーポイントから線への最小距離の長さ</li>
+            </ul>
+          </li>
+          <li>Type
+            <ul>
+              <li>6種類のマーキング（白実線、白破線、黄実線、黄破線、二重線、その他）</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Zoomモジュール
+    <ul>
+      <li><img src="/assets/images/posts/LaneDetectionSurvey/img31.png" alt="" /></li>
+      <li>ネットワーク構造を変えずに、視野を任意のサイズに変更できる</li>
+      <li>サムネイルCNNと高解像度トリミングCNNに分割
+        <ul>
+          <li>2つのCNNは重みを共有する</li>
+          <li>サムネイルCNN
+            <ul>
+              <li>グローバル特徴を獲得</li>
+            </ul>
+          </li>
+          <li>高解像度トリミングCNN
+            <ul>
+              <li>詳細に「見る」</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>インジェクション層で2つのCNNの特徴を融合</li>
+      <li>LP層で確信度が低い領域についてZoomモジュールを複数回適用する
+        <ul>
+          <li><img src="/assets/images/posts/LineNet/img1.png" alt="" /></li>
+          <li>0.5~16倍まで</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>まだ不連続な点のため、DBSCANでクラスタリング</li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>定量評価
+    <ul>
+      <li><img src="/assets/images/posts/LineNet/img2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>定性評価
+    <ul>
+      <li><img src="/assets/images/posts/LineNet/img3.png" alt="" /></li>
+      <li>(a)原画像 (b)(c)正解 (d)SCNN (e)Mask E-CNN (f)MLD-CRF (g)LineNet</li>
+      <li>LineNetは二重線検出や複雑なシーンにも強い</li>
+    </ul>
+  </li>
+  <li>HD地図モデリング
+    <ul>
+      <li><img src="/assets/images/posts/LineNet/img4.png" alt="" /></li>
+      <li><img src="/assets/images/posts/LineNet/img5.png" alt="" /></li>
+      <li>車線の平均誤差がGPSの5mから31.3cmへと大幅に改善</li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

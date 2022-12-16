@@ -26,250 +26,64 @@
     </header>
     <!DOCTYPE html>
 <html>
-  <title>Keisuke Jikuya</title>
+  <title>Lane Detection: A Survey with New Results</title>
   <head>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="/assets/css/posts.css">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
   </head>
   <body>
-    <div class="top-wrapper">
-      <div class="container">
-        <a href=""><img class="icon" src="/assets/images/kei.png"></a>
-        <h1>Keisuke Jikuya</h1>
-        <div class="btn-wrapper">
-          <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="btn email"><span class="fa fa-envelope fa-2x"></span></a>
-          <a href="https://twitter.com/jky_kei" class="btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
-          <a href="https://github.com/Absolute-Value" class="btn github"><span class="fa fa-github fa-2x"></span></a>
-        </div>
-      </div>
+    <img src="/assets/images/posts/LaneDetectionSurvey/img1.png" class="hero">
+    <h1>Lane Detection: A Survey with New Results</h1>
+    <p><span class="fa fa-link"></span><a href="https://link.springer.com/article/10.1007/s11390-020-0476-4"> https://link.springer.com/article/10.1007/s11390-020-0476-4</a></p>
+    <p><span class="fa fa-calendar"></span> Dec 12, 2022</p>
+    <p><span class="fa fa-flag"></span> Lane Detection, </p>
+    <p><span class="fa fa-graduation-cap"></span> JCST (2020) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Lane Detection: A Survey with New Results&url=https://absolute-value.github.io/lane%20detection/2022/12/12/LaneDetectionSurvey.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/lane%20detection/2022/12/12/LaneDetectionSurvey.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/lane%20detection/2022/12/12/LaneDetectionSurvey.html&title=Lane Detection: A Survey with New Results" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Lane Detection: A Survey with New Results&body=Lane Detection: A Survey with New Results https://absolute-value.github.io/lane%20detection/2022/12/12/LaneDetectionSurvey.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
     </div>
-    <head>
-  <style>
-    .bachelor:hover {
-      color: #365CA3;
-    }
-
-    .labo:hover {
-      color: #FF5126;
-    }
-
-    .other:hover {
-      color: #42b983;
-    }
-  </style>
-</head>
-
-<p><a id="Profile"></a></p>
-<h1 id="自己紹介--profile">自己紹介 | Profile</h1>
-
-<h2 id="経歴--history">経歴 | History</h2>
-<p>2022.04 - 現在: <a href="http://gnst.gifu-u.ac.jp/intellscieng/" class="master">岐阜大学 自然科学技術研究科 知能理工学専攻 知能情報学領域</a><br />
-2018.04 - 2022.03: <a href="http://www.eng.gifu-u.ac.jp/jyouhou/" class="bachelor">岐阜大学 工学部 電気電子・情報工学科 情報コース</a></p>
-
-<p>2022.04 - current: <a href="http://gnst.gifu-u.ac.jp/intellscieng/" class="master">Master of Engineering, Department of Information Science, Graduate School of Engineering, Gifu University</a><br />
-2018.04 - 2022.03: <a href="http://www.eng.gifu-u.ac.jp/jyouhou/" class="bachelor">Bachelor of Engineering. Department of Information Science, Faculty of Engineering, Gifu University</a></p>
-
-<h2 id="研究室--laboratory">研究室 | Laboratory</h2>
-<p>〒501-1193<br />
-岐阜県岐阜市柳戸1-1<br />
-<a href="http://www.cv.info.gifu-u.ac.jp/" class="labo">岐阜大学 工学部 電気電子・情報工学科 加藤研究室</a></p>
-
-<h2 id="発表--publication">発表 | Publication</h2>
-<h3 id="国内学会--domestic-conference">国内学会 | Domestic Conference</h3>
-<p><a href="https://confit.atlas.jp/guide/event/ssii2022/subject/IS2-19/tables?cryptoId=" class="other"><u>軸屋敬介</u>，加藤邦人，”複雑背景下での対象領域を考慮した異常検知”，第28回画像センシングシンポジウム SSII2022，IS2-19，2022.6.9</a></p>
-
-<h2 id="スキル--skills">スキル | Skills</h2>
-<ul>
-  <li><img src="https://design-goo.com/wp-content/uploads/2022/08/Python_logo_and_wordmark.svg_.png" height="26" />
-    <ul>
-      <li>最も使用している言語です．<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python" class="bachelor"><b>繰り返しの作業の自動化</b></a>や<a href="https://github.com/Absolute-Value/python-GUI"><b>GUIソフトの制作</b></a>，<a href="https://github.com/Absolute-Value/Cloth-Anomaly-Detection-pytorch" class="labo"><b>Deep Learning</b></a>で使用しています．</li>
-    </ul>
-  </li>
-  <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/PyTorch_logo_black.svg/1280px-PyTorch_logo_black.svg.png" height="18" />
-    <ul>
-      <li><a href="https://github.com/Absolute-Value/Cloth-Anomaly-Detection-pytorch" class="labo"><b>Deep Learning</b></a>で使用しているライブラリです．Tensorflowと比べて柔軟な実装が可能で最新手法の公開が早いです．Tensorflowもある程度使用できます．</li>
-    </ul>
-  </li>
-  <li><img src="https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-course-photos.s3.amazonaws.com/0a/8cd7f1b14344618b75142593bc7af8/JavaCupLogo800x800.png?auto=format%2Ccompress&amp;dpr=1" height="30" />Java
-    <ul>
-      <li>シューティングゲームを作成しました．</li>
-      <li><img src="/assets/images/FiShooting.png" height="300" /></li>
-      <li>Androidアプリの<a href="https://github.com/Absolute-Value/ToDoCalendar" class="other"><b>TODOリスト付きカレンダー</b></a>も作成しました．</li>
-    </ul>
-  </li>
-  <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Unity_2021.svg/1200px-Unity_2021.svg.png" height="25" />
-    <ul>
-      <li>VRで蕎麦運びをするゲームとデバイスを作りました．</li>
-      <li><img src="/assets/images/VR.png" height="300" /></li>
-    </ul>
-  </li>
-  <li>htmlとCSS
-    <ul>
-      <li>本ページはjekyllを用いて、既存のテーマに頼らずhtmlとCSSから作成しました．</li>
-    </ul>
-  </li>
-  <li><img src="https://japan.xilinx.com/content/xilinx/ja/products/design-tools/embedded-software/ubuntu/_jcr_content/root/parsysFullWidth/xilinxflexibleslab/xilinxflexibleslab-parsys/xilinxcolumns_149128/childParsys-2/xilinximage.img.png/1644358907679.png" height="20" /> Ubuntu
-    <ul>
-      <li>GPUノード用のOSです．無料なのに色々できて便利です．</li>
-      <li>最近は<a href="https://github.com/Absolute-Value/gpu-setup-20.04" class="other"><b>セットアップ</b></a>や修理をしています．</li>
-    </ul>
-  </li>
-  <li><img src="https://prtimes.jp/i/87890/2/origin/d87890-2-d4d26778877735a3722d-0.png" height="26" />
-    <ul>
-      <li>GPUノードの個別の環境構築に使用しています．</li>
-      <li>これまでよくわからず使っていましたが，最近はお友達になりました．リポジトリはセキュリティの関係で非公開です．</li>
-    </ul>
-  </li>
-</ul>
-
-    <h1>Recent Posts</h1>
-    <div class="myposts">
-      
-      
-        
-          
-            <div class="post">
-              <a href="/lane%20detection/2022/12/13/LineNet.html">
-                <img class="post_img" src="/assets/images/posts/LaneDetectionSurvey/img1.png">
-                <div class="post_detail">
-                  <p>
-                    <b>LineNet: a Zoomable CNN for Crowdsourced High Definition Maps Modeling in Urban Environments</b>
-                  </p>
-                  <p><h1 id=""></h1>
-
-<ul>
-  <li>現在のCNNを用いた車線検出の研究はセグメンテーションに限定されており、直感的でなく不正確である</li>
-  <li>HDマップのモデリングのために、LP層とZoomモジュールを持つCNN手法のLineNetを提案</li>
-  <li>車線検出用のデータセットTTLaneを紹介</li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>LineNetとTTLaneを組み合わせることで、HDマップのモデリングを行うパイプラインを初めて提案</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li>Line Prediction(LP)層
-    <ul>
-      <li>車線の位置決めと分類のために設計された追加層</li>
-      <li>Mask、Position、Direction、Confidence、Distance、Typeの6つのブランチがある
-        <ul>
-          <li><img src="/assets/images/posts/LaneDetectionSurvey/img30.png" alt="" /></li>
-          <li>Mask
-            <ul>
-              <li>一定の幅（32pixel）で描かれたストローク</li>
-            </ul>
-          </li>
-          <li>Position
-            <ul>
-              <li>アンカーポイントから線への最小距離のベクトル</li>
-            </ul>
-          </li>
-          <li>Direction
-            <ul>
-              <li>車線の向き</li>
-            </ul>
-          </li>
-          <li>Confidence
-            <ul>
-              <li>ネットワークが車線を見れているかの信頼度</li>
-            </ul>
-          </li>
-          <li>Distance
-            <ul>
-              <li>アンカーポイントから線への最小距離の長さ</li>
-            </ul>
-          </li>
-          <li>Type
-            <ul>
-              <li>6種類のマーキング（白実線、白破線、黄実線、黄破線、二重線、その他）</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Zoomモジュール
-    <ul>
-      <li><img src="/assets/images/posts/LaneDetectionSurvey/img31.png" alt="" /></li>
-      <li>ネットワーク構造を変えずに、視野を任意のサイズに変更できる</li>
-      <li>サムネイルCNNと高解像度トリミングCNNに分割
-        <ul>
-          <li>2つのCNNは重みを共有する</li>
-          <li>サムネイルCNN
-            <ul>
-              <li>グローバル特徴を獲得</li>
-            </ul>
-          </li>
-          <li>高解像度トリミングCNN
-            <ul>
-              <li>詳細に「見る」</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>インジェクション層で2つのCNNの特徴を融合</li>
-      <li>LP層で確信度が低い領域についてZoomモジュールを複数回適用する
-        <ul>
-          <li><img src="/assets/images/posts/LineNet/img1.png" alt="" /></li>
-          <li>0.5~16倍まで</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>まだ不連続な点のため、DBSCANでクラスタリング</li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>定量評価
-    <ul>
-      <li><img src="/assets/images/posts/LineNet/img2.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>定性評価
-    <ul>
-      <li><img src="/assets/images/posts/LineNet/img3.png" alt="" /></li>
-      <li>(a)原画像 (b)(c)正解 (d)SCNN (e)Mask E-CNN (f)MLD-CRF (g)LineNet</li>
-      <li>LineNetは二重線検出や複雑なシーンにも強い</li>
-    </ul>
-  </li>
-  <li>HD地図モデリング
-    <ul>
-      <li><img src="/assets/images/posts/LineNet/img4.png" alt="" /></li>
-      <li><img src="/assets/images/posts/LineNet/img5.png" alt="" /></li>
-      <li>車線の平均誤差がGPSの5mから31.3cmへと大幅に改善</li>
-    </ul>
-  </li>
-</ul>
-</p>
-                  <p>
-                    <span class="fa fa-calendar"></span> Dec 13, 2022
-                    <span class="fa fa-folder"></span> Lane Detection
-                    <span class="fa fa-graduation-cap"></span> arXiv (2018)
-                  </p>
-                </div>
-              </a>
-            </div>
-            
-          
-        
-      
-        
-          
-            <div class="post">
-              <a href="/lane%20detection/2022/12/12/LaneDetectionSurvey.html">
-                <img class="post_img" src="/assets/images/posts/LaneDetectionSurvey/img1.png">
-                <div class="post_detail">
-                  <p>
-                    <b>Lane Detection: A Survey with New Results</b>
-                  </p>
-                  <p><h1 id=""></h1>
+    <h1 id="概要">概要</h1>
 
 <ul>
   <li>視覚に基づく車線検出のデータセット、深層学習を用いた手法の比較</li>
@@ -672,225 +486,10 @@
     </ul>
   </li>
 </ul>
-</p>
-                  <p>
-                    <span class="fa fa-calendar"></span> Dec 12, 2022
-                    <span class="fa fa-folder"></span> Lane Detection
-                    <span class="fa fa-graduation-cap"></span> JCST (2020)
-                  </p>
-                </div>
-              </a>
-            </div>
-            
-          
-        
-      
-        
-          
-            <div class="post">
-              <a href="/hoi/2022/11/29/OFA.html">
-                <img class="post_img" src="/assets/images/posts/OFA/OFA.png">
-                <div class="post_detail">
-                  <p>
-                    <b>OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework</b>
-                  </p>
-                  <p><h1 id=""></h1>
 
-<ul>
-  <li>包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案
-    <ul>
-      <li>Text2Image, Visual Grounding, VQA, Image Caption, Image Classification, language modeling</li>
-    </ul>
-  </li>
-  <li>一般に公開されている2000万件の画像テキストペアのデータセットで事前学習</li>
-  <li>自然言語理解（RoBERTa、ELECTRA、DeBERTa）
-自然言語生成（UniLM、Pegasus、 ProphetNet）
-画像分類（MoCo-v3、BEiT、MAE）と同等のパフォーマンスを達成</li>
-  <li>未学習のタスクにも移行できる</li>
-</ul>
-</p>
-                  <p>
-                    <span class="fa fa-calendar"></span> Nov 29, 2022
-                    <span class="fa fa-folder"></span> HOI
-                    <span class="fa fa-graduation-cap"></span> ICML (2022)
-                  </p>
-                </div>
-              </a>
-            </div>
-            
-          
-        
-      
-        
-          
-            
-    </div>
     <div class="btn-wrapper">
-      <a href="/posts" class="btn back_btn">View more</a>
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
     </div>
-
-    <h1>Recent Notes</h1>
-    <div class="myposts">
-      
-      
-      
-        
-      
-        
-      
-        
-          
-            <div class="post">
-              <a href="/notes/Jekyll.html">
-                <img class="post_img" src="http://jekyllrb-ja.github.io/img/logo-2x.png">
-                <div class="post_detail">
-                  <p>
-                    <b>Jekyll ホームページ 個人的メモ</b>
-                  </p>
-                  <p>Jekyll関連で役に立ちそうな個人的メモです。</p>
-                  <p>
-                    <span class="fa fa-calendar"></span> Nov 20, 2022<span style="color: blue; "> (Updated)</span>
-                    <span class="fa fa-flag"></span> Memo, Jekyll, 
-                  </p>
-                </div>
-              </a>
-            </div>
-            
-          
-        
-      
-        
-          
-            <div class="post">
-              <a href="/notes/tmux.html">
-                <img class="post_img" src="/assets/images/notes/tmux/tmux.png">
-                <div class="post_detail">
-                  <p>
-                    <b>tmux 個人的メモ</b>
-                  </p>
-                  <p>tmuxに役立ちそうな個人的メモです。</p>
-                  <p>
-                    <span class="fa fa-calendar"></span> Nov 17, 2022
-                    <span class="fa fa-flag"></span> Memo, tmux, 
-                  </p>
-                </div>
-              </a>
-            </div>
-            
-          
-        
-      
-        
-          
-            <div class="post">
-              <a href="/notes/CondaEnv.html">
-                <img class="post_img" src="https://www.python.jp/install/anaconda.png">
-                <div class="post_detail">
-                  <p>
-                    <b>Anaconda 環境構築 個人的メモ</b>
-                  </p>
-                  <p>Anacondaの環境構築に役立ちそうな個人的メモです。</p>
-                  <p>
-                    <span class="fa fa-calendar"></span> Nov 17, 2022<span style="color: blue; "> (Updated)</span>
-                    <span class="fa fa-flag"></span> Memo, Anaconda, 
-                  </p>
-                </div>
-              </a>
-            </div>
-            
-          
-        
-      
-        
-          
-            
-    </div>
-    <div class="btn-wrapper">
-      <a href="/notes" class="btn back_btn">View more</a>
-    </div>
-
-    <h1>Recent Blogs</h1>
-    <div class="myposts">
-      
-      
-      
-        
-          
-            <div class="post">
-              <a href="/blogs/Tetris2.html">
-                <img class="post_img" src="/assets/images/blogs/tetris/mine.png">
-                <div class="post_detail">
-                  <p>
-                    <b>テトリス2</b>
-                  </p>
-                  <p><span style="color: #42b983;">[遊べます！] </span>ChatGPTに作ってもらったテトリスを修正しました。<br><span style="color: Red;">[更新] 次に落ちてくるブロックを表示するようにしました！</span></p>
-                  <p>
-                    <span class="fa fa-calendar"></span> Dec 3, 2022
-                    <span class="fa fa-flag"></span> JavaScript, 
-                  </p>
-                </div>
-              </a>
-            </div>
-            
-          
-        
-      
-        
-          
-            <div class="post">
-              <a href="/blogs/Tetris.html">
-                <img class="post_img" src="https://image.itmedia.co.jp/news/articles/2212/01/l_tm1636144_2212012_1_w490.jpg">
-                <div class="post_detail">
-                  <p>
-                    <b>テトリス</b>
-                  </p>
-                  <p>JavaScriptでテトリスをChatGPTに作ってもらいました</p>
-                  <p>
-                    <span class="fa fa-calendar"></span> Dec 2, 2022
-                    <span class="fa fa-flag"></span> JavaScript, 
-                  </p>
-                </div>
-              </a>
-            </div>
-            
-          
-        
-      
-        
-      
-        
-      
-        
-          
-            <div class="post">
-              <a href="/blogs/prime-factorization.html">
-                <img class="post_img" src="/assets/images/note.jpg">
-                <div class="post_detail">
-                  <p>
-                    <b>素因数分解プログラム</b>
-                  </p>
-                  <p>素因数分解を様々なプログラミング言語で実装しました</p>
-                  <p>
-                    <span class="fa fa-calendar"></span> Sep 4, 2022
-                    <span class="fa fa-flag"></span> python, java, c, 
-                  </p>
-                </div>
-              </a>
-            </div>
-            
-          
-        
-      
-        
-      
-        
-          
-            
-    </div>
-    <div class="btn-wrapper">
-      <a href="/blogs" class="btn back_btn">View more</a>
-    </div>
-    
   </body>
 </html>
     <footer>

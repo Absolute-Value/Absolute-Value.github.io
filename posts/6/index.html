@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <div class="top-wrapper">
+      <div class="container">
+        <h1> Posts | 6</h1>
+        <p>読んだ論文をまとめておく場所です</p>
+      </div>
+    </div>
+    <!DOCTYPE html>
+<html>
+  <title> Posts | 6</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/posts.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    
+    <div class="myposts">
+      
+        
+        <div class="post">
+          <a href="/anomaly%20detection/2021/07/14/SSIM-AE.html">
+            <img class="post_img" src="https://media.arxiv-vanity.com/render-output/5811705/SSIM_L2_COMPARISON.png">
+            <div class="post_detail"> 
+              <p><b>Improving Unsupervised Defect Segmentation by Applying Structural Similarity to Autoencoders</b></p>
+              <p class="post_p"><h2 id="1-どんなもの"></h2>
+<!-- ・貢献等 100-200字程度 -->
+<p>通常の畳み込みオートエンコーダで使用されるピクセルLossは位置ズレに弱く、強度の値が一定の場合に弱い。<br />
+そこで、輝度、コントラスト、構造情報を考慮した構造的類似性(SSIM)Lossを代わりに使用した。</p>
+</p>
+              <p>
+                <span class="fa fa-calendar"></span> Jul 14, 2021
+                <span class="fa fa-folder"></span> Anomaly Detection
+                <span class="fa fa-graduation-cap"></span> VISAPP (2019)
+              </p>
+            </div>
+          </a>
+        </div>
+        
+      
+    </div>
+    
+    <div class="btn-wrapper">
+      
+      <a href="/posts" class="btn back_btn previous"><<<</a>
+      <a href="/posts/5/" class="btn back_btn previous"><</a>
+      
+      
+    
+    </div>
+  </body>
+</html>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><span class="fa fa-envelope fa-2x"></span></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter"><span class="fa fa-twitter fa-2x"></span></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github"><span class="fa fa-github fa-2x"></span></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
