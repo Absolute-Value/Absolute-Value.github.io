@@ -1,6 +1,6 @@
 a {
   text-decoration: none;
-  color: black;
+  /* color: black; */
 }
 
 li {
@@ -17,7 +17,7 @@ li {
 }
 
 .post {
-  background-color: whitesmoke;
+  background-color: var(--entry);
   padding: 12px;
   margin-top: 10px;
   width: 100%;
@@ -36,7 +36,7 @@ li {
 }
 
 .post_detail:hover {
-  color: darkblue;
+  color: #42b983;
 }
 
 .post_img {
