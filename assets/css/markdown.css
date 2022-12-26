@@ -55,7 +55,7 @@ table {
 }
 
 .table-of-contents-h1 {
-  background-color: #e8e8e8;
+  background-color: var(--entry);
   margin: 15px 5% 0 5%;
   padding: 5px 1% 0 1%;
 }
@@ -66,7 +66,7 @@ table {
 }
 
 .section-nav {
-  background-color: #e8e8e8;
+  background-color: var(--entry);
   margin: 0 5% 15px 5%;
   padding: 0 1% 15px 1%;
   /* border: 3px solid #e8e8e8; */
