@@ -77,6 +77,10 @@
 <li class="toc-entry toc-h2"><a href="#表示させたいページのmarkdownの編集-1">表示させたいページのmarkdownの編集</a></li>
 <li class="toc-entry toc-h2"><a href="#表示させたいページのhtmlの編集-1">表示させたいページのhtmlの編集</a></li>
 <li class="toc-entry toc-h2"><a href="#cssの変更">CSSの変更</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ダークモード">ダークモード</a>
+<ul>
 <li class="toc-entry toc-h2"><a href="#その他の設定">その他の設定</a></li>
 </ul>
 </li>
@@ -102,7 +106,7 @@
 <h1 id="jekyllの起動">Jekyllの起動</h1>
 
 <p>ローカルでサーバーを立ち上げる時</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>jekyll serve
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>jekyll server
 </code></pre></div></div>
 
 <p>サイトをプロダクションとして生成する時</p>
@@ -277,6 +281,31 @@ git add <span class="nb">.</span>
   <span class="nl">border-radius</span><span class="p">:</span> <span class="m">3px</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
+
+<h1 id="ダークモード">ダークモード</h1>
+
+<p>ダークモードには「メディアクエリ，クラス指定，CSS変数」の3つが存在しますが，<br />
+本ホームページではJavaScriptを利用したクラス指定により，ダークモードを実現しています．</p>
+
+<p>cssは以下のようになります．JavaScriptは<a href="https://github.com/Absolute-Value/Portfolio/blob/main/assets/js/darkmode.js"><b>コチラ</b></a>を参照</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.light-theme</span> <span class="p">{</span>
+  <span class="c">/* 通常モードで指定したい色 */</span>
+  <span class="py">--theme</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.dark-theme</span> <span class="p">{</span>
+  <span class="c">/* ダークモードで指定したい色 */</span>
+  <span class="py">--theme</span><span class="p">:</span> <span class="nb">rgb</span><span class="p">(</span><span class="m">29</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="m">32</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nt">body</span> <span class="p">{</span>
+  <span class="c">/* varで上で指定した色を持ってくる */</span>
+  <span class="nl">background</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--theme</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>他のページへ移動するとダークモードが戻ってしまうバグを修正しました（2023/02/10）</p>
 
 <h2 id="その他の設定">その他の設定</h2>
 

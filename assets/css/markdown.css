@@ -5,6 +5,10 @@ h1, h2, h3, h4, p, ul, .hero, table, .highlight {
   padding-right: 1%;
 }
 
+a:hover {
+  color: #42b983;
+}
+
 img {
   max-width: 90%;
 }
