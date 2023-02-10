@@ -25,12 +25,20 @@ th {
   color: white;
 }
 
+.dark-theme th {
+  background-color: #044;
+}
+
 tr:nth-of-type(even) {
   background-color: #f3f3f3;
 }
 
+.dark-theme tr:nth-of-type(even) {
+  background-color: #333333;
+}
+
 table {
-  border-collapse:  collapse; /* セルの線を重ねる */
+  border-collapse: collapse; /* セルの線を重ねる */
 }
 
 .highlight table {
