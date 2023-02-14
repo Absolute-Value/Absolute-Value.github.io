@@ -1,3 +1,3 @@
-[ホームページ](https://absolute-value.github.io/)を作成するためのリポジトリです。
+[ホームページ](https://absolute-value.github.io/)の動作用リポジトリです。
 
-動作用は[こちら](https://github.com/Absolute-Value/Absolute-Value.github.io)
+作成用は[こちら](https://github.com/Absolute-Value/Portfolio)
