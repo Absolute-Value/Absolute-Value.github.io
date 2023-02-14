@@ -101,7 +101,7 @@
     <div id="markdown-content">
       <h1 id="はじめに">はじめに</h1>
 
-<p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/">退屈なことはPythonにやらせよう Automate the boring stuff with python</a>」（原書名『<a href="https://www.nostarch.com/automatestuff">Automate the Boring Stuff with Python</a>』）のpythonプログラムの実装の続き（9章）です．</p>
+<p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/" target="_blank">退屈なことはPythonにやらせよう Automate the boring stuff with python</a>」（原書名『<a href="https://www.nostarch.com/automatestuff" target="_blank">Automate the Boring Stuff with Python</a>』）のpythonプログラムの実装の続き（9章）です．</p>
 
 <p>これまで：<br />
 <a href="/blogs/python-boring-1">退屈なことはPythonにやらせよう①</a><br />
@@ -115,7 +115,7 @@
 過去のバージョンを残すために連番が付くようにする<br />
 引数 “&lt;folder&gt;“： フォルダを指定</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.4_BackupToZip.py">9.4_BackupToZip.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.4_BackupToZip.py" target="_blank">9.4_BackupToZip.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">zipfile</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">sys</span>
 
 <span class="c1"># クリップボードの内容を保存
@@ -171,14 +171,14 @@ Origin.txt
 Generated.txt
 Done.
 </span></code></pre></div></div>
-<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08">08</a>の中身を丸ごと、zipファイルにすることができました</p>
+<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08" target="_blank">08</a>の中身を丸ごと、zipファイルにすることができました</p>
 
 <h2 id="97-演習">9.7 演習</h2>
 <h3 id="971選択コピー">9.7.1　選択コピー</h3>
 <p>ディレクトリツリーを渡り歩いて、.pdfや.jpgなどの特定の拡張子のファイルを見つけて、新しいフォルダにコピーする<br />
 引数 “&lt;folder&gt; &lt;extention&gt;“： コピーするフォルダと拡張子</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.1_SelectCopy.py">9.7.1_SelectCopy.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.1_SelectCopy.py" target="_blank">9.7.1_SelectCopy.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">shutil</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">sys</span>
 
 <span class="c1"># クリップボードの内容を保存
@@ -219,7 +219,7 @@ Making folder: ./08
 Copy file: ./08/8.10.2_CompositionGenerator.py
 Done.
 </span></code></pre></div></div>
-<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08">08</a>の中の .py ファイルをコピーすることができました</p>
+<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08" target="_blank">08</a>の中の .py ファイルをコピーすることができました</p>
 
 <h3 id="972-巨大なフォイルを探す">9.7.2 巨大なフォイルを探す</h3>
 <p>ディレクトリツリーを渡り歩いて、サイズの大きなサイズのフォルダを探し出す<br />
@@ -227,7 +227,7 @@ Done.
 引数 “&lt;folder&gt; &lt;size&gt;“： サイズも指定<br />
 引数 “&lt;folder&gt; &lt;size&gt; &lt;unit&gt;“： 単位も指定(B,KB,MB,GB)</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.2_SearchLargeFile.py">9.7.2_SearchLargeFile.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.2_SearchLargeFile.py" target="_blank">9.7.2_SearchLargeFile.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span><span class="p">,</span> <span class="n">sys</span>
 
 <span class="c1"># クリップボードの内容を保存
@@ -265,7 +265,7 @@ Done.
     <span class="n">search_file</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 </code></pre></div></div>
 
-<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08">08</a>の中で、1KBを超えているファイルを探します</p>
+<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08" target="_blank">08</a>の中で、1KBを超えているファイルを探します</p>
 
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 9.7.2_SearchLargeFile.py ../08 1 KB
 <span class="go">./08/8.7_MultiClipBoard.py : 1.24 KB
@@ -279,7 +279,7 @@ Done.
 <h3 id="973-飛びつき連番の作成">9.7.3 飛びつき連番の作成</h3>
 <p>9.7.3.1の準備用に番号の飛んだ連番を作成する</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.3_Prepare.py">9.7.3_Prepare.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.3_Prepare.py" target="_blank">9.7.3_Prepare.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
 
 <span class="k">def</span> <span class="nf">prepare_serial_number</span><span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="s">'Files'</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="s">'spam'</span><span class="p">):</span>
@@ -323,7 +323,7 @@ spam023.txt
 <h3 id="9731-連番の飛びを埋める">9.7.3.1 連番の飛びを埋める</h3>
 <p>指定した接頭語を持つ連番ファイルを探し出し、連番が飛んでいる箇所を見つけ、後に続くファイルの名前を変更する</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.3.1_FillSerialNumber.py">9.7.3.1_FillSerialNumber.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.3.1_FillSerialNumber.py" target="_blank">9.7.3.1_FillSerialNumber.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span><span class="p">,</span> <span class="n">os</span>
 
 <span class="k">def</span> <span class="nf">fill_searial_number</span><span class="p">(</span><span class="n">folder</span><span class="o">=</span><span class="s">'Files'</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="s">'spam'</span><span class="p">):</span>
@@ -386,7 +386,7 @@ Files/spam023.txt Files/spam020.txt
 <h3 id="9732-連番の隙間を開ける9731の逆">9.7.3.2 連番の隙間を開ける(9.7.3.1の逆)</h3>
 <p>連番ファイルの間に隙間を開けて、他の連番ファイルを入れられるようにする</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.3.2_ExpandSerialNumber.py">9.7.3.2_ExpandSerialNumber.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/09/9.7.3.2_ExpandSerialNumber.py" target="_blank">9.7.3.2_ExpandSerialNumber.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span><span class="p">,</span> <span class="n">os</span>
 
 <span class="k">def</span> <span class="nf">expand_serial_number</span><span class="p">(</span><span class="n">expand_num</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s">'Files'</span><span class="p">,</span> <span class="n">head</span><span class="o">=</span><span class="s">'spam'</span><span class="p">):</span>

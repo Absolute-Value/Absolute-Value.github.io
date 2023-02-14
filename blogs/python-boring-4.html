@@ -109,7 +109,7 @@
     <div id="markdown-content">
       <h1 id="はじめに">はじめに</h1>
 
-<p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/">退屈なことはPythonにやらせよう Automate the boring stuff with python</a>」（原書名『<a href="https://www.nostarch.com/automatestuff">Automate the Boring Stuff with Python</a>』）のpythonプログラムの実装の続き（10・11章）です．</p>
+<p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/" target="_blank">退屈なことはPythonにやらせよう Automate the boring stuff with python</a>」（原書名『<a href="https://www.nostarch.com/automatestuff" target="_blank">Automate the Boring Stuff with Python</a>』）のpythonプログラムの実装の続き（10・11章）です．</p>
 
 <p>これまで：<br />
 <a href="/blogs/python-boring-1">退屈なことはPythonにやらせよう①</a><br />
@@ -123,7 +123,7 @@
 <h3 id="1057-ブレークポイント">10.5.7 ブレークポイント</h3>
 <p>1000回のコイン投げをシミュレーション</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.5.7_coinFlip.py">10.5.7_coinFlip.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.5.7_coinFlip.py" target="_blank">10.5.7_coinFlip.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
 
 <span class="n">heads</span> <span class="o">=</span> <span class="mi">0</span>
@@ -145,7 +145,7 @@
 <h3 id="1081-コイン投げゲームをデバッグする">10.8.1 コイン投げゲームをデバッグする</h3>
 <p>コインを投げて裏と表を当てるゲームにバグがあるため、バグを見つける</p>
 
-<p>オリジナルのバグありプログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.8.1_CoinGame.py">10.8.1_CoinGame.py</a>）</p>
+<p>オリジナルのバグありプログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.8.1_CoinGame.py" target="_blank">10.8.1_CoinGame.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
 
 <span class="n">guess</span> <span class="o">=</span> <span class="s">''</span>
@@ -179,7 +179,7 @@
 <p>入力は表か裏ですが、答えは0か1であるため当たるわけがないですね<br />
 そこで、裏と表を0と1に変換する関数を追加しました</p>
 
-<p>バグを修正したプログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.8.1_CoinGameDebug.py">10.8.1_CoinGameDebug.py</a>）</p>
+<p>バグを修正したプログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.8.1_CoinGameDebug.py" target="_blank">10.8.1_CoinGameDebug.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
 
 <span class="k">def</span> <span class="nf">StrToNum</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
@@ -223,7 +223,7 @@
 <h2 id="111-webbrowserモジュールを用いたmapitpy">11.1 webbrowserモジュールを用いたmapIt.py</h2>
 <p>コマンドラインやクリップボードに指定した住所の地図を開く</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.1_mapIt.py">11.1_mapIt.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.1_mapIt.py" target="_blank">11.1_mapIt.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">webbrowser</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">pyperclip</span>
 
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
@@ -247,7 +247,7 @@
 <p>コマンドラインからGoogle検索をし、上位の検索結果をタブに開く<br />
 引数 “&lt;keyword&gt;“：検索したいワード</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.5_lucky.py">11.5_lucky.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.5_lucky.py" target="_blank">11.5_lucky.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">webbrowser</span><span class="p">,</span> <span class="n">bs4</span>
 
 <span class="k">print</span><span class="p">(</span><span class="s">'Googling...'</span><span class="p">)</span> <span class="c1"># Googleページをダウンロード中にテキストを表示
@@ -275,7 +275,7 @@
 <h2 id="116-xkcdコミックをダウンロードする">11.6 XKCDコミックをダウンロードする</h2>
 <p>XKCDコミックをひとつずつダウンロードする</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.6_DownloadXkcd.py">11.6_DownloadXkcd.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.6_DownloadXkcd.py" target="_blank">11.6_DownloadXkcd.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">bs4</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
@@ -349,7 +349,7 @@
 <p>コマンドラインから電子メールアドレスと本文テキストを受け取り、電子メールを送信する<br />
 引数 “&lt;address&gt; &lt;text&gt;“：アドレスとテキスト</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.1_CommandLineMailer.py">11.10.1_CommandLineMailer.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.1_CommandLineMailer.py" target="_blank">11.10.1_CommandLineMailer.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
@@ -407,7 +407,7 @@
 <p>写真共有サイトFlickeで画像を検索し、検索結果の画像をすべてダウンロード<br />
 引数 “&lt;keyword&gt;“：検索したいワード</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.2_Downloader.py">11.10.2_Downloader.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.2_Downloader.py" target="_blank">11.10.2_Downloader.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">bs4</span><span class="p">,</span> <span class="n">re</span>
 
@@ -475,7 +475,7 @@
 <h3 id="11103-2048">11.10.3 2048</h3>
 <p>2048というゲームを自動的に上右下左を繰り返し入力して遊ぶ</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.3_2048.py">11.10.3_2048.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.3_2048.py" target="_blank">11.10.3_2048.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
 <span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
@@ -506,7 +506,7 @@
 <h3 id="11104-リンクの検査">11.10.4 リンクの検査</h3>
 <p>指定したURLのページからリンクされたすべてのページをダウンロードする</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.4_LinkSearch.py">11.10.4_LinkSearch.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.4_LinkSearch.py" target="_blank">11.10.4_LinkSearch.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">bs4</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">os</span>
 
 <span class="k">def</span> <span class="nf">link_search</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s">'Downloads'</span><span class="p">):</span>

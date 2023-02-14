@@ -102,7 +102,7 @@
     <div id="markdown-content">
       <h1 id="はじめに">はじめに</h1>
 
-<p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/">退屈なことはPythonにやらせよう Automate the boring stuff with python</a>」（原書名『<a href="https://www.nostarch.com/automatestuff">Automate the Boring Stuff with Python</a>』）のpythonプログラムの実装の続き（7・8章）です．</p>
+<p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/" target="_blank">退屈なことはPythonにやらせよう Automate the boring stuff with python</a>」（原書名『<a href="https://www.nostarch.com/automatestuff" target="_blank">Automate the Boring Stuff with Python</a>』）のpythonプログラムの実装の続き（7・8章）です．</p>
 
 <p>これまで：<br />
 <a href="/blogs/python-boring-1">退屈なことはPythonにやらせよう①</a></p>
@@ -114,7 +114,7 @@
 <p>正規表現を用いて，パスワードの強さを判定<br />
 強いパスワード（８文字以上，大文字と小文字を含む，１つ以上の数字を含む）</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/07/7.18.1_PasswordDetection.py">7.18.1_PasswordDetection.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/07/7.18.1_PasswordDetection.py" target="_blank">7.18.1_PasswordDetection.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
 
 <span class="n">given_password</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"パスワードを入力してください："</span><span class="p">))</span>
@@ -157,7 +157,7 @@
 <p>文字列メソッドのstrip()と同等の動きをする関数を定義<br />
 文字列の先頭と末尾から指定した文字を除去（デフォルトは空白文字）</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/07/7.18.2_StripMethod.py">7.18.2_StripMethod.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/07/7.18.2_StripMethod.py" target="_blank">7.18.2_StripMethod.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
 
 <span class="k">def</span> <span class="nf">strip</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s">' '</span><span class="p">):</span>
@@ -184,7 +184,7 @@ Text
 <h2 id="87-マルチクリップボード">8.7 マルチクリップボード</h2>
 <p>クリップボードのテキストを保存・読込を行うプログラム</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.7_MultiClipBoard.py">8.7_MultiClipBoard.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.7_MultiClipBoard.py" target="_blank">8.7_MultiClipBoard.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">shelve</span><span class="p">,</span> <span class="n">pyperclip</span><span class="p">,</span> <span class="n">sys</span>
 
 <span class="n">mcb_shelf</span> <span class="o">=</span> <span class="n">shelve</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'mcb'</span><span class="p">)</span>
@@ -232,7 +232,7 @@ Text
 <h3 id="8101-マルチクリップボードを拡張">8.10.1 マルチクリップボードを拡張</h3>
 <p>マルチクリップボードのプログラムを引数 “delete &lt;keyword&gt;“でシェルフからキーワードを削除できるように</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.10.1_MultiClipBoard.py">8.10.1_MultiClipBoard.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.10.1_MultiClipBoard.py" target="_blank">8.10.1_MultiClipBoard.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">shelve</span><span class="p">,</span> <span class="n">pyperclip</span><span class="p">,</span> <span class="n">sys</span>
 
 <span class="n">mcb_shelf</span> <span class="o">=</span> <span class="n">shelve</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'mcb'</span><span class="p">)</span>
@@ -274,7 +274,7 @@ Text
 <h3 id="8102-作文ジェネレータ">8.10.2 作文ジェネレータ</h3>
 <p>テキストファイルを読み込み，ADJECTIVE(形容詞),NOUN(名詞),ADVERB(副詞),VERB(動詞)を書き換える作文ジェネレータ</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.10.2_CompositionGenerator.py">8.10.2_CompositionGenerator.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.10.2_CompositionGenerator.py" target="_blank">8.10.2_CompositionGenerator.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
 
 <span class="n">origin_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"Composition/Origin.txt"</span><span class="p">)</span>
@@ -318,7 +318,7 @@ pickup truck
 <p>指定したフォルダ内のtxtファイルを開いて，入力した正規表現にマッチする箇所を探索する<br />
 引数 “&lt;path&gt;“：探索するフォルダ</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.10.3_RegexSearcher.py">8.10.3_RegexSearcher.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.10.3_RegexSearcher.py" target="_blank">8.10.3_RegexSearcher.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">os</span>
 
 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
@@ -351,7 +351,7 @@ Generated.txt
 The silly panda walked to the chandelier and then screamed. A nearby pickup truck was una"ff"ected by these events.
 kei@kenoMacBook-Pro 08 % 
 </span></code></pre></div></div>
-<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08/Composition">Composition</a>フォルダ内のtxtファイルの中で、<br />
+<p><a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/tree/main/08/Composition" target="_blank">Composition</a>フォルダ内のtxtファイルの中で、<br />
 fが二回続く箇所を探索し、見つけることができている。</p>
 
 <h1 id="つづき">つづき</h1>

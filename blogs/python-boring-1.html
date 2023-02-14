@@ -100,7 +100,7 @@
     <div id="markdown-content">
       <h1 id="はじめに">はじめに</h1>
 
-<p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/">退屈なことはPythonにやらせよう</a>」（原書名『<a href="https://www.nostarch.com/automatestuff">Automate the Boring Stuff with Python</a>』）のpythonプログラムを実装していきます．</p>
+<p>書籍 「<a href="https://www.oreilly.co.jp/books/9784873117782/" target="_blank">退屈なことはPythonにやらせよう</a>」（原書名『<a href="https://www.nostarch.com/automatestuff" target="_blank">Automate the Boring Stuff with Python</a>』）のpythonプログラムを実装していきます．</p>
 
 <!--more-->
 
@@ -112,7 +112,7 @@
 <p>偶数なら$\frac{n}{2}$，奇数なら$3n+1$を繰り返すことで，<br />
 最終的に$1$に収束するコラッツ数列を計算</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/03/3.11.1_CollatzSequence.py">3.11.1_CollatzSequence.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/03/3.11.1_CollatzSequence.py" target="_blank">3.11.1_CollatzSequence.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">collatz</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">number</span> <span class="o">/</span> <span class="mi">2</span>
@@ -146,7 +146,7 @@
 <h3 id="3112-入力の妥当性検証">3.11.2 入力の妥当性検証</h3>
 <p>コラッツ数列のプログラムの入力が整数でない場合に、整数を促すメッセージを表示</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/03/3.11.2_InputValidity.py">3.11.2_InputValidity.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/03/3.11.2_InputValidity.py" target="_blank">3.11.2_InputValidity.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">collatz</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">number</span> <span class="o">/</span> <span class="mi">2</span>
@@ -181,7 +181,7 @@
 <h3 id="4101-コンマ付け">4.10.1 コンマ付け</h3>
 <p>リストの要素をカンマとスペースで並べ，最後の要素の前にandを挿入</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/04/4.10.1_Comma.py">4.10.1_Comma.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/04/4.10.1_Comma.py" target="_blank">4.10.1_Comma.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">AddComma</span><span class="p">(</span><span class="n">given_list</span><span class="p">):</span>
     <span class="n">string</span> <span class="o">=</span> <span class="s">''</span>
     <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">given_list</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
@@ -201,7 +201,7 @@
 <h3 id="4102-絵文字グリッド">4.10.2 絵文字グリッド</h3>
 <p>リストを受け取り，絵として表示</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/04/4.10.2_CharacterPicture.py">4.10.2_CharacterPicture.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/04/4.10.2_CharacterPicture.py" target="_blank">4.10.2_CharacterPicture.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="s">'.'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">],</span>
         <span class="p">[</span><span class="s">'.'</span><span class="p">,</span> <span class="s">'0'</span><span class="p">,</span> <span class="s">'0'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">],</span>
         <span class="p">[</span><span class="s">'0'</span><span class="p">,</span> <span class="s">'0'</span><span class="p">,</span> <span class="s">'0'</span><span class="p">,</span> <span class="s">'0'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">,</span> <span class="s">'.'</span><span class="p">],</span>
@@ -233,7 +233,7 @@
 <h3 id="561-ファンタジーゲームの持ち物リスト">5.6.1 ファンタジーゲームの持ち物リスト</h3>
 <p>持ち物リスト（辞書型）の表示</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/05/5.6.1_Inventory.py">5.6.1_Inventory.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/05/5.6.1_Inventory.py" target="_blank">5.6.1_Inventory.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">display_inventory</span><span class="p">(</span><span class="n">inventory</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="s">"持ち物リスト"</span><span class="p">)</span>
     <span class="n">item_total</span> <span class="o">=</span> <span class="mi">0</span>
@@ -260,7 +260,7 @@
 <h3 id="562-ファンタジーゲームの持ち物リスト用にリストから辞書に移す関数">5.6.2 ファンタジーゲームの持ち物リスト用にリストから辞書に移す関数</h3>
 <p>持ち物リストに獲得したアイテムを追加</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/05/5.6.2_AddToInventory.py">5.6.2_AddToInventory.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/05/5.6.2_AddToInventory.py" target="_blank">5.6.2_AddToInventory.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">display_inventory</span><span class="p">(</span><span class="n">inventory</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="s">"持ち物リスト"</span><span class="p">)</span>
     <span class="n">item_total</span> <span class="o">=</span> <span class="mi">0</span>
@@ -297,7 +297,7 @@
 <h3 id="671-表の表示">6.7.1 表の表示</h3>
 <p>文字列のリストを右揃えに成形して表示</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/06/6.7.1_ShowTable.py">6.7.1_ShowTable.py</a>）</p>
+<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/06/6.7.1_ShowTable.py" target="_blank">6.7.1_ShowTable.py</a>）</p>
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">print_table</span><span class="p">(</span><span class="n">table_data</span><span class="p">):</span>
     <span class="n">col_widths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">table_data</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">datas</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">table_data</span><span class="p">):</span>
