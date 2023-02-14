@@ -104,24 +104,7 @@
 <h1 id="python">python</h1>
 <p>まずはpythonです</p>
 
-<p><a href="https://github.com/Absolute-Value/PrimeFactorization/blob/main/PrimeFactorization.py" target="_blank">PrimeFactorization.py</a></p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">PrimeFactorization</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
-    <span class="n">factors</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">num</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">num</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">factors</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-            <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span> <span class="n">num</span> <span class="o">/</span> <span class="n">i</span> <span class="p">)</span>
-            <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="n">factors</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">factors</span>
-
-<span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"素因数分解したい整数を入力してください："</span><span class="p">))</span>
-<span class="n">factors_result</span> <span class="o">=</span> <span class="n">PrimeFactorization</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">factors_result</span><span class="p">)</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/6e204cce0c69918307c62bd73880f6f6.js"></script>
 
 <p>実行</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 PrimeFactorization.py
@@ -134,39 +117,7 @@
 <h1 id="java">java</h1>
 <p>続いて、同じ内容をjavaでやってみました</p>
 
-<p><a href="https://github.com/Absolute-Value/PrimeFactorization/blob/main/PrimeFactorization.java" target="_blank">PrimeFactorization.java</a></p>
-<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Scanner</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
-
-<span class="kd">class</span> <span class="nc">PrimeFactorization</span><span class="o">{</span>
-  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="n">args</span><span class="o">[])</span> <span class="o">{</span>
-    <span class="nc">Scanner</span> <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">in</span><span class="o">);</span>
-    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"素因数分解したい整数を入力してください："</span><span class="o">);</span>
-
-    <span class="kt">int</span> <span class="n">input</span> <span class="o">=</span> <span class="n">scanner</span><span class="o">.</span><span class="na">nextInt</span><span class="o">();</span>
-
-    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">calc</span><span class="o">(</span><span class="n">input</span><span class="o">));</span>
-    <span class="n">scanner</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-  <span class="o">}</span>
-
-  <span class="kd">private</span> <span class="kd">static</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">calc</span><span class="o">(</span><span class="kt">int</span> <span class="n">num</span><span class="o">)</span> <span class="o">{</span>
-    <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">factors</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
-    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
-    
-    <span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">num</span><span class="o">)</span> <span class="o">{</span>
-      <span class="k">if</span> <span class="o">(</span><span class="n">num</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">factors</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-        <span class="n">num</span> <span class="o">/=</span> <span class="n">i</span><span class="o">;</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
-      <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="o">;</span>
-      <span class="o">}</span>
-    <span class="o">}</span>
-    <span class="n">factors</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">num</span><span class="o">);</span>
-    <span class="k">return</span> <span class="n">factors</span><span class="o">;</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/cb20aed233bdf6903fcb48b094e928f3.js"></script>
 
 <p>出力</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>javac PrimeFactorization.java
@@ -180,37 +131,7 @@
 <h1 id="c">C</h1>
 <p>c言語でもやってみました</p>
 
-<p><a href="https://github.com/Absolute-Value/PrimeFactorization/blob/main/PrimeFactorization.c" target="_blank">PrimeFactorization.c</a></p>
-<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
-</span>
-<span class="kt">void</span> <span class="nf">PrimeFactorization</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
-<span class="p">{</span>
-  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">"["</span><span class="p">);</span>
-  <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">!=</span> <span class="n">num</span><span class="p">)</span>
-  <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="p">{</span>
-      <span class="n">printf</span><span class="p">(</span><span class="s">"%d, "</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-      <span class="n">num</span> <span class="o">/=</span> <span class="n">i</span><span class="p">;</span>
-      <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-    <span class="p">}</span>
-    <span class="k">else</span>
-    <span class="p">{</span>
-      <span class="n">i</span><span class="o">++</span><span class="p">;</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">"%d]</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-<span class="p">{</span>
-  <span class="kt">int</span> <span class="n">num</span><span class="p">;</span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">"素因数分解したい整数を入力してください："</span><span class="p">);</span>
-  <span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num</span><span class="p">);</span>
-  <span class="n">PrimeFactorization</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/95b83107e869fd4f16a68f62535ddf4f.js"></script>
 
 <p>実行</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>gcc PrimeFactorization.c <span class="nt">-o</span> app   

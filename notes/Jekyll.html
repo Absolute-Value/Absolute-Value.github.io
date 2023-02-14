@@ -132,49 +132,8 @@
 <h2 id="git操作の自動化をするbashファイル">Git操作の自動化をするbashファイル</h2>
 <p>元のプロジェクトとサイト用のプロジェクトに対してgit操作するの面倒だったので自動化するbashを作成しました</p>
 
-<p>git.sh</p>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-</pre></td><td class="code"><pre><span class="c">#!/bin/sh</span>
-
-git add <span class="nb">.</span>
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span><span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
-    </span>git commit <span class="nt">-m</span> <span class="s2">"Update"</span>
-<span class="k">else
-    </span>git commit <span class="nt">-m</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
-<span class="k">fi
-</span>git push
-<span class="nb">cd </span>_site
-git add <span class="nb">.</span>
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span><span class="nt">-ne</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
-    </span>git commit <span class="nt">-m</span> <span class="s2">"Update"</span>
-<span class="k">else
-    </span>git commit <span class="nt">-m</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
-<span class="k">fi
-</span>git push
-<span class="nb">cd</span> ../
-</pre></td></tr></tbody></table></code></pre></figure>
-
-<p>実行</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bash git.sh
-</code></pre></div></div>
+<p>git.sh
+<script src="https://gist.github.com/Absolute-Value/96b0dfabffcde15528c82eef9135ec4b.js"></script></p>
 
 <p>引数にコミットメッセージ入れれます</p>
 
@@ -287,23 +246,11 @@ git add <span class="nb">.</span>
 <p>ダークモードには「メディアクエリ，クラス指定，CSS変数」の3つが存在しますが，<br />
 本ホームページではJavaScriptを利用したクラス指定により，ダークモードを実現しています．</p>
 
-<p>cssは以下のようになります．JavaScriptは<a href="https://github.com/Absolute-Value/Portfolio/blob/main/assets/js/darkmode.js"><b>コチラ</b></a>を参照</p>
+<p>cssとJavaScriptは以下のようになります．</p>
 
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.light-theme</span> <span class="p">{</span>
-  <span class="c">/* 通常モードで指定したい色 */</span>
-  <span class="py">--theme</span><span class="p">:</span> <span class="m">#fff</span><span class="p">;</span>
-<span class="p">}</span>
+<script src="https://gist.github.com/Absolute-Value/0aa3aa27c626f2af678b59cb0c42419d.js"></script>
 
-<span class="nc">.dark-theme</span> <span class="p">{</span>
-  <span class="c">/* ダークモードで指定したい色 */</span>
-  <span class="py">--theme</span><span class="p">:</span> <span class="nb">rgb</span><span class="p">(</span><span class="m">29</span><span class="p">,</span> <span class="m">30</span><span class="p">,</span> <span class="m">32</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="nt">body</span> <span class="p">{</span>
-  <span class="c">/* varで上で指定した色を持ってくる */</span>
-  <span class="nl">background</span><span class="p">:</span> <span class="n">var</span><span class="p">(</span><span class="n">--theme</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/508378fe1493c1b1df7b6c76cc3b1743.js"></script>
 
 <p>他のページへ移動するとダークモードが戻ってしまうバグを修正しました（2023/02/10）</p>
 

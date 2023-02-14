@@ -194,44 +194,8 @@ tmux a
 
 <h2 id="カスタマイズ例">カスタマイズ例</h2>
 
-<p>.tmux.conf</p>
-<div class="language-config highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#マウス操作を有効にする
-</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">mouse</span> <span class="n">on</span>
-
-<span class="c"># prefix+r で設定のリロード
-</span><span class="n">bind</span> <span class="n">r</span> <span class="n">source</span>-<span class="n">file</span> ~/.<span class="n">tmux</span>.<span class="n">conf</span> \; <span class="n">display</span> <span class="s2">"Reloaded!"</span>
-
-<span class="c"># windowのインデックスを1から始める
-</span><span class="n">set</span> -<span class="n">g</span> <span class="n">base</span>-<span class="n">index</span> <span class="m">1</span>
-
-<span class="c"># 256色カラーをセット
-</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">default</span>-<span class="n">terminal</span> <span class="n">screen</span>-<span class="m">256</span><span class="n">color</span>
-<span class="n">set</span> -<span class="n">g</span> <span class="n">terminal</span>-<span class="n">overrides</span> <span class="s1">'xterm:colors=256'</span>
-
-<span class="c"># ステータスライン の背景色を指定する。
-</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">bg</span> <span class="s2">"colour130"</span>
-
-<span class="c"># ステータスライン の文字色を指定する。
-</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">fg</span> <span class="s2">"colour255"</span>
-
-<span class="c"># status-left の最大の長さを指定する。
-</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">left</span>-<span class="n">length</span> <span class="m">20</span>
-
-<span class="c"># status-leftの見た目を変更
-</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">left</span> <span class="s2">"#[bg=colour160]  #S  #[default]"</span>
-
-<span class="c"># status-rightの見た目を変更
-</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">right</span> <span class="s2">"#[bg=colour214, fg=colour16] #H #[bg=colour72] %Y/%m/%d #[bg=colour32] %a #[bg=colour56, fg=colour255] %H:%M "</span>
-
-<span class="c"># window-status を中央揃えで配置する
-</span><span class="n">set</span>-<span class="n">option</span> -<span class="n">g</span> <span class="n">status</span>-<span class="n">justify</span> <span class="s2">"centre"</span>
-
-<span class="c"># window-statusの見た目を変更
-</span><span class="n">setw</span> -<span class="n">g</span> <span class="n">window</span>-<span class="n">status</span>-<span class="n">format</span> <span class="s1">'#[bg=colour166, fg=colour246] #I #W '</span>
-
-<span class="c"># prefixを押したときに、押されていることがわかるように
-</span><span class="n">setw</span> -<span class="n">g</span> <span class="n">window</span>-<span class="n">status</span>-<span class="n">current</span>-<span class="n">format</span> <span class="s1">'#[bg=colour208]#{?client_prefix,#[bg=colour214]#[fg=colour16],} #I #W '</span>
-</code></pre></div></div>
+<p>.tmux.conf
+<script src="https://gist.github.com/Absolute-Value/616203b77258c4ccc0f4b28bd5d22faf.js"></script></p>
 
 <h1 id="参考になるurl">参考になるURL</h1>
 <ul>

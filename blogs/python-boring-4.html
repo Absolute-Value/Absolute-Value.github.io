@@ -123,17 +123,7 @@
 <h3 id="1057-ブレークポイント">10.5.7 ブレークポイント</h3>
 <p>1000回のコイン投げをシミュレーション</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.5.7_coinFlip.py" target="_blank">10.5.7_coinFlip.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
-
-<span class="n">heads</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1001</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">heads</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">500</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'半分完了！'</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'表は</span><span class="si">{</span><span class="n">heads</span><span class="si">}</span><span class="s">回出ました'</span><span class="p">)</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/04d2b49dd897ef05ce1d6e2e0176b488.js"></script>
 
 <p>出力</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 10.5.7_coinFlip.py 
@@ -145,28 +135,7 @@
 <h3 id="1081-コイン投げゲームをデバッグする">10.8.1 コイン投げゲームをデバッグする</h3>
 <p>コインを投げて裏と表を当てるゲームにバグがあるため、バグを見つける</p>
 
-<p>オリジナルのバグありプログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.8.1_CoinGame.py" target="_blank">10.8.1_CoinGame.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
-
-<span class="n">guess</span> <span class="o">=</span> <span class="s">''</span>
-<span class="k">while</span> <span class="n">guess</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s">'表'</span><span class="p">,</span> <span class="s">'裏'</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'コインの裏表を当ててください。表か裏かを入力してください：'</span><span class="p">)</span>
-    <span class="n">guess</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
-
-<span class="n">toss</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 0は裏、1は表
-</span><span class="k">if</span> <span class="n">toss</span> <span class="o">==</span> <span class="n">guess</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'当たり！'</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'はずれ！もう一回あてて！'</span><span class="p">)</span>
-    <span class="n">guess</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
-    <span class="c1"># 2回目を振り直すなら、ここに
-</span>    <span class="c1"># toss = random.randint(0,1)
-</span>    <span class="c1"># を入れる
-</span>    <span class="k">if</span> <span class="n">toss</span> <span class="o">==</span> <span class="n">guess</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'当たり！'</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'はずれ。このゲームは苦手ですね。'</span><span class="p">)</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/4667a6cefaba87a86d4fdf05d26e267d.js"></script>
 
 <p>出力</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 10.8.1_CoinGame.py     
@@ -179,35 +148,7 @@
 <p>入力は表か裏ですが、答えは0か1であるため当たるわけがないですね<br />
 そこで、裏と表を0と1に変換する関数を追加しました</p>
 
-<p>バグを修正したプログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/10/10.8.1_CoinGameDebug.py" target="_blank">10.8.1_CoinGameDebug.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
-
-<span class="k">def</span> <span class="nf">StrToNum</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">input</span> <span class="o">==</span>  <span class="s">'表'</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">0</span>
-
-<span class="n">guess</span> <span class="o">=</span> <span class="s">''</span>
-<span class="k">while</span> <span class="n">guess</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s">'表'</span><span class="p">,</span> <span class="s">'裏'</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'コインの裏表を当ててください。表か裏かを入力してください：'</span><span class="p">)</span>
-    <span class="n">guess</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
-
-<span class="n">guess</span> <span class="o">=</span> <span class="n">StrToNum</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span>
-<span class="n">toss</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># 0は裏、1は表
-</span><span class="k">if</span> <span class="n">toss</span> <span class="o">==</span> <span class="n">guess</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'当たり！'</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'はずれ！もう一回あてて！'</span><span class="p">)</span>
-    <span class="k">while</span> <span class="n">guess</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s">'表'</span><span class="p">,</span> <span class="s">'裏'</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'表か裏かを入力してください：'</span><span class="p">)</span>
-        <span class="n">guess</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
-    <span class="n">guess</span> <span class="o">=</span> <span class="n">StrToNum</span><span class="p">(</span><span class="n">guess</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">toss</span> <span class="o">==</span> <span class="n">guess</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'当たり！'</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'はずれ。このゲームは苦手ですね。'</span><span class="p">)</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/a52675e16dcf0a83398877a41380b522.js"></script>
 
 <p>出力</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 10.8.1_CoinGameDebug.py
@@ -223,18 +164,7 @@
 <h2 id="111-webbrowserモジュールを用いたmapitpy">11.1 webbrowserモジュールを用いたmapIt.py</h2>
 <p>コマンドラインやクリップボードに指定した住所の地図を開く</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.1_mapIt.py" target="_blank">11.1_mapIt.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">webbrowser</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">pyperclip</span>
-
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="c1"># コマンドラインから住所を取得する
-</span>    <span class="n">address</span> <span class="o">=</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="c1"># クリップボードから住所を取得する
-</span>    <span class="n">address</span> <span class="o">=</span> <span class="n">pyperclip</span><span class="p">.</span><span class="n">paste</span><span class="p">()</span>
-
-<span class="n">webbrowser</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s">'https://www.google.com/maps/place/</span><span class="si">{</span><span class="n">address</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/f07aa5c47c3cfe266f46c35151229511.js"></script>
 
 <p>「870 Valencia St, San Francisco, CA 94110」を検索します</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 11.1_mapIt.py 870 Valencia St, San Francisco, CA 94110
@@ -247,23 +177,7 @@
 <p>コマンドラインからGoogle検索をし、上位の検索結果をタブに開く<br />
 引数 “&lt;keyword&gt;“：検索したいワード</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.5_lucky.py" target="_blank">11.5_lucky.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">webbrowser</span><span class="p">,</span> <span class="n">bs4</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s">'Googling...'</span><span class="p">)</span> <span class="c1"># Googleページをダウンロード中にテキストを表示
-</span><span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://google.com/search?q='</span> <span class="o">+</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
-<span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-
-<span class="c1"># 上位の検索結果のリンクを取得する
-</span><span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="s">'html5lib'</span><span class="p">)</span>
-<span class="n">link_elems</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">".egMi0 a"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">link_elems</span><span class="p">)</span>
-
-<span class="c1"># 各結果をブラウザのタブで開く
-</span><span class="n">num_open</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">link_elems</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_open</span><span class="p">):</span>
-    <span class="n">webbrowser</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'http://google.com'</span> <span class="o">+</span> <span class="n">link_elems</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">get</span><span class="p">(</span><span class="s">'href'</span><span class="p">))</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/b04c8ebdc35f833e04cae44b52fa594f.js"></script>
 
 <p>「python」でGoogle検索をします</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 11.5_lucky.py python       
@@ -275,45 +189,7 @@
 <h2 id="116-xkcdコミックをダウンロードする">11.6 XKCDコミックをダウンロードする</h2>
 <p>XKCDコミックをひとつずつダウンロードする</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.6_DownloadXkcd.py" target="_blank">11.6_DownloadXkcd.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">os</span><span class="p">,</span> <span class="n">bs4</span>
-<span class="kn">import</span> <span class="nn">time</span>
-
-<span class="n">url</span> <span class="o">=</span> <span class="s">'http://xkcd.com/'</span>               <span class="c1"># 開始URL
-</span><span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s">'xkcd'</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>    <span class="c1"># ./xkcdに保存する
-</span>
-<span class="k">while</span> <span class="ow">not</span> <span class="n">url</span><span class="p">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">'#'</span><span class="p">):</span>
-    <span class="c1"># ページをダウンロードする
-</span>    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'ページをダウンロード中 </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">...'</span><span class="p">)</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-
-    <span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
-
-    <span class="c1"># コミック画像のURLを見つける
-</span>    <span class="n">comic_elem</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">'#comic img'</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">comic_elem</span> <span class="o">==</span> <span class="p">[]:</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">'コミック画像が見つかりませんでした。'</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">comic_url</span> <span class="o">=</span> <span class="s">'http:'</span> <span class="o">+</span> <span class="n">comic_elem</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">get</span><span class="p">(</span><span class="s">'src'</span><span class="p">)</span>
-        <span class="c1"># 画像をダウンロードする
-</span>        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'画像をダウンロード中 </span><span class="si">{</span><span class="n">comic_url</span><span class="si">}</span><span class="s">...'</span><span class="p">)</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">comic_url</span><span class="p">)</span>
-        <span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-
-        <span class="c1"># 画像を./xkcdに保存する
-</span>        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="s">'xkcd'</span><span class="p">,</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">basename</span><span class="p">(</span><span class="n">comic_url</span><span class="p">)),</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">image_file</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">res</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
-                <span class="n">image_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-        
-    <span class="c1"># PrevボタンのURLを取得する
-</span>    <span class="n">prev_link</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">'a[rel="prev"]'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="s">'http://xkcd.com'</span> <span class="o">+</span> <span class="n">prev_link</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'href'</span><span class="p">)</span>
-
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s">'完了'</span><span class="p">)</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/271b3874e8d98fcfa34db635273fd429.js"></script>
 
 <p>実行</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 11.6_DownloadXkcd.py 
@@ -349,50 +225,7 @@
 <p>コマンドラインから電子メールアドレスと本文テキストを受け取り、電子メールを送信する<br />
 引数 “&lt;address&gt; &lt;text&gt;“：アドレスとテキスト</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.1_CommandLineMailer.py" target="_blank">11.10.1_CommandLineMailer.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
-
-<span class="k">def</span> <span class="nf">send_email</span><span class="p">(</span><span class="n">address</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
-    <span class="n">browser</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">()</span>
-    <span class="n">browser</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://sute.jp/'</span><span class="p">)</span>
-
-    <span class="n">MAIL_ADDRESS</span> <span class="o">=</span> <span class="s">'c0l9tcja2q'</span>
-    <span class="n">input_text</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s">'user[login]'</span><span class="p">)</span>
-    <span class="n">input_text</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">MAIL_ADDRESS</span><span class="p">)</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-    
-    <span class="n">make_address</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s">'btn-warning'</span><span class="p">)</span>
-    <span class="n">make_address</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">make_mail</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s">'btn-success'</span><span class="p">)</span>
-    <span class="n">make_mail</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">input_address</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s">'draft[to]'</span><span class="p">)</span>
-    <span class="n">input_address</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-
-    <span class="n">input_text</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s">'draft[body]'</span><span class="p">)</span>
-    <span class="n">input_text</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-
-    <span class="n">send_mail</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">NAME</span><span class="p">,</span> <span class="s">'button'</span><span class="p">)</span>
-    <span class="n">send_mail</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-    <span class="n">send_mail</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">CLASS_NAME</span><span class="p">,</span> <span class="s">'confirm'</span><span class="p">)</span>
-    <span class="n">send_mail</span><span class="p">.</span><span class="n">click</span><span class="p">()</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'使い方：python3 11.10.1_CommandLineMailer.py 電子メールアドレス 本文テキスト'</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">send_email</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:]))</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/c462213f90f95d0d497ca605b720dcda.js"></script>
 
 <p><a href="https://sute.jp/">https://sute.jp/</a>
 でメアドを２つ作成し、メールを送信しました</p>
@@ -407,37 +240,7 @@
 <p>写真共有サイトFlickeで画像を検索し、検索結果の画像をすべてダウンロード<br />
 引数 “&lt;keyword&gt;“：検索したいワード</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.2_Downloader.py" target="_blank">11.10.2_Downloader.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">bs4</span><span class="p">,</span> <span class="n">re</span>
-
-<span class="n">DIR</span> <span class="o">=</span> <span class="s">'downloads'</span>
-
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://www.flickr.com/search/?text='</span> <span class="o">+</span> <span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
-<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'ページをダウンロード中 </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s">...'</span><span class="p">)</span> <span class="c1"># Googleページをダウンロード中にテキストを表示
-</span><span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-
-<span class="c1"># 上位の検索結果のリンクを取得する
-</span><span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="s">'html5lib'</span><span class="p">)</span>
-<span class="n">link_elems</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">".view .awake"</span><span class="p">)</span>
-<span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s">'//.*\.jpg'</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">link_elems</span><span class="p">))</span>
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'画像が見つかりませんでした。'</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">DIR</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">reg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">regex</span><span class="p">):</span>
-        <span class="n">img_url</span> <span class="o">=</span> <span class="s">'https:'</span> <span class="o">+</span> <span class="n">reg</span>
-        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'画像をダウンロード中 </span><span class="si">{</span><span class="n">img_url</span><span class="si">}</span><span class="s">...'</span><span class="p">)</span>
-        <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">img_url</span><span class="p">)</span>
-        <span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">DIR</span><span class="p">,</span> <span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">_</span><span class="si">{</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">basename</span><span class="p">(</span><span class="n">img_url</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">),</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">image_file</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">res</span><span class="p">.</span><span class="n">iter_content</span><span class="p">(</span><span class="mi">100000</span><span class="p">):</span>
-                <span class="n">image_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="s">'完了'</span><span class="p">)</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/2c05add46590a2aeba752ed4df479373.js"></script>
 
 <p>実行</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 11.10.2_Downloader.py Japan
@@ -475,27 +278,7 @@
 <h3 id="11103-2048">11.10.3 2048</h3>
 <p>2048というゲームを自動的に上右下左を繰り返し入力して遊ぶ</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.3_2048.py" target="_blank">11.10.3_2048.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.common.by</span> <span class="kn">import</span> <span class="n">By</span>
-<span class="kn">from</span> <span class="nn">selenium.webdriver.common.keys</span> <span class="kn">import</span> <span class="n">Keys</span>
-
-<span class="n">browser</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">()</span>
-<span class="n">browser</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'https://play2048.co/'</span><span class="p">)</span>
-<span class="n">html_elem</span> <span class="o">=</span> <span class="n">browser</span><span class="p">.</span><span class="n">find_element</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">TAG_NAME</span><span class="p">,</span> <span class="s">'html'</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
-    <span class="n">html_elem</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">UP</span><span class="p">)</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
-    <span class="n">html_elem</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">RIGHT</span><span class="p">)</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
-    <span class="n">html_elem</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">DOWN</span><span class="p">)</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
-    <span class="n">html_elem</span><span class="p">.</span><span class="n">send_keys</span><span class="p">(</span><span class="n">Keys</span><span class="p">.</span><span class="n">LEFT</span><span class="p">)</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
-
-<span class="n">browser</span><span class="p">.</span><span class="n">quit</span><span class="p">()</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/110fdc08f7907bd3d69bf5a0b59b3971.js"></script>
 
 <p>自動的に実行され、3008点を稼ぐことができました</p>
 
@@ -506,40 +289,7 @@
 <h3 id="11104-リンクの検査">11.10.4 リンクの検査</h3>
 <p>指定したURLのページからリンクされたすべてのページをダウンロードする</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/11/11.10.4_LinkSearch.py" target="_blank">11.10.4_LinkSearch.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span><span class="p">,</span> <span class="n">bs4</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">os</span>
-
-<span class="k">def</span> <span class="nf">link_search</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s">'Downloads'</span><span class="p">):</span>
-    <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span> <span class="p">,</span><span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-    <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-    <span class="n">res</span><span class="p">.</span><span class="n">raise_for_status</span><span class="p">()</span>
-
-    <span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="p">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">text</span><span class="p">,</span> <span class="s">'html5lib'</span><span class="p">)</span>
-    <span class="n">links</span> <span class="o">=</span> <span class="n">soup</span><span class="p">.</span><span class="n">select</span><span class="p">(</span><span class="s">"a"</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
-        <span class="n">href</span> <span class="o">=</span> <span class="n">link</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'href'</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">href</span><span class="p">:</span>
-            <span class="k">continue</span>
-
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">href</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">href</span><span class="si">}</span><span class="s"> はリンク切れです．'</span><span class="p">)</span>
-            <span class="k">continue</span>
-
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">href</span><span class="p">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">'.html'</span><span class="p">):</span>
-            <span class="n">href</span> <span class="o">+=</span> <span class="s">'.html'</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">basename</span><span class="p">(</span><span class="n">href</span><span class="p">)),</span> <span class="s">'a'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">href</span><span class="si">}</span><span class="s">を</span><span class="si">{</span><span class="n">save_dir</span><span class="si">}</span><span class="s">に保存しました'</span><span class="p">)</span>
-        
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">'URLを入力してください'</span><span class="p">)</span>
-
-<span class="n">link_search</span><span class="p">(</span><span class="s">' '</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/9678c6d6863ed5e8f84b55b17d7fca32.js"></script>
 
 <p><a href="https://absolute-value.github.io/blogs">このホームページのBlog</a>をダウンロードしてみます</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 11.10.4_LinkSearch.py https://absolute-value.github.io/blogs

@@ -114,33 +114,7 @@
 <p>正規表現を用いて，パスワードの強さを判定<br />
 強いパスワード（８文字以上，大文字と小文字を含む，１つ以上の数字を含む）</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/07/7.18.1_PasswordDetection.py" target="_blank">7.18.1_PasswordDetection.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
-
-<span class="n">given_password</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"パスワードを入力してください："</span><span class="p">))</span>
-<span class="n">is_strong</span> <span class="o">=</span> <span class="bp">True</span>
-
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">given_password</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"弱い：8文字以上を推奨"</span><span class="p">)</span>
-    <span class="n">is_strong</span> <span class="o">=</span> <span class="bp">False</span>
-
-<span class="n">upper_regex</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s">'[A-Z]'</span><span class="p">)</span>
-<span class="n">mo_u</span> <span class="o">=</span> <span class="n">upper_regex</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">given_password</span><span class="p">)</span>
-<span class="n">lower_regex</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s">'[a-z]'</span><span class="p">)</span>
-<span class="n">mo_l</span> <span class="o">=</span> <span class="n">lower_regex</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">given_password</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">mo_u</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">mo_l</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"弱い：大文字と小文字を推奨"</span><span class="p">)</span>
-    <span class="n">is_strong</span> <span class="o">=</span> <span class="bp">False</span>
-
-<span class="n">num_regex</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s">'\d'</span><span class="p">)</span>
-<span class="n">mo</span> <span class="o">=</span> <span class="n">num_regex</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="n">given_password</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">mo</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"弱い：一つ以上の数字を推奨"</span><span class="p">)</span>
-    <span class="n">is_strong</span> <span class="o">=</span> <span class="bp">False</span>
-
-<span class="k">if</span> <span class="n">is_strong</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"強いパスワードです。"</span><span class="p">)</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/225a1a4ce28ca7de7a496778666c7f39.js"></script>
 
 <p>出力</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 7.18.1_PasswordDetection.py
@@ -157,21 +131,7 @@
 <p>文字列メソッドのstrip()と同等の動きをする関数を定義<br />
 文字列の先頭と末尾から指定した文字を除去（デフォルトは空白文字）</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/07/7.18.2_StripMethod.py" target="_blank">7.18.2_StripMethod.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
-
-<span class="k">def</span> <span class="nf">strip</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="s">' '</span><span class="p">):</span>
-    <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">f</span><span class="s">'^</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="si">}</span><span class="s">+|</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="si">}</span><span class="s">+$'</span><span class="p">)</span>
-    <span class="n">string</span> <span class="o">=</span> <span class="n">regex</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">string</span>
-
-<span class="n">given_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"文字列を入力してください："</span><span class="p">))</span>
-<span class="n">target_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"変えたい文字列を入力してください（何も入力しないとスペース）："</span><span class="p">))</span>
-<span class="k">if</span> <span class="n">target_string</span> <span class="o">==</span> <span class="s">''</span><span class="p">:</span>
-    <span class="n">target_string</span> <span class="o">=</span> <span class="s">' '</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">strip</span><span class="p">(</span><span class="n">given_string</span><span class="p">,</span> <span class="n">target_string</span><span class="p">))</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/f9a19c63126735a03dcae7b805a0a75b.js"></script>
 
 <p>出力</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 7.18.2_StripMethod.py      
@@ -184,32 +144,7 @@ Text
 <h2 id="87-マルチクリップボード">8.7 マルチクリップボード</h2>
 <p>クリップボードのテキストを保存・読込を行うプログラム</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.7_MultiClipBoard.py" target="_blank">8.7_MultiClipBoard.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">shelve</span><span class="p">,</span> <span class="n">pyperclip</span><span class="p">,</span> <span class="n">sys</span>
-
-<span class="n">mcb_shelf</span> <span class="o">=</span> <span class="n">shelve</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'mcb'</span><span class="p">)</span>
-
-<span class="n">mode</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span>
-<span class="n">clip_board</span> <span class="o">=</span> <span class="n">pyperclip</span><span class="p">.</span><span class="n">paste</span><span class="p">()</span>
-
-<span class="c1"># クリップボードの内容を保存
-</span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'save'</span><span class="p">:</span>
-    <span class="n">keyword</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">mcb_shelf</span><span class="p">[</span><span class="n">keyword</span><span class="p">]</span> <span class="o">=</span> <span class="n">clip_board</span>
-    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"クリップボード上の </span><span class="si">{</span><span class="n">clip_board</span><span class="si">}</span><span class="s"> を </span><span class="si">{</span><span class="n">keyword</span><span class="si">}</span><span class="s">　として保存しました"</span><span class="p">)</span>
-
-<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-    <span class="c1"># キーワード一覧と，内容の読み込み
-</span>    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'list'</span><span class="p">:</span>
-        <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mcb_shelf</span><span class="p">.</span><span class="n">keys</span><span class="p">())))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"全キーワードをクリップボードにコピーしました"</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">mcb_shelf</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">mcb_shelf</span><span class="p">[</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-        <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="s"> をクリップボードにコピーしました"</span><span class="p">)</span>
-
-<span class="n">mcb_shelf</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/38077d5b69a2e3025c762a1b795ba568.js"></script>
 
 <p>クリップ上の python を 1 として保存します</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 8.7_MultiClipBoard.py save 1
@@ -232,36 +167,7 @@ Text
 <h3 id="8101-マルチクリップボードを拡張">8.10.1 マルチクリップボードを拡張</h3>
 <p>マルチクリップボードのプログラムを引数 “delete &lt;keyword&gt;“でシェルフからキーワードを削除できるように</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.10.1_MultiClipBoard.py" target="_blank">8.10.1_MultiClipBoard.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">shelve</span><span class="p">,</span> <span class="n">pyperclip</span><span class="p">,</span> <span class="n">sys</span>
-
-<span class="n">mcb_shelf</span> <span class="o">=</span> <span class="n">shelve</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="s">'mcb'</span><span class="p">)</span>
-
-<span class="n">mode</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">lower</span><span class="p">()</span>
-<span class="n">clip_board</span> <span class="o">=</span> <span class="n">pyperclip</span><span class="p">.</span><span class="n">paste</span><span class="p">()</span>
-
-<span class="c1"># クリップボードの内容を保存
-</span><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-    <span class="n">keyword</span> <span class="o">=</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'save'</span><span class="p">:</span>
-        <span class="n">mcb_shelf</span><span class="p">[</span><span class="n">keyword</span><span class="p">]</span> <span class="o">=</span> <span class="n">clip_board</span>
-        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"クリップボード上の </span><span class="si">{</span><span class="n">clip_board</span><span class="si">}</span><span class="s"> を </span><span class="si">{</span><span class="n">keyword</span><span class="si">}</span><span class="s">　として保存しました"</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'delete'</span><span class="p">:</span>
-        <span class="n">mcb_shelf</span><span class="p">.</span><span class="n">pop</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">keyword</span><span class="si">}</span><span class="s">を削除しました"</span><span class="p">)</span>
-
-<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-    <span class="c1"># キーワード一覧と，内容の読み込み
-</span>    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s">'list'</span><span class="p">:</span>
-        <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mcb_shelf</span><span class="p">.</span><span class="n">keys</span><span class="p">())))</span>
-        <span class="k">print</span><span class="p">(</span><span class="s">"全キーワードをクリップボードにコピーしました"</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="n">mcb_shelf</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">mcb_shelf</span><span class="p">[</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-        <span class="n">pyperclip</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">content</span><span class="si">}</span><span class="s"> をクリップボードにコピーしました"</span><span class="p">)</span>
-
-<span class="n">mcb_shelf</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/05813ea490ae45f5dc3b581be405fb30.js"></script>
 
 <p>先ほど保存した 1 を削除し、一覧をクリップボードに取得しました</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 8.10.1_MultiClipBoard.py delete 1
@@ -274,25 +180,7 @@ Text
 <h3 id="8102-作文ジェネレータ">8.10.2 作文ジェネレータ</h3>
 <p>テキストファイルを読み込み，ADJECTIVE(形容詞),NOUN(名詞),ADVERB(副詞),VERB(動詞)を書き換える作文ジェネレータ</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.10.2_CompositionGenerator.py" target="_blank">8.10.2_CompositionGenerator.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span>
-
-<span class="n">origin_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"Composition/Origin.txt"</span><span class="p">)</span>
-<span class="n">origin_content</span> <span class="o">=</span> <span class="n">origin_file</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">origin_file</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-
-<span class="n">content_regex</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="sa">r</span><span class="s">'ADJECTIVE|NOUN|ADVERB|VERB'</span><span class="p">)</span>
-<span class="n">targets</span> <span class="o">=</span> <span class="n">content_regex</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="n">origin_content</span><span class="p">)</span>
-
-<span class="n">export_content</span> <span class="o">=</span> <span class="n">origin_content</span>
-<span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">targets</span><span class="p">:</span>
-    <span class="n">export_content</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s">"Enter </span><span class="si">{</span><span class="n">target</span><span class="p">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s">:</span><span class="se">\n</span><span class="s">"</span><span class="p">),</span> <span class="n">export_content</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">export_content</span><span class="p">)</span>
-<span class="n">export_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"Composition/Generated.txt"</span><span class="p">,</span> <span class="s">'a'</span><span class="p">)</span>
-<span class="n">export_file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">export_content</span><span class="p">)</span>
-<span class="n">export_file</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/8ec91d506e5d57d89840019e5eaad528.js"></script>
 
 <p>入力（Origin.txt）</p>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The ADJECTIVE panda walked to the NOUN and then VERB. A nearby NOUN was unaffected by these events.
@@ -318,29 +206,7 @@ pickup truck
 <p>指定したフォルダ内のtxtファイルを開いて，入力した正規表現にマッチする箇所を探索する<br />
 引数 “&lt;path&gt;“：探索するフォルダ</p>
 
-<p>プログラム（<a href="https://github.com/Absolute-Value/Automate-the-boring-stuff-with-python/blob/main/08/8.10.3_RegexSearcher.py" target="_blank">8.10.3_RegexSearcher.py</a>）</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">re</span><span class="p">,</span> <span class="n">sys</span><span class="p">,</span> <span class="n">os</span>
-
-<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
-    <span class="k">print</span><span class="p">(</span><span class="s">"探索したいフォルダのパスを入力してください"</span><span class="p">)</span>
-    <span class="n">sys</span><span class="p">.</span><span class="nb">exit</span><span class="p">()</span>
-
-<span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s">"正規表現を入力してください："</span><span class="p">)))</span>
-<span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-    <span class="k">if</span> <span class="s">".txt"</span> <span class="ow">in</span> <span class="nb">file</span><span class="p">:</span>
-        <span class="n">txt_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">file</span><span class="p">))</span>
-        <span class="n">txt_content</span> <span class="o">=</span> <span class="n">txt_file</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="n">txt_file</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
-
-        <span class="n">targets</span> <span class="o">=</span> <span class="n">regex</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="n">txt_content</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">targets</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="nb">file</span><span class="p">)</span>
-            
-            <span class="n">export_content</span> <span class="o">=</span> <span class="n">txt_content</span>
-            <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">targets</span><span class="p">):</span>
-                <span class="n">export_content</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="n">sub</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="sa">f</span><span class="s">'"</span><span class="si">{</span><span class="n">target</span><span class="si">}</span><span class="s">"'</span><span class="p">,</span> <span class="n">export_content</span><span class="p">)</span>
-            <span class="k">print</span><span class="p">(</span><span class="n">export_content</span><span class="p">)</span>
-</code></pre></div></div>
+<script src="https://gist.github.com/Absolute-Value/c6722ab2734f04e65bad38a9688c4fe7.js"></script>
 
 <p>出力</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 8.10.3_RegexSearcher.py Composition
