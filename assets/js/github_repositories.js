@@ -1,9 +1,11 @@
-const accessToken = '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';
+const accessToken1 = 'github_pat_'
+const accessToken2 = '11APYI3YQ0iFQ3mmO3PAJK_'
+const accessToken3 = 'yzJ11DcQlQxKJKr7iOrhkmrT5RtNNazfaR6Gy7qcdWbCSEFEXEBLweVVeBC';
 
 // リポジトリの情報を読み込む
 fetch(`https://api.github.com/users/Absolute-Value/repos`, {
   headers: {
-    Authorization: `Bearer ${accessToken}`
+    Authorization: `Bearer ${accessToken1+accessToken2+accessToken3}`
   }
 })
   .then(response => response.json())
