@@ -7,6 +7,36 @@ li {
   margin: 0 0 0 16px;
 }
 
+.repo {
+  background-color: var(--entry);
+  padding: 8px;
+  margin: 4px;
+  width: 300px;
+  height: 200px;
+  display: inline-flex;
+  border-radius: 10px;
+}
+
+.repo p {
+  margin: 8px;
+}
+
+.repo a {
+  width: 100%;
+}
+
+.repo_name {
+  font-size: large;
+  height: 26px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.repo_disc {
+  height: 70px;
+  overflow: hidden;
+}
+
 .post_p {
   padding: 0;
   margin: 10px 20px;
