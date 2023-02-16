@@ -7,14 +7,27 @@ li {
   margin: 0 0 0 16px;
 }
 
+.myrepos {
+  display: inline-flex;
+  padding: 0 4px;
+}
+
 .repo {
   background-color: var(--entry);
   padding: 8px;
-  margin: 4px;
+  margin: 10px;
   width: 260px;
   height: 200px;
-  display: inline-flex;
   border-radius: 10px;
+  transition: transform .5s ease; /* ゆっくり変化させる */
+}
+
+.repo:hover{
+  transform: scale(1.1); /* 拡大 */
+}
+
+.repo a:hover{
+  color: var(--primary); /* 拡大 */
 }
 
 .repo p {
@@ -44,6 +57,7 @@ li {
 
 .myposts {
   margin: 0 6%;
+  overflow-x: scroll;
 }
 
 .post {
