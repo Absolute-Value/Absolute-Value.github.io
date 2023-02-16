@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>BERTで遊ぶ</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="https://www.keywalker.co.jp/wp-content/uploads/2020/04/Google-Bert.png" class="hero">
+    <h1>BERTで遊ぶ</h1>
+    <p><span class="fa fa-calendar"></span> Feb 16, 2023</p>
+    <p><span class="fa fa-flag"></span> BERT, pytorch, python, </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=BERTで遊ぶ&url=https://absolute-value.github.io/blogs/BERT.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/blogs/BERT.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/blogs/BERT.html&title=BERTで遊ぶ" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=BERTで遊ぶ&body=BERTで遊ぶ https://absolute-value.github.io/blogs/BERT.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    
+    <div id="table-of-contents">
+      <h1 class="table-of-contents-h1">目次</h1>
+      <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#bert">BERT</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#ライブラリのインストール">ライブラリのインストール</a></li>
+<li class="toc-entry toc-h2"><a href="#プログラム">プログラム</a></li>
+<li class="toc-entry toc-h2"><a href="#全プログラムはコチラ">全プログラムはコチラ</a></li>
+</ul>
+</li>
+</ul>
+    </div>
+    
+    <div id="markdown-content">
+      <h1 id="bert">BERT</h1>
+<p>BERTを用いて「日本語」を「英語」に翻訳をして遊んでみます．</p>
+
+<h2 id="ライブラリのインストール">ライブラリのインストール</h2>
+<p>Google Colaboratory上などpytorchがインストールされている前提です．
+まず，pipを用いて必要なライブラリをインストールします．(Colab上では!をつけてください)</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">pip install transformers
+</span></code></pre></div></div>
+
+<h2 id="プログラム">プログラム</h2>
+<p>ライブラリをインポートします．</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForSeq2SeqLM</span>
+</code></pre></div></div>
+
+<p>GPUが使える場合はGPUを使用します．</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">():</span>
+  <span class="n">device</span> <span class="o">=</span> <span class="s">'cuda'</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">device</span> <span class="o">=</span> <span class="s">'cpu'</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'device : </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>tokenizerとモデルを読み込みます．</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"Helsinki-NLP/opus-mt-ja-en"</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"Helsinki-NLP/opus-mt-ja-en"</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>翻訳をする関数を定義します．</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">translation</span><span class="p">(</span><span class="n">japanese_text</span> <span class="o">=</span> <span class="s">"こんにちは、私の名前は太郎です。"</span><span class="p">):</span>
+  <span class="c1"># 日本語文章をトークナイズする
+</span>  <span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="n">japanese_text</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s">"pt"</span><span class="p">)</span>
+
+  <span class="c1"># BERTを使用して日本語から英語に翻訳する
+</span>  <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">generate</span><span class="p">(</span><span class="n">input_ids</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+
+  <span class="c1"># 翻訳された英語文章をデコードする
+</span>  <span class="n">english_text</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">english_text</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>関数に翻訳したい文字列を入力します．</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">translation</span><span class="p">(</span><span class="s">'リポジトリはセキュリティの都合上，非公開です．'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>翻訳された文章が出力されます．</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Repositories are confidential for security purposes.
+</span></code></pre></div></div>
+
+<p>普通に有用なので，これを用いてホームページの英語化を進めようか検討中です．</p>
+
+<h2 id="全プログラムはコチラ">全プログラムはコチラ</h2>
+<script src="https://gist.github.com/Absolute-Value/fc4b6bce731df7f9fe45cd9b72ba04d7.js"></script>
+
+
+    </div>
+    <div class="btn-wrapper">
+      <a href="/blogs" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

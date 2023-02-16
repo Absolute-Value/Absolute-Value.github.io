@@ -73,6 +73,10 @@ table {
   border-collapse: collapse; /* セルの線を重ねる */
 }
 
+.highlight {
+  overflow-x: scroll;
+}
+
 .highlight table {
   margin: 0;
 }
