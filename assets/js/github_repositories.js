@@ -30,11 +30,18 @@ fetch(`https://api.github.com/users/Absolute-Value/repos`, {
     // リポジトリを日付順にソートする
     repos.sort((a, b) => b.pushedAt - a.pushedAt);
 
-    // 最新の3つのリポジトリを取得する
-    const latestRepos = repos.slice(0, 8);
-
       // リポジトリを表示する
     const repoList = document.getElementById('repoList');
+    const repoWidth = repoList.clientWidth;
+    var repoNum = 2*parseInt(repoWidth/250);
+    if (repoNum === 2) {
+      repoNum = 4;
+    }
+
+    // 最新の3つのリポジトリを取得する
+    const latestRepos = repos.slice(0, repoNum);
+
+
     latestRepos.forEach(repo => {
       const repo_div = document.createElement('div');
       repoList.appendChild(repo_div);
