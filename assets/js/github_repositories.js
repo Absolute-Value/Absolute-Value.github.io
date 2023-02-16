@@ -33,7 +33,7 @@ fetch(`https://api.github.com/users/Absolute-Value/repos`, {
       // リポジトリを表示する
     const repoList = document.getElementById('repoList');
     const repoWidth = repoList.clientWidth;
-    var repoNum = 2*parseInt(repoWidth/250);
+    var repoNum = 2*parseInt(repoWidth/260);
     if (repoNum === 2) {
       repoNum = 4;
     }
