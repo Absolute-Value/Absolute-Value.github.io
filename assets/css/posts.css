@@ -27,7 +27,7 @@ li {
 }
 
 .repo a:hover{
-  color: var(--primary); /* 拡大 */
+  color: var(--primary);
 }
 
 .repo p {

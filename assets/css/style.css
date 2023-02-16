@@ -124,14 +124,17 @@ header {
 
 .email:hover {
   color: lightsalmon;
+  transform: scale(1.2); /* 拡大 */
 }
 
 .twitter:hover {
   color: rgb(29, 155, 240);
+  transform: scale(1.2); /* 拡大 */
 }
 
 .github:hover {
   color: gray;
+  transform: scale(1.2); /* 拡大 */
 }
 
 .share-btn-wrapper {
