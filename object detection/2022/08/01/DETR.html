@@ -132,7 +132,9 @@
     <ul>
       <li>予測とGTを1対1で対応させ、ハンガリーLossを計算
         <ul>
-          <li>$ L_{Hungarian} (y,\hat{y}) = \sum^N_{i=1} [- \log \hat{p}<em>{\sigma (i)} (C_i) + 1</em>{c_i\neq \phi} L_{box} (b_i, \hat{b}_{\hat{\sigma}} (i))] $</li>
+          <li>
+\[L_{Hungarian} (y,\hat{y}) = \sum^N_{i=1} [- \log \hat{p}_{\sigma (i)} (C_i) + 1_{c_i\neq \phi} L_{box} (b_i, \hat{b}_{\hat{\sigma}} (i))]\]
+          </li>
         </ul>
       </li>
       <li>バウンディングボックスロス
@@ -142,8 +144,12 @@
               <li>そこで、$L_{iou}$の線形結合を行いスケール不変にする</li>
             </ul>
           </li>
-          <li>$ L_{box} = \lambda_{iou} L_{iou} (b_i, \hat{b}<em>{\sigma (i)}) + \lambda</em>{L1} | b_i - \hat{b}_{\sigma (i)} |_1 $</li>
-          <li>$ L_{iou} = 1 - (\frac{b_{\sigma(i)  } \cap \hat{b}<em>i}{b</em>{\sigma(i)} \cup \hat{b}<em>i} - \frac{B (b</em>{\sigma(i)  }, \hat{b}<em>i) \backslash  b</em>{\sigma(i)  } \cup \hat{b}<em>i}{B(b</em>{\sigma(i)  }, \hat{b}_i)}) $</li>
+          <li>
+\[L_{box} = \lambda_{iou} L_{iou} (b_i, \hat{b}_{\sigma (i)}) + \lambda_{L1} \| b_i - \hat{b}_{\sigma (i)} \|_1\]
+          </li>
+          <li>
+\[L_{iou} = 1 - (\frac{b_{\sigma(i)  } \cap \hat{b}_i}{b_{\sigma(i)} \cup \hat{b}_i} - \frac{B (b_{\sigma(i)  }, \hat{b}_i) \backslash  b_{\sigma(i)  } \cup \hat{b}_i}{B(b_{\sigma(i)  }, \hat{b}_i)})\]
+          </li>
         </ul>
       </li>
     </ul>
