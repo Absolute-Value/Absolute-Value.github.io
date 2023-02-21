@@ -115,10 +115,16 @@
 <h3 id="学習">学習</h3>
 <!-- キモの中の学習に関する内容 -->
 
-<p>正常データを捉えるように学習する<br />
-損失関数は通常と同じ
-\(L_{VAE} = -\sum_i ELBO_i = -\sum_i \big[E_{q_\phi(z|x_i)}\big[log p_\theta(x_i|z)\big] - D_{KL}(q_\phi(z|x_i)||p(z))\big]\)
-を使用する</p>
+<ul>
+  <li>正常データを捉えるように学習</li>
+  <li>損失関数は通常と同じ
+    <ul>
+      <li>
+\[L_{VAE} = -\sum_i ELBO_i = -\sum_i \big[E_{q_\phi(z|x_i)}\big[log p_\theta(x_i|z)\big] - D_{KL}(q_\phi(z|x_i)||p(z))\big]\]
+      </li>
+    </ul>
+  </li>
+</ul>
 
 <h3 id="推論異常度の算出">推論（異常度の算出）</h3>
 <!-- キモの中の推論に関する内容 -->
@@ -126,25 +132,45 @@
 <ul>
   <li>潜在空間における新規性
     <ul>
-      <li>VAE正規化スコア<br />
-  異常なサンプルは、正常なサンプルよりも単位ガウスからより多く発散する潜在空間内の分布を持つことが予想される<br />
-  そこで、新規性スコアはVAE損失関数のKLダイバージェンス項を使用<br />
-  \(N_\text {VAE-reg}({x_\mathrm {test}}) = {D_\mathrm {KL}}\big (q_\phi (z|{x_\mathrm {test}}) \parallel \mathcal {N} (0,I)\big )\)</li>
+      <li>VAE正規化スコア
+        <ul>
+          <li>
+\[N_\text {VAE-reg}({x_\mathrm {test}}) = {D_\mathrm {KL}}\big (q_\phi (z|{x_\mathrm {test}}) \parallel \mathcal {N} (0,I)\big )\]
+          </li>
+          <li>異常なサンプルは、正常なサンプルよりも単位ガウスからより多く発散する潜在空間内の分布を持つことが予想される</li>
+          <li>そこで、新規性スコアはVAE損失関数のKLダイバージェンス項を使用</li>
+        </ul>
+      </li>
       <li>潜在空間距離
         <ol>
           <li>分布の平均間のユークリッド距離<br />
   テストデータポイントの潜在空間分布の平均と，正常なサンプルの最も近い潜在空間分布の平均との間の距離
-  \(N_{\bar{q}-\bar{q}_y}({x_ \mathrm {test}}) = \min _{y \in Y}\left\| E[q_ \phi (z|{x_ \mathrm {test}})] - E[q _\phi (z|y)]\right\| _2^2\)</li>
+            <ul>
+              <li>
+\[N_{\bar{q}-\bar{q}_y}({x_ \mathrm {test}}) = \min _{y \in Y}\left\| E[q_ \phi (z|{x_ \mathrm {test}})] - E[q _\phi (z|y)]\right\| _2^2\]
+              </li>
+            </ul>
+          </li>
           <li>分布間のBhattacharyaa距離<br />
   Bhattacharyya距離 : 2つの確率分布pとqの非類似性を表す対称的な尺度\(D_B(p,q) = -{\ln \big(\mathrm {\int \sqrt{p(z)q(z)} {\,\mathrm {d}}z}(p,q)\big )}\)
-  新規性スコアはテストサンプルの潜在空間分布$q_\phi (z|{x_\mathrm {test}})$と正常サンプルの最も類似した潜在空間分布$q_\phi (z|y)$との間の距離<br />
-  \(N_{q-q_y}({x_\mathrm {test}}) = \min_{y \in Y}D_B(q_\phi (z|{x_\mathrm {test}}), q_\phi (z|y))\)</li>
+  新規性スコアはテストサンプルの潜在空間分布$q_\phi (z|{x_\mathrm {test}})$と正常サンプルの最も類似した潜在空間分布$q_\phi (z|y)$との間の距離
+            <ul>
+              <li>
+\[N_{q-q_y}({x_\mathrm {test}}) = \min_{y \in Y}D_B(q_\phi (z|{x_\mathrm {test}}), q_\phi (z|y))\]
+              </li>
+            </ul>
+          </li>
         </ol>
       </li>
       <li>潜在空間における密度ベースの距離<br />
   潜在空間における正常なデータの密度を推定\(q_Y(z)=\frac{1}{|Y|}\sum_{y \in Y} q_\phi (z|y)\)
-  それを利用して新規性スコアを計算<br />
-  \(N_{q_Y}({x_\mathrm {test}}) = -q_Y(E[q_\phi (z|{x_\mathrm {test}})])\)</li>
+  それを利用して新規性スコアを計算
+        <ul>
+          <li>
+\[N_{q_Y}({x_\mathrm {test}}) = -q_Y(E[q_\phi (z|{x_\mathrm {test}})])\]
+          </li>
+        </ul>
+      </li>
     </ul>
   </li>
   <li>オリジナルの機能空間における新規性
@@ -154,63 +180,143 @@
   3.~6.のmeanに関してはmin計算に置き換え可
         <ol>
           <li>決定論的再構成エラー<br />
-  入力を決定論的に再構成し、再構成誤差を計算<br />
-  \(N_{x-\bar{p}(\bar{q})}({x_\mathrm {test}}) = \left\| {x_\mathrm {test}}- E\big [p_\theta \big (x|E[q(z|{x_\mathrm {test}})]\big )\big ]\right\| _2^2\)</li>
+  入力を決定論的に再構成し、再構成誤差を計算
+            <ul>
+              <li>
+\[N_{x-\bar{p}(\bar{q})}({x_\mathrm {test}}) = \left\| {x_\mathrm {test}}- E\big [p_\theta \big (x|E[q(z|{x_\mathrm {test}})]\big )\big ]\right\| _2^2\]
+              </li>
+            </ul>
+          </li>
           <li>決定論的再構築の可能性<br />
-  エンコーダの平均値を与えられた入力の対数尤度を計算<br />
-  \(N_{\bar{p}(\bar{q})}({x_\mathrm {test}}) = - \log p_\theta \big({x_\mathrm {test}}| E\big[q(z|{x_\mathrm {test}}\big )\big]\big)\)</li>
+  エンコーダの平均値を与えられた入力の対数尤度を計算
+            <ul>
+              <li>
+\[N_{\bar{p}(\bar{q})}({x_\mathrm {test}}) = - \log p_\theta \big({x_\mathrm {test}}| E\big[q(z|{x_\mathrm {test}}\big )\big]\big)\]
+              </li>
+            </ul>
+          </li>
           <li>エンコーダー確率的再構成エラー<br />
-  エンコーダのサンプルとデコーダの平均値を使って、入力の可能な再構成をいくつか計算し、平均再構成誤差を算出<br />
-  \(N_{x-\bar{p}(\hat{q})}({x_\mathrm {test}}) = \underset{z_i \sim q_\phi(z|x_{test})}{mean} \left\| {x_\mathrm {test}}- E\big [p_\theta \big (x|z_i)]\right\| _2^2\)</li>
+  エンコーダのサンプルとデコーダの平均値を使って、入力の可能な再構成をいくつか計算し、平均再構成誤差を算出
+            <ul>
+              <li>
+\[N_{x-\bar{p}(\hat{q})}({x_\mathrm {test}}) = \underset{z_i \sim q_\phi(z|x_{test})}{mean} \left\| {x_\mathrm {test}}- E\big [p_\theta \big (x|z_i)]\right\| _2^2\]
+              </li>
+            </ul>
+          </li>
           <li>エンコーダー確率的再構成の可能性<br />
-  エンコーダからのサンプルが与えられたときに、入力の対数尤度関数値をいくつか計算<br />
-  \(N_{\bar{p}(\hat{q})}({x_\mathrm {test}}) = \underset{z_i \sim q_\phi(z|x_{test})}{mean} - \log p_\theta (x_{test}|z_i)\)</li>
+  エンコーダからのサンプルが与えられたときに、入力の対数尤度関数値をいくつか計算
+            <ul>
+              <li>
+\[N_{\bar{p}(\hat{q})}({x_\mathrm {test}}) = \underset{z_i \sim q_\phi(z|x_{test})}{mean} - \log p_\theta (x_{test}|z_i)\]
+              </li>
+            </ul>
+          </li>
           <li>デコーダー-確率的再構成エラー<br />
-  エンコーダの平均値とデコーダからのサンプルを使って、平均再構築誤差を計算<br />
-  \(N_{x-\hat{p}(\bar{q})}({x_\mathrm {test}}) = \underset{x_i \sim p_\theta \big (x\big |E\big [q_\phi(z|x_{test})\big ]\big )}{mean} \left\| {x_\mathrm {test}}- x_i\right\| _2^2\)</li>
+  エンコーダの平均値とデコーダからのサンプルを使って、平均再構築誤差を計算
+            <ul>
+              <li>
+\[N_{x-\hat{p}(\bar{q})}({x_\mathrm {test}}) = \underset{x_i \sim p_\theta \big (x\big |E\big [q_\phi(z|x_{test})\big ]\big )}{mean} \left\| {x_\mathrm {test}}- x_i\right\| _2^2\]
+              </li>
+            </ul>
+          </li>
           <li>完全確率的再構成エラー<br />
-  エンコーダとデコーダの両方のサンプルを使用して、平均再構成誤差を計算<br />
-  \(N_{x-\hat{p}(\hat{q})}({x_\mathrm {test}}) = \underset{z_i \sim q_\phi(z|x_{test})}{\underset{x_i \sim p_\phi(x|z_i)}{mean}} \left\| {x_\mathrm {test}}- x_i\right\| _2^2\)</li>
+  エンコーダとデコーダの両方のサンプルを使用して、平均再構成誤差を計算
+            <ul>
+              <li>
+\[N_{x-\hat{p}(\hat{q})}({x_\mathrm {test}}) = \underset{z_i \sim q_\phi(z|x_{test})}{\underset{x_i \sim p_\phi(x|z_i)}{mean}} \left\| {x_\mathrm {test}}- x_i\right\| _2^2\]
+              </li>
+            </ul>
+          </li>
         </ol>
       </li>
       <li>距離ベースおよび密度ベース
         <ol>
           <li>前述の再構成に
             <ul>
-              <li>ユークリッド距離を適用<br />
- \(N_{\bar{q}-\bar{q}_y}({x_\mathrm {test}}) = \min _{y \in Y}\left\| E[p_\theta(x|E[q_\phi (z|{x_\mathrm {test}})])] - E[p_\theta(x|E[q_\phi (z|y)])]\right\| _2^2\)</li>
-              <li>Bhattacharyaa距離を適用<br />
- \(N_{q-q_y}({x_\mathrm {test}}) = \min_{y \in Y}D_B\big(p_\theta(x|E[q_\phi (z|{x_\mathrm {test}})]), p_\theta(x|E[q_\phi (z|y)]\big)\big)\)</li>
-              <li>密度を適用<br />
- \(N_{q_Y}({x_\mathrm {test}}) = -p_Y\big(E\big[p_\theta\big(x|E[q_\phi (z|{x_\mathrm {test}})])\big]\big)\)</li>
+              <li>ユークリッド距離を適用
+                <ul>
+                  <li>
+\[N_{\bar{q}-\bar{q}_y}({x_\mathrm {test}}) = \min _{y \in Y}\left\| E[p_\theta(x|E[q_\phi (z|{x_\mathrm {test}})])] - E[p_\theta(x|E[q_\phi (z|y)])]\right\| _2^2\]
+                  </li>
+                </ul>
+              </li>
+              <li>Bhattacharyaa距離を適用
+                <ul>
+                  <li>
+\[N_{q-q_y}({x_\mathrm {test}}) = \min_{y \in Y}D_B\big(p_\theta(x|E[q_\phi (z|{x_\mathrm {test}})]), p_\theta(x|E[q_\phi (z|y)]\big)\big)\]
+                  </li>
+                </ul>
+              </li>
+              <li>密度を適用
+                <ul>
+                  <li>
+\[N_{q_Y}({x_\mathrm {test}}) = -p_Y\big(E\big[p_\theta\big(x|E[q_\phi (z|{x_\mathrm {test}})])\big]\big)\]
+                  </li>
+                </ul>
+              </li>
             </ul>
           </li>
-          <li>
+          <li>1.の
             <ul>
-              <li>1.の上の式に決定論的再構成の代わりに元のテストサンプルを使用<br />
-  \(N_{x-\bar{p}(\bar{q}_y)}({x_\mathrm {test}}) = \min_{y \in Y} \left\| x_{test} - E\big [p_\theta \big ( x\big|E\big[q_\phi(z|y)\big] \big) \big] \right\| _2^2\)</li>
-              <li>1.の下の式にに決定論的再構成の代わりに元のテストサンプルを使用<br />
-  \(N_{p(\bar{q}_Y)(x)}({x_\mathrm {test}}) = -p_Y(x_{test})\)</li>
+              <li>上の式に決定論的再構成の代わりに元のテストサンプルを使用
+                <ul>
+                  <li>
+\[N_{x-\bar{p}(\bar{q}_y)}({x_\mathrm {test}}) = \min_{y \in Y} \left\| x_{test} - E\big [p_\theta \big ( x\big|E\big[q_\phi(z|y)\big] \big) \big] \right\| _2^2\]
+                  </li>
+                </ul>
+              </li>
+              <li>下の式にに決定論的再構成の代わりに元のテストサンプルを使用
+                <ul>
+                  <li>
+\[N_{p(\bar{q}_Y)(x)}({x_\mathrm {test}}) = -p_Y(x_{test})\]
+                  </li>
+                </ul>
+              </li>
             </ul>
           </li>
-          <li>再構成とオリジナルでユークリッド距離<br />
-  \(N_{\bar{p}(\bar{q})-y}({x_\mathrm {test}}) = \min_{y \in Y} \Bigl \Vert E\big [p_\theta \big (x|E[q_\phi (z|{x_\mathrm {test}}) - y]\big )\big ]\Bigr \Vert _2^2\)</li>
+          <li>再構成とオリジナルでユークリッド距離
+            <ul>
+              <li>
+\[N_{\bar{p}(\bar{q})-y}({x_\mathrm {test}}) = \min_{y \in Y} \Bigl \Vert E\big [p_\theta \big (x|E[q_\phi (z|{x_\mathrm {test}}) - y]\big )\big ]\Bigr \Vert _2^2\]
+              </li>
+            </ul>
+          </li>
         </ol>
       </li>
       <li>最も近い生成されたサンプルまでの距離<br />
-  入力とVAEデコーダが生成できる最も近いサンプルとの距離<br />
-  \(N_{x-\hat{p}}({x_\mathrm {test}})=\min _{z}\left\| {x_\mathrm {test}}- E[p_\theta (x|z)]\right\| _2^2\)</li>
+  入力とVAEデコーダが生成できる最も近いサンプルとの距離
+        <ul>
+          <li>
+\[N_{x-\hat{p}}({x_\mathrm {test}})=\min _{z}\left\| {x_\mathrm {test}}- E[p_\theta (x|z)]\right\| _2^2\]
+          </li>
+        </ul>
+      </li>
       <li>生成された最高の可能性の反数<br />
-  ユークリッド不使用で、$p_{\theta} (x_{test}|z)$の密度値を計算<br />
-  \(N_{\hat{p}}(x_{test}) = \min_z - \log p_{\theta} (x_{test}|z)\)</li>
+  ユークリッド不使用で、$p_{\theta} (x_{test}|z)$の密度値を計算
+        <ul>
+          <li>
+\[N_{\hat{p}}(x_{test}) = \min_z - \log p_{\theta} (x_{test}|z)\]
+          </li>
+        </ul>
+      </li>
     </ul>
   </li>
   <li>VAE損失としての新規性
     <ul>
-      <li>VAEの損失関数$L_{VAE}$そのものが新規性の指標<br />
-  \(N_{-\mathrm {ELBO}}({x_\mathrm {test}}) = -E_{q_\phi (z|{x_\mathrm {test}})}[\log p_\theta ({x_\mathrm {test}}|z)] + {D_\mathrm {KL}}\big (q_\phi (z|{x_\mathrm {test}})\parallel \mathcal {N}(0,I)\big )\)</li>
-      <li>確率的複合器 \(q_{\phi}\) \((z\|{x_{\mathrm{test}}})\) からの複数サンプルを使用<br />
-  \(N_{-{\widehat{\mathrm {ELBO}}}}({x_{\mathrm {test}}}) = \min_{z\sim q_{\phi} (z|{x_{\mathrm{test}}})}[\log p_{\theta} ({x_{\mathrm{test}}}|z)] + {D_{\mathrm{KL}}}\big (q_{\phi} (z|{x_{\mathrm {test}}})\parallel \mathcal{N}(0,I)\big )\)</li>
+      <li>VAEの損失関数$L_{VAE}$そのものが新規性の指標
+        <ul>
+          <li>
+\[N_{-\mathrm {ELBO}}({x_\mathrm {test}}) = -E_{q_\phi (z|{x_\mathrm {test}})}[\log p_\theta ({x_\mathrm {test}}|z)] + {D_\mathrm {KL}}\big (q_\phi (z|{x_\mathrm {test}})\parallel \mathcal {N}(0,I)\big )\]
+          </li>
+        </ul>
+      </li>
+      <li>確率的複合器 \(q_{\phi}\) \((z\|{x_{\mathrm{test}}})\) からの複数サンプルを使用
+        <ul>
+          <li>
+\[N_{-{\widehat{\mathrm {ELBO}}}}({x_{\mathrm {test}}}) = \min_{z\sim q_{\phi} (z|{x_{\mathrm{test}}})}[\log p_{\theta} ({x_{\mathrm{test}}}|z)] + {D_{\mathrm{KL}}}\big (q_{\phi} (z|{x_{\mathrm {test}}})\parallel \mathcal{N}(0,I)\big )\]
+          </li>
+        </ul>
+      </li>
     </ul>
   </li>
 </ul>

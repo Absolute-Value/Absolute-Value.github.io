@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Exploring Structure-aware Transformer over Interaction Proposals for Human-Object Interaction Detection</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/STIP/2.png" class="hero">
+    <h1>Exploring Structure-aware Transformer over Interaction Proposals for Human-Object Interaction Detection</h1>
+    <p><span class="fa fa-link"></span><a href="https://github.com/zyong812/STIP" target="_blank"> https://github.com/zyong812/STIP</a></p>
+    <p><span class="fa fa-calendar"></span> Feb 21, 2023</p>
+    <p><span class="fa fa-flag"></span> Human-Object Interaction Detection, Transformer, </p>
+    <p><span class="fa fa-graduation-cap"></span> CVPR (2022) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Exploring Structure-aware Transformer over Interaction Proposals for Human-Object Interaction Detection&url=https://absolute-value.github.io/hoi/2023/02/21/STIP.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/hoi/2023/02/21/STIP.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/hoi/2023/02/21/STIP.html&title=Exploring Structure-aware Transformer over Interaction Proposals for Human-Object Interaction Detection" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Exploring Structure-aware Transformer over Interaction Proposals for Human-Object Interaction Detection&body=Exploring Structure-aware Transformer over Interaction Proposals for Human-Object Interaction Detection https://absolute-value.github.io/hoi/2023/02/21/STIP.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>新しいtransformerベースのHOI手法のStructure-aware Transformer over Interaction Proposals (STIP)を提案</li>
+  <li>「インタラクションのある人間と物体のペア提案」と「構造考慮型transformerで提案をHOIに変換」の2つのフェーズでHOIを予測</li>
+  <li>構造考慮型transformerはバニラtransformerに対し、全体的意味構造および各相互作用提案内のヒト／モノの局所的空間構造を追加的に符号化することでHOI予測を強化している
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/STIP/1.png" alt="" /></li>
+  <li>他のHOIに依存していることを考慮させた（例：「人間が（野球の）グローブをつけている」ゆえに、「（別の）人間がバットを持っている」）</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/STIP/2.png" alt="" /></li>
+  <li>DETR
+    <ul>
+      <li>人間と物体のインスタンスを検出</li>
+    </ul>
+  </li>
+  <li>Interaction Proposal Network (IPN)
+    <ul>
+      <li>すべての人間と物体のペアを構築</li>
+      <li>すべてのペアに対してインタラクションの確率を外観特徴と空間特徴と言語特徴をMLPに入れて予測
+        <ul>
+          <li>外観特徴：DETRで得られる特徴</li>
+          <li>空間特徴：$[dx, dy, dis, A_h, A_o, I, U]$
+            <ul>
+              <li>$dx$ : 人間と物体のx距離</li>
+              <li>$dy$ : 人間と物体のy距離</li>
+              <li>$dis$ : 人間と物体のユークリッド</li>
+              <li>$A_h$ : 人間の面積</li>
+              <li>$A_o$ : 物体の面積</li>
+              <li>$I$ : 人間と物体の面積の積集合</li>
+              <li>$U$ : 人間と物体の面積の和集合</li>
+            </ul>
+          </li>
+          <li>言語特徴：物体のラベル(OneHot)を200次元のベクトルに</li>
+        </ul>
+      </li>
+      <li>インタラクションの確率が高い上位K組を提案として出力
+        <ul>
+          <li>
+\[L_{proposal} = \frac{1}{\sum^N_{i=1}z_i} \sum^N_{i=1} FL(\hat{z}_i, z_i)\]
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>インタラクション中心グラフ構築
+    <ul>
+      <li>インタラクション意味構造
+        <ul>
+          <li><img src="/assets/images/posts/STIP/4.png" alt="" /></li>
+          <li>インタラクション提案をグラフノードとしてグラフを構築</li>
+          <li>6つのクラス
+            <ul>
+              <li>disjunctive
+                <ul>
+                  <li>人間も物体もインスタンスを共有していない</li>
+                </ul>
+              </li>
+              <li>same-human</li>
+              <li>same-object
+                <ul>
+                  <li>人間／物体のインスタンスのみ同じ</li>
+                </ul>
+              </li>
+              <li>series-opposing</li>
+              <li>series
+                <ul>
+                  <li>人間／物体のインスタンスが物体／人間のインスタンスと同じ</li>
+                </ul>
+              </li>
+              <li>same-pair
+                <ul>
+                  <li>人間と物体の両方のインスタンスが同じ</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>インタラクション空間構造
+        <ul>
+          <li><img src="/assets/images/posts/STIP/5.png" alt="" /></li>
+          <li>局所的な空間特徴を考慮させる</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Structure-aware transformer
+    <ul>
+      <li>Structure-aware Self-Attention
+        <ul>
+          <li>
+\[e^{self}_{ij} = \frac{(W_q q_i)^T (W_k q_j + \psi (q_j, E_{dep}(d_{ij})))}{\sqrt{d_{key}}}\]
+          </li>
+          <li>IPNのK組の提案に対してSelf-Attention
+            <ul>
+              <li>Keyに対してインタラクション意味構造の6つのクラスで意味依存性を付与する</li>
+            </ul>
+          </li>
+          <li>$E_{dep}$は意味依存を符号化する2層MLP</li>
+        </ul>
+      </li>
+      <li>Structure-aware Cross-attention
+        <ul>
+          <li><img src="/assets/images/posts/STIP/7.png" alt="" /></li>
+          <li>
+\[e^{cross}_{ij} = \frac{(W_{\hat{q}} \hat{q}_i)^T (W_{\hat{k}} x_j + pos_j+ \phi (x_j, E_{lay}(l_{ij})))}{\sqrt{d_{key}}}\]
+          </li>
+          <li>K組の中間HOI特徴をQuery，画像特徴マップをKeyとValueとしCross-attention
+            <ul>
+              <li>Keyに対してインタラクション空間構造の5つのクラスを付与</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>最終出力
+    <ul>
+      <li>2層MLPでインタラクションクラスを予測
+        <ul>
+          <li>Focal Loss likeな損失関数
+            <ul>
+              <li>
+\[L_{cls} = \frac{1}{\sum^N_{i=1} \sum^C_{c=1}} \sum^N_{i=1} \sum^C_{c=1} FL (\hat{y}_{ic}, y_{ic})\]
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>全体の損失関数
+        <ul>
+          <li>
+\[L_{STIP} = L_{proposal} + L_{cls}\]
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>V-COCO
+    <ul>
+      <li><img src="/assets/images/posts/STIP/11.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>HICO-DET
+    <ul>
+      <li><img src="/assets/images/posts/STIP/12.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>提案のK組による精度比較
+    <ul>
+      <li><img src="/assets/images/posts/STIP/13.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>構造考慮型transformerのレイヤー数によおる精度比較
+    <ul>
+      <li><img src="/assets/images/posts/STIP/14.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

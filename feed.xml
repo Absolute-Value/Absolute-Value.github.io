@@ -1,4 +1,349 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-19T16:53:44+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">CLRNet: Cross Layer Refinement Network for Lane Detection</title><link href="http://localhost:4000/lane%20detection/2022/12/15/CLRNet.html" rel="alternate" type="text/html" title="CLRNet: Cross Layer Refinement Network for Lane Detection" /><published>2022-12-15T12:00:00+09:00</published><updated>2022-12-15T12:00:00+09:00</updated><id>http://localhost:4000/lane%20detection/2022/12/15/CLRNet</id><content type="html" xml:base="http://localhost:4000/lane%20detection/2022/12/15/CLRNet.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-22T00:47:01+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2023/02/21/FGAHOI.html" rel="alternate" type="text/html" title="FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection" /><published>2023-02-21T13:00:00+09:00</published><updated>2023-02-21T13:00:00+09:00</updated><id>http://localhost:4000/hoi/2023/02/21/FGAHOI</id><content type="html" xml:base="http://localhost:4000/hoi/2023/02/21/FGAHOI.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>MSS, HSAM, TAMという3つから成るEnd-to-endのtransformerベースの手法(FGAHOI)を提案
+    <ul>
+      <li>MSSは人間、物体、インタラクション領域の特徴を抽出</li>
+      <li>HSAMとTAMは抽出された特徴量とクエリ埋め込みを
+  階層的な空間視点とタスク視点で順番に意味的に整列・結合</li>
+      <li>複雑な学習を軽減するために、新しい学習戦略Stage-wise Training Strategyを設計</li>
+    </ul>
+  </li>
+  <li>新規のデータセットHOI-SDCを提案</li>
+  <li>既存手法から大幅に精度向上
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>以下の問題を低減
+    <ul>
+      <li>複雑な背景情報を持つ画像からいかにして重要な特徴を抽出するか</li>
+      <li>抽出した特徴量とクエリ埋め込みをどのように意味的に整合させるか</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>全体構造
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-1.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Multi-Scale Features Extractor
+    <ul>
+      <li>
+\[M = F_{encoder}(F_{flatten}(\phi(x)),p,s,r,l) \in \mathbb{R}^{N_s \times C_d}\]
+      </li>
+      <li>事前学習済みBackbone(Swin Transformer)でマルチスケール特徴を抽出</li>
+      <li>transformer encoderで符号化して意味特徴量を得る</li>
+    </ul>
+  </li>
+  <li>Decoder
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-2.png" alt="" /></li>
+      <li>Multi-Scale Sampling (MSS)
+        <ul>
+          <li>
+\[x^i_s = F_{sample} (reshape(M)^i, A, size^i, bilinear)\]
+          </li>
+          <li>transformer encoderの特徴を元の形状に整形</li>
+          <li>小さなインスタンスを検出する浅い特徴量では小さくサンプリング</li>
+          <li>大きなインスタンスを検出する深い特徴量では大きくサンプリング
+            <ul>
+              <li>サイズに関係なくインスタンスを検出するため</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Hierarchical Spatial-Aware Merging (HSAM)
+        <ul>
+          <li>サンプリングした各層の特徴をKeyとValue，位置PとコンテキストCをQueryとしてMHA
+            <ul>
+              <li>
+\[C_u = C + F_{MHA}\big((C+P)W^q, (C+P)W^k, CW^v \big)\]
+              </li>
+              <li>
+\[x^u_m = F_{concat} (\mathrm{head}_1, ... , \mathrm{head}_h) W^O\]
+                <ul>
+                  <li>
+\[\mathrm{where} \space \mathrm{head}_n = \mathrm{Softmax\big(\frac{(C_u W^q_n)\cdot(x^i_s W^k_n)^T}{\sqrt{d_k}}\big)} (x^i_s W^v_n)\]
+                  </li>
+                </ul>
+              </li>
+              <li>特徴内Attention</li>
+            </ul>
+          </li>
+          <li>MHAに通した各層の特徴をConcat
+            <ul>
+              <li>
+\[X_m = F_{concat} ({x^i_m}_{i=0,1,2}) \in \mathbb{R}^{B \times N_q \times N_L \times N_{hd}}\]
+              </li>
+            </ul>
+          </li>
+          <li>Concatした特徴をKeyとValue，位置PとコンテキストCをQueryとしてMHA
+            <ul>
+              <li>
+\[X_u = F_{concat} (\mathrm{head}_1, ... , \mathrm{head}_h) W^O\]
+                <ul>
+                  <li>
+\[\mathrm{where} \space \mathrm{head}_n = \mathrm{Softmax\big(\frac{(C_u W^q_n)\cdot(X_m W^k_n)^T}{\sqrt{d_k}}\big)} (X W^v_n)\]
+                  </li>
+                </ul>
+              </li>
+              <li>特徴間Attention</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Task-Aware Mergin (TAM)
+        <ul>
+          <li>HSAMの出力特徴とコンテンツ埋め込みを融合しCross Attention
+            <ul>
+              <li>
+\[X = F_{stack} (C_u, X_u) \in \mathbb{R}^{B \times N_q \times (2 \times N_{hd})}\]
+              </li>
+              <li>
+\[X_{switch} = F_{stack} (\mathrm{head}_1, ... , \mathrm{head}_h) W^O\]
+                <ul>
+                  <li>
+\[\mathrm{where} \space \mathrm{head}_n = \mathrm{Softmax\big(\frac{(C_u W^q_n)\cdot(X W^k_n)^T}{\sqrt{d_k}}\big)} (X W^v_n)\]
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>適切なチャンネルを選択する動的なスイッチを生成
+            <ul>
+              <li>
+\[Switch^{\gamma} = F_{normalize}(D_{mlp}(X_{switch}))^{\gamma} \in \mathbb{R}^{B \times N_q \times 2 \times 2}\]
+              </li>
+            </ul>
+          </li>
+          <li>HSAMの出力特徴に対し，スイッチで一部を選択
+            <ul>
+              <li>
+\[U^{\gamma} = F_{Max} \{Switch^{\gamma}_{i,0} \odot X^{\gamma}_u + Switch^{\gamma}_{i,1}\}_{i=0,1} + C^{\gamma}_u\]
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Decoding with Fine-Grained Anchor
+        <ul>
+          <li>内容埋め込みを線形層、リシェイプ、SoftMaxに通すことで
+  Cross AttentionのQueryとなるAnchorとKeyとなるAttention weightを生成</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>HOI Detection Head
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-13.png" alt="" /></li>
+      <li>HOI埋め込みと初期アンカーを利用して，人間と物体のBB・物体のクラス・インタラクションを予測
+        <ul>
+          <li><img src="/assets/images/posts/FGAHOI/FGAHOI-14.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>HICO-DET
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-15.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>V-COCO
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-16.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>HOI-SDC
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-17.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction" /><category term="FGAHOI" /><category term="Fine-Grained Anchors" /><category term="Noisy Background" /><category term="Semantically Aligning" /><summary type="html"><![CDATA[概要 MSS, HSAM, TAMという3つから成るEnd-to-endのtransformerベースの手法(FGAHOI)を提案 MSSは人間、物体、インタラクション領域の特徴を抽出 HSAMとTAMは抽出された特徴量とクエリ埋め込みを 階層的な空間視点とタスク視点で順番に意味的に整列・結合 複雑な学習を軽減するために、新しい学習戦略Stage-wise Training Strategyを設計 新規のデータセットHOI-SDCを提案 既存手法から大幅に精度向上]]></summary></entry><entry><title type="html">Exploring Structure-aware Transformer over Interaction Proposals for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2023/02/21/STIP.html" rel="alternate" type="text/html" title="Exploring Structure-aware Transformer over Interaction Proposals for Human-Object Interaction Detection" /><published>2023-02-21T11:00:00+09:00</published><updated>2023-02-21T11:00:00+09:00</updated><id>http://localhost:4000/hoi/2023/02/21/STIP</id><content type="html" xml:base="http://localhost:4000/hoi/2023/02/21/STIP.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>新しいtransformerベースのHOI手法のStructure-aware Transformer over Interaction Proposals (STIP)を提案</li>
+  <li>「インタラクションのある人間と物体のペア提案」と「構造考慮型transformerで提案をHOIに変換」の2つのフェーズでHOIを予測</li>
+  <li>構造考慮型transformerはバニラtransformerに対し、全体的意味構造および各相互作用提案内のヒト／モノの局所的空間構造を追加的に符号化することでHOI予測を強化している
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/STIP/1.png" alt="" /></li>
+  <li>他のHOIに依存していることを考慮させた（例：「人間が（野球の）グローブをつけている」ゆえに、「（別の）人間がバットを持っている」）</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/STIP/2.png" alt="" /></li>
+  <li>DETR
+    <ul>
+      <li>人間と物体のインスタンスを検出</li>
+    </ul>
+  </li>
+  <li>Interaction Proposal Network (IPN)
+    <ul>
+      <li>すべての人間と物体のペアを構築</li>
+      <li>すべてのペアに対してインタラクションの確率を外観特徴と空間特徴と言語特徴をMLPに入れて予測
+        <ul>
+          <li>外観特徴：DETRで得られる特徴</li>
+          <li>空間特徴：$[dx, dy, dis, A_h, A_o, I, U]$
+            <ul>
+              <li>$dx$ : 人間と物体のx距離</li>
+              <li>$dy$ : 人間と物体のy距離</li>
+              <li>$dis$ : 人間と物体のユークリッド</li>
+              <li>$A_h$ : 人間の面積</li>
+              <li>$A_o$ : 物体の面積</li>
+              <li>$I$ : 人間と物体の面積の積集合</li>
+              <li>$U$ : 人間と物体の面積の和集合</li>
+            </ul>
+          </li>
+          <li>言語特徴：物体のラベル(OneHot)を200次元のベクトルに</li>
+        </ul>
+      </li>
+      <li>インタラクションの確率が高い上位K組を提案として出力
+        <ul>
+          <li>
+\[L_{proposal} = \frac{1}{\sum^N_{i=1}z_i} \sum^N_{i=1} FL(\hat{z}_i, z_i)\]
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>インタラクション中心グラフ構築
+    <ul>
+      <li>インタラクション意味構造
+        <ul>
+          <li><img src="/assets/images/posts/STIP/4.png" alt="" /></li>
+          <li>インタラクション提案をグラフノードとしてグラフを構築</li>
+          <li>6つのクラス
+            <ul>
+              <li>disjunctive
+                <ul>
+                  <li>人間も物体もインスタンスを共有していない</li>
+                </ul>
+              </li>
+              <li>same-human</li>
+              <li>same-object
+                <ul>
+                  <li>人間／物体のインスタンスのみ同じ</li>
+                </ul>
+              </li>
+              <li>series-opposing</li>
+              <li>series
+                <ul>
+                  <li>人間／物体のインスタンスが物体／人間のインスタンスと同じ</li>
+                </ul>
+              </li>
+              <li>same-pair
+                <ul>
+                  <li>人間と物体の両方のインスタンスが同じ</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>インタラクション空間構造
+        <ul>
+          <li><img src="/assets/images/posts/STIP/5.png" alt="" /></li>
+          <li>局所的な空間特徴を考慮させる</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Structure-aware transformer
+    <ul>
+      <li>Structure-aware Self-Attention
+        <ul>
+          <li>
+\[e^{self}_{ij} = \frac{(W_q q_i)^T (W_k q_j + \psi (q_j, E_{dep}(d_{ij})))}{\sqrt{d_{key}}}\]
+          </li>
+          <li>IPNのK組の提案に対してSelf-Attention
+            <ul>
+              <li>Keyに対してインタラクション意味構造の6つのクラスで意味依存性を付与する</li>
+            </ul>
+          </li>
+          <li>$E_{dep}$は意味依存を符号化する2層MLP</li>
+        </ul>
+      </li>
+      <li>Structure-aware Cross-attention
+        <ul>
+          <li><img src="/assets/images/posts/STIP/7.png" alt="" /></li>
+          <li>
+\[e^{cross}_{ij} = \frac{(W_{\hat{q}} \hat{q}_i)^T (W_{\hat{k}} x_j + pos_j+ \phi (x_j, E_{lay}(l_{ij})))}{\sqrt{d_{key}}}\]
+          </li>
+          <li>K組の中間HOI特徴をQuery，画像特徴マップをKeyとValueとしCross-attention
+            <ul>
+              <li>Keyに対してインタラクション空間構造の5つのクラスを付与</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>最終出力
+    <ul>
+      <li>2層MLPでインタラクションクラスを予測
+        <ul>
+          <li>Focal Loss likeな損失関数
+            <ul>
+              <li>
+\[L_{cls} = \frac{1}{\sum^N_{i=1} \sum^C_{c=1}} \sum^N_{i=1} \sum^C_{c=1} FL (\hat{y}_{ic}, y_{ic})\]
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>全体の損失関数
+        <ul>
+          <li>
+\[L_{STIP} = L_{proposal} + L_{cls}\]
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>V-COCO
+    <ul>
+      <li><img src="/assets/images/posts/STIP/11.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>HICO-DET
+    <ul>
+      <li><img src="/assets/images/posts/STIP/12.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>提案のK組による精度比較
+    <ul>
+      <li><img src="/assets/images/posts/STIP/13.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>構造考慮型transformerのレイヤー数によおる精度比較
+    <ul>
+      <li><img src="/assets/images/posts/STIP/14.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Transformer" /><summary type="html"><![CDATA[概要 新しいtransformerベースのHOI手法のStructure-aware Transformer over Interaction Proposals (STIP)を提案 「インタラクションのある人間と物体のペア提案」と「構造考慮型transformerで提案をHOIに変換」の2つのフェーズでHOIを予測 構造考慮型transformerはバニラtransformerに対し、全体的意味構造および各相互作用提案内のヒト／モノの局所的空間構造を追加的に符号化することでHOI予測を強化している]]></summary></entry><entry><title type="html">CLRNet: Cross Layer Refinement Network for Lane Detection</title><link href="http://localhost:4000/lane%20detection/2022/12/15/CLRNet.html" rel="alternate" type="text/html" title="CLRNet: Cross Layer Refinement Network for Lane Detection" /><published>2022-12-15T12:00:00+09:00</published><updated>2022-12-15T12:00:00+09:00</updated><id>http://localhost:4000/lane%20detection/2022/12/15/CLRNet</id><content type="html" xml:base="http://localhost:4000/lane%20detection/2022/12/15/CLRNet.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>特徴抽出したFPN構造の特徴マップを、上位から下位まで複合的に活用する車線検出手法であるCross Layer Refinement Network (CLRNet)を提案</li>
@@ -899,7 +1244,7 @@
       </li>
       <li>マッチングされたペアに対するlossの計算
         <ul>
-          <li>$L = \lambda_b L_b + \lambda_u L_u + \lambda_c L_c + \lambda_a L_a$L_
+          <li>$L = \lambda_b L_b + \lambda_u L_u + \lambda_c L_c + \lambda_a L_a$
             <ul>
               <li>$L_b$：人と物体のバウンディングボックスの座標のLoss
                 <ul>
@@ -1087,195 +1432,4 @@
       <li><img src="/assets/images/posts/Passengers/6.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><category term="Tracking" /><summary type="html"><![CDATA[概要 空港の保安検査場における乗客と持ち物のトラッキング・関連付けのアルゴリズムを提示し、その有効性を実証 手作業とディープラーニングベースのアプローチの両方を活用 現実のデータセットで、乗客と持ち物を検出、トラッキング、関連付けることができた]]></summary></entry><entry><title type="html">Egocentric Human-Object Interaction Detection Exploiting Synthetic Data</title><link href="http://localhost:4000/hoi/2022/09/05/EgocentricHOI.html" rel="alternate" type="text/html" title="Egocentric Human-Object Interaction Detection Exploiting Synthetic Data" /><published>2022-09-05T00:00:00+09:00</published><updated>2022-09-05T00:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/09/05/EgocentricHOI</id><content type="html" xml:base="http://localhost:4000/hoi/2022/09/05/EgocentricHOI.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<p>産業環境（電気基板のテストおよび修理作業）においてHOI検出を行う際に、大量のデータの収集・ラベリングは困難である。そこで、自動的にラベリングされた合成一人称画像を生成するパイプラインとツールを提案する。生成した合成データで事前学習をし、実データでファインチューニングをすることで、実データでのHOI検出の性能を向上させた。
-<!--more--></p>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>産業界を対象とした手と物体のラベルやセグメンテーションを含む、HOI検出用の合成一人称データセットを提示</li>
-  <li>Understanding human hands in contact at internet scale (CVPR 2020)を全ての物体を検出できるように拡張した手法を提案</li>
-  <li>合成データの有用性を実験でベースライン手法と比較</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li>合成データの作成
-    <ul>
-      <li><img src="/assets/images/posts/EgocentricHOI/1.png" alt="" /></li>
-      <li>3Dスキャナ(対象物：Artec Eva 5, 環境：MatterPort 6)を用いて物体や環境の3Dモデルを取得</li>
-      <li>3Dモデルから、RGB画像・深度マップ・セグメンテーション・物体のBBとカテゴリ・手のBBとオブジェクトとの接触状態を生成するツールをBlenderで作成した
-        <ul>
-          <li><img src="/assets/images/posts/EgocentricHOI/2.png" alt="" /></li>
-          <li>カメラ位置・照明 ・手の色など、仮想シーンをカスタマイズして自動撮影することも可能</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>実データの作成
-    <ul>
-      <li>7人の被験者の工業用実験室での電気基板の試験・修理作業を8本、Microsoft Hololens 2を用いて撮影し、手動でアノテーション</li>
-      <li>操作をMRで指示（操作に一貫性を持たせ、自然に行うため）</li>
-    </ul>
-  </li>
-  <li>HOI検出手法
-    <ul>
-      <li><img src="/assets/images/posts/EgocentricHOI/3.png" alt="" /></li>
-      <li>Understanding human hands in contact at internet scale (CVPR 2020)を基本に、画像中の全ての物体を検出するようにした
-        <ul>
-          <li>Faster RCNNベースの手法</li>
-          <li>ResNet101がBackbone</li>
-          <li><img src="/assets/images/posts/EgocentricHOI/4.png" alt="" /></li>
-        </ul>
-      </li>
-      <li>Hand side classification module
-        <ul>
-          <li>左右の手のどちらかを予測</li>
-        </ul>
-      </li>
-      <li>Hand state classification module
-        <ul>
-          <li>手が物体と接触しているかを予測</li>
-        </ul>
-      </li>
-      <li>Offset vector regression module
-        <ul>
-          <li>手のBBと物体のBBの中心をリンクさせるOffset vectorを予測</li>
-        </ul>
-      </li>
-      <li>RGB 画像から、物体のカテゴリ・手の側面・手の接触状態・HOIを&lt;手、 接触状態、アクティブ物体、<他の物体>&gt;の4重項として推論</他の物体></li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<p><img src="/assets/images/posts/EgocentricHOI/5.png" alt="" /></p>
-
-<ul>
-  <li>物体検出性能
-    <ul>
-      <li><img src="/assets/images/posts/EgocentricHOI/6.png" alt="" /></li>
-      <li>事前学習にSynthetic（合成データ）を使用し、実データ50%でファインチューニングした結果が1位</li>
-      <li>事前学習にSynthetic（合成データ）を使用し、実データ100%でファインチューニングした結果が2位</li>
-    </ul>
-  </li>
-  <li>HOI検出性能（データ配分比較）
-    <ul>
-      <li>
-        <p><img src="/assets/images/posts/EgocentricHOI/7.png" alt="" /></p>
-      </li>
-      <li>
-        <p>事前学習にSynthetic（合成データ）を使用し、実データ100%でファインチューニングした結果がほとんどで1位</p>
-      </li>
-    </ul>
-  </li>
-  <li>HOI検出性能（既存手法との比較）
-    <ul>
-      <li><img src="/assets/images/posts/EgocentricHOI/8.png" alt="" /></li>
-      <li>物体には強いが、合成データの手のリアリティが低いためか性能が低い
-        <ul>
-          <li>BS1：単一オブジェクト</li>
-          <li>BS2：実データからのサンプリング画像</li>
-          <li>BS3：合成データ</li>
-          <li>BS4：合成データと実データ両方</li>
-          <li>BS5：YOLOv5でラベリング</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Dataset" /><summary type="html"><![CDATA[概要 産業環境（電気基板のテストおよび修理作業）においてHOI検出を行う際に、大量のデータの収集・ラベリングは困難である。そこで、自動的にラベリングされた合成一人称画像を生成するパイプラインとツールを提案する。生成した合成データで事前学習をし、実データでファインチューニングをすることで、実データでのHOI検出の性能を向上させた。]]></summary></entry><entry><title type="html">Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields</title><link href="http://localhost:4000/nerf/2022/08/24/Ref-NeRF.html" rel="alternate" type="text/html" title="Ref-NeRF: Structured View-Dependent Appearance for Neural Radiance Fields" /><published>2022-08-24T00:00:00+09:00</published><updated>2022-08-24T00:00:00+09:00</updated><id>http://localhost:4000/nerf/2022/08/24/Ref-NeRF</id><content type="html" xml:base="http://localhost:4000/nerf/2022/08/24/Ref-NeRF.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>既存のNeRFは光沢のある表面の外観を正確に再現できない場合が多い</li>
-  <li>そこで、NeRFの視点から色を出力する箇所に手を加えたRef-NeRFを提案</li>
-  <li>鏡面反射の精度を大幅に改善した
-<!--more--></li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li>NeRFは座標を与えると、空間(Spatial) MLPが密度を出力し、方向(Directional) MLPが視点の方向に従った放射輝度（色）を出力する（下図）
-    <ul>
-      <li><img src="/assets/images/posts/Ref-NeRF/1.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>鏡面では見る方向によって色が急激に変化するため、学習した方向しかうまくいかなく、鏡面反射を霧がかかったようにして偽造する</li>
-  <li>そこで、下図のようなネットワークを提案
-    <ul>
-      <li><img src="/assets/images/posts/Ref-NeRF/2.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>Reflectionは法線ベクトルを使用することで鏡面反射の処理を行う
-    <ul>
-      <li>$\hat{\omega}_r = 2 (\hat{\omega}_o \cdot \hat{n} ) \hat{n} - \hat{\omega}_o$
-        <ul>
-          <li>$\hat{\omega}_o$はある点からカメラに向かう単位ベクトル</li>
-          <li>$\hat{n}$はその点での法線ベクトル</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>IDEは粗い素材の見え方がゆっくり変化し、滑らかな素材の見え方が急激に変化することに対応するためのIntegrated Directional Encoding
-    <ul>
-      <li><img src="/assets/images/posts/Ref-NeRF/3.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>Dot productは視点と法線ベクトルの角度を考慮させるために存在
-    <ul>
-      <li>$\hat{n}\cdot\hat{\omega}_o$</li>
-    </ul>
-  </li>
-  <li>IDEとDot productの出力、照明に対応するために空間MLPの出力$b$を方向MLPに入力して鏡面色$c_s$を得る</li>
-  <li>Toneで分離した拡散色と鏡面色$c_s$を組み合わせて放射輝度（色）を出力する
-    <ul>
-      <li>$c=\gamma (c_d + s \odot c_s)$
-        <ul>
-          <li>$c_d$は空間MLPが出力した拡散色</li>
-          <li>$\gamma$はRGBに変換し、値を0~1に収める関数</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>ペナルティ項
-    <ul>
-      <li>法線ベクトルのノイズ対策
-        <ul>
-          <li>$R_p = \sum_i \omega_i | \hat{n}_i - \hat{n}^{\prime}_i | ^2$</li>
-        </ul>
-      </li>
-      <li>カメラから離れる裏向き法線対策
-        <ul>
-          <li>$R_o = \sum_i \omega_i \max (0, \hat{n}^{\prime}_i \cdot \hat{d})^2$</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>
-    <p>Shiny Blender</p>
-
-    <ul>
-      <li><img src="/assets/images/posts/Ref-NeRF/4.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>Blender
-    <ul>
-      <li><img src="/assets/images/posts/Ref-NeRF/5.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>garden spheres (PSNR)
-    <ul>
-      <li><img src="/assets/images/posts/Ref-NeRF/6.png" alt="" /></li>
-      <li><img src="/assets/images/posts/Ref-NeRF/7.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="NeRF" /><category term="NeRF" /><summary type="html"><![CDATA[概要 既存のNeRFは光沢のある表面の外観を正確に再現できない場合が多い そこで、NeRFの視点から色を出力する箇所に手を加えたRef-NeRFを提案 鏡面反射の精度を大幅に改善した]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><category term="Tracking" /><summary type="html"><![CDATA[概要 空港の保安検査場における乗客と持ち物のトラッキング・関連付けのアルゴリズムを提示し、その有効性を実証 手作業とディープラーニングベースのアプローチの両方を活用 現実のデータセットで、乗客と持ち物を検出、トラッキング、関連付けることができた]]></summary></entry></feed>

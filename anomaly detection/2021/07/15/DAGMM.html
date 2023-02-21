@@ -160,25 +160,43 @@
 
 <h3 id="compression-network-1">COMPRESSION NETWORK</h3>
 <ul>
-  <li>エンコーダから潜在変数$z_c$を取得<br />
-\(z_c = Encoder(x)\)</li>
-  <li>入力画像とデコーダの再構成画像の誤差を計算<br />
-\(x' = Decoder(z_c)\)<br />
-\(z_r = f(x,x')\)</li>
-  <li>抽出した$z_c$と$z_r$を組み合わせて$z$を作成<br />
-\(z = [z_c, z_r]\)</li>
+  <li>エンコーダから潜在変数$z_c$を取得
+    <ul>
+      <li>$ z_c = Encoder(x) $</li>
+    </ul>
+  </li>
+  <li>入力画像とデコーダの再構成画像の誤差を計算
+    <ul>
+      <li>$ x’ = Decoder(z_c) $</li>
+      <li>$ z_r = f(x,x’) $</li>
+    </ul>
+  </li>
+  <li>抽出した$z_c$と$z_r$を組み合わせて$z$を作成
+    <ul>
+      <li>$ z = [z_c, z_r] $</li>
+    </ul>
+  </li>
 </ul>
 
 <h3 id="estimation-network-1">ESTIMATION NETWORK</h3>
 <ul>
-  <li>推定ネットワークを利用してメンバーシップ予測のためのK次元ベクトル$\hat{\gamma}$を予測<br />
-\(\hat{\gamma} = softmax(MLN(z))\)</li>
-  <li>それを用いてGMMのパラメータ、混合確率$\hat{\phi}_k$・平均$\hat{\mu}_k$・共分散$\hat{\Sigma}_k$を推定<br />
-<img src="/assets/images/posts/DAGMM/5.png" alt="" /></li>
+  <li>推定ネットワークを利用してメンバーシップ予測のためのK次元ベクトル$\hat{\gamma}$を予測
+    <ul>
+      <li>$ \hat{\gamma} = softmax(MLN(z)) $</li>
+    </ul>
+  </li>
+  <li>それを用いてGMMのパラメータ、混合確率$\hat{\phi}_k$・平均$\hat{\mu}_k$・共分散$\hat{\Sigma}_k$を推定
+    <ul>
+      <li><img src="/assets/images/posts/DAGMM/5.png" alt="" /></li>
+    </ul>
+  </li>
   <li>上のパラメータを用いて、サンプルエネルギー(確率密度のエントロピー？)を推定
     <ul>
       <li>閾値より高いサンプルエネルギーのものを異常と予測
-<img src="/assets/images/posts/DAGMM/6.png" alt="" /></li>
+        <ul>
+          <li><img src="/assets/images/posts/DAGMM/6.png" alt="" /></li>
+        </ul>
+      </li>
     </ul>
   </li>
 </ul>

@@ -125,10 +125,15 @@
 <h3 id="学習">学習</h3>
 <!-- キモの中の学習に関する内容 -->
 <ul>
-  <li>通常のGANと同じ2プレイヤーのミニマックスゲーム</li>
+  <li>通常のGANと同じ2プレイヤーのミニマックスゲーム
+    <ul>
+      <li>
+\[\min_G \max_D V(D, G) = \mathbb{E}_{\bf x \rm \sim p_{data}(\bf x \rm)} [\log D(\bf x \rm)] + \mathbb{E}_{\bf z \rm \sim p_{\bf z \rm}(\bf z \rm)} [\log (1 - D(G(\bf z \rm)))]\]
+      </li>
+    </ul>
+  </li>
   <li>生成器Generatorは生成する能力を向上させる</li>
-  <li>識別機Discriminatorは実画像と生成された画像を識別する能力を向上させる<br />
-\(\min \_G \max \_D V(D, G) = \mathbb{E}_{\bf x \rm \sim p\_{data}(\bf x \rm)} [\log D(\bf x \rm)] + \mathbb{E}\_{\bf z \rm \sim p\_{\bf z \rm}(\bf z \rm)} [\log (1 - D(G(\bf z \rm)))]\)</li>
+  <li>識別機Discriminatorは実画像と生成された画像を識別する能力を向上させる</li>
 </ul>
 
 <h3 id="推論異常度の算出">推論（異常度の算出）</h3>
@@ -137,7 +142,7 @@
   <li>Residual loss
     <ul>
       <li>
-\[\mathcal{L}_R (\bf z\rm\_{\gamma}) = \sum |\bf x\rm - G(\bf z\rm\_{\gamma}) |\]
+\[\mathcal{L}_R (\bf z\rm_{\gamma}) = \sum |\bf x\rm - G(\bf z\rm_{\gamma}) |\]
       </li>
       <li>クエリ画像$x$と生成画像$G(z_\gamma)$の色覚的非類似性を測定</li>
     </ul>
@@ -145,28 +150,33 @@
   <li>discrimination loss
     <ul>
       <li>
-\[\mathcal{L}_{D} (\bf z\rm\_{\gamma}) = \sum | f(\bf x\rm ) - f(G(z\rm\_{\gamma}))|\]
+\[\mathcal{L}_{D} (\bf z\rm_{\gamma}) = \sum | f(\bf x\rm ) - f(G(z\rm_{\gamma}))|\]
       </li>
       <li>識別機Dの中間層の出力$f()$を使用することによって、Dが学習した特徴表現の情報を考慮に入れる</li>
       <li>識別機Dを分類機ではなく特徴抽出器として使用</li>
     </ul>
   </li>
-  <li>
-    <p>これら二つのLossの加重和の損失関数
-\(\mathcal{L} (z\rm\_{\gamma}) = (1-\lambda) \cdot \mathcal{L}_R (\bf z\rm\_{\gamma}) + \lambda \cdot \mathcal{L}_{D} (\bf z\rm\_{\gamma})\)を用いて<br />
-$\gamma$回のバックプロパゲーションを繰り返すことにより最適な潜在変数$z_\gamma$を得る。</p>
+  <li>これら二つのLossの加重和の損失関数
+    <ul>
+      <li>\(\mathcal{L} (z\rm_{\gamma}) = (1-\lambda) \cdot \mathcal{L}_R (\bf z\rm_{\gamma}) + \lambda \cdot \mathcal{L}_{D} (\bf z\rm_{\gamma})\)を用いて<br />
+  $\gamma$回のバックプロパゲーションを繰り返すことにより最適な潜在変数$z_\gamma$を得る。</li>
+    </ul>
   </li>
-  <li>その潜在変数$z_{\gamma}$を用いて、残差スコア$R(x) = \mathcal{L}_R (\bf z\rm_{\gamma})$と識別スコア$D(x) = \mathcal{L}_D (z\rm_{\gamma}) $と定義したとき、</li>
-  <li>
-    <p>クエリ画像$x$の異常スコア$A(x)$は
-\(A(\bf x\rm) = (1- \lambda) \cdot R(\bf x\rm) + \lambda \cdot D(\bf x\rm)\)
-となる。</p>
+  <li>その潜在変数$z_{\gamma}$を用いて、残差スコア \(R(x) = \mathcal{L}_R (\bf z\rm_{\gamma})\) と識別スコア \(D(x) = \mathcal{L}_D (z\rm_{\gamma})\) と定義したときのクエリ画像 $x$ の異常スコア
+    <ul>
+      <li>$ A(\bf x\rm) = (1- \lambda) \cdot R(\bf x\rm) + \lambda \cdot D(\bf x\rm) $</li>
+    </ul>
   </li>
   <li>基準異常スコア
-\(\hat{A}(\bf x\rm) = (1- \lambda) \cdot R(\bf x\rm) + \lambda \cdot \hat{D}(\bf x\rm)\qquad(\because \hat{D}(x) = \mathcal{L_{\hat{D}}} (z\rm\_{\gamma}))\)
-    <h2 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h2>
-    <!-- 実験の精度，結果画像など -->
+    <ul>
+      <li>$ \hat{A}(\bf x\rm) = (1- \lambda) \cdot R(\bf x\rm) + \lambda \cdot \hat{D}(\bf x\rm)\qquad(\because \hat{D}(x) = \mathcal{L_{\hat{D}}} (z\rm_{\gamma}))$</li>
+    </ul>
   </li>
+</ul>
+
+<h2 id="4-どうやって有効だと検証した">4. どうやって有効だと検証した？</h2>
+<!-- 実験の精度，結果画像など -->
+<ul>
   <li>網膜の臨床高解像度SD-OCTボリューム</li>
   <li><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/a/aotamasaki/20180414/20180414211624.png" alt="" />
     <ul>
@@ -176,7 +186,7 @@ $\gamma$回のバックプロパゲーションを繰り返すことにより最
   </li>
   <li><img src="https://www.researchgate.net/profile/Thomas-Schlegl-3/publication/318017139/figure/fig3/AS:473842939371520@1489984368215/Image-level-anomaly-detection-performance-and-suitability-evaluation-a-Model.png" alt="" />
     <ul>
-      <li>(a) 他モデルとの比較</li>
+      <li>(a). 他モデルとの比較</li>
       <li>(b) 残差スコア(緑)、識別スコア(黒)、基準識別スコア(赤)に基づく異常検知精度</li>
       <li>(c) 残差スコアの分布</li>
       <li>(d) 判別スコアの分布</li>
@@ -184,18 +194,7 @@ $\gamma$回のバックプロパゲーションを繰り返すことにより最
   </li>
 </ul>
 
-<h2 id="5-議論はあるか">5. 議論はあるか？</h2>
-<!-- 自分なりの考察や疑問-->
-<p>基準異常スコア
-\(\hat{A}(\bf x\rm) = (1- \lambda) \cdot R(\bf x\rm) + \lambda \cdot \hat{D}(\bf x\rm)\)<br />
-異常判断スコア\(\hat{D}(x) = \mathcal{L_{\hat{D}}} (z\rm_{\gamma})\)<br />
-Yehら<a href="https://arxiv.org/abs/1607.07539">https://arxiv.org/abs/1607.07539</a>とは</p>
-
 <h2 id="6-関連文献">6. 関連文献</h2>
-<!--
-1. D. P. Kingma and J. Ba: “Adam: A method for stochastic optimization,”arXiv preprint arXiv:1412.6980,(2014).
-2. P. Isola,J. Y. Zhu,T. Zhou,and A. A. Efros: “Image-to-image translation with conditional adversarial networks,” in Proceedings of the IEEE conference on computer vision and pattern recognition, (2017), 1125.
--->
 <ol>
   <li>Yeh, R., Chen, C., Lim, T.Y., Hasegawa-Johnson, M., Do, M.N.: Semantic image inpainting with perceptual and contextual losses. arXiv:1607.07539 (2016)</li>
 </ol>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/FGAHOI/FGAHOI-1.png" class="hero">
+    <h1>FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection</h1>
+    <p><span class="fa fa-link"></span><a href="https://github.com/xiaomabufei/fgahoi" target="_blank"> https://github.com/xiaomabufei/fgahoi</a></p>
+    <p><span class="fa fa-calendar"></span> Feb 21, 2023</p>
+    <p><span class="fa fa-flag"></span> Human-Object Interaction, FGAHOI, Fine-Grained Anchors, Noisy Background, Semantically Aligning, </p>
+    <p><span class="fa fa-graduation-cap"></span> arXiv (2023) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection&url=https://absolute-value.github.io/hoi/2023/02/21/FGAHOI.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/hoi/2023/02/21/FGAHOI.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/hoi/2023/02/21/FGAHOI.html&title=FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection&body=FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection https://absolute-value.github.io/hoi/2023/02/21/FGAHOI.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>MSS, HSAM, TAMという3つから成るEnd-to-endのtransformerベースの手法(FGAHOI)を提案
+    <ul>
+      <li>MSSは人間、物体、インタラクション領域の特徴を抽出</li>
+      <li>HSAMとTAMは抽出された特徴量とクエリ埋め込みを
+  階層的な空間視点とタスク視点で順番に意味的に整列・結合</li>
+      <li>複雑な学習を軽減するために、新しい学習戦略Stage-wise Training Strategyを設計</li>
+    </ul>
+  </li>
+  <li>新規のデータセットHOI-SDCを提案</li>
+  <li>既存手法から大幅に精度向上
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>以下の問題を低減
+    <ul>
+      <li>複雑な背景情報を持つ画像からいかにして重要な特徴を抽出するか</li>
+      <li>抽出した特徴量とクエリ埋め込みをどのように意味的に整合させるか</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>全体構造
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-1.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Multi-Scale Features Extractor
+    <ul>
+      <li>
+\[M = F_{encoder}(F_{flatten}(\phi(x)),p,s,r,l) \in \mathbb{R}^{N_s \times C_d}\]
+      </li>
+      <li>事前学習済みBackbone(Swin Transformer)でマルチスケール特徴を抽出</li>
+      <li>transformer encoderで符号化して意味特徴量を得る</li>
+    </ul>
+  </li>
+  <li>Decoder
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-2.png" alt="" /></li>
+      <li>Multi-Scale Sampling (MSS)
+        <ul>
+          <li>
+\[x^i_s = F_{sample} (reshape(M)^i, A, size^i, bilinear)\]
+          </li>
+          <li>transformer encoderの特徴を元の形状に整形</li>
+          <li>小さなインスタンスを検出する浅い特徴量では小さくサンプリング</li>
+          <li>大きなインスタンスを検出する深い特徴量では大きくサンプリング
+            <ul>
+              <li>サイズに関係なくインスタンスを検出するため</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Hierarchical Spatial-Aware Merging (HSAM)
+        <ul>
+          <li>サンプリングした各層の特徴をKeyとValue，位置PとコンテキストCをQueryとしてMHA
+            <ul>
+              <li>
+\[C_u = C + F_{MHA}\big((C+P)W^q, (C+P)W^k, CW^v \big)\]
+              </li>
+              <li>
+\[x^u_m = F_{concat} (\mathrm{head}_1, ... , \mathrm{head}_h) W^O\]
+                <ul>
+                  <li>
+\[\mathrm{where} \space \mathrm{head}_n = \mathrm{Softmax\big(\frac{(C_u W^q_n)\cdot(x^i_s W^k_n)^T}{\sqrt{d_k}}\big)} (x^i_s W^v_n)\]
+                  </li>
+                </ul>
+              </li>
+              <li>特徴内Attention</li>
+            </ul>
+          </li>
+          <li>MHAに通した各層の特徴をConcat
+            <ul>
+              <li>
+\[X_m = F_{concat} ({x^i_m}_{i=0,1,2}) \in \mathbb{R}^{B \times N_q \times N_L \times N_{hd}}\]
+              </li>
+            </ul>
+          </li>
+          <li>Concatした特徴をKeyとValue，位置PとコンテキストCをQueryとしてMHA
+            <ul>
+              <li>
+\[X_u = F_{concat} (\mathrm{head}_1, ... , \mathrm{head}_h) W^O\]
+                <ul>
+                  <li>
+\[\mathrm{where} \space \mathrm{head}_n = \mathrm{Softmax\big(\frac{(C_u W^q_n)\cdot(X_m W^k_n)^T}{\sqrt{d_k}}\big)} (X W^v_n)\]
+                  </li>
+                </ul>
+              </li>
+              <li>特徴間Attention</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Task-Aware Mergin (TAM)
+        <ul>
+          <li>HSAMの出力特徴とコンテンツ埋め込みを融合しCross Attention
+            <ul>
+              <li>
+\[X = F_{stack} (C_u, X_u) \in \mathbb{R}^{B \times N_q \times (2 \times N_{hd})}\]
+              </li>
+              <li>
+\[X_{switch} = F_{stack} (\mathrm{head}_1, ... , \mathrm{head}_h) W^O\]
+                <ul>
+                  <li>
+\[\mathrm{where} \space \mathrm{head}_n = \mathrm{Softmax\big(\frac{(C_u W^q_n)\cdot(X W^k_n)^T}{\sqrt{d_k}}\big)} (X W^v_n)\]
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>適切なチャンネルを選択する動的なスイッチを生成
+            <ul>
+              <li>
+\[Switch^{\gamma} = F_{normalize}(D_{mlp}(X_{switch}))^{\gamma} \in \mathbb{R}^{B \times N_q \times 2 \times 2}\]
+              </li>
+            </ul>
+          </li>
+          <li>HSAMの出力特徴に対し，スイッチで一部を選択
+            <ul>
+              <li>
+\[U^{\gamma} = F_{Max} \{Switch^{\gamma}_{i,0} \odot X^{\gamma}_u + Switch^{\gamma}_{i,1}\}_{i=0,1} + C^{\gamma}_u\]
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Decoding with Fine-Grained Anchor
+        <ul>
+          <li>内容埋め込みを線形層、リシェイプ、SoftMaxに通すことで
+  Cross AttentionのQueryとなるAnchorとKeyとなるAttention weightを生成</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>HOI Detection Head
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-13.png" alt="" /></li>
+      <li>HOI埋め込みと初期アンカーを利用して，人間と物体のBB・物体のクラス・インタラクションを予測
+        <ul>
+          <li><img src="/assets/images/posts/FGAHOI/FGAHOI-14.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>HICO-DET
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-15.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>V-COCO
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-16.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>HOI-SDC
+    <ul>
+      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-17.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>
