@@ -8,6 +8,11 @@ li {
 }
 
 .myrepos {
+  overflow-x: scroll;
+  margin: 0 6%;
+}
+
+#repoList {
   display: inline-flex;
   padding: 0 4px;
 }
@@ -57,7 +62,6 @@ li {
 
 .myposts {
   margin: 0 6%;
-  overflow-x: scroll;
 }
 
 .post {
