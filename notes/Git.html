@@ -36,7 +36,7 @@
   <body>
     <img src="https://tech-diary.net/wp-content/uploads/2021/10/how-to-use-git-and-github.png" class="hero">
     <h1>Git 個人的メモ</h1>
-    <p><span class="fa fa-calendar"></span> Jun 20, 2022<span style="color: blue; "> (Updated: Jul 18, 2022)</span></p>
+    <p><span class="fa fa-calendar"></span> Jun 20, 2022<span style="color: blue; "> (Updated: Feb 27, 2023)</span></p>
     <p><span class="fa fa-flag"></span> Memo, Git, </p>
     <div class="share-btn-wrapper">
       <a href="https://twitter.com/share?text=Git 個人的メモ&url=https://absolute-value.github.io/notes/Git.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
@@ -49,6 +49,8 @@
       <h1 class="table-of-contents-h1">目次</h1>
       <ul id="toc" class="section-nav">
 <li class="toc-entry toc-h1"><a href="#はじめに">はじめに</a></li>
+<li class="toc-entry toc-h1"><a href="#git-pullを強制する">git pullを強制する</a></li>
+<li class="toc-entry toc-h1"><a href="#pushしてしまったものを元に戻す">pushしてしまったものを元に戻す</a></li>
 <li class="toc-entry toc-h1"><a href="#gitの一連の流れを自動化するbashファイル">gitの一連の流れを自動化するbashファイル</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#gitsh">git.sh</a></li>
@@ -65,6 +67,20 @@
 <p>Git操作で役に立ちそうな個人的メモです。</p>
 
 <!--more-->
+
+<h1 id="git-pullを強制する">git pullを強制する</h1>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">git fetch origin main
+git reset --hard origin/main
+</span></code></pre></div></div>
+
+<h1 id="pushしてしまったものを元に戻す">pushしてしまったものを元に戻す</h1>
+
+<p>コミットのIDを取得する</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">git reset --hard &lt;コミットID&gt;</span><span class="w">
+</span><span class="go">git push -f origin main
+</span></code></pre></div></div>
 
 <h1 id="gitの一連の流れを自動化するbashファイル">gitの一連の流れを自動化するbashファイル</h1>
 
