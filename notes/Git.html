@@ -53,7 +53,6 @@
 <li class="toc-entry toc-h1"><a href="#pushしてしまったものを元に戻す">pushしてしまったものを元に戻す</a></li>
 <li class="toc-entry toc-h1"><a href="#gitの一連の流れを自動化するbashファイル">gitの一連の流れを自動化するbashファイル</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#gitsh">git.sh</a></li>
 <li class="toc-entry toc-h2"><a href="#実行方法">実行方法</a></li>
 </ul>
 </li>
@@ -86,27 +85,7 @@ git reset --hard origin/main
 
 <p>以下のgit.shを.gitと同階層に置いた上で実行</p>
 
-<h2 id="gitsh">git.sh</h2>
-
-<figure class="highlight"><pre><code class="language-shell" data-lang="shell"><table class="rouge-table"><tbody><tr><td class="gutter gl"><pre class="lineno">1
-2
-3
-4
-5
-6
-7
-8
-9
-</pre></td><td class="code"><pre><span class="c">#!/bin/sh</span>
-
-git add <span class="nb">.</span>
-<span class="k">if</span> <span class="o">[</span> <span class="nv">$# </span><span class="nt">-eq</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
-    </span>git commit <span class="nt">-m</span> <span class="s2">"Update"</span>
-<span class="k">else
-    </span>git commit <span class="nt">-m</span> <span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span>
-<span class="k">fi
-</span>git push
-</pre></td></tr></tbody></table></code></pre></figure>
+<script src="https://gist.github.com/Absolute-Value/884943d8d32398582dd1476ab8221711.js"></script>
 
 <h2 id="実行方法">実行方法</h2>
 <p>コミットメッセージがUpdateで良い場合</p>
