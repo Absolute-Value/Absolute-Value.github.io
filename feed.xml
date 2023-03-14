@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-14T22:49:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Flamingo: a Visual Language Model for Few-Shot Learning</title><link href="http://localhost:4000/vision&language/2023/03/14/Flamingo.html" rel="alternate" type="text/html" title="Flamingo: a Visual Language Model for Few-Shot Learning" /><published>2023-03-14T22:00:00+09:00</published><updated>2023-03-14T22:00:00+09:00</updated><id>http://localhost:4000/vision&amp;language/2023/03/14/Flamingo</id><content type="html" xml:base="http://localhost:4000/vision&amp;language/2023/03/14/Flamingo.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-14T22:55:27+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Flamingo: a Visual Language Model for Few-Shot Learning</title><link href="http://localhost:4000/vision&language/2023/03/14/Flamingo.html" rel="alternate" type="text/html" title="Flamingo: a Visual Language Model for Few-Shot Learning" /><published>2023-03-14T22:00:00+09:00</published><updated>2023-03-14T22:00:00+09:00</updated><id>http://localhost:4000/vision&amp;language/2023/03/14/Flamingo</id><content type="html" xml:base="http://localhost:4000/vision&amp;language/2023/03/14/Flamingo.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>少数のアノテーションで重みの更新なしに新しいタスクに迅速に対応できるVision&amp;LanguageモデルであるFlamingoを提案</li>
@@ -87,7 +87,54 @@
       <li><img src="/assets/images/posts/Flamingo/8.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Vision&amp;Language" /><category term="Vision and Language" /><category term="Few-shot Learning" /><summary type="html"><![CDATA[概要 少数のアノテーションで重みの更新なしに新しいタスクに迅速に対応できるVision&amp;LanguageモデルであるFlamingoを提案 数千倍のタスク専用データでFinetuningに対して、6/16のタスクでSotA]]></summary></entry><entry><title type="html">FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2023/02/21/FGAHOI.html" rel="alternate" type="text/html" title="FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection" /><published>2023-02-21T13:00:00+09:00</published><updated>2023-02-21T13:00:00+09:00</updated><id>http://localhost:4000/hoi/2023/02/21/FGAHOI</id><content type="html" xml:base="http://localhost:4000/hoi/2023/02/21/FGAHOI.html"><![CDATA[<h1 id="概要">概要</h1>
+</ul>]]></content><author><name></name></author><category term="Vision&amp;Language" /><category term="Vision and Language" /><category term="Few-shot Learning" /><category term="Transformer" /><summary type="html"><![CDATA[概要 少数のアノテーションで重みの更新なしに新しいタスクに迅速に対応できるVision&amp;LanguageモデルであるFlamingoを提案 数千倍のタスク専用データでFinetuningに対して、6/16のタスクでSotA]]></summary></entry><entry><title type="html">QAHOI: Query-Based Anchors for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2023/03/07/QAHOI.html" rel="alternate" type="text/html" title="QAHOI: Query-Based Anchors for Human-Object Interaction Detection" /><published>2023-03-07T13:00:00+09:00</published><updated>2023-03-07T13:00:00+09:00</updated><id>http://localhost:4000/hoi/2023/03/07/QAHOI</id><content type="html" xml:base="http://localhost:4000/hoi/2023/03/07/QAHOI.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>transformerベースの手法QAHOI（Query-Based Anchors for Human-Object Interac
+tion detection）を提案</li>
+  <li>マルチスケールで特徴を抽出し，クエリベースのアンカーを用いてHOIを予測する</li>
+  <li>強力なバックボーンによって、精度が大幅に向上した
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>1ステージアプローチでは，物体の位置や大きさのばらつきを無視している</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/QAHOI/1.png" alt="" /></p>
+
+<ul>
+  <li>階層型バックボーンで4段階の特徴マップを抽出し，1×1畳み込みで次元を整えて平坦化</li>
+  <li>Deformable transformer Encoderでさらに特徴抽出</li>
+  <li>Deformable transformer Decoder
+    <ul>
+      <li>クエリ埋め込みを，HOI問い合わせ埋め込みと位置埋め込みに等分割</li>
+      <li>位置埋め込みからアンカーを作成</li>
+      <li>それらをTransformer Decoderで処理し，HOI埋め込みを取得</li>
+      <li><img src="/assets/images/posts/QAHOI/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Interaction Head
+    <ul>
+      <li><img src="/assets/images/posts/QAHOI/3.png" alt="" /></li>
+      <li>Decoderの出力とアンカーを利用して， 人間と物体のBB・物体のクラス・インタラクションを予測</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>HICO-DET
+    <ul>
+      <li><img src="/assets/images/posts/QAHOI/4.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction" /><category term="Transformer" /><summary type="html"><![CDATA[概要 transformerベースの手法QAHOI（Query-Based Anchors for Human-Object Interac tion detection）を提案 マルチスケールで特徴を抽出し，クエリベースのアンカーを用いてHOIを予測する 強力なバックボーンによって、精度が大幅に向上した]]></summary></entry><entry><title type="html">FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2023/02/21/FGAHOI.html" rel="alternate" type="text/html" title="FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection" /><published>2023-02-21T13:00:00+09:00</published><updated>2023-02-21T13:00:00+09:00</updated><id>http://localhost:4000/hoi/2023/02/21/FGAHOI</id><content type="html" xml:base="http://localhost:4000/hoi/2023/02/21/FGAHOI.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>MSS, HSAM, TAMという3つから成るEnd-to-endのtransformerベースの手法(FGAHOI)を提案
@@ -1265,138 +1312,4 @@
       <li><img src="/assets/images/posts/OFA/UnseenDomain.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Vision&amp;Language" /><category term="Multimodal Pretraining" /><category term="Multitask Learning" /><category term="Unified Frameworks" /><category term="Zero-shot Learning" /><category term="Transformer" /><summary type="html"><![CDATA[概要 包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案 Text2Image, Visual Grounding, VQA, Image Caption, Image Classification, language modeling 一般に公開されている2000万件の画像テキストペアのデータセットで事前学習 自然言語理解（RoBERTa、ELECTRA、DeBERTa） 自然言語生成（UniLM、Pegasus、 ProphetNet） 画像分類（MoCo-v3、BEiT、MAE）と同等のパフォーマンスを達成 未学習のタスクにも移行できる]]></summary></entry><entry><title type="html">QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information</title><link href="http://localhost:4000/hoi/2022/10/20/QPIC.html" rel="alternate" type="text/html" title="QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information" /><published>2022-10-20T12:00:00+09:00</published><updated>2022-10-20T12:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/10/20/QPIC</id><content type="html" xml:base="http://localhost:4000/hoi/2022/10/20/QPIC.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>CNNベースのHOI手法ではCNNの局所性により全体の特徴を使用できず、手動で設定した関心領域に依存し、複数のHOIを混在する欠点がある</li>
-  <li>transformerベースの特徴抽出器を利用することで、画像全体を集約し複数のHOIの混在を避けることができる</li>
-  <li>効果的なtransformerベースの特徴抽出器によって検出ヘッドがシンプルで直感的になり、文脈上重要な特徴をうまく抽出し、既存手法を大きく上回った
-    <ul>
-      <li>HICO-DETで5.37mAP↑,V-COCOで5.7mAP↑
-<!--more--></li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>transformerを使用し、文脈特徴をペアワイズで集約</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<p><img src="/assets/images/posts/QPIC/1.png" alt="" /></p>
-
-<ul>
-  <li>アーキテクチャ
-    <ul>
-      <li>事前学習済みCNNで特徴マップを取得し、畳み込みでチャンネル数を調整</li>
-      <li>Positional Encodingを追加し、Transformer encoder, decoderに通す
-        <ul>
-          <li>decoderの入力(Query vectors)は学習</li>
-          <li>Query vectorsの数はインタラクション数</li>
-        </ul>
-      </li>
-      <li>Interaction detection heads
-        <ul>
-          <li>Human box FFN
-            <ul>
-              <li>人間のバウンディングボックスを予測</li>
-            </ul>
-          </li>
-          <li>Object box FFN
-            <ul>
-              <li>物体のバウンディングボックスを予測</li>
-            </ul>
-          </li>
-          <li>Object class FFN
-            <ul>
-              <li>物体のクラスを予測</li>
-            </ul>
-          </li>
-          <li>Action class FFN
-            <ul>
-              <li>行動のクラスを予測</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Loss
-    <ul>
-      <li>予測と正解のに分割マッチング
-        <ul>
-          <li>DETRのHungarianアルゴリズム</li>
-        </ul>
-      </li>
-      <li>マッチングされたペアに対するlossの計算
-        <ul>
-          <li>$L = \lambda_b L_b + \lambda_u L_u + \lambda_c L_c + \lambda_a L_a$
-            <ul>
-              <li>$L_b$：人と物体のバウンディングボックスの座標のLoss
-                <ul>
-                  <li><img src="/assets/images/posts/QPIC/2.png" alt="" /></li>
-                </ul>
-              </li>
-              <li>$L_u$：人と物体のバウンディングボックスのIoUのLoss
-                <ul>
-                  <li><img src="/assets/images/posts/QPIC/3.png" alt="" /></li>
-                </ul>
-              </li>
-              <li>$L_c$：物体のクラス分類Loss
-                <ul>
-                  <li><img src="/assets/images/posts/QPIC/4.png" alt="" /></li>
-                </ul>
-              </li>
-              <li>$L_a$：行動のクラス分類Loss
-                <ul>
-                  <li><img src="/assets/images/posts/QPIC/5.png" alt="" /></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>HICO-DET
-    <ul>
-      <li>5.37mAP↑
-        <ul>
-          <li><img src="/assets/images/posts/QPIC/6.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>V-COCO
-    <ul>
-      <li>5.7mAP↑
-        <ul>
-          <li><img src="/assets/images/posts/QPIC/7.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>既存手法との比較
-    <ul>
-      <li><img src="/assets/images/posts/QPIC/8.png" alt="" /></li>
-      <li>既存手法
-        <ul>
-          <li>(a)(b)はDRF, (c)(d)はPPDM→行動の検出に失敗</li>
-        </ul>
-      </li>
-      <li>QPIC
-        <ul>
-          <li>下段のAttentionマップからわかるように物体を見て検出できた</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Transformer" /><summary type="html"><![CDATA[概要 CNNベースのHOI手法ではCNNの局所性により全体の特徴を使用できず、手動で設定した関心領域に依存し、複数のHOIを混在する欠点がある transformerベースの特徴抽出器を利用することで、画像全体を集約し複数のHOIの混在を避けることができる 効果的なtransformerベースの特徴抽出器によって検出ヘッドがシンプルで直感的になり、文脈上重要な特徴をうまく抽出し、既存手法を大きく上回った HICO-DETで5.37mAP↑,V-COCOで5.7mAP↑]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Vision&amp;Language" /><category term="Multimodal Pretraining" /><category term="Multitask Learning" /><category term="Unified Frameworks" /><category term="Zero-shot Learning" /><category term="Transformer" /><summary type="html"><![CDATA[概要 包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案 Text2Image, Visual Grounding, VQA, Image Caption, Image Classification, language modeling 一般に公開されている2000万件の画像テキストペアのデータセットで事前学習 自然言語理解（RoBERTa、ELECTRA、DeBERTa） 自然言語生成（UniLM、Pegasus、 ProphetNet） 画像分類（MoCo-v3、BEiT、MAE）と同等のパフォーマンスを達成 未学習のタスクにも移行できる]]></summary></entry></feed>
