@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Flamingo: a Visual Language Model for Few-Shot Learning</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/Flamingo/3.png" class="hero">
+    <h1>Flamingo: a Visual Language Model for Few-Shot Learning</h1>
+    <p><span class="fa fa-link"></span><a href="https://www.deepmind.com/blog/tackling-multiple-tasks-with-a-single-visual-language-model" target="_blank"> https://www.deepmind.com/blog/tackling-multiple-tasks-with-a-single-visual-language-model</a></p>
+    <p><span class="fa fa-calendar"></span> Mar 14, 2023</p>
+    <p><span class="fa fa-flag"></span> Vision and Language, Few-shot Learning, </p>
+    <p><span class="fa fa-graduation-cap"></span> NeurIPS (2022) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Flamingo: a Visual Language Model for Few-Shot Learning&url=https://absolute-value.github.io/vision&language/2023/03/14/Flamingo.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/vision&language/2023/03/14/Flamingo.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/vision&language/2023/03/14/Flamingo.html&title=Flamingo: a Visual Language Model for Few-Shot Learning" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Flamingo: a Visual Language Model for Few-Shot Learning&body=Flamingo: a Visual Language Model for Few-Shot Learning https://absolute-value.github.io/vision&language/2023/03/14/Flamingo.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>少数のアノテーションで重みの更新なしに新しいタスクに迅速に対応できるVision&amp;LanguageモデルであるFlamingoを提案</li>
+  <li>数千倍のタスク専用データでFinetuningに対して、6/16のタスクでSotA
+<!--more-->
+<img src="/assets/images/posts/Flamingo/1.png" alt="" />
+<img src="/assets/images/posts/Flamingo/2.png" alt="" /></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>言語モデルのFew-shot学習をPerceiver-basedアーキテクチャなどを用いて画像やビデオを入力できるように拡張</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/Flamingo/3.png" alt="" /></p>
+
+<ul>
+  <li>概要
+    <ul>
+      <li>Vision Encoderから画像または動画の特徴を取得し、Perceiver Resamplerで固定数の画像トークンにする</li>
+      <li>画像トークンをCross AttentionでLM layerの間に挟むことで、LM Blockを視覚情報で条件付けする</li>
+    </ul>
+  </li>
+  <li>Vision Encoder
+    <ul>
+      <li>事前学習済みNormalizerFree ResNet (NFNet)を使用</li>
+      <li>ビデオの場合は1FPSごとにEncoderに通し、時間埋め込みを追加</li>
+    </ul>
+  </li>
+  <li>Perceiver Resampler
+    <ul>
+      <li>サイズの異なる特徴マップを固定数の画像トークンを生成
+        <ul>
+          <li>計算の複雑さを軽減</li>
+        </ul>
+      </li>
+      <li>V&amp;L Sampler Moduleによって通常のTransformerやMLPを凌駕</li>
+    </ul>
+  </li>
+  <li>GATED XATTN-DENSE layers within a frozen pretrained LM
+    <ul>
+      <li><img src="/assets/images/posts/Flamingo/4.png" alt="" /></li>
+      <li>事前学習済みのLM layer(Chinchilla)を用意し、重みは固定する</li>
+      <li>その中にGATED XATTN-DENSE layersを挿入</li>
+      <li>残差ブロックの接続前にtanhを掛けることで、学習の安定化と性能の向上</li>
+    </ul>
+  </li>
+  <li>Vision&amp;Languageデータセットで学習
+    <ul>
+      <li>M3W(画像とテキストが交互に並ぶデータセット)</li>
+      <li>ALIGN, LTIP(画像とテキストのペア)</li>
+      <li>VTP(動画とテキストのペア)</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>Few-shot learning
+    <ul>
+      <li><img src="/assets/images/posts/Flamingo/5.png" alt="" /></li>
+      <li>FlamingoはFinetuningを行わずに16個中6個のタスクでSotA
+        <ul>
+          <li>比較対象(100%)はFinetuning（重みの更新）済みの最新手法</li>
+        </ul>
+      </li>
+      <li>また、白色のZero/Few Shotを上回る
+        <ul>
+          <li><img src="/assets/images/posts/Flamingo/6.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Finetuning
+    <ul>
+      <li><img src="/assets/images/posts/Flamingo/7.png" alt="" /></li>
+      <li>FewshotでSotAを上回らなかった9個中5個のタスクでSotA</li>
+    </ul>
+  </li>
+  <li>Ablation studies
+    <ul>
+      <li><img src="/assets/images/posts/Flamingo/8.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>2022 Copyright</p>
+      </div>
+    </footer>
+  </body>
+</html>

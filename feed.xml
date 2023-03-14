@@ -1,4 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-27T20:40:31+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2023/02/21/FGAHOI.html" rel="alternate" type="text/html" title="FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection" /><published>2023-02-21T13:00:00+09:00</published><updated>2023-02-21T13:00:00+09:00</updated><id>http://localhost:4000/hoi/2023/02/21/FGAHOI</id><content type="html" xml:base="http://localhost:4000/hoi/2023/02/21/FGAHOI.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-14T22:49:23+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Flamingo: a Visual Language Model for Few-Shot Learning</title><link href="http://localhost:4000/vision&language/2023/03/14/Flamingo.html" rel="alternate" type="text/html" title="Flamingo: a Visual Language Model for Few-Shot Learning" /><published>2023-03-14T22:00:00+09:00</published><updated>2023-03-14T22:00:00+09:00</updated><id>http://localhost:4000/vision&amp;language/2023/03/14/Flamingo</id><content type="html" xml:base="http://localhost:4000/vision&amp;language/2023/03/14/Flamingo.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>少数のアノテーションで重みの更新なしに新しいタスクに迅速に対応できるVision&amp;LanguageモデルであるFlamingoを提案</li>
+  <li>数千倍のタスク専用データでFinetuningに対して、6/16のタスクでSotA
+<!--more-->
+<img src="/assets/images/posts/Flamingo/1.png" alt="" />
+<img src="/assets/images/posts/Flamingo/2.png" alt="" /></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>言語モデルのFew-shot学習をPerceiver-basedアーキテクチャなどを用いて画像やビデオを入力できるように拡張</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/Flamingo/3.png" alt="" /></p>
+
+<ul>
+  <li>概要
+    <ul>
+      <li>Vision Encoderから画像または動画の特徴を取得し、Perceiver Resamplerで固定数の画像トークンにする</li>
+      <li>画像トークンをCross AttentionでLM layerの間に挟むことで、LM Blockを視覚情報で条件付けする</li>
+    </ul>
+  </li>
+  <li>Vision Encoder
+    <ul>
+      <li>事前学習済みNormalizerFree ResNet (NFNet)を使用</li>
+      <li>ビデオの場合は1FPSごとにEncoderに通し、時間埋め込みを追加</li>
+    </ul>
+  </li>
+  <li>Perceiver Resampler
+    <ul>
+      <li>サイズの異なる特徴マップを固定数の画像トークンを生成
+        <ul>
+          <li>計算の複雑さを軽減</li>
+        </ul>
+      </li>
+      <li>V&amp;L Sampler Moduleによって通常のTransformerやMLPを凌駕</li>
+    </ul>
+  </li>
+  <li>GATED XATTN-DENSE layers within a frozen pretrained LM
+    <ul>
+      <li><img src="/assets/images/posts/Flamingo/4.png" alt="" /></li>
+      <li>事前学習済みのLM layer(Chinchilla)を用意し、重みは固定する</li>
+      <li>その中にGATED XATTN-DENSE layersを挿入</li>
+      <li>残差ブロックの接続前にtanhを掛けることで、学習の安定化と性能の向上</li>
+    </ul>
+  </li>
+  <li>Vision&amp;Languageデータセットで学習
+    <ul>
+      <li>M3W(画像とテキストが交互に並ぶデータセット)</li>
+      <li>ALIGN, LTIP(画像とテキストのペア)</li>
+      <li>VTP(動画とテキストのペア)</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>Few-shot learning
+    <ul>
+      <li><img src="/assets/images/posts/Flamingo/5.png" alt="" /></li>
+      <li>FlamingoはFinetuningを行わずに16個中6個のタスクでSotA
+        <ul>
+          <li>比較対象(100%)はFinetuning（重みの更新）済みの最新手法</li>
+        </ul>
+      </li>
+      <li>また、白色のZero/Few Shotを上回る
+        <ul>
+          <li><img src="/assets/images/posts/Flamingo/6.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Finetuning
+    <ul>
+      <li><img src="/assets/images/posts/Flamingo/7.png" alt="" /></li>
+      <li>FewshotでSotAを上回らなかった9個中5個のタスクでSotA</li>
+    </ul>
+  </li>
+  <li>Ablation studies
+    <ul>
+      <li><img src="/assets/images/posts/Flamingo/8.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Vision&amp;Language" /><category term="Vision and Language" /><category term="Few-shot Learning" /><summary type="html"><![CDATA[概要 少数のアノテーションで重みの更新なしに新しいタスクに迅速に対応できるVision&amp;LanguageモデルであるFlamingoを提案 数千倍のタスク専用データでFinetuningに対して、6/16のタスクでSotA]]></summary></entry><entry><title type="html">FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2023/02/21/FGAHOI.html" rel="alternate" type="text/html" title="FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection" /><published>2023-02-21T13:00:00+09:00</published><updated>2023-02-21T13:00:00+09:00</updated><id>http://localhost:4000/hoi/2023/02/21/FGAHOI</id><content type="html" xml:base="http://localhost:4000/hoi/2023/02/21/FGAHOI.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>MSS, HSAM, TAMという3つから成るEnd-to-endのtransformerベースの手法(FGAHOI)を提案
@@ -1082,7 +1171,7 @@
   <img src="/assets/images/posts/LaneDetectionSurvey/img37.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 視覚に基づく車線検出のデータセット、深層学習を用いた手法の比較 HD地図のモデリングに向けた新しいデータセット（TTLane）と複雑な道路状況での自立走行に向けた方向性とLineNetを紹介する]]></summary></entry><entry><title type="html">OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework</title><link href="http://localhost:4000/hoi/2022/11/29/OFA.html" rel="alternate" type="text/html" title="OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework" /><published>2022-11-29T12:00:00+09:00</published><updated>2022-11-29T12:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/11/29/OFA</id><content type="html" xml:base="http://localhost:4000/hoi/2022/11/29/OFA.html"><![CDATA[<h1 id="概要">概要</h1>
+</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 視覚に基づく車線検出のデータセット、深層学習を用いた手法の比較 HD地図のモデリングに向けた新しいデータセット（TTLane）と複雑な道路状況での自立走行に向けた方向性とLineNetを紹介する]]></summary></entry><entry><title type="html">OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework</title><link href="http://localhost:4000/vision&language/2022/11/29/OFA.html" rel="alternate" type="text/html" title="OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework" /><published>2022-11-29T12:00:00+09:00</published><updated>2022-11-29T12:00:00+09:00</updated><id>http://localhost:4000/vision&amp;language/2022/11/29/OFA</id><content type="html" xml:base="http://localhost:4000/vision&amp;language/2022/11/29/OFA.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案
@@ -1176,7 +1265,7 @@
       <li><img src="/assets/images/posts/OFA/UnseenDomain.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Multimodal Pretraining" /><category term="Multitask Learning" /><category term="Unified Frameworks" /><category term="Zero-shot Learning" /><category term="Transformer" /><summary type="html"><![CDATA[概要 包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案 Text2Image, Visual Grounding, VQA, Image Caption, Image Classification, language modeling 一般に公開されている2000万件の画像テキストペアのデータセットで事前学習 自然言語理解（RoBERTa、ELECTRA、DeBERTa） 自然言語生成（UniLM、Pegasus、 ProphetNet） 画像分類（MoCo-v3、BEiT、MAE）と同等のパフォーマンスを達成 未学習のタスクにも移行できる]]></summary></entry><entry><title type="html">QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information</title><link href="http://localhost:4000/hoi/2022/10/20/QPIC.html" rel="alternate" type="text/html" title="QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information" /><published>2022-10-20T12:00:00+09:00</published><updated>2022-10-20T12:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/10/20/QPIC</id><content type="html" xml:base="http://localhost:4000/hoi/2022/10/20/QPIC.html"><![CDATA[<h1 id="概要">概要</h1>
+</ul>]]></content><author><name></name></author><category term="Vision&amp;Language" /><category term="Multimodal Pretraining" /><category term="Multitask Learning" /><category term="Unified Frameworks" /><category term="Zero-shot Learning" /><category term="Transformer" /><summary type="html"><![CDATA[概要 包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案 Text2Image, Visual Grounding, VQA, Image Caption, Image Classification, language modeling 一般に公開されている2000万件の画像テキストペアのデータセットで事前学習 自然言語理解（RoBERTa、ELECTRA、DeBERTa） 自然言語生成（UniLM、Pegasus、 ProphetNet） 画像分類（MoCo-v3、BEiT、MAE）と同等のパフォーマンスを達成 未学習のタスクにも移行できる]]></summary></entry><entry><title type="html">QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information</title><link href="http://localhost:4000/hoi/2022/10/20/QPIC.html" rel="alternate" type="text/html" title="QPIC: Query-Based Pairwise Human-Object Interaction Detection with Image-Wide Contextual Information" /><published>2022-10-20T12:00:00+09:00</published><updated>2022-10-20T12:00:00+09:00</updated><id>http://localhost:4000/hoi/2022/10/20/QPIC</id><content type="html" xml:base="http://localhost:4000/hoi/2022/10/20/QPIC.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>CNNベースのHOI手法ではCNNの局所性により全体の特徴を使用できず、手動で設定した関心領域に依存し、複数のHOIを混在する欠点がある</li>
@@ -1310,126 +1399,4 @@
       </li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Transformer" /><summary type="html"><![CDATA[概要 CNNベースのHOI手法ではCNNの局所性により全体の特徴を使用できず、手動で設定した関心領域に依存し、複数のHOIを混在する欠点がある transformerベースの特徴抽出器を利用することで、画像全体を集約し複数のHOIの混在を避けることができる 効果的なtransformerベースの特徴抽出器によって検出ヘッドがシンプルで直感的になり、文脈上重要な特徴をうまく抽出し、既存手法を大きく上回った HICO-DETで5.37mAP↑,V-COCOで5.7mAP↑]]></summary></entry><entry><title type="html">Correlating Belongings with Passengers in a Simulated Airport Security Checkpoint</title><link href="http://localhost:4000/object%20detection/2022/10/17/Passengers.html" rel="alternate" type="text/html" title="Correlating Belongings with Passengers in a Simulated Airport Security Checkpoint" /><published>2022-10-17T00:00:00+09:00</published><updated>2022-10-17T00:00:00+09:00</updated><id>http://localhost:4000/object%20detection/2022/10/17/Passengers</id><content type="html" xml:base="http://localhost:4000/object%20detection/2022/10/17/Passengers.html"><![CDATA[<h1 id="概要">概要</h1>
-<ul>
-  <li>空港の保安検査場における乗客と持ち物のトラッキング・関連付けのアルゴリズムを提示し、その有効性を実証</li>
-  <li>手作業とディープラーニングベースのアプローチの両方を活用</li>
-  <li>現実のデータセットで、乗客と持ち物を検出、トラッキング、関連付けることができた
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>自然光があり実世界に近く、物があり複雑な空港監視システムにおける初めての追跡と関連付け</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<p><img src="/assets/images/posts/Passengers/1.png" alt="" /></p>
-<ul>
-  <li>乗客の検出とトラッキング
-    <ul>
-      <li>オプティカルフローでフローが閾値以上の画素を得ることで、乗客の位置を荒く推定</li>
-      <li>Faster R-CNNで精密な位置をバウンディングボックスで得る</li>
-      <li>オプティカルフローの大きさと方向で移動方向を予測し、トラッキング</li>
-      <li><img src="/assets/images/posts/Passengers/2.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>持ち物の検出とトラッキング
-    <ul>
-      <li>はじめビン（持ち物を入れる容器）は灰色で背景は暗いので、強度の変化で検出できる</li>
-      <li>一意のIDとバウンディングボックスを割り当てる</li>
-      <li>相関フィルタでモデル化し畳み込みで追跡
-        <ul>
-          <li>Background Aware Correlation Filterを採用
-            <ul>
-              <li>ターゲットの周囲の背景をネガティブサンプルとして使用</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>Best-Buddies Similarity (BBS) テンプレートマッチングでビン内に離脱物があるか判定
-        <ul>
-          <li>ビンの色の急激な変化（乗客の手や日陰に入ることが原因）に対応するため</li>
-          <li>類似度が閾値以下で空と判定</li>
-          <li><img src="/assets/images/posts/Passengers/3.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>乗客と持ち物（ビン）の関連付け
-    <ul>
-      <li>単純な距離だと、複数の乗客が近接していると失敗する</li>
-      <li>カメラ2（置く）
-        <ul>
-          <li>VGG19の特徴量で上半身をポーズ推定</li>
-          <li>手のひらの座標がビンに最も近い乗客を追跡</li>
-          <li>ビンから離れたときに、最も手が近い乗客を所有者に割り当て
-            <ul>
-              <li>所有者以外がビンを一時的に移動させた際に対応</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>カメラ4（拾う）
-        <ul>
-          <li>手のひらの座標がビンに最も近い乗客を受取人に
-            <ul>
-              <li>その際に受取人のラベルが所有者と同じかを判定</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><img src="/assets/images/posts/Passengers/4.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>結果
-    <ul>
-      <li>評価方法
-        <ul>
-          <li>PD：全イベントのうち、正しく検出できたもの↑</li>
-          <li>PFA：全イベントのうち、誤って検出したもの↓</li>
-          <li>Switch：乗客か持ち物のラベルに変更があったか↓</li>
-          <li>Mismatch：乗客と持ち物の関連付けが不一致↓</li>
-        </ul>
-      </li>
-      <li>対象
-        <ul>
-          <li>PAX：乗客</li>
-          <li>DVI：持ち物</li>
-          <li>XFR：記載なし</li>
-        </ul>
-      </li>
-      <li>
-        <ul>
-          <li><img src="/assets/images/posts/Passengers/5.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>評価結果の例
-    <ul>
-      <li>見方
-        <ul>
-          <li>緑：GT</li>
-          <li>赤：アルゴリズムの予測</li>
-          <li>黄色：アルゴリズムの間違い</li>
-        </ul>
-      </li>
-      <li>フレーム
-        <ul>
-          <li>(a)~(c)：正しく検出</li>
-          <li>(d)~(e)：乗客の誤検出（見切れているもの）</li>
-          <li>(f)：ビンの見落とし（出てきたばかりのため）</li>
-        </ul>
-      </li>
-      <li><img src="/assets/images/posts/Passengers/6.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><category term="Tracking" /><summary type="html"><![CDATA[概要 空港の保安検査場における乗客と持ち物のトラッキング・関連付けのアルゴリズムを提示し、その有効性を実証 手作業とディープラーニングベースのアプローチの両方を活用 現実のデータセットで、乗客と持ち物を検出、トラッキング、関連付けることができた]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Transformer" /><summary type="html"><![CDATA[概要 CNNベースのHOI手法ではCNNの局所性により全体の特徴を使用できず、手動で設定した関心領域に依存し、複数のHOIを混在する欠点がある transformerベースの特徴抽出器を利用することで、画像全体を集約し複数のHOIの混在を避けることができる 効果的なtransformerベースの特徴抽出器によって検出ヘッドがシンプルで直感的になり、文脈上重要な特徴をうまく抽出し、既存手法を大きく上回った HICO-DETで5.37mAP↑,V-COCOで5.7mAP↑]]></summary></entry></feed>
