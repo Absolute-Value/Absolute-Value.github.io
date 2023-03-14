@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-15T00:10:51+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery</title><link href="http://localhost:4000/object%20detection/2023/03/14/GO-Finder.html" rel="alternate" type="text/html" title="GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery" /><published>2023-03-14T23:30:00+09:00</published><updated>2023-03-14T23:30:00+09:00</updated><id>http://localhost:4000/object%20detection/2023/03/14/GO-Finder</id><content type="html" xml:base="http://localhost:4000/object%20detection/2023/03/14/GO-Finder.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-15T00:15:42+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery</title><link href="http://localhost:4000/object%20detection/2023/03/14/GO-Finder.html" rel="alternate" type="text/html" title="GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery" /><published>2023-03-14T23:30:00+09:00</published><updated>2023-03-14T23:30:00+09:00</updated><id>http://localhost:4000/object%20detection/2023/03/14/GO-Finder</id><content type="html" xml:base="http://localhost:4000/object%20detection/2023/03/14/GO-Finder.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>登録不要のウェアラブルカメラを用いた物体の発見支援システムGO-Finderを提案</li>
@@ -25,7 +25,7 @@
       <li>必要なもの
         <ul>
           <li>ウェアラブルカメラ、処理サーバー、参照用スマートフォン</li>
-          <li><img src="/assets/images/posts/Go-Finder/GoFinder-2.png" alt="" /></li>
+          <li><img src="/assets/images/posts/GO-Finder/GoFinder-2.png" alt="" /></li>
         </ul>
       </li>
       <li>観察フェーズ
@@ -37,7 +37,7 @@
       </li>
       <li>検索フェーズ
         <ul>
-          <li><img src="/assets/images/posts/Go-Finder/GoFinder-3.png" alt="" /></li>
+          <li><img src="/assets/images/posts/GO-Finder/GoFinder-3.png" alt="" /></li>
           <li>スマートフォンのインターフェースを使って、処理結果を受信</li>
           <li>検索したい物体を選択</li>
           <li>物体が最後に出現したシーンがポップアップ画面で出てくる</li>
@@ -47,7 +47,7 @@
   </li>
   <li>アルゴリズム
     <ul>
-      <li><img src="/assets/images/posts/Go-Finder/GoFinder-4.png" alt="" /></li>
+      <li><img src="/assets/images/posts/GO-Finder/GoFinder-4.png" alt="" /></li>
       <li>手持ち物体の検出
         <ul>
           <li>既存手法「Understanding Human Hands in Contact at Internet Scale」を用いて、バウンディングボックスと携帯型物体判定と接触状態を取得</li>
@@ -82,20 +82,20 @@
 <ul>
   <li>12名のボランティアに指定した場所に物体を隠してもらい、15分のインターバルで位置を忘れさせ、システムを利用しながら隠した物体の一部を持ち帰るように指示
     <ul>
-      <li><img src="/assets/images/posts/Go-Finder/GoFinder-5.png" alt="" /></li>
+      <li><img src="/assets/images/posts/GO-Finder/GoFinder-5.png" alt="" /></li>
       <li>パフォーマンス
         <ul>
-          <li><img src="/assets/images/posts/Go-Finder/GoFinder-6.png" alt="" /></li>
+          <li><img src="/assets/images/posts/GO-Finder/GoFinder-6.png" alt="" /></li>
         </ul>
       </li>
       <li>タスク完了時間
         <ul>
-          <li><img src="/assets/images/posts/Go-Finder/GoFinder-7.png" alt="" /></li>
+          <li><img src="/assets/images/posts/GO-Finder/GoFinder-7.png" alt="" /></li>
         </ul>
       </li>
       <li>クラスタの様子
         <ul>
-          <li><img src="/assets/images/posts/Go-Finder/GoFinder-8.png" alt="" /></li>
+          <li><img src="/assets/images/posts/GO-Finder/GoFinder-8.png" alt="" /></li>
           <li>いくつかのクラスタは分割され過ぎている</li>
         </ul>
       </li>
