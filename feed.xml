@@ -1,4 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-14T23:55:45+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Flamingo: a Visual Language Model for Few-Shot Learning</title><link href="http://localhost:4000/vision&language/2023/03/14/Flamingo.html" rel="alternate" type="text/html" title="Flamingo: a Visual Language Model for Few-Shot Learning" /><published>2023-03-14T22:00:00+09:00</published><updated>2023-03-14T22:00:00+09:00</updated><id>http://localhost:4000/vision&amp;language/2023/03/14/Flamingo</id><content type="html" xml:base="http://localhost:4000/vision&amp;language/2023/03/14/Flamingo.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-15T00:02:59+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery</title><link href="http://localhost:4000/object-detection/2023/03/14/GO-Finder.html" rel="alternate" type="text/html" title="GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery" /><published>2023-03-14T23:30:00+09:00</published><updated>2023-03-14T23:30:00+09:00</updated><id>http://localhost:4000/object-detection/2023/03/14/GO-Finder</id><content type="html" xml:base="http://localhost:4000/object-detection/2023/03/14/GO-Finder.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>登録不要のウェアラブルカメラを用いた物体の発見支援システムGO-Finderを提案</li>
+  <li>手持ちの物体を自動的に検出しグループ化しておくことで、アプリから対象物の最後の出現を取得できる
+    <ul>
+      <li>手で扱う物体に限定することで、対象となる物体を大幅に削減</li>
+    </ul>
+  </li>
+  <li>物体画像をクエリとして利用し、候補の中から物体を選択することができる
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>従来のシステムではユーザーが事前に対象物を登録する必要があった</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>概要
+    <ul>
+      <li>必要なもの
+        <ul>
+          <li>ウェアラブルカメラ、処理サーバー、参照用スマートフォン</li>
+          <li><img src="/assets/images/posts/Go-Finder/GoFinder-2.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>観察フェーズ
+        <ul>
+          <li>ウェアラブルカメラで連続的に画像を撮って、サーバーに送信</li>
+          <li>サーバーは手持ちの物体を検出・追跡</li>
+          <li>物体の外観によってクラスタリング</li>
+        </ul>
+      </li>
+      <li>検索フェーズ
+        <ul>
+          <li><img src="/assets/images/posts/Go-Finder/GoFinder-3.png" alt="" /></li>
+          <li>スマートフォンのインターフェースを使って、処理結果を受信</li>
+          <li>検索したい物体を選択</li>
+          <li>物体が最後に出現したシーンがポップアップ画面で出てくる</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>アルゴリズム
+    <ul>
+      <li><img src="/assets/images/posts/Go-Finder/GoFinder-4.png" alt="" /></li>
+      <li>手持ち物体の検出
+        <ul>
+          <li>既存手法「Understanding Human Hands in Contact at Internet Scale」を用いて、バウンディングボックスと携帯型物体判定と接触状態を取得</li>
+          <li>携帯型物体判定かつ接触状態の物体のバウンディングボックスを取得</li>
+          <li>フレームの半分の辺長はノイズとして除外</li>
+        </ul>
+      </li>
+      <li>検出されたバウンディングボックスを、外観特徴に基づいてクラスタリング
+        <ul>
+          <li>ステージ１：トラッキングしたものを同じクラスタへ(c)</li>
+          <li>ステージ２：トラッキングが失敗した場合、ImageNet学習済みResNetに通した特徴に対してコサイン類似度を計算し、閾値を超えたらクラスタへ(d上)
+            <ul>
+              <li>条件を満たすクラスタが1つもない場合は新しいクラスタを作成</li>
+            </ul>
+          </li>
+          <li>ステージ３：クラスタ単位でコサイン類似度行列を作成、最大値と中央値が閾値を超えたらクラスタへ(d下)</li>
+        </ul>
+      </li>
+      <li>手の外観や類似の質感による誤った関連付けを防ぐために、ヒューリスティックを導入
+        <ul>
+          <li>バウンディングボックスのアスペクト比が1.5より大きい場合</li>
+          <li>肌色領域(カラーヒストグラム)の比率が0.3より大きい場合</li>
+          <li>物体と手の面積比が1.5より大きい場合</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>12名のボランティアに指定した場所に物体を隠してもらい、15分のインターバルで位置を忘れさせ、システムを利用しながら隠した物体の一部を持ち帰るように指示
+    <ul>
+      <li><img src="/assets/images/posts/Go-Finder/GoFinder-5.png" alt="" /></li>
+      <li>パフォーマンス
+        <ul>
+          <li><img src="/assets/images/posts/Go-Finder/GoFinder-6.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>タスク完了時間
+        <ul>
+          <li><img src="/assets/images/posts/Go-Finder/GoFinder-7.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>クラスタの様子
+        <ul>
+          <li><img src="/assets/images/posts/Go-Finder/GoFinder-8.png" alt="" /></li>
+          <li>いくつかのクラスタは分割され過ぎている</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Object-Detection" /><category term="Object Detection" /><summary type="html"><![CDATA[概要 登録不要のウェアラブルカメラを用いた物体の発見支援システムGO-Finderを提案 手持ちの物体を自動的に検出しグループ化しておくことで、アプリから対象物の最後の出現を取得できる 手で扱う物体に限定することで、対象となる物体を大幅に削減 物体画像をクエリとして利用し、候補の中から物体を選択することができる]]></summary></entry><entry><title type="html">Flamingo: a Visual Language Model for Few-Shot Learning</title><link href="http://localhost:4000/vision&language/2023/03/14/Flamingo.html" rel="alternate" type="text/html" title="Flamingo: a Visual Language Model for Few-Shot Learning" /><published>2023-03-14T22:00:00+09:00</published><updated>2023-03-14T22:00:00+09:00</updated><id>http://localhost:4000/vision&amp;language/2023/03/14/Flamingo</id><content type="html" xml:base="http://localhost:4000/vision&amp;language/2023/03/14/Flamingo.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>少数のアノテーションで重みの更新なしに新しいタスクに迅速に対応できるVision&amp;LanguageモデルであるFlamingoを提案</li>
@@ -1218,98 +1321,4 @@ tion detection）を提案</li>
   <img src="/assets/images/posts/LaneDetectionSurvey/img37.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 視覚に基づく車線検出のデータセット、深層学習を用いた手法の比較 HD地図のモデリングに向けた新しいデータセット（TTLane）と複雑な道路状況での自立走行に向けた方向性とLineNetを紹介する]]></summary></entry><entry><title type="html">OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework</title><link href="http://localhost:4000/vision&language/2022/11/29/OFA.html" rel="alternate" type="text/html" title="OFA: Unifying Architectures, Tasks, and Modalities Through a Simple Sequence-to-Sequence Learning Framework" /><published>2022-11-29T12:00:00+09:00</published><updated>2022-11-29T12:00:00+09:00</updated><id>http://localhost:4000/vision&amp;language/2022/11/29/OFA</id><content type="html" xml:base="http://localhost:4000/vision&amp;language/2022/11/29/OFA.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案
-    <ul>
-      <li>Text2Image, Visual Grounding, VQA, Image Caption, Image Classification, language modeling</li>
-    </ul>
-  </li>
-  <li>一般に公開されている2000万件の画像テキストペアのデータセットで事前学習</li>
-  <li>自然言語理解（RoBERTa、ELECTRA、DeBERTa）
-自然言語生成（UniLM、Pegasus、 ProphetNet）
-画像分類（MoCo-v3、BEiT、MAE）と同等のパフォーマンスを達成</li>
-  <li>未学習のタスクにも移行できる
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>下流タスクであるVQAや画像キャプションでの性能劣化が起きない</li>
-  <li>画像生成機能を持っている</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li>アーキテクチャ
-    <ul>
-      <li><img src="/assets/images/posts/OFA/OFA.png" alt="" /></li>
-      <li>TransformerベースのEncoder Decoderフレームワーク</li>
-      <li>テキストと画像に対して絶対位置埋め込み</li>
-      <li>ハイパラ
-        <ul>
-          <li><img src="/assets/images/posts/OFA/HyperPram.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>事前学習
-    <ul>
-      <li><img src="/assets/images/posts/OFA/PreTrain.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>VQA and visual entailment
-    <ul>
-      <li><img src="/assets/images/posts/OFA/VQA.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>MSCOCO Image Captioning
-    <ul>
-      <li><img src="/assets/images/posts/OFA/ImageCaptioning.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>RefCOCO, RefCOCO+, RefCOCOg
-    <ul>
-      <li><img src="/assets/images/posts/OFA/RefCOCO.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>text-to-image generation task
-    <ul>
-      <li><img src="/assets/images/posts/OFA/Text2Image1.png" alt="" /></li>
-      <li><img src="/assets/images/posts/OFA/Text2Image2.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>GLUE benchmark datasets
-    <ul>
-      <li><img src="/assets/images/posts/OFA/GLUE.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>Gigaword abstractive summarization
-    <ul>
-      <li><img src="/assets/images/posts/OFA/Gigaword.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>ImageNet-1K
-    <ul>
-      <li><img src="/assets/images/posts/OFA/ImageNet.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>unseen task grounded QA
-    <ul>
-      <li><img src="/assets/images/posts/OFA/UnseenTask.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>unseen domain VQA
-    <ul>
-      <li><img src="/assets/images/posts/OFA/UnseenDomain.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Vision&amp;Language" /><category term="Multimodal Pretraining" /><category term="Multitask Learning" /><category term="Unified Frameworks" /><category term="Zero-shot Learning" /><category term="Transformer" /><summary type="html"><![CDATA[概要 包括的なタスクを行うことができる、タスクとモダリティを無視できるフレームワークであるOFA(One For All)を提案 Text2Image, Visual Grounding, VQA, Image Caption, Image Classification, language modeling 一般に公開されている2000万件の画像テキストペアのデータセットで事前学習 自然言語理解（RoBERTa、ELECTRA、DeBERTa） 自然言語生成（UniLM、Pegasus、 ProphetNet） 画像分類（MoCo-v3、BEiT、MAE）と同等のパフォーマンスを達成 未学習のタスクにも移行できる]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 視覚に基づく車線検出のデータセット、深層学習を用いた手法の比較 HD地図のモデリングに向けた新しいデータセット（TTLane）と複雑な道路状況での自立走行に向けた方向性とLineNetを紹介する]]></summary></entry></feed>
