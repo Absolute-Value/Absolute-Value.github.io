@@ -74,10 +74,9 @@ fetch(`https://api.github.com/users/Absolute-Value/repos`, {
       }
       
       // // FontAwesomeのアイコンを追加する
-      const calendar_icon = document.createElement('i');
-      calendar_icon.className = 'fa fa-calendar';
-      detail_p.appendChild(calendar_icon);
-      detail_p.appendChild(document.createTextNode(repo.pushedAt.toLocaleDateString()));
+      const calendar = document.createElement('img');
+      calendar.src = 'https://img.shields.io/github/last-commit/Absolute-Value/'+repo.name+'?color=red&logoColor=white&logo=GitHub%20Actions'
+      detail_p.appendChild(calendar);
     });
   });
 })
