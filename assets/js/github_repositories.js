@@ -61,13 +61,13 @@ fetch(`https://api.github.com/users/Absolute-Value/repos`, {
       const detail_p = document.createElement('p');
       repo_a.appendChild(detail_p)
       try {
-        const col = colors[repo.language].color;
+        const col = colors[repo.language].color.replace('#','');
         // FontAwesomeのアイコンを追加する
-        const code_icon = document.createElement('i');
-        code_icon.className = 'fa fa-circle';
-        code_icon.style.color = col;
-        detail_p.appendChild(code_icon);
-        detail_p.appendChild(document.createTextNode(repo.language));
+        const code = document.createElement('img');
+        const log_name = repo.language.replace(' Notebook','')
+        code.src = 'https://img.shields.io/github/languages/top/Absolute-Value/'+repo.name+'?color='+col+'&logo='+log_name+'&logoColor='+col+'&style=flat';
+        
+        detail_p.appendChild(code)
         detail_p.appendChild(document.createElement('br'));
       } catch(error) {
         true;
