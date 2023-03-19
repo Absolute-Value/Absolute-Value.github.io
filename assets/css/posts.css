@@ -22,6 +22,37 @@ li {
   display: flex;
   flex-direction: column;
   border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.skill span {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: var(--primary);
+  opacity: 0;
+  /* transform: translateY(10px); */
+}
+
+.skill::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 3px;
+  background-color: var(--primary);
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.skill:hover::before {
+  transform: scaleX(1);
 }
 
 .myrepos {
