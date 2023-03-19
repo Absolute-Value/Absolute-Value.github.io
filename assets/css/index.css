@@ -1,0 +1,107 @@
+.skills {
+  margin: 0 6%;
+  display: flex;
+  flex-direction: row;
+}
+
+.skill {
+  /* background-color: var(--entry); */
+  align-items: center;
+  padding: 8px;
+  margin: 0px 10px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.skill span {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: var(--primary);
+  opacity: 0;
+  /* transform: translateY(10px); */
+}
+
+.skill::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 3px;
+  background-color: var(--primary);
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.skill:hover::before {
+  transform: scaleX(1);
+}
+
+.myrepos {
+  overflow-x: scroll;
+  margin: 0 6%;
+}
+
+#repoList {
+  display: inline-flex;
+  padding: 0 4px;
+}
+
+.repo {
+  background-color: var(--entry);
+  padding: 8px;
+  margin: 10px;
+  width: 260px;
+  height: 200px;
+  border-radius: 10px;
+  transition: transform .5s ease; /* ゆっくり変化させる */
+}
+
+.repo:hover{
+  transform: scale(1.1); /* 拡大 */
+}
+
+.repo a:hover{
+  color: var(--primary);
+}
+
+.repo p {
+  margin: 8px;
+}
+
+.repo a {
+  width: 100%;
+}
+
+.repo_name {
+  font-size: large;
+  height: 26px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.repo_disc {
+  height: 70px;
+  overflow: hidden;
+}
+
+.bachelor:hover {
+    color: #365CA3;
+}
+
+.labo:hover {
+    color: #FF5126;
+}
+
+.other:hover {
+    color: #42b983;
+}
