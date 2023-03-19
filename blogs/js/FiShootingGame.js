@@ -5,15 +5,15 @@ var ctx = canvas.getContext("2d");
 var player = {
 	x: canvas.width / 2,
 	y: canvas.height - 30,
-	radius: 10
+	radius: 8
 };
 
 // エイリアンの初期位置とサイズ
 var alien = {
-	x: canvas.width / 2,
+	x: 8,
 	y: 30,
-	radius: 10,
-	speed: 5
+	radius: 8,
+	speed: 0.5
 };
 
 // キーボード入力の処理
@@ -28,10 +28,10 @@ document.addEventListener("keyup", function(event) {
 // プレイヤーの移動
 function movePlayer() {
 	if (keys[37] && player.x > player.radius/2) { // 左矢印キー
-		player.x -= 5;
+		player.x -= 1;
 	}
 	if (keys[39] && player.x < canvas.width - player.radius/2) { // 右矢印キー
-		player.x += 5;
+		player.x += 1;
 	}
 }
 
@@ -82,6 +82,6 @@ var gameLoop = setInterval(function() {
     movePlayer();
     moveAlien();
     draw();
-}, 30);
+}, 5);
 
 
