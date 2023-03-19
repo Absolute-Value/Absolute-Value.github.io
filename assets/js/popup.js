@@ -18,7 +18,7 @@ function showDetails(button) {
     language.innerText = spanText;
     language.style.marginLeft = "0px";
     language.style.marginTop = "0px";
-    popupContent.appendChild(language);
+    popupContent.appendChild(language)
 
     switch (spanText) {
         case 'Python':

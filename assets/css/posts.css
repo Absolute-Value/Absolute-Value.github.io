@@ -55,6 +55,10 @@ li {
   transform: scaleX(1);
 }
 
+.skill h2 {
+  margin: 0px;
+}
+
 .myrepos {
   overflow-x: scroll;
   margin: 0 6%;
