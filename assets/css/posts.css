@@ -21,7 +21,7 @@ li {
   width: 100px;
   display: flex;
   flex-direction: column;
-  border-radius: 10px;
+  border-radius: 10px 10px 0 0;
   position: relative;
   cursor: pointer;
 }
