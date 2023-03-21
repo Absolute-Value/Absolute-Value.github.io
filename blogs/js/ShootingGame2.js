@@ -1,11 +1,10 @@
-let DEFAULT_FONT = "MS Gothic";
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
 // プレイヤーの初期位置とサイズ
 var player = {
-	x: canvas.width / 2,
-	y: canvas.height - 30,
+	x: canvas.width / 4,
+	y: canvas.height / 2,
 	radius: 8
 };
 
@@ -21,8 +20,8 @@ function createAlien() {
 		var color = "red";
 	}
 	var alien = {
-		x: Math.random() * canvas.width,
-		y: -8,
+		x: canvas.width + 8,
+		y: Math.random() * (canvas.height-4),
 		radius: radius,
 		speed: 0.5 + score / 100,
 		color: color
@@ -34,6 +33,7 @@ function createAlien() {
 var keys = {};
 document.addEventListener("keydown", function(event) {
 	keys[event.code] = true;
+	event.preventDefault();
 	switch (event.code) {
 		case "KeyX":
 			switch (mode) {
@@ -57,6 +57,12 @@ document.addEventListener("keyup", function(event) {
 
 // プレイヤーの移動
 function movePlayer() {
+	if (keys["ArrowUp"] && player.y > player.radius/2) { // 上矢印キー
+		player.y -= 1;
+	}
+	if (keys["ArrowDown"] && player.y < canvas.height - player.radius/2) { // 下矢印キー
+		player.y += 1;
+	}
 	if (keys["ArrowLeft"] && player.x > player.radius/2) { // 左矢印キー
 		player.x -= 1;
 	}
@@ -68,10 +74,37 @@ function movePlayer() {
 // エイリアンの移動
 function moveAlien() {
 	for (var i = 0; i < aliens.length; i++) {
-		aliens[i].y += aliens[i].speed;
-		if (aliens[i].y > canvas.height + aliens[i].radius) {
-			aliens[i].y = -aliens[i].radius;
-			aliens[i].x = Math.random() * canvas.width;
+		aliens[i].x -= aliens[i].speed;
+		if (aliens[i].x < -5) {
+			aliens[i].x = canvas.width + 8;
+			aliens[i].y = Math.random() * canvas.height;
+		}
+	}
+}
+
+var sand_len = 1;
+var sands = [];
+function createBackGround() {
+	var random_choise = parseInt(Math.random() * 3);
+	if (random_choise==0 && sand_len > 1) {
+		sand_len -= 1;
+	} else if (random_choise==2 && sand_len < 10) {
+		sand_len += 1;
+	}
+	var sand = {
+		x: canvas.width + 8,
+		y: canvas.height - sand_len,
+		len: sand_len,
+		speed: 0.5
+	}
+	sands.push(sand);
+}
+
+function moveBackGround() {
+	for (var i = 0; i < sands.length; i++) {
+		sands[i].x -= sands[i].speed;
+		if (sands[i].x < -5) {
+			sands.splice(i, 1);
 		}
 	}
 }
@@ -85,8 +118,9 @@ function collisionDetection() {
 		var distance = Math.sqrt(dx * dx + dy * dy);
 		if (distance < player.radius + aliens[i].radius) {
 			mode = 2;
-			count = 200;
-			player.x = canvas.width / 2;
+			count = 100;
+			player.x = canvas.width / 4;
+			player.y = canvas.height / 2;
 			aliens = [];
 			bullets = [];
 		}
@@ -100,8 +134,8 @@ function createBullet() {
 	var bullet = {
 		x: player.x + player.radius / 2,
 		y: player.y,
-		radius: 2,
-		speed: 4
+		radius: 4,
+		speed: 2
 	};
 	bullets.push(bullet);
 }
@@ -109,7 +143,11 @@ function createBullet() {
 // 弾を移動させる
 function moveBullet() {
 	for (var i = 0; i < bullets.length; i++) {
-		bullets[i].y -= bullets[i].speed;
+		bullets[i].x += bullets[i].speed;
+		// 弾が画面外に出た場合は、弾のオブジェクトを削除する
+		if (bullets[i].x > canvas.width) {
+			bullets.splice(i, 1);
+		}
 	}
 }
 
@@ -132,24 +170,27 @@ function hitTest() {
 	}
 }
 
-// 弾が画面外に出た場合は、弾のオブジェクトを削除する
-function removeBullet() {
-	for (var i = 0; i < bullets.length; i++) {
-		if (bullets[i].y < 0) {
-			bullets.splice(i, 1);
-			break;
-		}
-	}
-}
-
 // ゲーム画面描画
 function drawGame() {
 	// 背景を描画
-	ctx.fillStyle = "#000";
+	ctx.fillStyle = BACKGROUND_COLOR;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	for (var i = 0; i < sands.length; i++) {
+		ctx.fillStyle = "#ff8";
+		ctx.fillRect(sands[i].x, sands[i].y, 6, sands[i].len);
+	}
+
+	// 弾を描画する
+    for (var i = 0; i < bullets.length; i++) {
+		ctx.beginPath();
+		ctx.arc(bullets[i].x, bullets[i].y, bullets[i].radius, 0, Math.PI * 2);
+		ctx.strokeStyle = "white";
+		ctx.lineWidth = 1 ;
+		ctx.stroke() ;
+    }
 
 	// プレイヤーを描画
-	ctx.fillStyle = "white";
+	ctx.fillStyle = "#ff0";
 	ctx.beginPath();
 	ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
 	ctx.fill();
@@ -162,18 +203,10 @@ function drawGame() {
 		ctx.fill();
 	}
 
-    // 弾を描画する
-    ctx.fillStyle = "white";
-    for (var i = 0; i < bullets.length; i++) {
-		ctx.beginPath();
-		ctx.arc(bullets[i].x, bullets[i].y, bullets[i].radius, 0, Math.PI * 2);
-		ctx.fill();
-    }
-
 	// スコアを描画する
 	ctx.fillStyle = "white";
 	ctx.font = "10px " + DEFAULT_FONT;
-	ctx.fillText("Score: " + score, 0, canvas.height-1);
+	ctx.fillText("Score: " + score, 1, 10);
 
 	// 当たり判定
 	collisionDetection();
@@ -182,7 +215,7 @@ function drawGame() {
 // ゲーム開始画面描画
 function drawStart() {
 	// 背景を描画
-	ctx.fillStyle = "#000";
+	ctx.fillStyle = BACKGROUND_COLOR;
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 	// タイトルを描画する
@@ -207,30 +240,37 @@ function drawGameOver() {
 }
 
 // ゲームループ
-var mode=0
-var count = 200;
+var mode = 0
+var count = 0;
 var score = 0;
 var gameLoop = setInterval(function() {
 	switch(mode) {
 		case 0:
 			score = 0;
+			if (count % 10 == 0) {
+				createBackGround();
+			}
+			moveBackGround()
 			drawStart();
 			break
 		case 1:
+			if (count % 10 == 0) {
+				createBackGround();
+			}
+			moveBackGround();
 			movePlayer();
 			moveAlien();
 			moveBullet();
-			removeBullet();
 			drawGame();
-			count += 1;
-			if (count >= 200) {
-				createAlien()
-				count = 0
+			if (count >= 100) {
+				createAlien();
 			}
 			break
 		case 2:
 			drawGameOver();
 	}
+	count += 1;
+	if (count > 100) {
+		count = 0;
+	}
 }, 5);
-
-
