@@ -16,11 +16,18 @@ createAlien();
 
 // エイリアンを生成する関数
 function createAlien() {
+	radius = 4 + Math.random() * 8;
+	if (radius > 8){
+		var color = "red";
+	} else {
+		var color = "green";
+	}
 	var alien = {
 		x: Math.random() * canvas.width,
 		y: -8,
-		radius: 8,
-		speed: 0.5
+		radius: radius,
+		speed: 0.5 + score / 100,
+		color: color
 	};
 	aliens.push(alien);
 }
@@ -128,21 +135,21 @@ function draw() {
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
 	// プレイヤーを描画
-	ctx.fillStyle = "#f00";
+	ctx.fillStyle = "white";
 	ctx.beginPath();
 	ctx.arc(player.x, player.y, player.radius, 0, Math.PI * 2);
 	ctx.fill();
 
 	// エイリアンを描画
-	ctx.fillStyle = "#0f0";
 	for (var i = 0; i < aliens.length; i++) {
+		ctx.fillStyle = aliens[i].color;
 		ctx.beginPath();
 		ctx.arc(aliens[i].x, aliens[i].y, aliens[i].radius, 0, Math.PI * 2);
 		ctx.fill();
 	}
 
     // 弾を描画する
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "white";
     for (var i = 0; i < bullets.length; i++) {
 		ctx.beginPath();
 		ctx.arc(bullets[i].x, bullets[i].y, bullets[i].radius, 0, Math.PI * 2);
