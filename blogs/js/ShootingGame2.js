@@ -213,6 +213,7 @@ var score = 0;
 var gameLoop = setInterval(function() {
 	switch(mode) {
 		case 0:
+			score = 0;
 			drawStart();
 			break
 		case 1:
@@ -228,7 +229,6 @@ var gameLoop = setInterval(function() {
 			}
 			break
 		case 2:
-			score = 0;
 			drawGameOver();
 	}
 }, 5);
