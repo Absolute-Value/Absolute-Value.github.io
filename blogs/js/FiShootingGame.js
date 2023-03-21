@@ -104,7 +104,7 @@ function hitTest() {
 				bullets.splice(i, 1);
 				aliens.splice(j, 1);
 				// スコアを加算する
-				// score++;
+				score++;
 				break;
 			}
 		}
@@ -149,12 +149,18 @@ function draw() {
 		ctx.fill();
     }
 
+	// スコアを描画する
+	ctx.fillStyle = "white";
+	ctx.font = "10px Arial";
+	ctx.fillText("Score: " + score, 0, canvas.height-1);
+
 	// 当たり判定
 	collisionDetection();
 }
 
 // ゲームループ
 var count = 0;
+var score = 0;
 var gameLoop = setInterval(function() {
     movePlayer();
     moveAlien();
