@@ -16,11 +16,11 @@ createAlien();
 
 // エイリアンを生成する関数
 function createAlien() {
-	radius = 4 + Math.random() * 8;
+	radius = 6 + Math.random() * 6;
 	if (radius > 8){
-		var color = "red";
-	} else {
 		var color = "green";
+	} else {
+		var color = "red";
 	}
 	var alien = {
 		x: Math.random() * canvas.width,
