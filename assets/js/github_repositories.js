@@ -64,7 +64,8 @@ fetch(`https://api.github.com/users/Absolute-Value/repos`, {
         const col = colors[repo.language].color.replace('#','');
         // FontAwesomeのアイコンを追加する
         const code = document.createElement('img');
-        const log_name = repo.language.replace(' Notebook','')
+        var log_name = repo.language.replace(' Notebook','');
+        log_name = log_name.replace('HTML', 'HTML5');
         code.src = 'https://img.shields.io/github/languages/top/Absolute-Value/'+repo.name+'?color='+col+'&logo='+log_name+'&logoColor='+col+'&style=flat';
         
         detail_p.appendChild(code)
