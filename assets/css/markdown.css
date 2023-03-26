@@ -1,8 +1,12 @@
-h1, h2, h3, h4, p, ul, .hero, table, .highlight, .gist {
+h1, h2, h3, h4, p, ul, details, .hero, table, .highlight, .gist {
   margin-left: 5%;
   margin-right: 5%;
   padding-left: 1%;
   padding-right: 1%;
+}
+
+details {
+  margin-top: 1em;
 }
 
 .gist .gist-file {

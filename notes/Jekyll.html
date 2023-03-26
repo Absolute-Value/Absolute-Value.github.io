@@ -36,7 +36,7 @@
   <body>
     <img src="http://jekyllrb-ja.github.io/img/logo-2x.png" class="hero">
     <h1>Jekyll ホームページ 個人的メモ</h1>
-    <p><span class="fa fa-calendar"></span> Jul 1, 2022<span style="color: blue; "> (Updated: Mar 19, 2023)</span></p>
+    <p><span class="fa fa-calendar"></span> Jul 1, 2022<span style="color: blue; "> (Updated: Mar 26, 2023)</span></p>
     <p><span class="fa fa-flag"></span> Memo, Jekyll, </p>
     <div class="share-btn-wrapper">
       <a href="https://twitter.com/share?text=Jekyll ホームページ 個人的メモ&url=https://absolute-value.github.io/notes/Jekyll.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
@@ -51,11 +51,7 @@
 <li class="toc-entry toc-h1"><a href="#はじめに">はじめに</a></li>
 <li class="toc-entry toc-h1"><a href="#jekyllの新規作成">Jekyllの新規作成</a></li>
 <li class="toc-entry toc-h1"><a href="#jekyllの起動">Jekyllの起動</a></li>
-<li class="toc-entry toc-h1"><a href="#githubへの投稿方法">Githubへの投稿方法</a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#git操作の自動化をするbashファイル">Git操作の自動化をするbashファイル</a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h1"><a href="#githubへの投稿方法">Githubへの投稿方法</a></li>
 <li class="toc-entry toc-h1"><a href="#markdown記法">Markdown記法</a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#インラインコード">インラインコード</a></li>
@@ -82,8 +78,9 @@
 </li>
 <li class="toc-entry toc-h1"><a href="#サイトマップの作成">サイトマップの作成</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#jekyll-tocをダウンロード-1">jekyll-tocをダウンロード</a></li>
+<li class="toc-entry toc-h2"><a href="#jekyll-sitemapをダウンロード">jekyll-sitemapをダウンロード</a></li>
 <li class="toc-entry toc-h2"><a href="#_configymlを編集-2">_config.ymlを編集</a></li>
+<li class="toc-entry toc-h2"><a href="#サイトマップを生成">サイトマップを生成</a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#ダークモード">ダークモード</a></li>
@@ -132,13 +129,13 @@
 <span class="gp">$</span><span class="w"> </span>git push
 </code></pre></div></div>
 
-<h2 id="git操作の自動化をするbashファイル">Git操作の自動化をするbashファイル</h2>
+<details><summary>Git操作の自動化をするbashファイル</summary>
 <p>元のプロジェクトとサイト用のプロジェクトに対してgit操作するの面倒だったので自動化するbashを作成しました</p>
-
-<p>git.sh
-<script src="https://gist.github.com/Absolute-Value/96b0dfabffcde15528c82eef9135ec4b.js"></script></p>
-
+<p>git.sh</p>
+<script src="https://gist.github.com/Absolute-Value/96b0dfabffcde15528c82eef9135ec4b.js"></script>
 <p>引数にコミットメッセージ入れれます</p>
+
+</details>
 
 <h1 id="markdown記法">Markdown記法</h1>
 <h2 id="インラインコード">インラインコード</h2>
@@ -167,6 +164,7 @@
 <p>一括インストール</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">bundle install
 </span></code></pre></div></div>
+
 <p>参考：<a href="https://www.sejuku.net/blog/19603">理解必須！gemsのインストール方法とインストール場所</a></p>
 
 <h2 id="_configymlを編集">_config.ymlを編集</h2>
@@ -258,7 +256,7 @@
 
 <h1 id="サイトマップの作成">サイトマップの作成</h1>
 
-<h2 id="jekyll-tocをダウンロード-1">jekyll-tocをダウンロード</h2>
+<h2 id="jekyll-sitemapをダウンロード">jekyll-sitemapをダウンロード</h2>
 <p>Gemfileに以下を追加する</p>
 
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'jekyll-sitemap'</span>
@@ -273,9 +271,19 @@
 
 <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">gems</span><span class="pi">:</span>
   <span class="pi">-</span> <span class="s">jekyll-sitemap</span>
+<span class="na">url</span><span class="pi">:</span> <span class="s">サイトのURL</span>
+<span class="na">sitemap</span><span class="pi">:</span>
+  <span class="na">file</span><span class="pi">:</span> <span class="s2">"</span><span class="s">/sitemap.xml"</span>
+  <span class="na">change_frequency_name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">always"</span>
+  <span class="na">priority_name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0.8"</span>
 </code></pre></div></div>
 
-<p><a href="https://www.xmisao.com/2014/08/25/generate-sitemap-in-jekyll.html">jekyllでサイトマップ(sitemap.xml)を生成する</a></p>
+<h2 id="サイトマップを生成">サイトマップを生成</h2>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">jekyll build
+</span></code></pre></div></div>
+<p>jekyll serverでは更新されません</p>
+
+<p>参考：<a href="https://www.xmisao.com/2014/08/25/generate-sitemap-in-jekyll.html">jekyllでサイトマップ(sitemap.xml)を生成する</a></p>
 
 <h1 id="ダークモード">ダークモード</h1>
 
