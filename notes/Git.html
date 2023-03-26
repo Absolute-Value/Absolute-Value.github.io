@@ -51,12 +51,18 @@
 <li class="toc-entry toc-h1"><a href="#はじめに">はじめに</a></li>
 <li class="toc-entry toc-h1"><a href="#git-pullを強制する">git pullを強制する</a></li>
 <li class="toc-entry toc-h1"><a href="#pushしてしまったものを元に戻す">pushしてしまったものを元に戻す</a></li>
-<li class="toc-entry toc-h1"><a href="#gitの一連の流れを自動化するbashファイル">gitの一連の流れを自動化するbashファイル</a>
+<li class="toc-entry toc-h1"><a href="#gitの一連の流れを自動化するbashファイル">Gitの一連の流れを自動化するbashファイル</a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#実行方法">実行方法</a></li>
+<li class="toc-entry toc-h2"><a href="#%E5%AE%9F%E8%A1%8C%E6%96%B9%E6%B3%95">実行方法</a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#vscode上でgitを実行">VSCode上でGitを実行</a></li>
+<li class="toc-entry toc-h1"><a href="#vscode上でgitを実行">VSCode上でGitを実行</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#フォルダファイルの準備">フォルダ・ファイルの準備</a></li>
+<li class="toc-entry toc-h2"><a href="#ファイルを編集する">ファイルを編集する</a></li>
+<li class="toc-entry toc-h2"><a href="#gitの実行">Gitの実行</a></li>
+</ul>
+</li>
 </ul>
     </div>
     
@@ -81,21 +87,23 @@ git reset --hard origin/main
 </span><span class="go">git push -f origin main
 </span></code></pre></div></div>
 
-<h1 id="gitの一連の流れを自動化するbashファイル">gitの一連の流れを自動化するbashファイル</h1>
+<h1 id="gitの一連の流れを自動化するbashファイル">Gitの一連の流れを自動化するbashファイル</h1>
+<details open="">
+<summary>Gitの一連の流れを自動化するbashファイル</summary>
 
 <p>以下のgit.shを.gitと同階層に置いた上で実行</p>
-
 <script src="https://gist.github.com/Absolute-Value/884943d8d32398582dd1476ab8221711.js"></script>
 
-<h2 id="実行方法">実行方法</h2>
+<h2>実行方法</h2>
 <p>コミットメッセージがUpdateで良い場合</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bash git.sh
 </code></pre></div></div>
+
 <p>コミットメッセージを指定する場合</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>bash git.sh &lt;commit message&gt;
 </code></pre></div></div>
 
-<h3 id="bashの省略mac">bashの省略(Mac)</h3>
+<h3>bashの省略(Mac)</h3>
 <p>ファイルに実行権限を与える</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">chmod</span> +x git.sh
 </code></pre></div></div>
@@ -107,8 +115,11 @@ git reset --hard origin/main
 <p>コミットメッセージを指定する場合は</p>
 <div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>./git.sh &lt;commit message&gt;
 </code></pre></div></div>
+</details>
 
 <h1 id="vscode上でgitを実行">VSCode上でGitを実行</h1>
+
+<h2 id="フォルダファイルの準備">フォルダ・ファイルの準備</h2>
 <ol>
   <li>フォルダを保存したいディレクトリに移動</li>
   <li>Gitのリポジトリをクローン
@@ -118,23 +129,19 @@ git reset --hard origin/main
   <li>ファイル-&gt;フォルダを開く で、クローンしたディレクトリを開く</li>
 </ol>
 
-<ul>
-  <li>編集する
-    <ul>
-      <li>変更点は緑色で表示され、変更したファイルは黄色で表示される</li>
-    </ul>
-  </li>
-</ul>
+<h2 id="ファイルを編集する">ファイルを編集する</h2>
+<p>変更点は緑色で表示され、変更したファイルは黄色で表示される</p>
 
+<h2 id="gitの実行">Gitの実行</h2>
 <ol>
-  <li>変更のファイルの右にある+を押すことで、git addができる
+  <li>Ctrl+Shift+G を押してソースの管理を表示</li>
+  <li>変更したファイルの右にある+を押すことで、git addができる
     <ul>
-      <li>面倒ならば省略が可能</li>
+      <li>省略も可能（すべてaddされる）</li>
     </ul>
   </li>
-  <li>Ctrl+Shift+G を押してソースの管理を表示</li>
-  <li>メッセージにコミットメッセージを記入</li>
-  <li>コミットを押すことでコミットができる
+  <li>Messageにコミットメッセージを記入</li>
+  <li>Commitを押すことでコミットができる
     <ul>
       <li>コミット右のvから、コミットとともにプッシュもできる</li>
     </ul>
