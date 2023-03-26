@@ -80,6 +80,12 @@
 <li class="toc-entry toc-h2"><a href="#その他の設定">その他の設定</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h1"><a href="#サイトマップの作成">サイトマップの作成</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#jekyll-tocをダウンロード-1">jekyll-tocをダウンロード</a></li>
+<li class="toc-entry toc-h2"><a href="#_configymlを編集-2">_config.ymlを編集</a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h1"><a href="#ダークモード">ダークモード</a></li>
 <li class="toc-entry toc-h1"><a href="#お役立ちリンク">お役立ちリンク</a></li>
 </ul>
@@ -196,11 +202,8 @@
 <p>参考：<a href="https://github.com/toshimaru/jekyll-toc">toshimaru/jekyll-toc</a></p>
 
 <h2 id="jekyll-tocをダウンロード">jekyll-tocをダウンロード</h2>
-<p>gemfileを編集</p>
-<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">vim gemfile
-</span></code></pre></div></div>
+<p>Gemfileに以下を追加する</p>
 
-<p>以下を追加する</p>
 <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'jekyll-toc'</span>
 </code></pre></div></div>
 
@@ -252,6 +255,27 @@
   <span class="na">item_class</span><span class="pi">:</span> <span class="s">toc-entry</span>
   <span class="na">item_prefix</span><span class="pi">:</span> <span class="s">toc-</span>
 </code></pre></div></div>
+
+<h1 id="サイトマップの作成">サイトマップの作成</h1>
+
+<h2 id="jekyll-tocをダウンロード-1">jekyll-tocをダウンロード</h2>
+<p>Gemfileに以下を追加する</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">gem</span> <span class="s1">'jekyll-sitemap'</span>
+</code></pre></div></div>
+
+<p>インストール</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">bundle install
+</span></code></pre></div></div>
+
+<h2 id="_configymlを編集-2">_config.ymlを編集</h2>
+<p>_config.ymlに以下を追加する</p>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">gems</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">jekyll-sitemap</span>
+</code></pre></div></div>
+
+<p><a href="https://www.xmisao.com/2014/08/25/generate-sitemap-in-jekyll.html">jekyllでサイトマップ(sitemap.xml)を生成する</a></p>
 
 <h1 id="ダークモード">ダークモード</h1>
 
