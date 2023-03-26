@@ -1,4 +1,4 @@
-h1, h2, h3, h4, p, ul, details, .hero, table, .highlight, .gist {
+h1, h2, h3, h4, p, ul, .hero, table, .highlight, .gist {
   margin-left: 5%;
   margin-right: 5%;
   padding-left: 1%;
@@ -6,7 +6,25 @@ h1, h2, h3, h4, p, ul, details, .hero, table, .highlight, .gist {
 }
 
 details {
-  margin-top: 1em;
+  margin: 1em 5% 0 5%;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 0.5em 0.5em 0;
+}
+
+summary {
+  font-weight: bold;
+  margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+}
+
+details[open] {
+  padding: 0.5em;
+}
+
+details[open] summary {
+  border-bottom: 1px solid #aaa;
+  margin-bottom: 0.5em;
 }
 
 .gist .gist-file {
