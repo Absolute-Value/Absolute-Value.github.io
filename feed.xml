@@ -1,4 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-01T22:11:31+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Unified Visual Relationship Detection with Vision and Language Models</title><link href="http://localhost:4000/hoi/2023/03/28/UniVRD.html" rel="alternate" type="text/html" title="Unified Visual Relationship Detection with Vision and Language Models" /><published>2023-03-28T23:30:00+09:00</published><updated>2023-03-28T23:30:00+09:00</updated><id>http://localhost:4000/hoi/2023/03/28/UniVRD</id><content type="html" xml:base="http://localhost:4000/hoi/2023/03/28/UniVRD.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-01T23:19:29+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Open-vocabulary Object Detection via Vision and Language Knowledge Distillation</title><link href="http://localhost:4000/object%20detection/2023/03/31/ViLD.html" rel="alternate" type="text/html" title="Open-vocabulary Object Detection via Vision and Language Knowledge Distillation" /><published>2023-03-31T23:30:00+09:00</published><updated>2023-03-31T23:30:00+09:00</updated><id>http://localhost:4000/object%20detection/2023/03/31/ViLD</id><content type="html" xml:base="http://localhost:4000/object%20detection/2023/03/31/ViLD.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>任意のテキストで物体検出をするオープンボキャブラリ物体検出器ViLD(Vision and Language knowledge Distillation)を提案</li>
+  <li>オープンボキャブラリの画像分類である教師モデルから2段階の検出器である生徒モデルに知識蒸留する</li>
+  <li>ResNetやALIGNをバックボーンとして、PASCAL VOC、COCO、Objects365で高精度が出た
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>任意のテキストで物体検出</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/ViLD/2.png" alt="" /></p>
+
+<ul>
+  <li>変数
+    <ul>
+      <li>教師データセットを基本サブセット$C_B$と新規サブセット$C_N$に分ける
+        <ul>
+          <li>$C_B$のみ学習に使う</li>
+        </ul>
+      </li>
+      <li>テキストEncoder  $T()$, 画像Encoder $V()$</li>
+    </ul>
+  </li>
+  <li>位置の検出
+    <ul>
+      <li>Mask R-CNNのような二段階物体検出器をベースとする</li>
+    </ul>
+  </li>
+  <li>Open Vocab検出
+    <ul>
+      <li>検出した位置を切り抜き</li>
+      <li>画像埋め込み
+        <ul>
+          <li>基本サブセット$C_B$を用いて位置提案ネットワークを学習し、提案領域を得る</li>
+          <li>提案領域の切り抜きとリサイズをして，事前学習済み画像Encoder$V()$で画像埋め込みを得る</li>
+        </ul>
+      </li>
+      <li>テキスト埋め込み
+        <ul>
+          <li>カテゴリー名をプロンプトテンプレート（例：「a photo of {category} in the scene」）にして，テキストEncoder  $T()$でテキスト埋め込みを得る</li>
+        </ul>
+      </li>
+      <li>画像とテキストの埋め込み間のコサイン類似度を計算
+        <ul>
+          <li>すべての提案領域に対し，画像Encoder$V()$に通すので推論は低速</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Vision&amp;Languageの知識蒸留
+    <ul>
+      <li>推論の遅さを解決するため</li>
+      <li>ViLD-text
+        <ul>
+          <li><img src="/assets/images/posts/ViLD/3.png" alt="" /></li>
+          <li>検出器の分類を前述のテキスト埋め込みに置き換え</li>
+          <li>背景というテキストは表現できないので独自の埋め込みを学習</li>
+          <li>すべてのカテゴリとのCos類似度を出しクロスエントロピーを計算
+            <ul>
+              <li><img src="/assets/images/posts/ViLD/4.png" alt="" /></li>
+            </ul>
+          </li>
+          <li>推論時には新規カテゴリに対して，テキスト埋め込みを追加することで新規カテゴリに対応</li>
+        </ul>
+      </li>
+      <li>ViLD-image
+        <ul>
+          <li><img src="/assets/images/posts/ViLD/5.png" alt="" /></li>
+          <li>Mask R-CNNで切り取った特徴が、前述の画像埋め込みと一致するように学習することで知識蒸留（L1距離の最小化）
+            <ul>
+              <li><img src="/assets/images/posts/ViLD/6.png" alt="" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>組み合わせた最終形態
+        <ul>
+          <li><img src="/assets/images/posts/ViLD/7.png" alt="" /></li>
+          <li><img src="/assets/images/posts/ViLD/8.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/ViLD/9.png" alt="" /></li>
+  <li><img src="/assets/images/posts/ViLD/10.png" alt="" /></li>
+  <li>PASCAL VOCで72.2 AP</li>
+  <li>COCOで36.6 AP</li>
+  <li>Objects365で11.8 AP</li>
+</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 任意のテキストで物体検出をするオープンボキャブラリ物体検出器ViLD(Vision and Language knowledge Distillation)を提案 オープンボキャブラリの画像分類である教師モデルから2段階の検出器である生徒モデルに知識蒸留する ResNetやALIGNをバックボーンとして、PASCAL VOC、COCO、Objects365で高精度が出た]]></summary></entry><entry><title type="html">Unified Visual Relationship Detection with Vision and Language Models</title><link href="http://localhost:4000/hoi/2023/03/28/UniVRD.html" rel="alternate" type="text/html" title="Unified Visual Relationship Detection with Vision and Language Models" /><published>2023-03-28T23:30:00+09:00</published><updated>2023-03-28T23:30:00+09:00</updated><id>http://localhost:4000/hoi/2023/03/28/UniVRD</id><content type="html" xml:base="http://localhost:4000/hoi/2023/03/28/UniVRD.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>Visual Relationship Detection(VRD)では、１つのデータセットから学習するため、画像ドメインと語彙に制約があり、汎用性と拡張性に限界がある</li>
@@ -914,115 +1014,4 @@ tion detection）を提案</li>
       <li>上段がTuSimple、中段がCULane、下段がLLAMAS</li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 YOLOv3やSSDのようなアンカーベースのモデルであるLaneATTを提案 大域的情報の取得のためにAttentionも使用 CULaneとTuSimpleとLLAMASのデータセットで最先端手法を凌駕]]></summary></entry><entry><title type="html">LineNet: a Zoomable CNN for Crowdsourced High Definition Maps Modeling in Urban Environments</title><link href="http://localhost:4000/lane%20detection/2022/12/13/LineNet.html" rel="alternate" type="text/html" title="LineNet: a Zoomable CNN for Crowdsourced High Definition Maps Modeling in Urban Environments" /><published>2022-12-13T12:00:00+09:00</published><updated>2022-12-13T12:00:00+09:00</updated><id>http://localhost:4000/lane%20detection/2022/12/13/LineNet</id><content type="html" xml:base="http://localhost:4000/lane%20detection/2022/12/13/LineNet.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>現在のCNNを用いた車線検出の研究はセグメンテーションに限定されており、直感的でなく不正確である</li>
-  <li>HDマップのモデリングのために、LP層とZoomモジュールを持つCNN手法のLineNetを提案</li>
-  <li>車線検出用のデータセットTTLaneを紹介
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>LineNetとTTLaneを組み合わせることで、HDマップのモデリングを行うパイプラインを初めて提案</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li>Line Prediction(LP)層
-    <ul>
-      <li>車線の位置決めと分類のために設計された追加層</li>
-      <li>Mask、Position、Direction、Confidence、Distance、Typeの6つのブランチがある
-        <ul>
-          <li><img src="/assets/images/posts/LaneDetectionSurvey/img30.png" alt="" /></li>
-          <li>Mask
-            <ul>
-              <li>一定の幅（32pixel）で描かれたストローク</li>
-            </ul>
-          </li>
-          <li>Position
-            <ul>
-              <li>アンカーポイントから線への最小距離のベクトル</li>
-            </ul>
-          </li>
-          <li>Direction
-            <ul>
-              <li>車線の向き</li>
-            </ul>
-          </li>
-          <li>Confidence
-            <ul>
-              <li>ネットワークが車線を見れているかの信頼度</li>
-            </ul>
-          </li>
-          <li>Distance
-            <ul>
-              <li>アンカーポイントから線への最小距離の長さ</li>
-            </ul>
-          </li>
-          <li>Type
-            <ul>
-              <li>6種類のマーキング（白実線、白破線、黄実線、黄破線、二重線、その他）</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Zoomモジュール
-    <ul>
-      <li><img src="/assets/images/posts/LaneDetectionSurvey/img31.png" alt="" /></li>
-      <li>ネットワーク構造を変えずに、視野を任意のサイズに変更できる</li>
-      <li>サムネイルCNNと高解像度トリミングCNNに分割
-        <ul>
-          <li>2つのCNNは重みを共有する</li>
-          <li>サムネイルCNN
-            <ul>
-              <li>グローバル特徴を獲得</li>
-            </ul>
-          </li>
-          <li>高解像度トリミングCNN
-            <ul>
-              <li>詳細に「見る」</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>インジェクション層で2つのCNNの特徴を融合</li>
-      <li>LP層で確信度が低い領域についてZoomモジュールを複数回適用する
-        <ul>
-          <li><img src="/assets/images/posts/LineNet/img1.png" alt="" /></li>
-          <li>0.5~16倍まで</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>まだ不連続な点のため、DBSCANでクラスタリング</li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>定量評価
-    <ul>
-      <li><img src="/assets/images/posts/LineNet/img2.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>定性評価
-    <ul>
-      <li><img src="/assets/images/posts/LineNet/img3.png" alt="" /></li>
-      <li>(a)原画像 (b)(c)正解 (d)SCNN (e)Mask E-CNN (f)MLD-CRF (g)LineNet</li>
-      <li>LineNetは二重線検出や複雑なシーンにも強い</li>
-    </ul>
-  </li>
-  <li>HD地図モデリング
-    <ul>
-      <li><img src="/assets/images/posts/LineNet/img4.png" alt="" /></li>
-      <li><img src="/assets/images/posts/LineNet/img5.png" alt="" /></li>
-      <li>車線の平均誤差がGPSの5mから31.3cmへと大幅に改善</li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 現在のCNNを用いた車線検出の研究はセグメンテーションに限定されており、直感的でなく不正確である HDマップのモデリングのために、LP層とZoomモジュールを持つCNN手法のLineNetを提案 車線検出用のデータセットTTLaneを紹介]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 YOLOv3やSSDのようなアンカーベースのモデルであるLaneATTを提案 大域的情報の取得のためにAttentionも使用 CULaneとTuSimpleとLLAMASのデータセットで最先端手法を凌駕]]></summary></entry></feed>

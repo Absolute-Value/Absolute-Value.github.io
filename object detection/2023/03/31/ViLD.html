@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Open-vocabulary Object Detection via Vision and Language Knowledge Distillation</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/ViLD/1.png" class="hero">
+    <h1>Open-vocabulary Object Detection via Vision and Language Knowledge Distillation</h1>
+    <p><span class="fa fa-link"></span><a href="https://github.com/tensorflow/tpu/tree/master/models/official/detection/projects/vild" target="_blank"> https://github.com/tensorflow/tpu/tree/master/models/official/detection/projects/vild</a></p>
+    <p><span class="fa fa-calendar"></span> Mar 31, 2023</p>
+    <p><span class="fa fa-flag"></span> Object Detection, Zero-shot Learning, Vision and Language, </p>
+    <p><span class="fa fa-graduation-cap"></span> ICLR (2022) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Open-vocabulary Object Detection via Vision and Language Knowledge Distillation&url=https://absolute-value.github.io/object%20detection/2023/03/31/ViLD.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/object%20detection/2023/03/31/ViLD.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/object%20detection/2023/03/31/ViLD.html&title=Open-vocabulary Object Detection via Vision and Language Knowledge Distillation" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Open-vocabulary Object Detection via Vision and Language Knowledge Distillation&body=Open-vocabulary Object Detection via Vision and Language Knowledge Distillation https://absolute-value.github.io/object%20detection/2023/03/31/ViLD.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>任意のテキストで物体検出をするオープンボキャブラリ物体検出器ViLD(Vision and Language knowledge Distillation)を提案</li>
+  <li>オープンボキャブラリの画像分類である教師モデルから2段階の検出器である生徒モデルに知識蒸留する</li>
+  <li>ResNetやALIGNをバックボーンとして、PASCAL VOC、COCO、Objects365で高精度が出た
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>任意のテキストで物体検出</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/ViLD/2.png" alt="" /></p>
+
+<ul>
+  <li>変数
+    <ul>
+      <li>教師データセットを基本サブセット$C_B$と新規サブセット$C_N$に分ける
+        <ul>
+          <li>$C_B$のみ学習に使う</li>
+        </ul>
+      </li>
+      <li>テキストEncoder  $T()$, 画像Encoder $V()$</li>
+    </ul>
+  </li>
+  <li>位置の検出
+    <ul>
+      <li>Mask R-CNNのような二段階物体検出器をベースとする</li>
+    </ul>
+  </li>
+  <li>Open Vocab検出
+    <ul>
+      <li>検出した位置を切り抜き</li>
+      <li>画像埋め込み
+        <ul>
+          <li>基本サブセット$C_B$を用いて位置提案ネットワークを学習し、提案領域を得る</li>
+          <li>提案領域の切り抜きとリサイズをして，事前学習済み画像Encoder$V()$で画像埋め込みを得る</li>
+        </ul>
+      </li>
+      <li>テキスト埋め込み
+        <ul>
+          <li>カテゴリー名をプロンプトテンプレート（例：「a photo of {category} in the scene」）にして，テキストEncoder  $T()$でテキスト埋め込みを得る</li>
+        </ul>
+      </li>
+      <li>画像とテキストの埋め込み間のコサイン類似度を計算
+        <ul>
+          <li>すべての提案領域に対し，画像Encoder$V()$に通すので推論は低速</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Vision&amp;Languageの知識蒸留
+    <ul>
+      <li>推論の遅さを解決するため</li>
+      <li>ViLD-text
+        <ul>
+          <li><img src="/assets/images/posts/ViLD/3.png" alt="" /></li>
+          <li>検出器の分類を前述のテキスト埋め込みに置き換え</li>
+          <li>背景というテキストは表現できないので独自の埋め込みを学習</li>
+          <li>すべてのカテゴリとのCos類似度を出しクロスエントロピーを計算
+            <ul>
+              <li><img src="/assets/images/posts/ViLD/4.png" alt="" /></li>
+            </ul>
+          </li>
+          <li>推論時には新規カテゴリに対して，テキスト埋め込みを追加することで新規カテゴリに対応</li>
+        </ul>
+      </li>
+      <li>ViLD-image
+        <ul>
+          <li><img src="/assets/images/posts/ViLD/5.png" alt="" /></li>
+          <li>Mask R-CNNで切り取った特徴が、前述の画像埋め込みと一致するように学習することで知識蒸留（L1距離の最小化）
+            <ul>
+              <li><img src="/assets/images/posts/ViLD/6.png" alt="" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>組み合わせた最終形態
+        <ul>
+          <li><img src="/assets/images/posts/ViLD/7.png" alt="" /></li>
+          <li><img src="/assets/images/posts/ViLD/8.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/ViLD/9.png" alt="" /></li>
+  <li><img src="/assets/images/posts/ViLD/10.png" alt="" /></li>
+  <li>PASCAL VOCで72.2 AP</li>
+  <li>COCOで36.6 AP</li>
+  <li>Objects365で11.8 AP</li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>
