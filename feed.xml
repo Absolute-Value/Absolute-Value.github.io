@@ -1,4 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-03-28T04:40:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery</title><link href="http://localhost:4000/object%20detection/2023/03/14/GO-Finder.html" rel="alternate" type="text/html" title="GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery" /><published>2023-03-14T23:30:00+09:00</published><updated>2023-03-14T23:30:00+09:00</updated><id>http://localhost:4000/object%20detection/2023/03/14/GO-Finder</id><content type="html" xml:base="http://localhost:4000/object%20detection/2023/03/14/GO-Finder.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-01T22:11:31+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Unified Visual Relationship Detection with Vision and Language Models</title><link href="http://localhost:4000/hoi/2023/03/28/UniVRD.html" rel="alternate" type="text/html" title="Unified Visual Relationship Detection with Vision and Language Models" /><published>2023-03-28T23:30:00+09:00</published><updated>2023-03-28T23:30:00+09:00</updated><id>http://localhost:4000/hoi/2023/03/28/UniVRD</id><content type="html" xml:base="http://localhost:4000/hoi/2023/03/28/UniVRD.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>Visual Relationship Detection(VRD)では、１つのデータセットから学習するため、画像ドメインと語彙に制約があり、汎用性と拡張性に限界がある</li>
+  <li>Vision&amp;Languageモデルを活用し、複数のデータセットを統一するフレームワークUniVRDを提案</li>
+  <li>HICO-DETにおいて60%アップの38.07mAP
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>Vision&amp;Languageモデルによる複数データセットの統一</li>
+  <li>モデルや損失、訓練方法の改善</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/UniVRD/UniVRD-1.png" alt="" /></p>
+
+<ul>
+  <li>物体検出器
+    <ul>
+      <li>CLIPなどと同様にテキストEncoderとしてtransformer，画像EncoderとしてViTを使用</li>
+      <li>画像Encoderは、プーリング層と最終層を削除して、トークン埋め込み層を追加する
+        <ul>
+          <li>トークン埋め込みを線形層に通すことで分類埋め込みを，FFNに通すことでBBを得る</li>
+        </ul>
+      </li>
+      <li>Encoderのみで動作するため、知識抽出や事前学習を必要としない</li>
+    </ul>
+  </li>
+  <li>Relationship Decoder
+    <ul>
+      <li>入力をEncoderのトークン埋め込みと関係クエリ（学習）として，関係埋め込みを得る
+        <ul>
+          <li>関係埋め込みを線形層に通すことで関係分類埋め込みを，FFNに通すことで主語と目的後のインデックスを得る</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>分類用テキスト埋め込み
+    <ul>
+      <li>物体／関係の分類では整数値ではなく，テキスト埋め込みを使用
+        <ul>
+          <li>物体の分類：「person」を「a photo of person」にしてテキストEncoderへ</li>
+          <li>関係の分類：「person(主語), ride(述語), horse(目的)」を「a person riding a orse」にしてテキストEncoderへ</li>
+        </ul>
+      </li>
+      <li>検出器はテキスト埋め込みに対してクラス確率を予測する</li>
+    </ul>
+  </li>
+  <li>データ拡張
+    <ul>
+      <li>モザイク
+        <ul>
+          <li>画像をグリッドにすることで、モデルが見るスケールの幅を広げる</li>
+        </ul>
+      </li>
+      <li>テキストプロンプティング
+        <ul>
+          <li>CLIPのように、プロンプトテンプレートを使用
+            <ul>
+              <li>物体：「a photo of &lt;object&gt;」</li>
+              <li>関係：「a &lt;subject&gt; &lt;predicate&gt;ing a &lt;object&gt;」</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>学習
+    <ul>
+      <li>物体検出とDecoderを順番に学習したほうが安定的かつ効果的</li>
+      <li>Decoderの学習時に学習データが限られている場合は物体検出器を凍結したほうがよい</li>
+      <li>Loss関数
+        <ul>
+          <li><img src="/assets/images/posts/UniVRD/UniVRD-2.png" alt="" /></li>
+          <li><img src="/assets/images/posts/UniVRD/UniVRD-3.png" alt="" /></li>
+          <li><img src="/assets/images/posts/UniVRD/UniVRD-4.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>HOI(Himan-Object Interaction)
+    <ul>
+      <li>HICO-DETでSOTA
+        <ul>
+          <li><img src="/assets/images/posts/UniVRD/UniVRD-5.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>SGG(Scene Graph Generation)
+    <ul>
+      <li>Visual Genome
+        <ul>
+          <li><img src="/assets/images/posts/UniVRD/UniVRD-6.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="HOI" /><category term="Transformer" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 Visual Relationship Detection(VRD)では、１つのデータセットから学習するため、画像ドメインと語彙に制約があり、汎用性と拡張性に限界がある Vision&amp;Languageモデルを活用し、複数のデータセットを統一するフレームワークUniVRDを提案 HICO-DETにおいて60%アップの38.07mAP]]></summary></entry><entry><title type="html">GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery</title><link href="http://localhost:4000/object%20detection/2023/03/14/GO-Finder.html" rel="alternate" type="text/html" title="GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery" /><published>2023-03-14T23:30:00+09:00</published><updated>2023-03-14T23:30:00+09:00</updated><id>http://localhost:4000/object%20detection/2023/03/14/GO-Finder</id><content type="html" xml:base="http://localhost:4000/object%20detection/2023/03/14/GO-Finder.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>登録不要のウェアラブルカメラを用いた物体の発見支援システムGO-Finderを提案</li>
@@ -918,407 +1025,4 @@ tion detection）を提案</li>
       <li>車線の平均誤差がGPSの5mから31.3cmへと大幅に改善</li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 現在のCNNを用いた車線検出の研究はセグメンテーションに限定されており、直感的でなく不正確である HDマップのモデリングのために、LP層とZoomモジュールを持つCNN手法のLineNetを提案 車線検出用のデータセットTTLaneを紹介]]></summary></entry><entry><title type="html">Lane Detection: A Survey with New Results</title><link href="http://localhost:4000/lane%20detection/2022/12/12/LaneDetectionSurvey.html" rel="alternate" type="text/html" title="Lane Detection: A Survey with New Results" /><published>2022-12-12T12:00:00+09:00</published><updated>2022-12-12T12:00:00+09:00</updated><id>http://localhost:4000/lane%20detection/2022/12/12/LaneDetectionSurvey</id><content type="html" xml:base="http://localhost:4000/lane%20detection/2022/12/12/LaneDetectionSurvey.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>視覚に基づく車線検出のデータセット、深層学習を用いた手法の比較</li>
-  <li>HD地図のモデリングに向けた新しいデータセット（TTLane）と複雑な道路状況での自立走行に向けた方向性とLineNetを紹介する
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>全車線の検出とHD地図のモデリングに向けた新しいデータセット（TTLane）</li>
-  <li>複雑な道路状況下での正確な車線検出のための新しい深層CNN手法、LineNetを提案</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li>データセット
-    <ul>
-      <li><img src="/assets/images/posts/LaneDetectionSurvey/img1.png" alt="" /></li>
-      <li>KITTI  road
-        <ul>
-          <li>全車線と現在走行している車線「（エゴレーン）の二種類のアノテーション</li>
-        </ul>
-      </li>
-      <li>ELAS
-        <ul>
-          <li>エゴレーン＋レーンマーキングタイプ（LMT）</li>
-          <li>20以上の異なるシーン（15,000フレーム以上）</li>
-        </ul>
-      </li>
-      <li>Caltech Lanes
-        <ul>
-          <li>都市環境における4つのビデオ</li>
-          <li>1225枚の画像</li>
-        </ul>
-      </li>
-      <li>BDD100K
-        <ul>
-          <li>車線が走行方向と平行か否かを示すアノテーション付き</li>
-        </ul>
-      </li>
-      <li>VPGNet
-        <ul>
-          <li>4つのシナリオ、8種類の車線マーキング、9種類の道路マーキング</li>
-          <li>約20,000枚</li>
-          <li>すべての車線にアノテーション</li>
-        </ul>
-      </li>
-      <li>tuSimple lane challenge
-        <ul>
-          <li>高速道路で撮影された3626枚の学習画像と2782枚のテスト画像</li>
-          <li>車線の種類を区別しない</li>
-          <li>破線の車線を実線と表記</li>
-        </ul>
-      </li>
-      <li>CULane
-        <ul>
-          <li>複数車線検出の最大のデータセット</li>
-          <li>現在走っている道路のアノテーションしかない＋道路境界のアノテーションがない</li>
-          <li>HD地図のモデリングに向いてない</li>
-        </ul>
-      </li>
-      <li>TTLane Dataset
-        <ul>
-          <li><img src="/assets/images/posts/LaneDetectionSurvey/img2.png" alt="" /></li>
-          <li>全車線の検出とHD地図のモデリングに向けたデータセット</li>
-          <li>晴天から雨天まで、異なる光の条件と天候</li>
-          <li>全ての車線にアノテーション</li>
-          <li>LMT（白実線、白破線、黄実線、黄破線、二重線）
-            <ul>
-              <li>破線の間にもアノテーション</li>
-              <li>実践と破線の組み合わせもできる</li>
-            </ul>
-          </li>
-          <li>中心点は手動、連続はベジェ曲線でフィッティング</li>
-          <li>13200枚のうち3000枚にオクルージョン情報
-            <ul>
-              <li>クルマで重なって見えない部分</li>
-            </ul>
-          </li>
-          <li>分離帯などは「その他」
-            <ul>
-              <li><img src="/assets/images/posts/LaneDetectionSurvey/img3.png" alt="" /></li>
-              <li><img src="/assets/images/posts/LaneDetectionSurvey/img4.png" alt="" /></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>手法
-    <ul>
-      <li>共通の課題：光線状態、天候状態、オクルージョン</li>
-      <li>エゴレーン（現在走行している車線）検出
-        <ul>
-          <li>車線逸脱警報（LDWS）やレーンセンタリングで用いられる</li>
-          <li>リアルタイム性能が要求される</li>
-          <li>シングルタスク（車線検出のみの手法）
-            <ul>
-              <li>Efficient Deep Models for Monocular Road Segmentation
-                <ul>
-                  <li><img src="/assets/images/posts/LaneDetectionSurvey/img5.png" alt="" /></li>
-                  <li>VGGベースのエンコーダ・デコーダネットワーク</li>
-                </ul>
-              </li>
-              <li>
-                <p>Drivable Road Detection Based on Dilated FPN with Feature Aggregation
-  <img src="/assets/images/posts/LaneDetectionSurvey/img6.png" alt="" /></p>
-
-                <ul>
-                  <li>特徴ピラミッドネットワーク（FPN）</li>
-                  <li>KITTIで最高のF1</li>
-                </ul>
-              </li>
-              <li>Road Segmentation Using CNN and Distributed LSTM
-                <ul>
-                  <li>CNN+LSTMによるセグメンテーション</li>
-                  <li><img src="/assets/images/posts/LaneDetectionSurvey/img7.png" alt="" /></li>
-                  <li><img src="/assets/images/posts/LaneDetectionSurvey/img8.png" alt="" /></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>マルチタスク（車線検出以外にも道路分類、車線検出、パラメータ回帰）
-            <ul>
-              <li>RBNet: A Deep Neural Network for Unified Road and Road Boundary Detection
-                <ul>
-                  <li><img src="/assets/images/posts/LaneDetectionSurvey/img9.png" alt="" /></li>
-                  <li>道路と道路境界検出</li>
-                  <li>ResNet50で特徴抽出し、3つのタスクをサブネットで検出</li>
-                </ul>
-              </li>
-              <li>Estimating High Definition Map Parameters with Convolutional Neural Networks
-                <ul>
-                  <li><img src="/assets/images/posts/LaneDetectionSurvey/img10.png" alt="" /></li>
-                  <li>マルチタスクCNN</li>
-                  <li>道路の種類，車線数，路側，角度などのパラメータを推定
-                    <ul>
-                      <li>HD地図に必須</li>
-                    </ul>
-                  </li>
-                  <li>ナビから生成された強度マップ、意味マップ、占有グリッドマップが必要</li>
-                </ul>
-              </li>
-              <li>MultiNet: Real-time joint semantic reasoning for autonomous driving
-                <ul>
-                  <li><img src="/assets/images/posts/LaneDetectionSurvey/img11.png" alt="" /></li>
-                  <li>道路分類、車両検出、道路セグメンテーションを同時に行うエンドツーエンドのマルチタスクアーキテクチャ</li>
-                  <li>共有の3層CNN Encoderの特徴を入力とし、3つのDecoderで予測</li>
-                  <li>リアルタイム性能を達成</li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>エゴ・ロードレーン（走行方向の道路にある全てのレーン）検出
-            <ul>
-              <li>課題：道路幅の変化により、レーン数が変化することがある
-                <ul>
-                  <li>インスタンスセグメンテーションとみなされる</li>
-                </ul>
-              </li>
-              <li>End-to-end方式
-                <ul>
-                  <li>個々の車線を直接出力</li>
-                  <li>VPGNet: Vanishing point guided network for lane and road marking detection and recognition
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img12.png" alt="" /></li>
-                      <li>車線と道路標識の同時検出を行うマルチタスクCNN</li>
-                      <li>車線の消失点を利用</li>
-                      <li>Caltech Lanesで最高のF1</li>
-                    </ul>
-                  </li>
-                  <li>Spatial as deep: Spatial CNN for traffic scene understanding
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img13.png" alt="" /></li>
-                      <li>空間CNN（SCNN）というレイヤーを提案</li>
-                      <li>行／列に沿ったメッセージの受け渡し、受容野を画像全体に拡大</li>
-                      <li>車線が画像上で交差している可能性があるため、車線認識に有効</li>
-                      <li>あらかじめ定義された数の車線しか検出することができない</li>
-                    </ul>
-                  </li>
-                  <li>SpinNet: Spinning convolutional network for lane boundary detection
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img14.png" alt="" /></li>
-                      <li>多くの情報を収集するために回転畳み込み層を導入</li>
-                      <li>特徴マップから車線曲線を回帰する車線境界パラメータ化技でEnd-to-end</li>
-                    </ul>
-                  </li>
-                  <li>Learning lightweight lane detection CNNs by self attention distillation
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img15.png" alt="" /></li>
-                      <li>隣接する2 つの ENet Encoder間の自己注意を学習し、固定数のレーンをセグメント化する新しいモジュールSelf Attention Distillation (SAD)を提案</li>
-                    </ul>
-                  </li>
-                  <li>Lane Detection and Classification using Cascaded CNNs
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img16.png" alt="" /></li>
-                      <li>インスタンスセグメンテーションネットワークと分類ネットワークをカスケード接続</li>
-                    </ul>
-                  </li>
-                  <li>FastDraw: Addressing the long tail of lane detection by adapting a sequential prediction network
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img17.png" alt="" /></li>
-                      <li>セグメンテーションの代わりにResNet-50を適応し、
-  複数の車線の表現を自動回帰させ、
-  道路上の任意の数の車線を検出できるように</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-              <li>車線標識を見つけるセグメントネットワーク＋
-  車線インスタンスを得るためのクラスタリングや車線曲線フィット
-                <ul>
-                  <li>Semantic instance segmentation with a discriminative loss function
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img18.png" alt="" /></li>
-                      <li>ResNet38の特徴を高速なポスト処理によって特徴をクラスタリング</li>
-                    </ul>
-                  </li>
-                  <li>Towards end-to-end lane detection: An instance segmentation approach
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img19.png" alt="" /></li>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img20.png" alt="" /></li>
-                      <li>車線分割サブネットワーク、上記手法と同様の画素埋め込みサブネットワーク、および透視変換ネットワークからなる複雑なネットワークを提案</li>
-                      <li>最後に透視変換の各車線のインスタンスに対し、3次多項式</li>
-                    </ul>
-                  </li>
-                  <li>Learning to Cluster for Proposal-Free Instance Segmentation
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img21.png" alt="" /></li>
-                      <li>セグメンテーションネットワークを利用し、車線と車線の特徴を同時に見つける</li>
-                      <li>後処理でクラスタリング</li>
-                    </ul>
-                  </li>
-                  <li>Multi-lane detection using instance segmentation and attentive voting
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img22.png" alt="" /></li>
-                      <li>複雑な気象条件で収集された独自の市道データセットに対して車線分割ネットワークを学習</li>
-                      <li>その後、教師なしクラスタリング</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>全車線検出
-            <ul>
-              <li>自立走行において曲がる可能性がある十字路、HD地図のモデリングなどで必要</li>
-              <li>エゴレーン検出用の手法
-                <ul>
-                  <li>Efficient Deep Models for Monocular Road Segmentation</li>
-                  <li>RBNet: A Deep Neural Network for Unified Road and Road Boundary Detection</li>
-                  <li>MultiNet: Real-time joint semantic reasoning for autonomous driving</li>
-                  <li>オクルージョンの影響を受けやすく、車線境界の種類も無視</li>
-                  <li>入力画像が前方視であるため，消失点に向かってレーンマークが細く小さくなり，識別しづらい</li>
-                </ul>
-              </li>
-              <li>より多くのモダリティとの組み合わせ
-                <ul>
-                  <li>Accurate and robust lane detection based on dual-view convolutional neutral network
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img23.png" alt="" /></li>
-                      <li>前方視と鳥瞰図を組み合わせた</li>
-                    </ul>
-                  </li>
-                  <li>3D-laneNet: End-to-end 3D multiple lane detection
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img24.png" alt="" /></li>
-                      <li>前方視と鳥瞰図を利用して、道路平面 と3DレーンをEnd-to-endで予測</li>
-                    </ul>
-                  </li>
-                  <li>Deep multi-sensor lane detection
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img25.png" alt="" /></li>
-                      <li>LiDARとRGBカメラの組み合わせによる予測</li>
-                      <li>3D LiDARで接地面の高さと角度を予測</li>
-                      <li>予測されたパラメータを使用して、画像を鳥瞰図に再投影</li>
-                    </ul>
-                  </li>
-                  <li>HD maps: Finegrained road segmentation by parsing ground and aerial images
-  <img src="/assets/images/posts/LaneDetectionSurvey/img26.png" alt="" />
-                    <ul>
-                      <li>航空写真を使って、すべての道路を認識しモデル化</li>
-                    </ul>
-                  </li>
-                  <li>Aerial LaneNet: Lane Marking Semantic Segmentation in Aerial Imagery using Wavelet-Enhanced Cost-sensitive Symmetric Fully Convolutional Neural Networks
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img27.png" alt="" /></li>
-                      <li>Encoder Decoderでリモートセンシング画像内のすべての車線をセグメンテーション</li>
-                    </ul>
-                  </li>
-                  <li>Deep learning segmentation and 3D reconstruction of road markings using multiview aerial imagery
-                    <ul>
-                      <li><img src="/assets/images/posts/LaneDetectionSurvey/img28.png" alt="" /></li>
-                      <li>上の研究に基づいて、マルチビュー航空写真から高精細な写真を再構成</li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>学習型車線検出の動向
-    <ul>
-      <li>ロバスト性（晴れでも曇りでも、昼でも夜でも、夏でも冬でも、都会でも田舎でも、渋滞でも晴れでも、1年を通して車線検出する）のために
-        <ul>
-          <li>多くのモダリティ
-            <ul>
-              <li>LiDAR、赤外線画像、航空写真、パノラマ画像の利用</li>
-            </ul>
-          </li>
-          <li>汎用性の向上
-            <ul>
-              <li>データセットに制約されていて汎化されてない</li>
-              <li>転送学習や実世界の道路情報を示す、より一般的なデータセットの検討</li>
-            </ul>
-          </li>
-          <li>3D車線検出
-            <ul>
-              <li>2次元では曲がる際や合流する際に不可欠な距離情報が欠落</li>
-            </ul>
-          </li>
-          <li>マルチタスク
-            <ul>
-              <li>自律走行システムのためのネットワーク負荷を軽減するために、複数タスクを同時の行うネットワークが必要</li>
-            </ul>
-          </li>
-          <li>半教師ありや教師なし学習の利用</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>LineNet
-    <ul>
-      <li><img src="/assets/images/posts/LaneDetectionSurvey/img29.png" alt="" /></li>
-      <li>既存のCNNベースの手法は画像分類タスク用ネットワークを使用していて、白泉検出には適さない</li>
-      <li>事前学習済みDeepLabを基幹とし、Line Prediction(LP)層とZoomモジュールを含む</li>
-      <li>Line Prediction(LP)層
-        <ul>
-          <li>マスク層、位置層、方向層、信頼度層、距離層、およびタイプ層の6層から成る
-            <ul>
-              <li><img src="/assets/images/posts/LaneDetectionSurvey/img30.png" alt="" /></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>Zoomモジュール
-        <ul>
-          <li><img src="/assets/images/posts/LaneDetectionSurvey/img31.png" alt="" /></li>
-          <li>低解像度画像における結果が信頼できない領域を、サムネイルCNNと高解像度トリミングCNNの2つに分割
-            <ul>
-              <li>重みと特徴を共有</li>
-              <li>サムネイルCNNはグローバル特徴、高解像度トリミングCNNは詳細に「見る」</li>
-            </ul>
-          </li>
-          <li>生成した離散的な点をDBSCANを用いてクラスタリングし線に</li>
-          <li>滑らかで信頼性の高い線を車線検出結果として得る</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>Caltech Lanes
-    <ul>
-      <li><img src="/assets/images/posts/LaneDetectionSurvey/img32.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>CULane
-    <ul>
-      <li><img src="/assets/images/posts/LaneDetectionSurvey/img33.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>TTLane
-    <ul>
-      <li><img src="/assets/images/posts/LaneDetectionSurvey/img34.png" alt="" /></li>
-      <li><img src="/assets/images/posts/LaneDetectionSurvey/img35.png" alt="" /></li>
-      <li>(a)原画像 (b)(c)正解 (d)SCNN (e)Mask E-CNN (f)MLD-CRF (g)LineNet
-        <ul>
-          <li>LineNetは二重線検出や複雑なシーンにも強い
-            <ul>
-              <li><img src="/assets/images/posts/LaneDetectionSurvey/img36.png" alt="" /></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>HD地図モデリング
-    <ul>
-      <li>クラウドソーシングで収集した画像と GPS 情報から地図を生成</li>
-      <li>車線の平均誤差がGPSの5mから31.3cmへと大幅に改善
-  <img src="/assets/images/posts/LaneDetectionSurvey/img37.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 視覚に基づく車線検出のデータセット、深層学習を用いた手法の比較 HD地図のモデリングに向けた新しいデータセット（TTLane）と複雑な道路状況での自立走行に向けた方向性とLineNetを紹介する]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 現在のCNNを用いた車線検出の研究はセグメンテーションに限定されており、直感的でなく不正確である HDマップのモデリングのために、LP層とZoomモジュールを持つCNN手法のLineNetを提案 車線検出用のデータセットTTLaneを紹介]]></summary></entry></feed>
