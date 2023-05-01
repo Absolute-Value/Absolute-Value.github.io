@@ -1,4 +1,135 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-04-01T23:19:29+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Open-vocabulary Object Detection via Vision and Language Knowledge Distillation</title><link href="http://localhost:4000/object%20detection/2023/03/31/ViLD.html" rel="alternate" type="text/html" title="Open-vocabulary Object Detection via Vision and Language Knowledge Distillation" /><published>2023-03-31T23:30:00+09:00</published><updated>2023-03-31T23:30:00+09:00</updated><id>http://localhost:4000/object%20detection/2023/03/31/ViLD</id><content type="html" xml:base="http://localhost:4000/object%20detection/2023/03/31/ViLD.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-02T04:22:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Visual Programming: Compositional visual reasoning without training</title><link href="http://localhost:4000/object%20detection/2023/03/31/VisProg.html" rel="alternate" type="text/html" title="Visual Programming: Compositional visual reasoning without training" /><published>2023-03-31T23:30:00+09:00</published><updated>2023-03-31T23:30:00+09:00</updated><id>http://localhost:4000/object%20detection/2023/03/31/VisProg</id><content type="html" xml:base="http://localhost:4000/object%20detection/2023/03/31/VisProg.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>1枚または複数枚の画像と自然言語の命令を与え、GPT-3を利用して命令プログラムを作成し、そのプログラムを実行することで目的の出力を得るシステムVISPROGを提案</li>
+  <li>命令プログラムの各行では、CVモデル・言語モデル・OpenCVの画像処理・演算子のいずれかのモジュールを実行し、後続で使用できる中間出力を生成している</li>
+  <li>事実知識オブジェクトタグ付け・言語ガイド付き画像編集などの4つのタスクで柔軟性を実証
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>Neural Module Networksに比べて、GPT-3によって訓練を必要とせずに少数の例からプログラムを作成できる</li>
+  <li>中間出力を確認することで、間違いの理由や視覚的根拠を得ることができる</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>GPT-3は入力と出力のデモを与えることで、入力から欲しい出力を得ることができる
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-2.png" alt="" /></li>
+      <li>これを利用し、命令とプログラムのデモを与えることで、目的のプログラムを得る（画像編集タスクの例）
+        <ul>
+          <li><img src="/assets/images/posts/VisProg/VisProg-3.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>GPT-3が各モジュールの入出力や機能を理解できるように、説明的なモジュール名(Select, Replaceなど)、引数名(image, objectなど)、変数名(IMAGE, OBJ)を用いている
+        <ul>
+          <li>各モジュールはPythonのクラスとして実装されている
+            <ul>
+              <li><img src="/assets/images/posts/VisProg/VisProg-4.png" alt="" />
+                <ol>
+                  <li>行を解析して入力引数名と値、出力変数名を抽出</li>
+                  <li>学習済みNNを含む計算を実行し、出力変数名と値でプログラムの状態を更新</li>
+                  <li>htmlを用いて計算を視覚的に要約</li>
+                </ol>
+              </li>
+            </ul>
+          </li>
+          <li>現在サポートされているモジュール（赤はNNモデル, 青は画像処理などのPythonルーチン）
+            <ul>
+              <li><img src="/assets/images/posts/VisProg/VisProg-5.png" alt="" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>視覚的要約
+        <ul>
+          <li>例（画像編集タスク）
+            <ul>
+              <li><img src="/assets/images/posts/VisProg/VisProg-6.png" alt="" /></li>
+            </ul>
+          </li>
+          <li>例（NLVRタスク）
+            <ul>
+              <li><img src="/assets/images/posts/VisProg/VisProg-7.png" alt="" /></li>
+            </ul>
+          </li>
+          <li>この視覚的要約によって、プログラムの論理的な正しさや失敗の原因が理解できる</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>タスクとプロンプト
+    <ul>
+      <li>合成VQAタスク
+        <ul>
+          <li><img src="/assets/images/posts/VisProg/VisProg-8.png" alt="" /></li>
+          <li>例：「ヘルメットをかぶっている人の左側に小さなトラックがあるか、右側にあるのか？」</li>
+        </ul>
+      </li>
+      <li>NLVR
+        <ul>
+          <li><img src="/assets/images/posts/VisProg/VisProg-9.png" alt="" /></li>
+          <li>画像ペアに対するVQA</li>
+        </ul>
+      </li>
+      <li>知識タグ付けタスク
+        <ul>
+          <li><img src="/assets/images/posts/VisProg/VisProg-10.png" alt="" /></li>
+          <li>画像に写っている人物や物体の名前を識別</li>
+        </ul>
+      </li>
+      <li>画像編集タスク
+        <ul>
+          <li><img src="/assets/images/posts/VisProg/VisProg-11.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>合成VQAタスク
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-12.png" alt="" /></li>
+      <li>2.7ポイントUP</li>
+    </ul>
+  </li>
+  <li>NLVR
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-13.png" alt="" /></li>
+      <li>62.4%の高いゼロショット精度</li>
+    </ul>
+  </li>
+  <li>知識タグ付けタスク
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-14.png" alt="" /></li>
+      <li><img src="/assets/images/posts/VisProg/VisProg-15.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>画像編集タスク
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-16.png" alt="" /></li>
+      <li><img src="/assets/images/posts/VisProg/VisProg-17.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>視覚的要約による失敗原因の解明とプロンプトの修正
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-18.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="関連論文">関連論文</h1>
+
+<ul>
+  <li>PROGPROMPT: Generating Situated Robot Task Plans using Large Language Models</li>
+</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Transformer" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 1枚または複数枚の画像と自然言語の命令を与え、GPT-3を利用して命令プログラムを作成し、そのプログラムを実行することで目的の出力を得るシステムVISPROGを提案 命令プログラムの各行では、CVモデル・言語モデル・OpenCVの画像処理・演算子のいずれかのモジュールを実行し、後続で使用できる中間出力を生成している 事実知識オブジェクトタグ付け・言語ガイド付き画像編集などの4つのタスクで柔軟性を実証]]></summary></entry><entry><title type="html">Open-vocabulary Object Detection via Vision and Language Knowledge Distillation</title><link href="http://localhost:4000/object%20detection/2023/03/31/ViLD.html" rel="alternate" type="text/html" title="Open-vocabulary Object Detection via Vision and Language Knowledge Distillation" /><published>2023-03-31T23:30:00+09:00</published><updated>2023-03-31T23:30:00+09:00</updated><id>http://localhost:4000/object%20detection/2023/03/31/ViLD</id><content type="html" xml:base="http://localhost:4000/object%20detection/2023/03/31/ViLD.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>任意のテキストで物体検出をするオープンボキャブラリ物体検出器ViLD(Vision and Language knowledge Distillation)を提案</li>
@@ -955,63 +1086,4 @@ tion detection）を提案</li>
       <li><img src="/assets/images/posts/CondLaneNet/img9.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 既存の車線検出は密集線や分岐線のような複雑な場合に苦労している(下図) 車線を検出し、次に各車線の形状を予測する車線検出フレームワークであるCondLaneNetを提案 3つのベンチマークデータセットで最先端手法を凌駕]]></summary></entry><entry><title type="html">Keep your Eyes on the Lane: Real-time Attention-guided Lane Detection</title><link href="http://localhost:4000/lane%20detection/2022/12/13/LaneATT.html" rel="alternate" type="text/html" title="Keep your Eyes on the Lane: Real-time Attention-guided Lane Detection" /><published>2022-12-13T17:00:00+09:00</published><updated>2022-12-13T17:00:00+09:00</updated><id>http://localhost:4000/lane%20detection/2022/12/13/LaneATT</id><content type="html" xml:base="http://localhost:4000/lane%20detection/2022/12/13/LaneATT.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>YOLOv3やSSDのようなアンカーベースのモデルであるLaneATTを提案</li>
-  <li>大域的情報の取得のためにAttentionも使用</li>
-  <li>CULaneとTuSimpleとLLAMASのデータセットで最先端手法を凌駕
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>高速な学習・推論が可能（250FPSを達成）</li>
-  <li>アンカーベースのAttentionメカニズムは他ドメインでも有用な可能性</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li><img src="/assets/images/posts/LaneATT/img1.png" alt="" /></li>
-  <li>画像の境界の1点と方向θで定義される仮想の直線をアンカーと定義する</li>
-  <li>ResNetなどの学習済みCNNで特徴マップを生成</li>
-  <li>アンカーに該当する特徴マップを抽出する</li>
-  <li>抽出した特徴マップ同士でAttentionを取る
-    <ul>
-      <li>局所情報のみだと車で隠れている場合に予測できないため</li>
-    </ul>
-  </li>
-  <li>全結合に通して、クラスラベル（白線、黄線、背景など）とアンカーとの水平距離、長さを予測</li>
-  <li>NMSアルゴリズムを適用</li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>TuSimple
-    <ul>
-      <li><img src="/assets/images/posts/LaneATT/img2.png" alt="" /></li>
-      <li><img src="/assets/images/posts/LaneATT/img3.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>CULane
-    <ul>
-      <li><img src="/assets/images/posts/LaneATT/img4.png" alt="" /></li>
-      <li><img src="/assets/images/posts/LaneATT/img5.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>LLAMAS
-    <ul>
-      <li><img src="/assets/images/posts/LaneATT/img6.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>可視化
-    <ul>
-      <li><img src="/assets/images/posts/LaneATT/img7.png" alt="" /></li>
-      <li>青は正解、緑と赤が予測</li>
-      <li>上段がTuSimple、中段がCULane、下段がLLAMAS</li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 YOLOv3やSSDのようなアンカーベースのモデルであるLaneATTを提案 大域的情報の取得のためにAttentionも使用 CULaneとTuSimpleとLLAMASのデータセットで最先端手法を凌駕]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 既存の車線検出は密集線や分岐線のような複雑な場合に苦労している(下図) 車線を検出し、次に各車線の形状を予測する車線検出フレームワークであるCondLaneNetを提案 3つのベンチマークデータセットで最先端手法を凌駕]]></summary></entry></feed>

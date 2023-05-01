@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Visual Programming: Compositional visual reasoning without training</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/VisProg/VisProg-1.png" class="hero">
+    <h1>Visual Programming: Compositional visual reasoning without training</h1>
+    <p><span class="fa fa-link"></span><a href="https://prior.allenai.org/projects/visprog" target="_blank"> https://prior.allenai.org/projects/visprog</a></p>
+    <p><span class="fa fa-calendar"></span> Mar 31, 2023</p>
+    <p><span class="fa fa-flag"></span> Transformer, Vision and Language, </p>
+    <p><span class="fa fa-graduation-cap"></span> CVPR (2023) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Visual Programming: Compositional visual reasoning without training&url=https://absolute-value.github.io/object%20detection/2023/03/31/VisProg.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/object%20detection/2023/03/31/VisProg.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/object%20detection/2023/03/31/VisProg.html&title=Visual Programming: Compositional visual reasoning without training" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Visual Programming: Compositional visual reasoning without training&body=Visual Programming: Compositional visual reasoning without training https://absolute-value.github.io/object%20detection/2023/03/31/VisProg.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>1枚または複数枚の画像と自然言語の命令を与え、GPT-3を利用して命令プログラムを作成し、そのプログラムを実行することで目的の出力を得るシステムVISPROGを提案</li>
+  <li>命令プログラムの各行では、CVモデル・言語モデル・OpenCVの画像処理・演算子のいずれかのモジュールを実行し、後続で使用できる中間出力を生成している</li>
+  <li>事実知識オブジェクトタグ付け・言語ガイド付き画像編集などの4つのタスクで柔軟性を実証
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>Neural Module Networksに比べて、GPT-3によって訓練を必要とせずに少数の例からプログラムを作成できる</li>
+  <li>中間出力を確認することで、間違いの理由や視覚的根拠を得ることができる</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>GPT-3は入力と出力のデモを与えることで、入力から欲しい出力を得ることができる
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-2.png" alt="" /></li>
+      <li>これを利用し、命令とプログラムのデモを与えることで、目的のプログラムを得る（画像編集タスクの例）
+        <ul>
+          <li><img src="/assets/images/posts/VisProg/VisProg-3.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>GPT-3が各モジュールの入出力や機能を理解できるように、説明的なモジュール名(Select, Replaceなど)、引数名(image, objectなど)、変数名(IMAGE, OBJ)を用いている
+        <ul>
+          <li>各モジュールはPythonのクラスとして実装されている
+            <ul>
+              <li><img src="/assets/images/posts/VisProg/VisProg-4.png" alt="" />
+                <ol>
+                  <li>行を解析して入力引数名と値、出力変数名を抽出</li>
+                  <li>学習済みNNを含む計算を実行し、出力変数名と値でプログラムの状態を更新</li>
+                  <li>htmlを用いて計算を視覚的に要約</li>
+                </ol>
+              </li>
+            </ul>
+          </li>
+          <li>現在サポートされているモジュール（赤はNNモデル, 青は画像処理などのPythonルーチン）
+            <ul>
+              <li><img src="/assets/images/posts/VisProg/VisProg-5.png" alt="" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>視覚的要約
+        <ul>
+          <li>例（画像編集タスク）
+            <ul>
+              <li><img src="/assets/images/posts/VisProg/VisProg-6.png" alt="" /></li>
+            </ul>
+          </li>
+          <li>例（NLVRタスク）
+            <ul>
+              <li><img src="/assets/images/posts/VisProg/VisProg-7.png" alt="" /></li>
+            </ul>
+          </li>
+          <li>この視覚的要約によって、プログラムの論理的な正しさや失敗の原因が理解できる</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>タスクとプロンプト
+    <ul>
+      <li>合成VQAタスク
+        <ul>
+          <li><img src="/assets/images/posts/VisProg/VisProg-8.png" alt="" /></li>
+          <li>例：「ヘルメットをかぶっている人の左側に小さなトラックがあるか、右側にあるのか？」</li>
+        </ul>
+      </li>
+      <li>NLVR
+        <ul>
+          <li><img src="/assets/images/posts/VisProg/VisProg-9.png" alt="" /></li>
+          <li>画像ペアに対するVQA</li>
+        </ul>
+      </li>
+      <li>知識タグ付けタスク
+        <ul>
+          <li><img src="/assets/images/posts/VisProg/VisProg-10.png" alt="" /></li>
+          <li>画像に写っている人物や物体の名前を識別</li>
+        </ul>
+      </li>
+      <li>画像編集タスク
+        <ul>
+          <li><img src="/assets/images/posts/VisProg/VisProg-11.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>合成VQAタスク
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-12.png" alt="" /></li>
+      <li>2.7ポイントUP</li>
+    </ul>
+  </li>
+  <li>NLVR
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-13.png" alt="" /></li>
+      <li>62.4%の高いゼロショット精度</li>
+    </ul>
+  </li>
+  <li>知識タグ付けタスク
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-14.png" alt="" /></li>
+      <li><img src="/assets/images/posts/VisProg/VisProg-15.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>画像編集タスク
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-16.png" alt="" /></li>
+      <li><img src="/assets/images/posts/VisProg/VisProg-17.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>視覚的要約による失敗原因の解明とプロンプトの修正
+    <ul>
+      <li><img src="/assets/images/posts/VisProg/VisProg-18.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="関連論文">関連論文</h1>
+
+<ul>
+  <li>PROGPROMPT: Generating Situated Robot Task Plans using Large Language Models</li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>
