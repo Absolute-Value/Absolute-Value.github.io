@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Neural Machine Translation of Rare Words with Subword Units</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/BPE/0.png" class="hero">
+    <h1>Neural Machine Translation of Rare Words with Subword Units</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/1508.07909" target="_blank"> https://arxiv.org/abs/1508.07909</a></p>
+    <p><span class="fa fa-calendar"></span> May 4, 2023</p>
+    <p><span class="fa fa-flag"></span> Language, </p>
+    <p><span class="fa fa-graduation-cap"></span> ACM (2016) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Neural Machine Translation of Rare Words with Subword Units&url=https://absolute-value.github.io/language/2023/05/04/BPE.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/language/2023/05/04/BPE.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/language/2023/05/04/BPE.html&title=Neural Machine Translation of Rare Words with Subword Units" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Neural Machine Translation of Rare Words with Subword Units&body=Neural Machine Translation of Rare Words with Subword Units https://absolute-value.github.io/language/2023/05/04/BPE.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>実際の翻訳はopen-vocabularyであるのに対し、ニューラル機械翻訳(NMT)は固定の語彙で動作し、語彙にない単語は辞書で対処してきた（翻訳は1対1とは限らないので不適切）</li>
+  <li>そこでBPEを単語分割のタスクに対応させ、希少や未知の単語をサブワード単位で符号化することで、open-vocabularyに対応した</li>
+  <li>これにより、WMT15の翻訳課題において英→独で最大1.1BLEU、英→露で1.3BLEU向上
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>open-vocabularyでニューラル機械翻訳(NMT)</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>アルゴリズム
+    <ul>
+      <li><img src="/assets/images/posts/BPE/1.png" alt="" /></li>
+      <li>BPE
+        <ul>
+          <li>シーケンス内で最も頻繁に使用されるバイトのペアを、単一の未使用バイトに繰り返し置き換えていく</li>
+          <li>繰り返す回数はハイパラ</li>
+        </ul>
+      </li>
+      <li>例
+        <ul>
+          <li>「l o w &lt;/w&gt;(5個), l o w e s t &lt;/w&gt;(2個), n e w e r &lt;/w&gt;(6個), w i d e r &lt;/w&gt;(3個)」という辞書がある場合（4回繰り返す）
+            <ul>
+              <li>最も頻繁に出てくるeとrの組み合わせを結合(er)</li>
+              <li>最も頻繁に出てくるerと&lt;/w&gt;の組み合わせを結合(er&lt;/w&gt;)</li>
+              <li>最も頻繁に出てくるlとoの組み合わせを結合(lo)</li>
+              <li>最も頻繁に出てくるloとwの組み合わせを結合(low)</li>
+            </ul>
+          </li>
+          <li>「low &lt;/w&gt;, low e s t &lt;/w&gt;, n e w er&lt;/w&gt;, w i d er&lt;/w&gt;」という辞書になる</li>
+          <li>12(l o w e s t n r w i d &lt;/w&gt;)から10(low e s t n w er&lt;/w&gt; i d &lt;/w&gt;)に減った</li>
+        </ul>
+      </li>
+      <li>ソースとターゲットで独立してEncodingを学習する方法と
+  ソースとターゲットの結合でEncodingを学習する方法(joint BPE)を用意
+        <ul>
+          <li>独立する場合はニューラルモデルがサブワード単位間の翻訳を学習するのが難しくなる</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>newest2015(英→独)
+    <ul>
+      <li><img src="/assets/images/posts/BPE/2.png" alt="" /></li>
+      <li>rareは上位5万語に含まれない単語</li>
+    </ul>
+  </li>
+  <li>newest2015(英→露)
+    <ul>
+      <li><img src="/assets/images/posts/BPE/3.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>単語の分割例(英→独)
+    <ul>
+      <li><img src="/assets/images/posts/BPE/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>単語の分割例(英→露)
+    <ul>
+      <li><img src="/assets/images/posts/BPE/5.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,4 +1,79 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-04T18:46:17+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Visual Programming: Compositional visual reasoning without training</title><link href="http://localhost:4000/vision%20and%20language/2023/05/01/VisProg.html" rel="alternate" type="text/html" title="Visual Programming: Compositional visual reasoning without training" /><published>2023-05-01T12:00:00+09:00</published><updated>2023-05-01T12:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/05/01/VisProg</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/05/01/VisProg.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-04T18:56:17+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Neural Machine Translation of Rare Words with Subword Units</title><link href="http://localhost:4000/language/2023/05/04/BPE.html" rel="alternate" type="text/html" title="Neural Machine Translation of Rare Words with Subword Units" /><published>2023-05-04T12:00:00+09:00</published><updated>2023-05-04T12:00:00+09:00</updated><id>http://localhost:4000/language/2023/05/04/BPE</id><content type="html" xml:base="http://localhost:4000/language/2023/05/04/BPE.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>実際の翻訳はopen-vocabularyであるのに対し、ニューラル機械翻訳(NMT)は固定の語彙で動作し、語彙にない単語は辞書で対処してきた（翻訳は1対1とは限らないので不適切）</li>
+  <li>そこでBPEを単語分割のタスクに対応させ、希少や未知の単語をサブワード単位で符号化することで、open-vocabularyに対応した</li>
+  <li>これにより、WMT15の翻訳課題において英→独で最大1.1BLEU、英→露で1.3BLEU向上
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>open-vocabularyでニューラル機械翻訳(NMT)</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>アルゴリズム
+    <ul>
+      <li><img src="/assets/images/posts/BPE/1.png" alt="" /></li>
+      <li>BPE
+        <ul>
+          <li>シーケンス内で最も頻繁に使用されるバイトのペアを、単一の未使用バイトに繰り返し置き換えていく</li>
+          <li>繰り返す回数はハイパラ</li>
+        </ul>
+      </li>
+      <li>例
+        <ul>
+          <li>「l o w &lt;/w&gt;(5個), l o w e s t &lt;/w&gt;(2個), n e w e r &lt;/w&gt;(6個), w i d e r &lt;/w&gt;(3個)」という辞書がある場合（4回繰り返す）
+            <ul>
+              <li>最も頻繁に出てくるeとrの組み合わせを結合(er)</li>
+              <li>最も頻繁に出てくるerと&lt;/w&gt;の組み合わせを結合(er&lt;/w&gt;)</li>
+              <li>最も頻繁に出てくるlとoの組み合わせを結合(lo)</li>
+              <li>最も頻繁に出てくるloとwの組み合わせを結合(low)</li>
+            </ul>
+          </li>
+          <li>「low &lt;/w&gt;, low e s t &lt;/w&gt;, n e w er&lt;/w&gt;, w i d er&lt;/w&gt;」という辞書になる</li>
+          <li>12(l o w e s t n r w i d &lt;/w&gt;)から10(low e s t n w er&lt;/w&gt; i d &lt;/w&gt;)に減った</li>
+        </ul>
+      </li>
+      <li>ソースとターゲットで独立してEncodingを学習する方法と
+  ソースとターゲットの結合でEncodingを学習する方法(joint BPE)を用意
+        <ul>
+          <li>独立する場合はニューラルモデルがサブワード単位間の翻訳を学習するのが難しくなる</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>newest2015(英→独)
+    <ul>
+      <li><img src="/assets/images/posts/BPE/2.png" alt="" /></li>
+      <li>rareは上位5万語に含まれない単語</li>
+    </ul>
+  </li>
+  <li>newest2015(英→露)
+    <ul>
+      <li><img src="/assets/images/posts/BPE/3.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>単語の分割例(英→独)
+    <ul>
+      <li><img src="/assets/images/posts/BPE/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>単語の分割例(英→露)
+    <ul>
+      <li><img src="/assets/images/posts/BPE/5.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Language" /><category term="Language" /><summary type="html"><![CDATA[概要 実際の翻訳はopen-vocabularyであるのに対し、ニューラル機械翻訳(NMT)は固定の語彙で動作し、語彙にない単語は辞書で対処してきた（翻訳は1対1とは限らないので不適切） そこでBPEを単語分割のタスクに対応させ、希少や未知の単語をサブワード単位で符号化することで、open-vocabularyに対応した これにより、WMT15の翻訳課題において英→独で最大1.1BLEU、英→露で1.3BLEU向上]]></summary></entry><entry><title type="html">Visual Programming: Compositional visual reasoning without training</title><link href="http://localhost:4000/vision%20and%20language/2023/05/01/VisProg.html" rel="alternate" type="text/html" title="Visual Programming: Compositional visual reasoning without training" /><published>2023-05-01T12:00:00+09:00</published><updated>2023-05-01T12:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/05/01/VisProg</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/05/01/VisProg.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>1枚または複数枚の画像と自然言語の命令を与え、GPT-3を利用して命令プログラムを作成し、そのプログラムを実行することで目的の出力を得るシステムVISPROGを提案</li>
@@ -1000,90 +1075,4 @@ tion detection）を提案</li>
       <li><img src="/assets/images/posts/CLRNet/img10.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 特徴抽出したFPN構造の特徴マップを、上位から下位まで複合的に活用する車線検出手法であるCross Layer Refinement Network (CLRNet)を提案 CULaneとTuSimpleとLLAMASのデータセットで従来手法を上回る]]></summary></entry><entry><title type="html">CondLaneNet: a Top-to-down Lane Detection Framework Based on Conditional Convolution</title><link href="http://localhost:4000/lane%20detection/2022/12/14/CondLaneNet.html" rel="alternate" type="text/html" title="CondLaneNet: a Top-to-down Lane Detection Framework Based on Conditional Convolution" /><published>2022-12-14T12:00:00+09:00</published><updated>2022-12-14T12:00:00+09:00</updated><id>http://localhost:4000/lane%20detection/2022/12/14/CondLaneNet</id><content type="html" xml:base="http://localhost:4000/lane%20detection/2022/12/14/CondLaneNet.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>既存の車線検出は密集線や分岐線のような複雑な場合に苦労している(下図)</li>
-  <li>車線を検出し、次に各車線の形状を予測する車線検出フレームワークであるCondLaneNetを提案</li>
-  <li>3つのベンチマークデータセットで最先端手法を凌駕
-<!--more--></li>
-  <li><img src="/assets/images/posts/CondLaneNet/img1.png" alt="" /></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>密集線や分岐線などの複雑な車線を検出する問題を克服</li>
-  <li>CULaneでは78.14 F1スコアと220 FPSを達成するなど，精度と効率の両立が可能</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li><img src="/assets/images/posts/CondLaneNet/img2.png" alt="" /></li>
-  <li>事前学習済みResNetをBackboneとしてFPNを用いて、マルチスケール特徴を得る
-    <ul>
-      <li>車線は細長いため、文脈特徴の抽出のためにBackboneの最終層にTransformer Encoderを追加
-        <ul>
-          <li><img src="/assets/images/posts/CondLaneNet/img3.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Proposal head
-    <ul>
-      <li>線の始点を予測する
-        <ul>
-          <li>CenterNetに従うが、細長い線は中心を見つけることが難しいため始点</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Recurrent Instance Module
-    <ul>
-      <li><img src="/assets/images/posts/CondLaneNet/img4.png" alt="" /></li>
-      <li>予測した始点の特徴量から動的カーネルパラメータを再帰的に予測</li>
-      <li>密な線や複数の線が同一の始点から始まる場合(ex.分岐)に対応</li>
-    </ul>
-  </li>
-  <li>Conditional shape head
-    <ul>
-      <li>RIMの動的カーネルパラメータを使って畳み込み、マルチスケール特徴から各線の形状を予測
-        <ul>
-          <li><img src="/assets/images/posts/CondLaneNet/img5.png" alt="" /></li>
-        </ul>
-      </li>
-      <li>Location maps：行ごと列ごとに予測</li>
-      <li>Offset maps：行ごとの水平方向の正確な位置を予測</li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>可視化
-    <ul>
-      <li>上からCurveLanes、CULane、TuSimple
-        <ul>
-          <li><img src="/assets/images/posts/CondLaneNet/img6.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>CurveLanes
-    <ul>
-      <li><img src="/assets/images/posts/CondLaneNet/img7.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>CULane
-    <ul>
-      <li><img src="/assets/images/posts/CondLaneNet/img8.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>TuSimple
-    <ul>
-      <li><img src="/assets/images/posts/CondLaneNet/img9.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 既存の車線検出は密集線や分岐線のような複雑な場合に苦労している(下図) 車線を検出し、次に各車線の形状を予測する車線検出フレームワークであるCondLaneNetを提案 3つのベンチマークデータセットで最先端手法を凌駕]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 特徴抽出したFPN構造の特徴マップを、上位から下位まで複合的に活用する車線検出手法であるCross Layer Refinement Network (CLRNet)を提案 CULaneとTuSimpleとLLAMASのデータセットで従来手法を上回る]]></summary></entry></feed>
