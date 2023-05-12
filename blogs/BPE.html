@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>BPEの実装</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/BPE/0.png" class="hero">
+    <h1>BPEの実装</h1>
+    <p><span class="fa fa-calendar"></span> May 12, 2023</p>
+    <p><span class="fa fa-flag"></span> BPE, python, </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=BPEの実装&url=https://absolute-value.github.io/blogs/BPE.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/blogs/BPE.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/blogs/BPE.html&title=BPEの実装" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=BPEの実装&body=BPEの実装 https://absolute-value.github.io/blogs/BPE.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    
+    <div id="table-of-contents">
+      <h1 class="table-of-contents-h1">目次</h1>
+      <ul id="toc" class="section-nav">
+</ul>
+    </div>
+    
+    <div id="markdown-content">
+      <p>論文「Neural Machine Translation of Rare Words with Subword Units」
+（解説は<a href="/language/2023/05/04/BPE.html">コチラ</a>）
+のBPEアルゴリズムをpythonで実装したので、保存用に貼っておきます。</p>
+
+<script src="https://gist.github.com/Absolute-Value/f13fc63cbc0233e965efe817831352c4.js"></script>
+
+<p>実行</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>python3 BPE.py
+<span class="gp">before: {'l o w &lt;/w&gt;</span><span class="s1">': 5, '</span>l o w e s t &lt;/w&gt;<span class="s1">': 2, '</span>n e w e r &lt;/w&gt;<span class="s1">': 6, '</span>w i d e r &lt;/w&gt;<span class="s1">': 3}
+</span><span class="go">1 : ('e', 'r')
+</span><span class="gp">2 : ('er', '&lt;/w&gt;</span><span class="s1">')
+</span><span class="go">3 : ('l', 'o')
+4 : ('lo', 'w')
+</span><span class="gp">after: {'low &lt;/w&gt;</span><span class="s1">': 5, '</span>low e s t &lt;/w&gt;<span class="s1">': 2, '</span>n e w er&lt;/w&gt;<span class="s1">': 6, '</span>w i d er&lt;/w&gt;<span class="s1">': 3}
+</span></code></pre></div></div>
+
+    </div>
+    <div class="btn-wrapper">
+      <a href="/blogs" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>
