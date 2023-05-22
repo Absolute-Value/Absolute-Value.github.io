@@ -110,39 +110,39 @@
 
 <h2 id="プログラム">プログラム</h2>
 <p>ライブラリをインポートします．</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForSeq2SeqLM</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="kn">from</span> <span class="n">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span><span class="p">,</span> <span class="n">AutoModelForSeq2SeqLM</span>
 </code></pre></div></div>
 
 <p>GPUが使える場合はGPUを使用します．</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="n">is_available</span><span class="p">():</span>
-  <span class="n">device</span> <span class="o">=</span> <span class="s">'cuda'</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">torch</span><span class="p">.</span><span class="n">cuda</span><span class="p">.</span><span class="nf">is_available</span><span class="p">():</span>
+  <span class="n">device</span> <span class="o">=</span> <span class="sh">'</span><span class="s">cuda</span><span class="sh">'</span>
 <span class="k">else</span><span class="p">:</span>
-  <span class="n">device</span> <span class="o">=</span> <span class="s">'cpu'</span>
-<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'device : </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+  <span class="n">device</span> <span class="o">=</span> <span class="sh">'</span><span class="s">cpu</span><span class="sh">'</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">'</span><span class="s">device : </span><span class="si">{</span><span class="n">device</span><span class="si">}</span><span class="sh">'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>tokenizerとモデルを読み込みます．</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"Helsinki-NLP/opus-mt-ja-en"</span><span class="p">)</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="p">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s">"Helsinki-NLP/opus-mt-ja-en"</span><span class="p">)</span>
-<span class="n">model</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="p">.</span><span class="nf">from_pretrained</span><span class="p">(</span><span class="sh">"</span><span class="s">Helsinki-NLP/opus-mt-ja-en</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForSeq2SeqLM</span><span class="p">.</span><span class="nf">from_pretrained</span><span class="p">(</span><span class="sh">"</span><span class="s">Helsinki-NLP/opus-mt-ja-en</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>翻訳をする関数を定義します．</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">translation</span><span class="p">(</span><span class="n">japanese_text</span> <span class="o">=</span> <span class="s">"こんにちは、私の名前は太郎です。"</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">translation</span><span class="p">(</span><span class="n">japanese_text</span> <span class="o">=</span> <span class="sh">"</span><span class="s">こんにちは、私の名前は太郎です。</span><span class="sh">"</span><span class="p">):</span>
   <span class="c1"># 日本語文章をトークナイズする
-</span>  <span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="n">japanese_text</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s">"pt"</span><span class="p">)</span>
+</span>  <span class="n">input_ids</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">japanese_text</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="sh">"</span><span class="s">pt</span><span class="sh">"</span><span class="p">)</span>
 
   <span class="c1"># BERTを使用して日本語から英語に翻訳する
-</span>  <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="n">generate</span><span class="p">(</span><span class="n">input_ids</span><span class="p">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+</span>  <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">.</span><span class="nf">generate</span><span class="p">(</span><span class="n">input_ids</span><span class="p">.</span><span class="nf">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
 
   <span class="c1"># 翻訳された英語文章をデコードする
-</span>  <span class="n">english_text</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-  <span class="k">print</span><span class="p">(</span><span class="n">english_text</span><span class="p">)</span>
+</span>  <span class="n">english_text</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">.</span><span class="nf">decode</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">skip_special_tokens</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">english_text</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>関数に翻訳したい文字列を入力します．</p>
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">translation</span><span class="p">(</span><span class="s">'リポジトリはセキュリティの都合上，非公開です．'</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">translation</span><span class="p">(</span><span class="sh">'</span><span class="s">リポジトリはセキュリティの都合上，非公開です．</span><span class="sh">'</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>翻訳された文章が出力されます．</p>
