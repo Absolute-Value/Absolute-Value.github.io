@@ -128,6 +128,150 @@
         
           
             <div class="post">
+              <a href="/vision%20and%20language/2023/05/09/SimVLM.html">
+                <img class="post_img" src="/assets/images/posts/SimVLM/SimVLM.png">
+                <div class="post_detail">
+                  <p>
+                    <b>SimVLM: Simple Visual Language Model Pretraining with Weak Supervision</b>
+                  </p>
+                  <p><h1 id=""></h1>
+
+<ul>
+  <li>最小限のVision-Language PretrainingフレームワークであるSimple Visual Language Model (SimVLM)を提案</li>
+  <li>Prefix Language Modelingによって余分なデータやタスク固有のカスタマイズが必要ない</li>
+  <li>従来の事前学習方法を大幅に上回り、VQA、NLVR2、SNLI-VEなどの幅広いVLタスクでSOTA</li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>効率的なVLの事前学習方法を提案</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>背景
+    <ul>
+      <li>Masked Language Modeling (MLM)
+        <ul>
+          <li>BERTのように文章の一部にマスクをし、そのトークンを復元する訓練をする事前学習
+            <ul>
+              <li><img src="/assets/images/posts/SimVLM/MLM.png" alt="" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Language Modeling (LM)
+        <ul>
+          <li>テキストの確率を最大化するように事前学習
+            <ul>
+              <li><img src="/assets/images/posts/SimVLM/LM.png" alt="" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Prefix Language Modeling (PrefixLM)
+    <ul>
+      <li>LM Lossに倣って、下図のように、画像と文章前半を受け取り続きを予測することで、ゼロショットで画像と言語の関係を学習する
+        <ul>
+          <li><img src="/assets/images/posts/SimVLM/PrefixLM.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>アーキテクチャ
+    <ul>
+      <li><img src="/assets/images/posts/SimVLM/SimVLM.png" alt="" /></li>
+      <li>言語と画像で成功しているtransformerをバックボーンとする
+        <ul>
+          <li>PrefixLMはDecoderのみでもEnc-Decにも適用できるが、Enc-Decの機能バイアスが下流タスクに寄与することを確認</li>
+        </ul>
+      </li>
+      <li>画像：ResNetの最初の3つのブロックに通して、パッチ化してFlattenしてtransformerへ
+        <ul>
+          <li>ViTで使用される単純な線形射影より有利</li>
+        </ul>
+      </li>
+      <li>言語：サブワードトークンにトークン化</li>
+      <li>画像と言語に学習可能な1D位置埋め込み</li>
+      <li>transformerレイヤー内の画像パッチに2D相対位置埋め込み</li>
+    </ul>
+  </li>
+  <li>学習
+    <ul>
+      <li>ALIGINとC4データセットで1Mステップの事前学習
+        <ul>
+          <li>512個のTPU v3
+            <ul>
+              <li>4096 Img-Text(ALIGIN), 512 Text(C4)</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Finetuning後、6つのVLベンチマークで評価</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>popular VL banchmarks
+    <ul>
+      <li><img src="/assets/images/posts/SimVLM/VL.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>SNLI-VE and Multi30k (Zero-shot)
+    <ul>
+      <li>+1.37% accuracy</li>
+      <li><img src="/assets/images/posts/SimVLM/6.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>VQA
+    <ul>
+      <li>+3.74%</li>
+      <li><img src="/assets/images/posts/SimVLM/VQA.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>ImageNet
+    <ul>
+      <li><img src="/assets/images/posts/SimVLM/ImageNet.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>VQA(Ablation study)
+    <ul>
+      <li><img src="/assets/images/posts/SimVLM/9.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>生成例
+    <ul>
+      <li>(a) zero-shot image captioning (b) zero-shot cross-modality transfer on German image captioning (c) generative VQA (d) zero-shot visual text completion (e) zero-shot open-ended VQA.
+        <ul>
+          <li><img src="/assets/images/posts/SimVLM/10.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+</p>
+                  <p>
+                    <span class="fa fa-calendar"></span> May 9, 2023
+                    <span class="fa fa-folder"></span> Vision and Language
+                    <span class="fa fa-graduation-cap"></span> ICLR (2022)
+                  </p>
+                </div>
+              </a>
+            </div>
+            
+          
+        
+      
+        
+          
+            <div class="post">
               <a href="/vision%20and%20language/2023/05/08/Unified-IO.html">
                 <img class="post_img" src="/assets/images/posts/Unified-IO/Unified-IO-1.png">
                 <div class="post_detail">
@@ -175,35 +319,6 @@
                     <span class="fa fa-calendar"></span> May 4, 2023
                     <span class="fa fa-folder"></span> Language
                     <span class="fa fa-graduation-cap"></span> ACM (2016)
-                  </p>
-                </div>
-              </a>
-            </div>
-            
-          
-        
-      
-        
-          
-            <div class="post">
-              <a href="/vision%20and%20language/2023/05/01/VisProg.html">
-                <img class="post_img" src="/assets/images/posts/VisProg/VisProg-1.png">
-                <div class="post_detail">
-                  <p>
-                    <b>Visual Programming: Compositional visual reasoning without training</b>
-                  </p>
-                  <p><h1 id=""></h1>
-
-<ul>
-  <li>1枚または複数枚の画像と自然言語の命令を与え、GPT-3を利用して命令プログラムを作成し、そのプログラムを実行することで目的の出力を得るシステムVISPROGを提案</li>
-  <li>命令プログラムの各行では、CVモデル・言語モデル・OpenCVの画像処理・演算子のいずれかのモジュールを実行し、後続で使用できる中間出力を生成している</li>
-  <li>事実知識オブジェクトタグ付け・言語ガイド付き画像編集などの4つのタスクで柔軟性を実証</li>
-</ul>
-</p>
-                  <p>
-                    <span class="fa fa-calendar"></span> May 1, 2023
-                    <span class="fa fa-folder"></span> Vision and Language
-                    <span class="fa fa-graduation-cap"></span> CVPR (2023)
                   </p>
                 </div>
               </a>
