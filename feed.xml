@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-24T20:04:17+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">SimVLM: Simple Visual Language Model Pretraining with Weak Supervision</title><link href="http://localhost:4000/vision%20and%20language/2023/05/10/SimVLM.html" rel="alternate" type="text/html" title="SimVLM: Simple Visual Language Model Pretraining with Weak Supervision" /><published>2023-05-10T12:00:00+09:00</published><updated>2023-05-10T12:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/05/10/SimVLM</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/05/10/SimVLM.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-24T20:12:02+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">SimVLM: Simple Visual Language Model Pretraining with Weak Supervision</title><link href="http://localhost:4000/vision%20and%20language/2023/05/10/SimVLM.html" rel="alternate" type="text/html" title="SimVLM: Simple Visual Language Model Pretraining with Weak Supervision" /><published>2023-05-10T12:00:00+09:00</published><updated>2023-05-10T12:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/05/10/SimVLM</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/05/10/SimVLM.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>最小限のVision-Language PretrainingフレームワークであるSimple Visual Language Model (SimVLM)を提案</li>
   <li>Prefix Language Modelingによって余分なデータやタスク固有のカスタマイズが必要ない</li>
-  <li>従来の事前学習方法を大幅に上回り、VQA、NLVR2、SNLI-VEなどの幅広いVLタスクでSOTA</li>
+  <li>従来の事前学習方法を大幅に上回り、VQA、NLVR2、SNLI-VEなどの幅広いVLタスクでSOTA
+<!--more--></li>
 </ul>
 
 <h1 id="新規性差分">新規性・差分</h1>
@@ -119,7 +120,94 @@
       </li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Multimodal Pretraining" /><category term="Vision-Language Pretraining" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 最小限のVision-Language PretrainingフレームワークであるSimple Visual Language Model (SimVLM)を提案 Prefix Language Modelingによって余分なデータやタスク固有のカスタマイズが必要ない 従来の事前学習方法を大幅に上回り、VQA、NLVR2、SNLI-VEなどの幅広いVLタスクでSOTA 新規性・差分 効率的なVLの事前学習方法を提案 アイデア 背景 Masked Language Modeling (MLM) BERTのように文章の一部にマスクをし、そのトークンを復元する訓練をする事前学習 Language Modeling (LM) テキストの確率を最大化するように事前学習 Prefix Language Modeling (PrefixLM) LM Lossに倣って、下図のように、画像と文章前半を受け取り続きを予測することで、ゼロショットで画像と言語の関係を学習する アーキテクチャ 言語と画像で成功しているtransformerをバックボーンとする PrefixLMはDecoderのみでもEnc-Decにも適用できるが、Enc-Decの機能バイアスが下流タスクに寄与することを確認 画像：ResNetの最初の3つのブロックに通して、パッチ化してFlattenしてtransformerへ ViTで使用される単純な線形射影より有利 言語：サブワードトークンにトークン化 画像と言語に学習可能な1D位置埋め込み transformerレイヤー内の画像パッチに2D相対位置埋め込み 学習 ALIGINとC4データセットで1Mステップの事前学習 512個のTPU v3 4096 Img-Text(ALIGIN), 512 Text(C4) Finetuning後、6つのVLベンチマークで評価 結果 popular VL banchmarks SNLI-VE and Multi30k (Zero-shot) +1.37% accuracy VQA +3.74% ImageNet VQA(Ablation study) 生成例 (a) zero-shot image captioning (b) zero-shot cross-modality transfer on German image captioning (c) generative VQA (d) zero-shot visual text completion (e) zero-shot open-ended VQA.]]></summary></entry><entry><title type="html">Unified-IO: A Unified Model for Vision, Language, and Multi-Modal Tasks</title><link href="http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO.html" rel="alternate" type="text/html" title="Unified-IO: A Unified Model for Vision, Language, and Multi-Modal Tasks" /><published>2023-05-08T12:00:00+09:00</published><updated>2023-05-08T12:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO.html"><![CDATA[<h1 id="概要">概要</h1>
+</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Multimodal Pretraining" /><category term="Vision-Language Pretraining" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 最小限のVision-Language PretrainingフレームワークであるSimple Visual Language Model (SimVLM)を提案 Prefix Language Modelingによって余分なデータやタスク固有のカスタマイズが必要ない 従来の事前学習方法を大幅に上回り、VQA、NLVR2、SNLI-VEなどの幅広いVLタスクでSOTA]]></summary></entry><entry><title type="html">ViPLO: Vision Transformer based Pose-Conditioned Self-Loop Graph for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2023/05/09/ViPLO.html" rel="alternate" type="text/html" title="ViPLO: Vision Transformer based Pose-Conditioned Self-Loop Graph for Human-Object Interaction Detection" /><published>2023-05-09T13:00:00+09:00</published><updated>2023-05-09T13:00:00+09:00</updated><id>http://localhost:4000/hoi/2023/05/09/ViPLO</id><content type="html" xml:base="http://localhost:4000/hoi/2023/05/09/ViPLO.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>MOAモジュールと姿勢条件付きグラフの2段階のHOI検出器ViPROを提案</li>
+  <li>MOAモジュールにより量子化問題に対処し、ViTを特徴抽出器として利用</li>
+  <li>人間のプロセスに触発された姿勢条件付きグラフにより、人間の姿勢から豊富な情報を利用</li>
+  <li>1段階法と比べて、低複雑性と実世界シナリオへの適用性の利点がある
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>HICO-DETとV-COCOでSOTA</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>ViT Backboneを使用した特徴抽出
+    <ul>
+      <li><img src="/assets/images/posts/ViPLO/backbone.png" alt="" /></li>
+      <li>Faster R-CNNを使用して、画像から人間とオブジェクトを検出</li>
+      <li>特徴抽出にResNetではなくViTを使用</li>
+      <li>ViTに対応するためにMOAモジュールを導入
+        <ul>
+          <li>ViT Backboneの出力特徴から、人間とオブジェクトの特徴を抽出する</li>
+          <li>パッチと領域の重なりを利用して、Attention MAPを作成</li>
+          <li>MOAモジュールによりHOI検出で大きなパフォーマンスの向上
+            <ul>
+              <li><img src="/assets/images/posts/ViPLO/moa.png" alt="" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>姿勢条件付きグラフニューラルネットワーク
+    <ul>
+      <li><img src="/assets/images/posts/ViPLO/gnn.png" alt="" /></li>
+      <li>人間とオブジェクト間のインタラクションを検出するために使用</li>
+      <li>空間条件付きグラフ（SCG）ベース
+        <ul>
+          <li>ResNetとROIAlignを使用して抽出した特徴でノードを初期化</li>
+          <li>エッジエンコーディングを人間とオブジェクトの2つの境界ボックスの空間情報に基づく特徴で初期化</li>
+          <li>エッジエンコーディングに条件付けられたノード間で双方向メッセージパッシングを実行</li>
+          <li>更新されたノードエンコーディングとエッジエンコーディングはHOIの分類に使用</li>
+        </ul>
+      </li>
+      <li>姿勢認識エッジエンコーディング
+        <ul>
+          <li>空間情報だけでなく人間の姿勢情報に基づいて初期化する</li>
+          <li>CGと同様にペアワイズ空間特徴（つまり、クエリ）を計算</li>
+          <li>各関節の座標と関節から、ペアワイズ関節特徴（つまり、キー）を計算</li>
+          <li>クエリとキーの内積によって各人間の関節の注意スコアを計算</li>
+        </ul>
+      </li>
+      <li>メッセージパッシングと姿勢
+        <ul>
+          <li>各人間の関節のローカル領域ボックスのViT出力をUnFlattenしてROIAlignを適用してローカル特徴を抽出</li>
+          <li>抽出特徴を人間のノードエンコーディングを更新するために使用</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>HICO-DET &amp; V-COCO
+    <ul>
+      <li><img src="/assets/images/posts/ViPLO/HICO.png" alt="" /></li>
+      <li>HICOで2.07 mAP向上</li>
+    </ul>
+  </li>
+  <li>SCGとの比較
+    <ul>
+      <li><img src="/assets/images/posts/ViPLO/SCG.png" alt="" /></li>
+      <li>left: ViPLO, right: SCG</li>
+    </ul>
+  </li>
+  <li>CLIP重みの有効性
+    <ul>
+      <li><img src="/assets/images/posts/ViPLO/CLIP.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction" /><category term="CLIP" /><category term="ViT" /><summary type="html"><![CDATA[概要 MOAモジュールと姿勢条件付きグラフの2段階のHOI検出器ViPROを提案 MOAモジュールにより量子化問題に対処し、ViTを特徴抽出器として利用 人間のプロセスに触発された姿勢条件付きグラフにより、人間の姿勢から豊富な情報を利用 1段階法と比べて、低複雑性と実世界シナリオへの適用性の利点がある]]></summary></entry><entry><title type="html">Unified-IO: A Unified Model for Vision, Language, and Multi-Modal Tasks</title><link href="http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO.html" rel="alternate" type="text/html" title="Unified-IO: A Unified Model for Vision, Language, and Multi-Modal Tasks" /><published>2023-05-08T12:00:00+09:00</published><updated>2023-05-08T12:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>統一された入力と出力を使用して、姿勢推定、物体検出、深度推定、画像生成などのCVタスク、領域キャプションや参照表現などのVLタスク、質問応答やテキスト要約などのNLタスクを実行する統合モデルUNIFIED-IOを提案</li>
@@ -879,176 +967,4 @@ tion detection）を提案</li>
       <li><img src="/assets/images/posts/QAHOI/4.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction" /><category term="Transformer" /><summary type="html"><![CDATA[概要 transformerベースの手法QAHOI（Query-Based Anchors for Human-Object Interac tion detection）を提案 マルチスケールで特徴を抽出し，クエリベースのアンカーを用いてHOIを予測する 強力なバックボーンによって、精度が大幅に向上した]]></summary></entry><entry><title type="html">FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2023/02/21/FGAHOI.html" rel="alternate" type="text/html" title="FGAHOI: Fine-Grained Anchors for Human-Object Interaction Detection" /><published>2023-02-21T13:00:00+09:00</published><updated>2023-02-21T13:00:00+09:00</updated><id>http://localhost:4000/hoi/2023/02/21/FGAHOI</id><content type="html" xml:base="http://localhost:4000/hoi/2023/02/21/FGAHOI.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>MSS, HSAM, TAMという3つから成るEnd-to-endのtransformerベースの手法(FGAHOI)を提案
-    <ul>
-      <li>MSSは人間、物体、インタラクション領域の特徴を抽出</li>
-      <li>HSAMとTAMは抽出された特徴量とクエリ埋め込みを
-  階層的な空間視点とタスク視点で順番に意味的に整列・結合</li>
-      <li>複雑な学習を軽減するために、新しい学習戦略Stage-wise Training Strategyを設計</li>
-    </ul>
-  </li>
-  <li>新規のデータセットHOI-SDCを提案</li>
-  <li>既存手法から大幅に精度向上
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>以下の問題を低減
-    <ul>
-      <li>複雑な背景情報を持つ画像からいかにして重要な特徴を抽出するか</li>
-      <li>抽出した特徴量とクエリ埋め込みをどのように意味的に整合させるか</li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li>全体構造
-    <ul>
-      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-1.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>Multi-Scale Features Extractor
-    <ul>
-      <li>
-\[M = F_{encoder}(F_{flatten}(\phi(x)),p,s,r,l) \in \mathbb{R}^{N_s \times C_d}\]
-      </li>
-      <li>事前学習済みBackbone(Swin Transformer)でマルチスケール特徴を抽出</li>
-      <li>transformer encoderで符号化して意味特徴量を得る</li>
-    </ul>
-  </li>
-  <li>Decoder
-    <ul>
-      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-2.png" alt="" /></li>
-      <li>Multi-Scale Sampling (MSS)
-        <ul>
-          <li>
-\[x^i_s = F_{sample} (reshape(M)^i, A, size^i, bilinear)\]
-          </li>
-          <li>transformer encoderの特徴を元の形状に整形</li>
-          <li>小さなインスタンスを検出する浅い特徴量では小さくサンプリング</li>
-          <li>大きなインスタンスを検出する深い特徴量では大きくサンプリング
-            <ul>
-              <li>サイズに関係なくインスタンスを検出するため</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>Hierarchical Spatial-Aware Merging (HSAM)
-        <ul>
-          <li>サンプリングした各層の特徴をKeyとValue，位置PとコンテキストCをQueryとしてMHA
-            <ul>
-              <li>
-\[C_u = C + F_{MHA}\big((C+P)W^q, (C+P)W^k, CW^v \big)\]
-              </li>
-              <li>
-\[x^u_m = F_{concat} (\mathrm{head}_1, ... , \mathrm{head}_h) W^O\]
-                <ul>
-                  <li>
-\[\mathrm{where} \space \mathrm{head}_n = \mathrm{Softmax\big(\frac{(C_u W^q_n)\cdot(x^i_s W^k_n)^T}{\sqrt{d_k}}\big)} (x^i_s W^v_n)\]
-                  </li>
-                </ul>
-              </li>
-              <li>特徴内Attention</li>
-            </ul>
-          </li>
-          <li>MHAに通した各層の特徴をConcat
-            <ul>
-              <li>
-\[X_m = F_{concat} ({x^i_m}_{i=0,1,2}) \in \mathbb{R}^{B \times N_q \times N_L \times N_{hd}}\]
-              </li>
-            </ul>
-          </li>
-          <li>Concatした特徴をKeyとValue，位置PとコンテキストCをQueryとしてMHA
-            <ul>
-              <li>
-\[X_u = F_{concat} (\mathrm{head}_1, ... , \mathrm{head}_h) W^O\]
-                <ul>
-                  <li>
-\[\mathrm{where} \space \mathrm{head}_n = \mathrm{Softmax\big(\frac{(C_u W^q_n)\cdot(X_m W^k_n)^T}{\sqrt{d_k}}\big)} (X W^v_n)\]
-                  </li>
-                </ul>
-              </li>
-              <li>特徴間Attention</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>Task-Aware Mergin (TAM)
-        <ul>
-          <li>HSAMの出力特徴とコンテンツ埋め込みを融合しCross Attention
-            <ul>
-              <li>
-\[X = F_{stack} (C_u, X_u) \in \mathbb{R}^{B \times N_q \times (2 \times N_{hd})}\]
-              </li>
-              <li>
-\[X_{switch} = F_{stack} (\mathrm{head}_1, ... , \mathrm{head}_h) W^O\]
-                <ul>
-                  <li>
-\[\mathrm{where} \space \mathrm{head}_n = \mathrm{Softmax\big(\frac{(C_u W^q_n)\cdot(X W^k_n)^T}{\sqrt{d_k}}\big)} (X W^v_n)\]
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-          <li>適切なチャンネルを選択する動的なスイッチを生成
-            <ul>
-              <li>
-\[Switch^{\gamma} = F_{normalize}(D_{mlp}(X_{switch}))^{\gamma} \in \mathbb{R}^{B \times N_q \times 2 \times 2}\]
-              </li>
-            </ul>
-          </li>
-          <li>HSAMの出力特徴に対し，スイッチで一部を選択
-            <ul>
-              <li>
-\[U^{\gamma} = F_{Max} \{Switch^{\gamma}_{i,0} \odot X^{\gamma}_u + Switch^{\gamma}_{i,1}\}_{i=0,1} + C^{\gamma}_u\]
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>Decoding with Fine-Grained Anchor
-        <ul>
-          <li>内容埋め込みを線形層、リシェイプ、SoftMaxに通すことで
-  Cross AttentionのQueryとなるAnchorとKeyとなるAttention weightを生成</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>HOI Detection Head
-    <ul>
-      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-13.png" alt="" /></li>
-      <li>HOI埋め込みと初期アンカーを利用して，人間と物体のBB・物体のクラス・インタラクションを予測
-        <ul>
-          <li><img src="/assets/images/posts/FGAHOI/FGAHOI-14.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>HICO-DET
-    <ul>
-      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-15.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>V-COCO
-    <ul>
-      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-16.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>HOI-SDC
-    <ul>
-      <li><img src="/assets/images/posts/FGAHOI/FGAHOI-17.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction" /><category term="FGAHOI" /><category term="Fine-Grained Anchors" /><category term="Noisy Background" /><category term="Semantically Aligning" /><summary type="html"><![CDATA[概要 MSS, HSAM, TAMという3つから成るEnd-to-endのtransformerベースの手法(FGAHOI)を提案 MSSは人間、物体、インタラクション領域の特徴を抽出 HSAMとTAMは抽出された特徴量とクエリ埋め込みを 階層的な空間視点とタスク視点で順番に意味的に整列・結合 複雑な学習を軽減するために、新しい学習戦略Stage-wise Training Strategyを設計 新規のデータセットHOI-SDCを提案 既存手法から大幅に精度向上]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction" /><category term="Transformer" /><summary type="html"><![CDATA[概要 transformerベースの手法QAHOI（Query-Based Anchors for Human-Object Interac tion detection）を提案 マルチスケールで特徴を抽出し，クエリベースのアンカーを用いてHOIを予測する 強力なバックボーンによって、精度が大幅に向上した]]></summary></entry></feed>

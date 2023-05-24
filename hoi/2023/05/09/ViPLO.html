@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>ViPLO: Vision Transformer based Pose-Conditioned Self-Loop Graph for Human-Object Interaction Detection</title>
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/ViPLO/top.png" class="hero">
+    <h1>ViPLO: Vision Transformer based Pose-Conditioned Self-Loop Graph for Human-Object Interaction Detection</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2304.08114v1" target="_blank"> https://arxiv.org/abs/2304.08114v1</a></p>
+    <p><span class="fa fa-calendar"></span> May 9, 2023</p>
+    <p><span class="fa fa-flag"></span> Human-Object Interaction, CLIP, ViT, </p>
+    <p><span class="fa fa-graduation-cap"></span> CVPR (2023) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=ViPLO: Vision Transformer based Pose-Conditioned Self-Loop Graph for Human-Object Interaction Detection&url=https://absolute-value.github.io/hoi/2023/05/09/ViPLO.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/hoi/2023/05/09/ViPLO.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/hoi/2023/05/09/ViPLO.html&title=ViPLO: Vision Transformer based Pose-Conditioned Self-Loop Graph for Human-Object Interaction Detection" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=ViPLO: Vision Transformer based Pose-Conditioned Self-Loop Graph for Human-Object Interaction Detection&body=ViPLO: Vision Transformer based Pose-Conditioned Self-Loop Graph for Human-Object Interaction Detection https://absolute-value.github.io/hoi/2023/05/09/ViPLO.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>MOAモジュールと姿勢条件付きグラフの2段階のHOI検出器ViPROを提案</li>
+  <li>MOAモジュールにより量子化問題に対処し、ViTを特徴抽出器として利用</li>
+  <li>人間のプロセスに触発された姿勢条件付きグラフにより、人間の姿勢から豊富な情報を利用</li>
+  <li>1段階法と比べて、低複雑性と実世界シナリオへの適用性の利点がある
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>HICO-DETとV-COCOでSOTA</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>ViT Backboneを使用した特徴抽出
+    <ul>
+      <li><img src="/assets/images/posts/ViPLO/backbone.png" alt="" /></li>
+      <li>Faster R-CNNを使用して、画像から人間とオブジェクトを検出</li>
+      <li>特徴抽出にResNetではなくViTを使用</li>
+      <li>ViTに対応するためにMOAモジュールを導入
+        <ul>
+          <li>ViT Backboneの出力特徴から、人間とオブジェクトの特徴を抽出する</li>
+          <li>パッチと領域の重なりを利用して、Attention MAPを作成</li>
+          <li>MOAモジュールによりHOI検出で大きなパフォーマンスの向上
+            <ul>
+              <li><img src="/assets/images/posts/ViPLO/moa.png" alt="" /></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>姿勢条件付きグラフニューラルネットワーク
+    <ul>
+      <li><img src="/assets/images/posts/ViPLO/gnn.png" alt="" /></li>
+      <li>人間とオブジェクト間のインタラクションを検出するために使用</li>
+      <li>空間条件付きグラフ（SCG）ベース
+        <ul>
+          <li>ResNetとROIAlignを使用して抽出した特徴でノードを初期化</li>
+          <li>エッジエンコーディングを人間とオブジェクトの2つの境界ボックスの空間情報に基づく特徴で初期化</li>
+          <li>エッジエンコーディングに条件付けられたノード間で双方向メッセージパッシングを実行</li>
+          <li>更新されたノードエンコーディングとエッジエンコーディングはHOIの分類に使用</li>
+        </ul>
+      </li>
+      <li>姿勢認識エッジエンコーディング
+        <ul>
+          <li>空間情報だけでなく人間の姿勢情報に基づいて初期化する</li>
+          <li>CGと同様にペアワイズ空間特徴（つまり、クエリ）を計算</li>
+          <li>各関節の座標と関節から、ペアワイズ関節特徴（つまり、キー）を計算</li>
+          <li>クエリとキーの内積によって各人間の関節の注意スコアを計算</li>
+        </ul>
+      </li>
+      <li>メッセージパッシングと姿勢
+        <ul>
+          <li>各人間の関節のローカル領域ボックスのViT出力をUnFlattenしてROIAlignを適用してローカル特徴を抽出</li>
+          <li>抽出特徴を人間のノードエンコーディングを更新するために使用</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>HICO-DET &amp; V-COCO
+    <ul>
+      <li><img src="/assets/images/posts/ViPLO/HICO.png" alt="" /></li>
+      <li>HICOで2.07 mAP向上</li>
+    </ul>
+  </li>
+  <li>SCGとの比較
+    <ul>
+      <li><img src="/assets/images/posts/ViPLO/SCG.png" alt="" /></li>
+      <li>left: ViPLO, right: SCG</li>
+    </ul>
+  </li>
+  <li>CLIP重みの有効性
+    <ul>
+      <li><img src="/assets/images/posts/ViPLO/CLIP.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa fa-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>
