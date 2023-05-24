@@ -36,7 +36,7 @@
   <body>
     <img src="/notes/images/tmux/tmux.png" class="hero">
     <h1>tmux 個人的メモ</h1>
-    <p><span class="fa fa-calendar"></span> Nov 17, 2022<span style="color: blue; "> (Updated: Mar 27, 2023)</span></p>
+    <p><span class="fa fa-calendar"></span> Nov 17, 2022<span style="color: blue; "> (Updated: May 24, 2023)</span></p>
     <p><span class="fa fa-flag"></span> Memo, tmux, </p>
     <div class="share-btn-wrapper">
       <a href="https://twitter.com/share?text=tmux 個人的メモ&url=https://absolute-value.github.io/notes/tmux.html" class="share-btn share-twitter"><span class="fa fa-twitter fa-2x"></span></a>
@@ -62,6 +62,7 @@
 <li class="toc-entry toc-h2"><a href="#カスタマイズ例">カスタマイズ例</a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h1"><a href="#tmuxのサイズが小さくなってしまう場合の対処法">tmuxのサイズが小さくなってしまう場合の対処法</a></li>
 <li class="toc-entry toc-h1"><a href="#参考になるurl">参考になるURL</a></li>
 </ul>
     </div>
@@ -76,7 +77,7 @@ ssh接続を終了してもプログラムを動かし続けてログを残す�
 
 <h1 id="起動と終了">起動と終了</h1>
 
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 新規セッション開始</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 新規セッション開始（セッション名は0）</span>
 tmux
 
 <span class="c"># 名前をつけて新規セッション開始</span>
@@ -219,6 +220,13 @@ tmux a
 
 <p>.tmux.conf
 <script src="https://gist.github.com/Absolute-Value/616203b77258c4ccc0f4b28bd5d22faf.js"></script></p>
+
+<h1 id="tmuxのサイズが小さくなってしまう場合の対処法">tmuxのサイズが小さくなってしまう場合の対処法</h1>
+<p>tmuxのサイズが他の接続端末のサイズに合わせて小さくなってしまった場合に<br />
+他の端末の接続を切って、大きさを現在の画面に合わせるには以下を実行</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tmux attach <span class="nt">-t</span> &lt;セッション名&gt; <span class="nt">-d</span>
+</code></pre></div></div>
 
 <h1 id="参考になるurl">参考になるURL</h1>
 <ul>
