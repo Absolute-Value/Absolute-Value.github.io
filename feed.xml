@@ -1,4 +1,112 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-23T01:22:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Neural Machine Translation of Rare Words with Subword Units</title><link href="http://localhost:4000/language/2023/05/04/BPE.html" rel="alternate" type="text/html" title="Neural Machine Translation of Rare Words with Subword Units" /><published>2023-05-04T12:00:00+09:00</published><updated>2023-05-04T12:00:00+09:00</updated><id>http://localhost:4000/language/2023/05/04/BPE</id><content type="html" xml:base="http://localhost:4000/language/2023/05/04/BPE.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-05-24T19:46:19+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Unified-IO: A Unified Model for Vision, Language, and Multi-Modal Tasks</title><link href="http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO.html" rel="alternate" type="text/html" title="Unified-IO: A Unified Model for Vision, Language, and Multi-Modal Tasks" /><published>2023-05-08T12:00:00+09:00</published><updated>2023-05-08T12:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>統一された入力と出力を使用して、姿勢推定、物体検出、深度推定、画像生成などのCVタスク、領域キャプションや参照表現などのVLタスク、質問応答やテキスト要約などのNLタスクを実行する統合モデルUNIFIED-IOを提案</li>
+  <li>UNIFIED-IOは、単一のtransformerベースのアーキテクチャを使用して、CVとNLの90を超える多様なデータセットを共同でトレーニングできる</li>
+  <li>GRITベンチマークで7つのタスクすべてを実行できる最初のモデルであり、NYUv2-Depth、ImageNet、VQA2.0、OK-VQA、Swig、VizWizGround、BoolQ、およびSciTailなどの16の多様なベンチマークでタスク固有のFinetuningなしで優れた結果
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>モダリティ固有のブランチを必要とせずに、GRITベンチマークで7つのタスクをサポートする最初のモデル</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/Unified-IO/Unified-IO-2.png" alt="" /></p>
+<ul>
+  <li>アーキテクチャ
+    <ul>
+      <li>Text-to-Text Transfer Transformer (T5)に従って、基本は純粋なTransformer Encoder-Decoder構造</li>
+      <li>画像はViTに倣ってパッチトークンにし、2次元絶対位置埋め込みを追加</li>
+      <li>入力は言語256画像576トークン(384x384画像から24x24パッチ)で、出力は言語128画像256トークン(256x256画像から16x16パッチ)</li>
+      <li>パラメータ
+        <ul>
+          <li><img src="/assets/images/posts/Unified-IO/Unified-IO-3.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>学習
+    <ul>
+      <li>2つの事前学習
+        <ul>
+          <li>言語のノイズ除去(BERTと同様)
+            <ul>
+              <li>半分がテキストデータ(C4とWikipedia)</li>
+              <li>残りがImagenet21kなどの画像とクラスデータや、YFCC15Mなどの画像とキャプションデータ</li>
+            </ul>
+          </li>
+          <li>画像のマスクノイズ除去(MAEと同様)
+            <ul>
+              <li>CVデータの一部の画像を使用</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>学習とデータセット
+        <ul>
+          <li>62箇所から95の公開データセットを使用
+            <ul>
+              <li><img src="/assets/images/posts/Unified-IO/Unified-IO-4.png" alt="" /></li>
+              <li><img src="/assets/images/posts/Unified-IO/Unified-IO-5.png" alt="" /></li>
+            </ul>
+          </li>
+          <li>バッチにデータセットを混ぜて訓練
+            <ul>
+              <li>データの多い画像合成は3/16、少ない密度ラベリングは1/16、それ以外はグループで均等</li>
+              <li>グループ内ではデータセットサイズの平方根に比例してサンプリング</li>
+              <li>一部のタスクはめったにサンプリングされない（深度推定は0.43％）</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>語彙
+    <ul>
+      <li>言語が32152，場所が1000，画像が16384の計49536</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>GRIT ベンチマーク
+    <ul>
+      <li>画像分類、物体検出、VQA、参照表現、セグメンテーション、キーポイント、および表面法線推定など7つのタスクで構成</li>
+      <li>既存で最も多いGPV-2が4タスクしかできないのに対し、UNIFIED-IOは7つのタスクすべてをサポート</li>
+      <li>UNIFIED-IO XLは画像分類、VQA、参照表現、セグメンテーションにおいてSOTA</li>
+      <li>キーポイントはMask R-CNNより劣っている（推論が二段階のため）
+        <ul>
+          <li><img src="/assets/images/posts/Unified-IO/Unified-IO-6.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Detection
+    <ul>
+      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-7.png" alt="" /></li>
+      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-8.png" alt="" /></li>
+      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-9.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Reration
+    <ul>
+      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-10.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Other
+    <ul>
+      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-11.png" alt="" /></li>
+      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-12.png" alt="" /></li>
+      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-13.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Multimodal Pretraining" /><category term="Multitask Learning" /><category term="Unified Frameworks" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 統一された入力と出力を使用して、姿勢推定、物体検出、深度推定、画像生成などのCVタスク、領域キャプションや参照表現などのVLタスク、質問応答やテキスト要約などのNLタスクを実行する統合モデルUNIFIED-IOを提案 UNIFIED-IOは、単一のtransformerベースのアーキテクチャを使用して、CVとNLの90を超える多様なデータセットを共同でトレーニングできる GRITベンチマークで7つのタスクすべてを実行できる最初のモデルであり、NYUv2-Depth、ImageNet、VQA2.0、OK-VQA、Swig、VizWizGround、BoolQ、およびSciTailなどの16の多様なベンチマークでタスク固有のFinetuningなしで優れた結果]]></summary></entry><entry><title type="html">Neural Machine Translation of Rare Words with Subword Units</title><link href="http://localhost:4000/language/2023/05/04/BPE.html" rel="alternate" type="text/html" title="Neural Machine Translation of Rare Words with Subword Units" /><published>2023-05-04T12:00:00+09:00</published><updated>2023-05-04T12:00:00+09:00</updated><id>http://localhost:4000/language/2023/05/04/BPE</id><content type="html" xml:base="http://localhost:4000/language/2023/05/04/BPE.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>実際の翻訳はopen-vocabularyであるのに対し、ニューラル機械翻訳(NMT)は固定の語彙で動作し、語彙にない単語は辞書で対処してきた（翻訳は1対1とは限らないので不適切）</li>
@@ -995,84 +1103,4 @@ tion detection）を提案</li>
       <li><img src="/assets/images/posts/STIP/14.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Transformer" /><summary type="html"><![CDATA[概要 新しいtransformerベースのHOI手法のStructure-aware Transformer over Interaction Proposals (STIP)を提案 「インタラクションのある人間と物体のペア提案」と「構造考慮型transformerで提案をHOIに変換」の2つのフェーズでHOIを予測 構造考慮型transformerはバニラtransformerに対し、全体的意味構造および各相互作用提案内のヒト／モノの局所的空間構造を追加的に符号化することでHOI予測を強化している]]></summary></entry><entry><title type="html">CLRNet: Cross Layer Refinement Network for Lane Detection</title><link href="http://localhost:4000/lane%20detection/2022/12/15/CLRNet.html" rel="alternate" type="text/html" title="CLRNet: Cross Layer Refinement Network for Lane Detection" /><published>2022-12-15T12:00:00+09:00</published><updated>2022-12-15T12:00:00+09:00</updated><id>http://localhost:4000/lane%20detection/2022/12/15/CLRNet</id><content type="html" xml:base="http://localhost:4000/lane%20detection/2022/12/15/CLRNet.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>特徴抽出したFPN構造の特徴マップを、上位から下位まで複合的に活用する車線検出手法であるCross Layer Refinement Network (CLRNet)を提案</li>
-  <li>CULaneとTuSimpleとLLAMASのデータセットで従来手法を上回る
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>車線の部分領域と全体を組み合わせて大域的な特徴表現を獲得するROIGatherを使用</li>
-  <li>車線の検出結果に対するIoUとしてLIoU(Line IoU)を定義し、LIoUの最大化を損失関数に含んだ</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li><img src="/assets/images/posts/CLRNet/img1.png" alt="" /></li>
-  <li>二次元の点列$𝑃$（レーン事前分布）をネットワークで出力
-    <ul>
-      <li>前景と背景の確率、線の長さ、角度、予測と正解の水平距離</li>
-    </ul>
-  </li>
-  <li>ResNetをBackboneとし、FPN構造から特徴マップ$𝐿_0, 𝐿_1, 𝐿_2$を生成</li>
-  <li>点列$P$と特徴マップ$L$を組み合わせる
-    <ul>
-      <li>
-\[P_t = P_{t-1} \circ R_t (L_{t-1},P_{t-1})\]
-      </li>
-      <li>上位から下位の特徴を活用するため</li>
-    </ul>
-  </li>
-  <li>点列Pをもとに特徴マップ$L$をROIAlignで抽出</li>
-  <li>Attentionをとる
-    <ul>
-      <li>
-\[\mathcal{G} = \mathcal{W}\mathcal{X}^T_f\]
-      </li>
-      <li>
-\[\mathcal{W} = f(\frac{\mathcal{X}^T_p \mathcal{X}_f}{\sqrt{C}})\]
-      </li>
-    </ul>
-  </li>
-  <li>Line IoU Loss
-    <ul>
-      <li>点を別々の変数として扱うため、既存の距離損失を用いると精度が低くなってしまう</li>
-      <li>そこで、車線専用のLossを提案
-        <ul>
-          <li>
-\[IoU = \frac{d^\omicron_i}{d^u_i} = \frac{\min(x^p_i+e, x^q_i+e) - \max(x^p_i+e, x^q_i+e)}{\max(x^p_i-e, x^q_i-e) - \min(x^p_i-e, x^q_i-e)}\]
-          </li>
-          <li>
-\[LIoU = \frac{\sum^N_{i=1} d^\omicron_i}{\sum^N_{i=1} d^u_i}\]
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>CULane
-    <ul>
-      <li><img src="/assets/images/posts/CLRNet/img7.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>LLAMAS
-    <ul>
-      <li><img src="/assets/images/posts/CLRNet/img8.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>TuSimple
-    <ul>
-      <li><img src="/assets/images/posts/CLRNet/img9.png" alt="" /></li>
-      <li><img src="/assets/images/posts/CLRNet/img10.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Lane Detection" /><category term="Lane Detection" /><summary type="html"><![CDATA[概要 特徴抽出したFPN構造の特徴マップを、上位から下位まで複合的に活用する車線検出手法であるCross Layer Refinement Network (CLRNet)を提案 CULaneとTuSimpleとLLAMASのデータセットで従来手法を上回る]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction Detection" /><category term="Transformer" /><summary type="html"><![CDATA[概要 新しいtransformerベースのHOI手法のStructure-aware Transformer over Interaction Proposals (STIP)を提案 「インタラクションのある人間と物体のペア提案」と「構造考慮型transformerで提案をHOIに変換」の2つのフェーズでHOIを予測 構造考慮型transformerはバニラtransformerに対し、全体的意味構造および各相互作用提案内のヒト／モノの局所的空間構造を追加的に符号化することでHOI予測を強化している]]></summary></entry></feed>
