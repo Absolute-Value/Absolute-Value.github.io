@@ -1,4 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-09-21T00:45:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">OFASys: A Multi-Modal Multi-Task Learning System for Building Generalist Models</title><link href="http://localhost:4000/vision%20and%20language/2023/05/15/OFASys.html" rel="alternate" type="text/html" title="OFASys: A Multi-Modal Multi-Task Learning System for Building Generalist Models" /><published>2023-05-15T12:00:00+09:00</published><updated>2023-05-15T12:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/05/15/OFASys</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/05/15/OFASys.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-09-21T01:59:57+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">RedCaps: Web-curated image-text data created by the people, for the people</title><link href="http://localhost:4000/caption/2023/07/03/RedCaps.html" rel="alternate" type="text/html" title="RedCaps: Web-curated image-text data created by the people, for the people" /><published>2023-07-03T10:50:00+09:00</published><updated>2023-07-03T10:50:00+09:00</updated><id>http://localhost:4000/caption/2023/07/03/RedCaps</id><content type="html" xml:base="http://localhost:4000/caption/2023/07/03/RedCaps.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>ビジョンと言語のタスクのための大規模データセットは、検索エンジンをクエリにしたりHTMLのaltテキストを収集することで構築されているが、ウェブデータはノイズが多いため、品質を維持するために複雑なフィルタリングパイプラインが必要</li>
+  <li>最小限のフィルタリングで高品質なデータを収集するための代替データソースを探索</li>
+  <li>Redditから収集された1200万の画像とキャプションのペアのRedCapsという大規模なデータセットを紹介
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>Redditから収集された画像とキャプションのペアで構成</li>
+  <li>独自のデータ収集パイプラインやフィルタリング手法を使用して高品質なデータを提供</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>パイプライン
+    <ul>
+      <li>ステップ1：Subredditの選択
+        <ul>
+          <li>手動で選ばれた一連のSubredditからデータを収集</li>
+          <li>Subredditの選択により、個々のインスタンスに注釈を付けることなく、データセットの構成を調整することができる</li>
+          <li>人々の画像を共有したり、コメントしたりすることを目的とするサブレディットは除外</li>
+        </ul>
+      </li>
+      <li>ステップ2：画像投稿のフィルタリング
+        <ul>
+          <li>PushshiftとRedditのAPIを使用して、選択したSubredditに投稿されたすべての画像投稿をダウンロード</li>
+          <li>画像はReddit、Imgur、Flickrの3つのドメインにホストされているもののみ収集</li>
+          <li>人気のないコンテンツや不適切なコンテンツを避けるために、2つ未満の評価やNSFWマークのある投稿は除外</li>
+        </ul>
+      </li>
+      <li>ステップ3：キャプションのクリーニング
+        <ul>
+          <li>Redditの投稿タイトルは他の大規模なソース（例：altテキスト）に比べてノイズが少ないため、テキストのクリーニングは最小限</li>
+          <li>キャプションを小文字に変換し、文字のアクセント、絵文字、非ラテン文字を削除</li>
+          <li>括弧で囲まれた部分を簡単なパターンマッチングで削除</li>
+          <li>ソーシャルメディアのハンドル（’@’で始まる単語）を[USR]トークンに置き換え、ユーザーのプライバシーを保護し重複を減らす</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>プライバシー保護
+    <ul>
+      <li>RetinaFaceで信頼度0.9以上の顔が検出されたものを削除</li>
+    </ul>
+  </li>
+  <li>NSFW画像
+    <ul>
+      <li>InceptionV3でポルノまたはヘンタイとして検出されたものを削除</li>
+    </ul>
+  </li>
+  <li>Potentially derogatory language
+    <ul>
+      <li>軽蔑的な言葉を含むものを削除</li>
+    </ul>
+  </li>
+  <li>Consent
+    <ul>
+      <li>ユーザーはデータセットになることを同意していないため、Redditの投稿が消えたらデータセットから削除され、削除申請できるフォームも用意</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>image-textデータセットとの比較
+    <ul>
+      <li><img src="/assets/images/posts/RedCaps/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>TOP20 Subreddit
+    <ul>
+      <li><img src="/assets/images/posts/RedCaps/3.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Captionの長さ
+    <ul>
+      <li><img src="/assets/images/posts/RedCaps/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>言語的多様性の比較
+    <ul>
+      <li><img src="/assets/images/posts/RedCaps/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>言語統計
+    <ul>
+      <li>
+        <p><img src="/assets/images/posts/RedCaps/6.png" alt="" /></p>
+      </li>
+      <li>VirTex-v2を大規模データセットでPretrainしたときの、7つのデータセットのゼロショット画像分類の比較
+        <ul>
+          <li>6つのデータセットで他の大規模データセットを上回る</li>
+        </ul>
+      </li>
+      <li><img src="/assets/images/posts/RedCaps/7.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Caption" /><category term="Dataset" /><category term="Caption" /><summary type="html"><![CDATA[概要 ビジョンと言語のタスクのための大規模データセットは、検索エンジンをクエリにしたりHTMLのaltテキストを収集することで構築されているが、ウェブデータはノイズが多いため、品質を維持するために複雑なフィルタリングパイプラインが必要 最小限のフィルタリングで高品質なデータを収集するための代替データソースを探索 Redditから収集された1200万の画像とキャプションのペアのRedCapsという大規模なデータセットを紹介]]></summary></entry><entry><title type="html">OFASys: A Multi-Modal Multi-Task Learning System for Building Generalist Models</title><link href="http://localhost:4000/vision%20and%20language/2023/05/15/OFASys.html" rel="alternate" type="text/html" title="OFASys: A Multi-Modal Multi-Task Learning System for Building Generalist Models" /><published>2023-05-15T12:00:00+09:00</published><updated>2023-05-15T12:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/05/15/OFASys</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/05/15/OFASys.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>マルチモーダルの汎用モデル学習システムOFASysを提案
@@ -943,93 +1046,4 @@
       </li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><summary type="html"><![CDATA[概要 登録不要のウェアラブルカメラを用いた物体の発見支援システムGO-Finderを提案 手持ちの物体を自動的に検出しグループ化しておくことで、アプリから対象物の最後の出現を取得できる 手で扱う物体に限定することで、対象となる物体を大幅に削減 物体画像をクエリとして利用し、候補の中から物体を選択することができる]]></summary></entry><entry><title type="html">Flamingo: a Visual Language Model for Few-Shot Learning</title><link href="http://localhost:4000/vision%20and%20language/2023/03/14/Flamingo.html" rel="alternate" type="text/html" title="Flamingo: a Visual Language Model for Few-Shot Learning" /><published>2023-03-14T22:00:00+09:00</published><updated>2023-03-14T22:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/03/14/Flamingo</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/03/14/Flamingo.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>少数のアノテーションで重みの更新なしに新しいタスクに迅速に対応できるVision&amp;LanguageモデルであるFlamingoを提案</li>
-  <li>数千倍のタスク専用データでFinetuningに対して、6/16のタスクでSotA
-<!--more-->
-<img src="/assets/images/posts/Flamingo/1.png" alt="" />
-<img src="/assets/images/posts/Flamingo/2.png" alt="" /></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>言語モデルのFew-shot学習をPerceiver-basedアーキテクチャなどを用いて画像やビデオを入力できるように拡張</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<p><img src="/assets/images/posts/Flamingo/3.png" alt="" /></p>
-
-<ul>
-  <li>概要
-    <ul>
-      <li>Vision Encoderから画像または動画の特徴を取得し、Perceiver Resamplerで固定数の画像トークンにする</li>
-      <li>画像トークンをCross AttentionでLM layerの間に挟むことで、LM Blockを視覚情報で条件付けする</li>
-    </ul>
-  </li>
-  <li>Vision Encoder
-    <ul>
-      <li>事前学習済みNormalizerFree ResNet (NFNet)を使用</li>
-      <li>ビデオの場合は1FPSごとにEncoderに通し、時間埋め込みを追加</li>
-    </ul>
-  </li>
-  <li>Perceiver Resampler
-    <ul>
-      <li>サイズの異なる特徴マップを固定数の画像トークンを生成
-        <ul>
-          <li>計算の複雑さを軽減</li>
-        </ul>
-      </li>
-      <li>V&amp;L Sampler Moduleによって通常のTransformerやMLPを凌駕</li>
-    </ul>
-  </li>
-  <li>GATED XATTN-DENSE layers within a frozen pretrained LM
-    <ul>
-      <li><img src="/assets/images/posts/Flamingo/4.png" alt="" /></li>
-      <li>事前学習済みのLM layer(Chinchilla)を用意し、重みは固定する</li>
-      <li>その中にGATED XATTN-DENSE layersを挿入</li>
-      <li>残差ブロックの接続前にtanhを掛けることで、学習の安定化と性能の向上</li>
-    </ul>
-  </li>
-  <li>Vision&amp;Languageデータセットで学習
-    <ul>
-      <li>M3W(画像とテキストが交互に並ぶデータセット)</li>
-      <li>ALIGN, LTIP(画像とテキストのペア)</li>
-      <li>VTP(動画とテキストのペア)</li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>Few-shot learning
-    <ul>
-      <li><img src="/assets/images/posts/Flamingo/5.png" alt="" /></li>
-      <li>FlamingoはFinetuningを行わずに16個中6個のタスクでSotA
-        <ul>
-          <li>比較対象(100%)はFinetuning（重みの更新）済みの最新手法</li>
-        </ul>
-      </li>
-      <li>また、白色のZero/Few Shotを上回る
-        <ul>
-          <li><img src="/assets/images/posts/Flamingo/6.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Finetuning
-    <ul>
-      <li><img src="/assets/images/posts/Flamingo/7.png" alt="" /></li>
-      <li>FewshotでSotAを上回らなかった9個中5個のタスクでSotA</li>
-    </ul>
-  </li>
-  <li>Ablation studies
-    <ul>
-      <li><img src="/assets/images/posts/Flamingo/8.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Vision and Language" /><category term="Few-shot Learning" /><category term="Transformer" /><summary type="html"><![CDATA[概要 少数のアノテーションで重みの更新なしに新しいタスクに迅速に対応できるVision&amp;LanguageモデルであるFlamingoを提案 数千倍のタスク専用データでFinetuningに対して、6/16のタスクでSotA]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><summary type="html"><![CDATA[概要 登録不要のウェアラブルカメラを用いた物体の発見支援システムGO-Finderを提案 手持ちの物体を自動的に検出しグループ化しておくことで、アプリから対象物の最後の出現を取得できる 手で扱う物体に限定することで、対象となる物体を大幅に削減 物体画像をクエリとして利用し、候補の中から物体を選択することができる]]></summary></entry></feed>
