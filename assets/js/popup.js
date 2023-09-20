@@ -51,7 +51,8 @@ function showDetails(button) {
             break
         case 'Docker':
             popupContent.innerHTML += '<li>DeepLearningの計算用ノードの個別の環境構築に使用しています．</li>';
-            popupContent.innerHTML += '<li>これまでよくわからず使っていましたが，最近はお友達になりました．リポジトリはセキュリティの都合上，非公開です．</li>';
+            popupContent.innerHTML += '<li>これまでよくわからず使っていましたが，最近はお友達になりました．</li>';
+            popupContent.innerHTML += '<li>Dockerfileやdocker-compose.ymlを一から書きましたが，セキュリティの都合上，リポジトリは非公開です．</li>';
             break
         default:
             popupContent.innerHTML += spanText;
