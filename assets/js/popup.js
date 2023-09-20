@@ -55,6 +55,10 @@ function showDetails(button) {
             popupContent.innerHTML += '<li>これまでよくわからず使っていましたが，最近はお友達になりました．</li>';
             popupContent.innerHTML += '<li>Dockerfileやdocker-compose.ymlを一から書きましたが，セキュリティの都合上，リポジトリは非公開です．</li>';
             break
+        case 'GitHub':
+            popupContent.innerHTML += '<li>本ページはGitHub Pagesを使用しています．</li>';
+            popupContent.innerHTML += '<li>コード管理に使用しており，最近はブランチやプルリクエスト，マージを使えるようになりました．</li>';
+            break
         default:
             popupContent.innerHTML += spanText;
     }
