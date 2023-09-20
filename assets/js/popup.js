@@ -28,8 +28,9 @@ function showDetails(button) {
             popupContent.innerHTML += '<li><a href="https://github.com/Absolute-Value/Cloth-Anomaly-Detection-pytorch" class=labo target="_blank"><b>Deep Learning</b></a>で使用しているライブラリです．Tensorflowと比べて柔軟な実装が可能で最新手法の公開が早いです．Tensorflowもある程度使用できます．</li>';
             break
         case 'Java':
-            popupContent.innerHTML += '<li>シューティングゲームを作成しました．</li>';
-            popupContent.innerHTML += '<li><img src="/assets/images/FiShooting.png" height="300"/></li>';
+            popupContent.innerHTML += '<li>シューティングゲームや<a href="https://github.com/Absolute-Value/PinBall" class="other" target="_blank"><b>ピンボール</b></a>を作成しました．</li>';
+            popupContent.innerHTML += '<li><img src="/assets/images/FiShooting.png" width="400"/></li>';
+            popupContent.innerHTML += `<li><img src="https://github.com/Absolute-Value/PinBall/raw/main/top.png" width="400"/></li>`;
             popupContent.innerHTML += '<li>Androidアプリの<a href="https://github.com/gu-info/ToDoCalendar" class="other" target="_blank"><b>TODOリスト付きカレンダー</b></a>も作成しました．</li>';
             break
         case 'Unity':
@@ -45,11 +46,11 @@ function showDetails(button) {
             popupContent.innerHTML += '<li>本ページにおけるダークモードの実装や下にあるGitHubのリポジトリの取得をしています．</li>';
             break
         case 'Ubuntu':
-            popupContent.innerHTML += '<li>GPUノード用のOSです．無料なのに色々できて便利です．</li>';
+            popupContent.innerHTML += '<li>DeepLearningの計算用ノードのOSです．無料なのに色々できて便利です．</li>';
             popupContent.innerHTML += '<li>最近は<a href="https://github.com/Absolute-Value/gpu-setup-20.04" class="other" target="_blank"><b>セットアップ</b></a>や修理をしています．</li>';
             break
         case 'Docker':
-            popupContent.innerHTML += '<li>GPUノードの個別の環境構築に使用しています．</li>';
+            popupContent.innerHTML += '<li>DeepLearningの計算用ノードの個別の環境構築に使用しています．</li>';
             popupContent.innerHTML += '<li>これまでよくわからず使っていましたが，最近はお友達になりました．リポジトリはセキュリティの都合上，非公開です．</li>';
             break
         default:
