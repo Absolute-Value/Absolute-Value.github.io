@@ -40,10 +40,11 @@ function showDetails(button) {
         case 'HTML':
         case 'CSS':
             popupContent.innerHTML += '<li>本ページはjekyllを用いて，既存のテーマに頼らずhtmlとCSSから作成しました．</li>';
-            popupContent.innerHTML += '<li>ページの評判が良く，後輩も使うようになりました！採用実績は<a href="https://ia-gu.github.io/index" class="labo" target="_blank"><b>コチラ</b></li>';
+            popupContent.innerHTML += '<li>ページの評判が良く，後輩も使うようになりました！採用実績は<a href="https://ia-gu.github.io/index" class="labo" target="_blank"><b>コチラ</b></a></li>';
             break
         case 'JavaScript':
             popupContent.innerHTML += '<li>本ページにおけるダークモードの実装や下にあるGitHubのリポジトリの取得をしています．</li>';
+            popupContent.innerHTML += '<li>未完成ですが、<a href="https://absolute-value.github.io/blogs/BaseBallGame.html" class="other" target="_blank"><b>野球ゲーム</b></a>を作成したりもしました．</li>';
             break
         case 'Ubuntu':
             popupContent.innerHTML += '<li>DeepLearningの計算用ノードのOSです．無料なのに色々できて便利です．</li>';
