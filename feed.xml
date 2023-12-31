@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-31T23:28:58+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Music Transformer: Generating music with long-term structure</title><link href="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html" rel="alternate" type="text/html" title="Music Transformer: Generating music with long-term structure" /><published>2023-10-23T20:14:00+09:00</published><updated>2023-10-23T20:14:00+09:00</updated><id>http://localhost:4000/transformer/2023/10/23/MusicTransformer</id><content type="html" xml:base="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-31T23:35:34+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Music Transformer: Generating music with long-term structure</title><link href="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html" rel="alternate" type="text/html" title="Music Transformer: Generating music with long-term structure" /><published>2023-10-23T20:14:00+09:00</published><updated>2023-10-23T20:14:00+09:00</updated><id>http://localhost:4000/transformer/2023/10/23/MusicTransformer</id><content type="html" xml:base="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>音楽の長期構造を生成するためのMusic Transformerを提案</li>
@@ -68,7 +68,49 @@
       <li><img src="/assets/images/posts/MusicTransformer/6.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Transformer" /><category term="Attention" /><category term="Transformer" /><summary type="html"><![CDATA[概要 音楽の長期構造を生成するためのMusic Transformerを提案 Music Transformerは既存のTransformerモデルの相対位置情報の表現を改善し、音楽の相対的なタイミングとピッチを捉えることができる データセット「JSB Chorales」と「Piano-e-Competition」で評価され、後者で最先端の結果を達成]]></summary></entry><entry><title type="html">RedCaps: Web-curated image-text data created by the people, for the people</title><link href="http://localhost:4000/caption/2023/07/03/RedCaps.html" rel="alternate" type="text/html" title="RedCaps: Web-curated image-text data created by the people, for the people" /><published>2023-07-03T10:50:00+09:00</published><updated>2023-07-03T10:50:00+09:00</updated><id>http://localhost:4000/caption/2023/07/03/RedCaps</id><content type="html" xml:base="http://localhost:4000/caption/2023/07/03/RedCaps.html"><![CDATA[<h1 id="概要">概要</h1>
+</ul>]]></content><author><name></name></author><category term="Transformer" /><category term="Attention" /><category term="Transformer" /><summary type="html"><![CDATA[概要 音楽の長期構造を生成するためのMusic Transformerを提案 Music Transformerは既存のTransformerモデルの相対位置情報の表現を改善し、音楽の相対的なタイミングとピッチを捉えることができる データセット「JSB Chorales」と「Piano-e-Competition」で評価され、後者で最先端の結果を達成]]></summary></entry><entry><title type="html">BEIT: BERT Pre-Training of Image Transformers</title><link href="http://localhost:4000/transformer/2023/10/16/BEIT.html" rel="alternate" type="text/html" title="BEIT: BERT Pre-Training of Image Transformers" /><published>2023-10-16T20:06:00+09:00</published><updated>2023-10-16T20:06:00+09:00</updated><id>http://localhost:4000/transformer/2023/10/16/BEIT</id><content type="html" xml:base="http://localhost:4000/transformer/2023/10/16/BEIT.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>Vision Transformer事前学習する自己教師ありタスクを提案</li>
+  <li>BERTのようなマスク画像モデリングを行う</li>
+  <li>画像分類とセマンティックセグメンテーションで競争力のある結果を達成し、事前トレーニング方法を改善
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>BERTスタイルの事前トレーニングを画像データに直接適用するのが難しいという課題を解決</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/BEIT/0.png" alt="" /></li>
+  <li>事前学習
+    <ul>
+      <li>入力画像をdiscrete VAEでvisual tokensにする</li>
+      <li>同時に入力画像をパッチ分割し、ランダムにマスクしてtransformerへ</li>
+      <li>transformerはマスクされたパッチに対応するvisual tokensを予測するように学習</li>
+    </ul>
+  </li>
+  <li>この事前学習をしたモデルをダウンストリームタスクに応用</li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>画像分類（ILSVRC-2012 ImageNet）
+    <ul>
+      <li><img src="/assets/images/posts/BEIT/1.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>セマンティックセグメンテーション
+    <ul>
+      <li><img src="/assets/images/posts/BEIT/2.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Transformer" /><category term="Vision Pretraining" /><category term="Transformer" /><summary type="html"><![CDATA[概要 Vision Transformer事前学習する自己教師ありタスクを提案 BERTのようなマスク画像モデリングを行う 画像分類とセマンティックセグメンテーションで競争力のある結果を達成し、事前トレーニング方法を改善]]></summary></entry><entry><title type="html">RedCaps: Web-curated image-text data created by the people, for the people</title><link href="http://localhost:4000/caption/2023/07/03/RedCaps.html" rel="alternate" type="text/html" title="RedCaps: Web-curated image-text data created by the people, for the people" /><published>2023-07-03T10:50:00+09:00</published><updated>2023-07-03T10:50:00+09:00</updated><id>http://localhost:4000/caption/2023/07/03/RedCaps</id><content type="html" xml:base="http://localhost:4000/caption/2023/07/03/RedCaps.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>ビジョンと言語のタスクのための大規模データセットは、検索エンジンをクエリにしたりHTMLのaltテキストを収集することで構築されているが、ウェブデータはノイズが多いため、品質を維持するために複雑なフィルタリングパイプラインが必要</li>
@@ -906,111 +948,4 @@
   <li>PASCAL VOCで72.2 AP</li>
   <li>COCOで36.6 AP</li>
   <li>Objects365で11.8 AP</li>
-</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 任意のテキストで物体検出をするオープンボキャブラリ物体検出器ViLD(Vision and Language knowledge Distillation)を提案 オープンボキャブラリの画像分類である教師モデルから2段階の検出器である生徒モデルに知識蒸留する ResNetやALIGNをバックボーンとして、PASCAL VOC、COCO、Objects365で高精度が出た]]></summary></entry><entry><title type="html">Unified Visual Relationship Detection with Vision and Language Models</title><link href="http://localhost:4000/hoi/2023/03/28/UniVRD.html" rel="alternate" type="text/html" title="Unified Visual Relationship Detection with Vision and Language Models" /><published>2023-03-28T23:30:00+09:00</published><updated>2023-03-28T23:30:00+09:00</updated><id>http://localhost:4000/hoi/2023/03/28/UniVRD</id><content type="html" xml:base="http://localhost:4000/hoi/2023/03/28/UniVRD.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>Visual Relationship Detection(VRD)では、１つのデータセットから学習するため、画像ドメインと語彙に制約があり、汎用性と拡張性に限界がある</li>
-  <li>Vision&amp;Languageモデルを活用し、複数のデータセットを統一するフレームワークUniVRDを提案</li>
-  <li>HICO-DETにおいて60%アップの38.07mAP
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>Vision&amp;Languageモデルによる複数データセットの統一</li>
-  <li>モデルや損失、訓練方法の改善</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<p><img src="/assets/images/posts/UniVRD/UniVRD-1.png" alt="" /></p>
-
-<ul>
-  <li>物体検出器
-    <ul>
-      <li>CLIPなどと同様にテキストEncoderとしてtransformer，画像EncoderとしてViTを使用</li>
-      <li>画像Encoderは、プーリング層と最終層を削除して、トークン埋め込み層を追加する
-        <ul>
-          <li>トークン埋め込みを線形層に通すことで分類埋め込みを，FFNに通すことでBBを得る</li>
-        </ul>
-      </li>
-      <li>Encoderのみで動作するため、知識抽出や事前学習を必要としない</li>
-    </ul>
-  </li>
-  <li>Relationship Decoder
-    <ul>
-      <li>入力をEncoderのトークン埋め込みと関係クエリ（学習）として，関係埋め込みを得る
-        <ul>
-          <li>関係埋め込みを線形層に通すことで関係分類埋め込みを，FFNに通すことで主語と目的後のインデックスを得る</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>分類用テキスト埋め込み
-    <ul>
-      <li>物体／関係の分類では整数値ではなく，テキスト埋め込みを使用
-        <ul>
-          <li>物体の分類：「person」を「a photo of person」にしてテキストEncoderへ</li>
-          <li>関係の分類：「person(主語), ride(述語), horse(目的)」を「a person riding a orse」にしてテキストEncoderへ</li>
-        </ul>
-      </li>
-      <li>検出器はテキスト埋め込みに対してクラス確率を予測する</li>
-    </ul>
-  </li>
-  <li>データ拡張
-    <ul>
-      <li>モザイク
-        <ul>
-          <li>画像をグリッドにすることで、モデルが見るスケールの幅を広げる</li>
-        </ul>
-      </li>
-      <li>テキストプロンプティング
-        <ul>
-          <li>CLIPのように、プロンプトテンプレートを使用
-            <ul>
-              <li>物体：「a photo of &lt;object&gt;」</li>
-              <li>関係：「a &lt;subject&gt; &lt;predicate&gt;ing a &lt;object&gt;」</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>学習
-    <ul>
-      <li>物体検出とDecoderを順番に学習したほうが安定的かつ効果的</li>
-      <li>Decoderの学習時に学習データが限られている場合は物体検出器を凍結したほうがよい</li>
-      <li>Loss関数
-        <ul>
-          <li><img src="/assets/images/posts/UniVRD/UniVRD-2.png" alt="" /></li>
-          <li><img src="/assets/images/posts/UniVRD/UniVRD-3.png" alt="" /></li>
-          <li><img src="/assets/images/posts/UniVRD/UniVRD-4.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>HOI(Himan-Object Interaction)
-    <ul>
-      <li>HICO-DETでSOTA
-        <ul>
-          <li><img src="/assets/images/posts/UniVRD/UniVRD-5.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>SGG(Scene Graph Generation)
-    <ul>
-      <li>Visual Genome
-        <ul>
-          <li><img src="/assets/images/posts/UniVRD/UniVRD-6.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="HOI" /><category term="Transformer" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 Visual Relationship Detection(VRD)では、１つのデータセットから学習するため、画像ドメインと語彙に制約があり、汎用性と拡張性に限界がある Vision&amp;Languageモデルを活用し、複数のデータセットを統一するフレームワークUniVRDを提案 HICO-DETにおいて60%アップの38.07mAP]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 任意のテキストで物体検出をするオープンボキャブラリ物体検出器ViLD(Vision and Language knowledge Distillation)を提案 オープンボキャブラリの画像分類である教師モデルから2段階の検出器である生徒モデルに知識蒸留する ResNetやALIGNをバックボーンとして、PASCAL VOC、COCO、Objects365で高精度が出た]]></summary></entry></feed>
