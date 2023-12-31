@@ -1,4 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-31T22:39:16+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">RedCaps: Web-curated image-text data created by the people, for the people</title><link href="http://localhost:4000/caption/2023/07/03/RedCaps.html" rel="alternate" type="text/html" title="RedCaps: Web-curated image-text data created by the people, for the people" /><published>2023-07-03T10:50:00+09:00</published><updated>2023-07-03T10:50:00+09:00</updated><id>http://localhost:4000/caption/2023/07/03/RedCaps</id><content type="html" xml:base="http://localhost:4000/caption/2023/07/03/RedCaps.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-31T23:28:58+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Music Transformer: Generating music with long-term structure</title><link href="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html" rel="alternate" type="text/html" title="Music Transformer: Generating music with long-term structure" /><published>2023-10-23T20:14:00+09:00</published><updated>2023-10-23T20:14:00+09:00</updated><id>http://localhost:4000/transformer/2023/10/23/MusicTransformer</id><content type="html" xml:base="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>音楽の長期構造を生成するためのMusic Transformerを提案</li>
+  <li>Music Transformerは既存のTransformerモデルの相対位置情報の表現を改善し、音楽の相対的なタイミングとピッチを捉えることができる</li>
+  <li>データセット「JSB Chorales」と「Piano-e-Competition」で評価され、後者で最先端の結果を達成
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>Transformerを用いて長期構造を持つ音楽を生成する初の成功例で、LSTMを超えた</li>
+  <li>提案アルゴリズムは、相対的自己注意メカニズムの空間複雑さを大幅に削減し、より長い音楽構造の生成を可能にしている</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>Relative positional self-attention
+    <ul>
+      <li>Shawらによって提案されたもの
+        <ul>
+          <li><img src="/assets/images/posts/MusicTransformer/1.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Skewing
+    <ul>
+      <li>LxDの相対埋め込みE（学習パラメータ）がある</li>
+      <li>ShawらはEからLxLxDの埋め込みに拡張しQをかけることでSを作成 O($L^2D$)</li>
+      <li>SkewingではEに直接Qをかけて、図下のような変形をすることで効率化 O($LD$)
+        <ul>
+          <li><img src="/assets/images/posts/MusicTransformer/2.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Relative local attention
+    <ul>
+      <li>非常に長い文の場合にすべてのAttentionをとるのは非現実的</li>
+      <li>Mブロックにわけた長さNに対してAttentionをとる</li>
+      <li>その場合のSkewingは、図のような変形
+        <ul>
+          <li><img src="/assets/images/posts/MusicTransformer/3.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>ShawらのRelative Attentionとのメモリ使用量の比較
+    <ul>
+      <li><img src="/assets/images/posts/MusicTransformer/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>J.S.Bach Chorales
+    <ul>
+      <li><img src="/assets/images/posts/MusicTransformer/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Piano-e-Competition dataset
+    <ul>
+      <li><img src="/assets/images/posts/MusicTransformer/6.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Transformer" /><category term="Attention" /><category term="Transformer" /><summary type="html"><![CDATA[概要 音楽の長期構造を生成するためのMusic Transformerを提案 Music Transformerは既存のTransformerモデルの相対位置情報の表現を改善し、音楽の相対的なタイミングとピッチを捉えることができる データセット「JSB Chorales」と「Piano-e-Competition」で評価され、後者で最先端の結果を達成]]></summary></entry><entry><title type="html">RedCaps: Web-curated image-text data created by the people, for the people</title><link href="http://localhost:4000/caption/2023/07/03/RedCaps.html" rel="alternate" type="text/html" title="RedCaps: Web-curated image-text data created by the people, for the people" /><published>2023-07-03T10:50:00+09:00</published><updated>2023-07-03T10:50:00+09:00</updated><id>http://localhost:4000/caption/2023/07/03/RedCaps</id><content type="html" xml:base="http://localhost:4000/caption/2023/07/03/RedCaps.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>ビジョンと言語のタスクのための大規模データセットは、検索エンジンをクエリにしたりHTMLのaltテキストを収集することで構築されているが、ウェブデータはノイズが多いため、品質を維持するために複雑なフィルタリングパイプラインが必要</li>
@@ -943,107 +1013,4 @@
       </li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="HOI" /><category term="Transformer" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 Visual Relationship Detection(VRD)では、１つのデータセットから学習するため、画像ドメインと語彙に制約があり、汎用性と拡張性に限界がある Vision&amp;Languageモデルを活用し、複数のデータセットを統一するフレームワークUniVRDを提案 HICO-DETにおいて60%アップの38.07mAP]]></summary></entry><entry><title type="html">GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery</title><link href="http://localhost:4000/object%20detection/2023/03/14/GO-Finder.html" rel="alternate" type="text/html" title="GO-Finder: A Registration-Free Wearable System for Assisting Users in Finding Lost Objects via Hand-Held Object Discovery" /><published>2023-03-14T23:30:00+09:00</published><updated>2023-03-14T23:30:00+09:00</updated><id>http://localhost:4000/object%20detection/2023/03/14/GO-Finder</id><content type="html" xml:base="http://localhost:4000/object%20detection/2023/03/14/GO-Finder.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>登録不要のウェアラブルカメラを用いた物体の発見支援システムGO-Finderを提案</li>
-  <li>手持ちの物体を自動的に検出しグループ化しておくことで、アプリから対象物の最後の出現を取得できる
-    <ul>
-      <li>手で扱う物体に限定することで、対象となる物体を大幅に削減</li>
-    </ul>
-  </li>
-  <li>物体画像をクエリとして利用し、候補の中から物体を選択することができる
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>従来のシステムではユーザーが事前に対象物を登録する必要があった</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li>概要
-    <ul>
-      <li>必要なもの
-        <ul>
-          <li>ウェアラブルカメラ、処理サーバー、参照用スマートフォン</li>
-          <li><img src="/assets/images/posts/GO-Finder/GoFinder-2.png" alt="" /></li>
-        </ul>
-      </li>
-      <li>観察フェーズ
-        <ul>
-          <li>ウェアラブルカメラで連続的に画像を撮って、サーバーに送信</li>
-          <li>サーバーは手持ちの物体を検出・追跡</li>
-          <li>物体の外観によってクラスタリング</li>
-        </ul>
-      </li>
-      <li>検索フェーズ
-        <ul>
-          <li><img src="/assets/images/posts/GO-Finder/GoFinder-3.png" alt="" /></li>
-          <li>スマートフォンのインターフェースを使って、処理結果を受信</li>
-          <li>検索したい物体を選択</li>
-          <li>物体が最後に出現したシーンがポップアップ画面で出てくる</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>アルゴリズム
-    <ul>
-      <li><img src="/assets/images/posts/GO-Finder/GoFinder-4.png" alt="" /></li>
-      <li>手持ち物体の検出
-        <ul>
-          <li>既存手法「Understanding Human Hands in Contact at Internet Scale」を用いて、バウンディングボックスと携帯型物体判定と接触状態を取得</li>
-          <li>携帯型物体判定かつ接触状態の物体のバウンディングボックスを取得</li>
-          <li>フレームの半分の辺長はノイズとして除外</li>
-        </ul>
-      </li>
-      <li>検出されたバウンディングボックスを、外観特徴に基づいてクラスタリング
-        <ul>
-          <li>ステージ１：トラッキングしたものを同じクラスタへ(c)</li>
-          <li>ステージ２：トラッキングが失敗した場合、ImageNet学習済みResNetに通した特徴に対してコサイン類似度を計算し、閾値を超えたらクラスタへ(d上)
-            <ul>
-              <li>条件を満たすクラスタが1つもない場合は新しいクラスタを作成</li>
-            </ul>
-          </li>
-          <li>ステージ３：クラスタ単位でコサイン類似度行列を作成、最大値と中央値が閾値を超えたらクラスタへ(d下)</li>
-        </ul>
-      </li>
-      <li>手の外観や類似の質感による誤った関連付けを防ぐために、ヒューリスティックを導入
-        <ul>
-          <li>バウンディングボックスのアスペクト比が1.5より大きい場合</li>
-          <li>肌色領域(カラーヒストグラム)の比率が0.3より大きい場合</li>
-          <li>物体と手の面積比が1.5より大きい場合</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>12名のボランティアに指定した場所に物体を隠してもらい、15分のインターバルで位置を忘れさせ、システムを利用しながら隠した物体の一部を持ち帰るように指示
-    <ul>
-      <li><img src="/assets/images/posts/GO-Finder/GoFinder-5.png" alt="" /></li>
-      <li>パフォーマンス
-        <ul>
-          <li><img src="/assets/images/posts/GO-Finder/GoFinder-6.png" alt="" /></li>
-        </ul>
-      </li>
-      <li>タスク完了時間
-        <ul>
-          <li><img src="/assets/images/posts/GO-Finder/GoFinder-7.png" alt="" /></li>
-        </ul>
-      </li>
-      <li>クラスタの様子
-        <ul>
-          <li><img src="/assets/images/posts/GO-Finder/GoFinder-8.png" alt="" /></li>
-          <li>いくつかのクラスタは分割され過ぎている</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><summary type="html"><![CDATA[概要 登録不要のウェアラブルカメラを用いた物体の発見支援システムGO-Finderを提案 手持ちの物体を自動的に検出しグループ化しておくことで、アプリから対象物の最後の出現を取得できる 手で扱う物体に限定することで、対象となる物体を大幅に削減 物体画像をクエリとして利用し、候補の中から物体を選択することができる]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="HOI" /><category term="Transformer" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 Visual Relationship Detection(VRD)では、１つのデータセットから学習するため、画像ドメインと語彙に制約があり、汎用性と拡張性に限界がある Vision&amp;Languageモデルを活用し、複数のデータセットを統一するフレームワークUniVRDを提案 HICO-DETにおいて60%アップの38.07mAP]]></summary></entry></feed>

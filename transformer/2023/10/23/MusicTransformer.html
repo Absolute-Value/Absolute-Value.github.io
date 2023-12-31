@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Music Transformer: Generating music with long-term structure</title>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/MusicTransformer/0.png" class="hero">
+    <h1>Music Transformer: Generating music with long-term structure</h1>
+    <p><span class="fa fa-link"></span><a href="https://magenta.tensorflow.org/music-transformer" target="_blank"> https://magenta.tensorflow.org/music-transformer</a></p>
+    <p><span class="fa fa-calendar"></span> Oct 23, 2023</p>
+    <p><span class="fa fa-flag"></span> Attention, Transformer, </p>
+    <p><span class="fa fa-graduation-cap"></span> ICLR (2019) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Music Transformer: Generating music with long-term structure&url=https://absolute-value.github.io/transformer/2023/10/23/MusicTransformer.html" class="share-btn share-twitter"><span class="fa-brands fa-x-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/transformer/2023/10/23/MusicTransformer.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/transformer/2023/10/23/MusicTransformer.html&title=Music Transformer: Generating music with long-term structure" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Music Transformer: Generating music with long-term structure&body=Music Transformer: Generating music with long-term structure https://absolute-value.github.io/transformer/2023/10/23/MusicTransformer.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>音楽の長期構造を生成するためのMusic Transformerを提案</li>
+  <li>Music Transformerは既存のTransformerモデルの相対位置情報の表現を改善し、音楽の相対的なタイミングとピッチを捉えることができる</li>
+  <li>データセット「JSB Chorales」と「Piano-e-Competition」で評価され、後者で最先端の結果を達成
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>Transformerを用いて長期構造を持つ音楽を生成する初の成功例で、LSTMを超えた</li>
+  <li>提案アルゴリズムは、相対的自己注意メカニズムの空間複雑さを大幅に削減し、より長い音楽構造の生成を可能にしている</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>Relative positional self-attention
+    <ul>
+      <li>Shawらによって提案されたもの
+        <ul>
+          <li><img src="/assets/images/posts/MusicTransformer/1.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Skewing
+    <ul>
+      <li>LxDの相対埋め込みE（学習パラメータ）がある</li>
+      <li>ShawらはEからLxLxDの埋め込みに拡張しQをかけることでSを作成 O($L^2D$)</li>
+      <li>SkewingではEに直接Qをかけて、図下のような変形をすることで効率化 O($LD$)
+        <ul>
+          <li><img src="/assets/images/posts/MusicTransformer/2.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Relative local attention
+    <ul>
+      <li>非常に長い文の場合にすべてのAttentionをとるのは非現実的</li>
+      <li>Mブロックにわけた長さNに対してAttentionをとる</li>
+      <li>その場合のSkewingは、図のような変形
+        <ul>
+          <li><img src="/assets/images/posts/MusicTransformer/3.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>ShawらのRelative Attentionとのメモリ使用量の比較
+    <ul>
+      <li><img src="/assets/images/posts/MusicTransformer/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>J.S.Bach Chorales
+    <ul>
+      <li><img src="/assets/images/posts/MusicTransformer/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Piano-e-Competition dataset
+    <ul>
+      <li><img src="/assets/images/posts/MusicTransformer/6.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa-brands fa-x-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>
