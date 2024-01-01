@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-31T23:35:34+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Music Transformer: Generating music with long-term structure</title><link href="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html" rel="alternate" type="text/html" title="Music Transformer: Generating music with long-term structure" /><published>2023-10-23T20:14:00+09:00</published><updated>2023-10-23T20:14:00+09:00</updated><id>http://localhost:4000/transformer/2023/10/23/MusicTransformer</id><content type="html" xml:base="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-01-01T13:49:40+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Music Transformer: Generating music with long-term structure</title><link href="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html" rel="alternate" type="text/html" title="Music Transformer: Generating music with long-term structure" /><published>2023-10-23T20:14:00+09:00</published><updated>2023-10-23T20:14:00+09:00</updated><id>http://localhost:4000/transformer/2023/10/23/MusicTransformer</id><content type="html" xml:base="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>音楽の長期構造を生成するためのMusic Transformerを提案</li>
@@ -68,7 +68,79 @@
       <li><img src="/assets/images/posts/MusicTransformer/6.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Transformer" /><category term="Attention" /><category term="Transformer" /><summary type="html"><![CDATA[概要 音楽の長期構造を生成するためのMusic Transformerを提案 Music Transformerは既存のTransformerモデルの相対位置情報の表現を改善し、音楽の相対的なタイミングとピッチを捉えることができる データセット「JSB Chorales」と「Piano-e-Competition」で評価され、後者で最先端の結果を達成]]></summary></entry><entry><title type="html">BEIT: BERT Pre-Training of Image Transformers</title><link href="http://localhost:4000/transformer/2023/10/16/BEIT.html" rel="alternate" type="text/html" title="BEIT: BERT Pre-Training of Image Transformers" /><published>2023-10-16T20:06:00+09:00</published><updated>2023-10-16T20:06:00+09:00</updated><id>http://localhost:4000/transformer/2023/10/16/BEIT</id><content type="html" xml:base="http://localhost:4000/transformer/2023/10/16/BEIT.html"><![CDATA[<h1 id="概要">概要</h1>
+</ul>]]></content><author><name></name></author><category term="Transformer" /><category term="Attention" /><category term="Transformer" /><summary type="html"><![CDATA[概要 音楽の長期構造を生成するためのMusic Transformerを提案 Music Transformerは既存のTransformerモデルの相対位置情報の表現を改善し、音楽の相対的なタイミングとピッチを捉えることができる データセット「JSB Chorales」と「Piano-e-Competition」で評価され、後者で最先端の結果を達成]]></summary></entry><entry><title type="html">Places: An Image Database for Deep Scene Understanding</title><link href="http://localhost:4000/dataset/2023/10/23/Places.html" rel="alternate" type="text/html" title="Places: An Image Database for Deep Scene Understanding" /><published>2023-10-23T18:45:00+09:00</published><updated>2023-10-23T18:45:00+09:00</updated><id>http://localhost:4000/dataset/2023/10/23/Places</id><content type="html" xml:base="http://localhost:4000/dataset/2023/10/23/Places.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>シーンの意味論的なカテゴリと属性がラベル付けされた 1,000 万枚のシーン写真のリポジトリである Places Databaseについて説明</li>
+  <li>最先端のCNNを使用して分類時に優れたベースラインパフォーマンス
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>環境のカテゴリの広範なカバレッジを提供することにより、シーン理解の能力を向上させることを目指している</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>オンライン画像検索エンジン(Google画像、Bing画像、およびFlickr) から、SUN データセットのクラスのリストからのクエリワードを使用して候補画像をダウンロード
+    <ul>
+      <li>外観の多様性のために696の一般的な形容詞 (例: 乱雑、晴れ、荒涼など)と組み合わせた</li>
+      <li>SUNデータセットと同じ画像が含まれないようにしている</li>
+    </ul>
+  </li>
+  <li>Amazon Mechanical Turk (AMT) にクラウドソーシングしてラベルが正しいかを検証
+    <ul>
+      <li><img src="/assets/images/posts/Places/1.png" alt="" /></li>
+      <li>最初の反復では50％以上、2回目の反復では25.4％がNo</li>
+      <li>最終的に少なくとも1,000個のサンプルが含まれるカテゴリが413、20,000個を超えるサンプルが含まれるカテゴリが98</li>
+    </ul>
+  </li>
+  <li>AlexNetで残りの 5,300 万枚の画像を分類
+    <ul>
+      <li>データセットは1,000個のサンプルが含まれる413カテゴリ</li>
+      <li>サンプルが少ないカテゴリは信頼度0.8以上のものをAMTへ</li>
+      <li>5,000個のサンプルが含まれるカテゴリが401、20,000個を超えるサンプルが含まれるカテゴリが240</li>
+    </ul>
+  </li>
+  <li>「スキー ロッジ」と「スキー リゾート」のような類似カテゴリを統合</li>
+  <li>分類が曖昧な画像をどちらに属すかをAMTで収集することで分類
+    <ul>
+      <li><img src="/assets/images/posts/Places/2.png" alt="" /></li>
+      <li><img src="/assets/images/posts/Places/3.png" alt="" /></li>
+      <li>434の場所カテゴリ,10,624,928 枚の画像のデータベースが完成</li>
+    </ul>
+  </li>
+  <li>4,000枚を超える画像を含む365のカテゴリからPlaces365-StandardとPlaces365-Challengeを作成
+    <ul>
+      <li>Places365-Standardは1,803,460個の学習画像</li>
+      <li>Places365-Challengeは800万個の学習画像</li>
+      <li>検証はクラスごとに50個、テストはクラスごとに900個</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>CNN分類精度(Places205 &amp; SUN205)
+    <ul>
+      <li><img src="/assets/images/posts/Places/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>CNN分類精度(Places365)
+    <ul>
+      <li><img src="/assets/images/posts/Places/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>VGG(Places365)
+    <ul>
+      <li><img src="/assets/images/posts/Places/6.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Dataset" /><category term="Dataset" /><summary type="html"><![CDATA[概要 シーンの意味論的なカテゴリと属性がラベル付けされた 1,000 万枚のシーン写真のリポジトリである Places Databaseについて説明 最先端のCNNを使用して分類時に優れたベースラインパフォーマンス]]></summary></entry><entry><title type="html">BEIT: BERT Pre-Training of Image Transformers</title><link href="http://localhost:4000/transformer/2023/10/16/BEIT.html" rel="alternate" type="text/html" title="BEIT: BERT Pre-Training of Image Transformers" /><published>2023-10-16T20:06:00+09:00</published><updated>2023-10-16T20:06:00+09:00</updated><id>http://localhost:4000/transformer/2023/10/16/BEIT</id><content type="html" xml:base="http://localhost:4000/transformer/2023/10/16/BEIT.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>Vision Transformer事前学習する自己教師ありタスクを提案</li>
@@ -848,104 +920,4 @@
 
 <ul>
   <li>PROGPROMPT: Generating Situated Robot Task Plans using Large Language Models</li>
-</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Transformer" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 1枚または複数枚の画像と自然言語の命令を与え、GPT-3を利用して命令プログラムを作成し、そのプログラムを実行することで目的の出力を得るシステムVISPROGを提案 命令プログラムの各行では、CVモデル・言語モデル・OpenCVの画像処理・演算子のいずれかのモジュールを実行し、後続で使用できる中間出力を生成している 事実知識オブジェクトタグ付け・言語ガイド付き画像編集などの4つのタスクで柔軟性を実証]]></summary></entry><entry><title type="html">Open-vocabulary Object Detection via Vision and Language Knowledge Distillation</title><link href="http://localhost:4000/object%20detection/2023/03/31/ViLD.html" rel="alternate" type="text/html" title="Open-vocabulary Object Detection via Vision and Language Knowledge Distillation" /><published>2023-03-31T23:30:00+09:00</published><updated>2023-03-31T23:30:00+09:00</updated><id>http://localhost:4000/object%20detection/2023/03/31/ViLD</id><content type="html" xml:base="http://localhost:4000/object%20detection/2023/03/31/ViLD.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>任意のテキストで物体検出をするオープンボキャブラリ物体検出器ViLD(Vision and Language knowledge Distillation)を提案</li>
-  <li>オープンボキャブラリの画像分類である教師モデルから2段階の検出器である生徒モデルに知識蒸留する</li>
-  <li>ResNetやALIGNをバックボーンとして、PASCAL VOC、COCO、Objects365で高精度が出た
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>任意のテキストで物体検出</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<p><img src="/assets/images/posts/ViLD/2.png" alt="" /></p>
-
-<ul>
-  <li>変数
-    <ul>
-      <li>教師データセットを基本サブセット$C_B$と新規サブセット$C_N$に分ける
-        <ul>
-          <li>$C_B$のみ学習に使う</li>
-        </ul>
-      </li>
-      <li>テキストEncoder  $T()$, 画像Encoder $V()$</li>
-    </ul>
-  </li>
-  <li>位置の検出
-    <ul>
-      <li>Mask R-CNNのような二段階物体検出器をベースとする</li>
-    </ul>
-  </li>
-  <li>Open Vocab検出
-    <ul>
-      <li>検出した位置を切り抜き</li>
-      <li>画像埋め込み
-        <ul>
-          <li>基本サブセット$C_B$を用いて位置提案ネットワークを学習し、提案領域を得る</li>
-          <li>提案領域の切り抜きとリサイズをして，事前学習済み画像Encoder$V()$で画像埋め込みを得る</li>
-        </ul>
-      </li>
-      <li>テキスト埋め込み
-        <ul>
-          <li>カテゴリー名をプロンプトテンプレート（例：「a photo of {category} in the scene」）にして，テキストEncoder  $T()$でテキスト埋め込みを得る</li>
-        </ul>
-      </li>
-      <li>画像とテキストの埋め込み間のコサイン類似度を計算
-        <ul>
-          <li>すべての提案領域に対し，画像Encoder$V()$に通すので推論は低速</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Vision&amp;Languageの知識蒸留
-    <ul>
-      <li>推論の遅さを解決するため</li>
-      <li>ViLD-text
-        <ul>
-          <li><img src="/assets/images/posts/ViLD/3.png" alt="" /></li>
-          <li>検出器の分類を前述のテキスト埋め込みに置き換え</li>
-          <li>背景というテキストは表現できないので独自の埋め込みを学習</li>
-          <li>すべてのカテゴリとのCos類似度を出しクロスエントロピーを計算
-            <ul>
-              <li><img src="/assets/images/posts/ViLD/4.png" alt="" /></li>
-            </ul>
-          </li>
-          <li>推論時には新規カテゴリに対して，テキスト埋め込みを追加することで新規カテゴリに対応</li>
-        </ul>
-      </li>
-      <li>ViLD-image
-        <ul>
-          <li><img src="/assets/images/posts/ViLD/5.png" alt="" /></li>
-          <li>Mask R-CNNで切り取った特徴が、前述の画像埋め込みと一致するように学習することで知識蒸留（L1距離の最小化）
-            <ul>
-              <li><img src="/assets/images/posts/ViLD/6.png" alt="" /></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>組み合わせた最終形態
-        <ul>
-          <li><img src="/assets/images/posts/ViLD/7.png" alt="" /></li>
-          <li><img src="/assets/images/posts/ViLD/8.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li><img src="/assets/images/posts/ViLD/9.png" alt="" /></li>
-  <li><img src="/assets/images/posts/ViLD/10.png" alt="" /></li>
-  <li>PASCAL VOCで72.2 AP</li>
-  <li>COCOで36.6 AP</li>
-  <li>Objects365で11.8 AP</li>
-</ul>]]></content><author><name></name></author><category term="Object Detection" /><category term="Object Detection" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 任意のテキストで物体検出をするオープンボキャブラリ物体検出器ViLD(Vision and Language knowledge Distillation)を提案 オープンボキャブラリの画像分類である教師モデルから2段階の検出器である生徒モデルに知識蒸留する ResNetやALIGNをバックボーンとして、PASCAL VOC、COCO、Objects365で高精度が出た]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Transformer" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 1枚または複数枚の画像と自然言語の命令を与え、GPT-3を利用して命令プログラムを作成し、そのプログラムを実行することで目的の出力を得るシステムVISPROGを提案 命令プログラムの各行では、CVモデル・言語モデル・OpenCVの画像処理・演算子のいずれかのモジュールを実行し、後続で使用できる中間出力を生成している 事実知識オブジェクトタグ付け・言語ガイド付き画像編集などの4つのタスクで柔軟性を実証]]></summary></entry></feed>

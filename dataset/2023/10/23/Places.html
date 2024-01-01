@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Places: An Image Database for Deep Scene Understanding</title>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/Places/0.png" class="hero">
+    <h1>Places: An Image Database for Deep Scene Understanding</h1>
+    <p><span class="fa fa-link"></span><a href="https://ieeexplore.ieee.org/document/7968387" target="_blank"> https://ieeexplore.ieee.org/document/7968387</a></p>
+    <p><span class="fa fa-calendar"></span> Oct 23, 2023</p>
+    <p><span class="fa fa-flag"></span> Dataset, </p>
+    <p><span class="fa fa-graduation-cap"></span> IEEE (2018) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Places: An Image Database for Deep Scene Understanding&url=https://absolute-value.github.io/dataset/2023/10/23/Places.html" class="share-btn share-twitter"><span class="fa-brands fa-x-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/dataset/2023/10/23/Places.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/dataset/2023/10/23/Places.html&title=Places: An Image Database for Deep Scene Understanding" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Places: An Image Database for Deep Scene Understanding&body=Places: An Image Database for Deep Scene Understanding https://absolute-value.github.io/dataset/2023/10/23/Places.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>シーンの意味論的なカテゴリと属性がラベル付けされた 1,000 万枚のシーン写真のリポジトリである Places Databaseについて説明</li>
+  <li>最先端のCNNを使用して分類時に優れたベースラインパフォーマンス
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>環境のカテゴリの広範なカバレッジを提供することにより、シーン理解の能力を向上させることを目指している</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>オンライン画像検索エンジン(Google画像、Bing画像、およびFlickr) から、SUN データセットのクラスのリストからのクエリワードを使用して候補画像をダウンロード
+    <ul>
+      <li>外観の多様性のために696の一般的な形容詞 (例: 乱雑、晴れ、荒涼など)と組み合わせた</li>
+      <li>SUNデータセットと同じ画像が含まれないようにしている</li>
+    </ul>
+  </li>
+  <li>Amazon Mechanical Turk (AMT) にクラウドソーシングしてラベルが正しいかを検証
+    <ul>
+      <li><img src="/assets/images/posts/Places/1.png" alt="" /></li>
+      <li>最初の反復では50％以上、2回目の反復では25.4％がNo</li>
+      <li>最終的に少なくとも1,000個のサンプルが含まれるカテゴリが413、20,000個を超えるサンプルが含まれるカテゴリが98</li>
+    </ul>
+  </li>
+  <li>AlexNetで残りの 5,300 万枚の画像を分類
+    <ul>
+      <li>データセットは1,000個のサンプルが含まれる413カテゴリ</li>
+      <li>サンプルが少ないカテゴリは信頼度0.8以上のものをAMTへ</li>
+      <li>5,000個のサンプルが含まれるカテゴリが401、20,000個を超えるサンプルが含まれるカテゴリが240</li>
+    </ul>
+  </li>
+  <li>「スキー ロッジ」と「スキー リゾート」のような類似カテゴリを統合</li>
+  <li>分類が曖昧な画像をどちらに属すかをAMTで収集することで分類
+    <ul>
+      <li><img src="/assets/images/posts/Places/2.png" alt="" /></li>
+      <li><img src="/assets/images/posts/Places/3.png" alt="" /></li>
+      <li>434の場所カテゴリ,10,624,928 枚の画像のデータベースが完成</li>
+    </ul>
+  </li>
+  <li>4,000枚を超える画像を含む365のカテゴリからPlaces365-StandardとPlaces365-Challengeを作成
+    <ul>
+      <li>Places365-Standardは1,803,460個の学習画像</li>
+      <li>Places365-Challengeは800万個の学習画像</li>
+      <li>検証はクラスごとに50個、テストはクラスごとに900個</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>CNN分類精度(Places205 &amp; SUN205)
+    <ul>
+      <li><img src="/assets/images/posts/Places/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>CNN分類精度(Places365)
+    <ul>
+      <li><img src="/assets/images/posts/Places/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>VGG(Places365)
+    <ul>
+      <li><img src="/assets/images/posts/Places/6.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa-brands fa-x-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>
