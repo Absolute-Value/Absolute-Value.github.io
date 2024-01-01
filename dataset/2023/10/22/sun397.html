@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Sun database: Large-scale scene recognition from abbey to zoo</title>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/sun397/0.png" class="hero">
+    <h1>Sun database: Large-scale scene recognition from abbey to zoo</h1>
+    <p><span class="fa fa-link"></span><a href="https://ieeexplore.ieee.org/document/5539970" target="_blank"> https://ieeexplore.ieee.org/document/5539970</a></p>
+    <p><span class="fa fa-calendar"></span> Oct 22, 2023</p>
+    <p><span class="fa fa-flag"></span> Dataset, SVM, </p>
+    <p><span class="fa fa-graduation-cap"></span> CVPR (2010) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Sun database: Large-scale scene recognition from abbey to zoo&url=https://absolute-value.github.io/dataset/2023/10/22/sun397.html" class="share-btn share-twitter"><span class="fa-brands fa-x-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/dataset/2023/10/22/sun397.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/dataset/2023/10/22/sun397.html&title=Sun database: Large-scale scene recognition from abbey to zoo" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Sun database: Large-scale scene recognition from abbey to zoo&body=Sun database: Large-scale scene recognition from abbey to zoo https://absolute-value.github.io/dataset/2023/10/22/sun397.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>899のカテゴリと130,519の画像を含む広範なScene UNderstanding (SUN) データベースを提案</li>
+  <li>さまざまな最先端のアルゴリズムを使用してシーン認識の新しいパフォーマンスの境界を設定
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>SUNデータベースは現存する最大のシーンカテゴリデータセットで、これまでの研究よりも多様な環境をカバー</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>小さな画像データセットで利用可能なWordNetの70,000の用語から、シーン、場所、および環境を記述する2500の空間とシーンの初期用語を選択
+    <ul>
+      <li>具体的な地名（ニューヨークなど）や特定のアイデンティティ（職場など）を想起させる用語は含めない</li>
+      <li>ナビゲート不可能なシーン（デスクトップなど）や乗り物を含めない</li>
+      <li>WordNetに欠けているいくつかのカテゴリを追加</li>
+    </ul>
+  </li>
+  <li>同義語を重ねて、屋内と屋内などを分離して、899のカテゴリーと130,519の画像でSUNデータベースを構築</li>
+  <li>各シーン・カテゴリーについて、ウェブ上の様々な検索エンジンでは200×200ピクセル以上のカラー画像を取得
+    <ul>
+      <li>類似のシーン・カテゴリー（例：修道院と教会）については、定義の重複を避けるために明示的なルールを設定</li>
+      <li>退化した画像や異常な画像（白黒、歪んだ色、非常にぼやけている、ノイズが多い、回転が正しくない、航空写真、境界線が目立つ）は削除</li>
+    </ul>
+  </li>
+  <li>899カテゴリのうち、100枚のユニークな写真がある397カテゴリで実験
+    <ul>
+      <li>人間のシーン分類
+        <ul>
+          <li>Amazon’s Mechanical Turk (AMT)を使って、各SUNカテゴリについて20の異なるテストシーンで合計397×20=7940の実験を行った</li>
+          <li>語彙の混乱を避けるために米国の参加者限定</li>
+        </ul>
+      </li>
+      <li>複数の特徴量（GIST、Dense SIFT、HOG2x2、自己類似性記述子、Tiny Images、色ヒストグラム、直線ヒストグラムなど）でSVMを学習</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>人間のシーン分類の精度
+    <ul>
+      <li>397のカテゴリで58.6%</li>
+      <li>一部の作業者は0%の精度</li>
+      <li>最初の階層で95%以上の精度を持つ「良い作業者」に焦点を当てると、精度は68.5%に上昇</li>
+      <li>精度が高いカテゴリ
+        <ul>
+          <li><img src="/assets/images/posts/sun397/1.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>精度が低いカテゴリ
+        <ul>
+          <li><img src="/assets/images/posts/sun397/2.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>SVMの精度
+    <ul>
+      <li><img src="/assets/images/posts/sun397/3.png" alt="" /></li>
+      <li>全特徴を用いて38%で人間を大きく下回る</li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa-brands fa-x-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>
