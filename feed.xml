@@ -1,4 +1,62 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-03-28T22:05:26+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Music Transformer: Generating music with long-term structure</title><link href="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html" rel="alternate" type="text/html" title="Music Transformer: Generating music with long-term structure" /><published>2023-10-23T20:14:00+09:00</published><updated>2023-10-23T20:14:00+09:00</updated><id>http://localhost:4000/transformer/2023/10/23/MusicTransformer</id><content type="html" xml:base="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-03-28T22:16:43+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Video Swin Transformer</title><link href="http://localhost:4000/dataset/2024/02/15/VideoSwin.html" rel="alternate" type="text/html" title="Video Swin Transformer" /><published>2024-02-15T12:00:00+09:00</published><updated>2024-02-15T12:00:00+09:00</updated><id>http://localhost:4000/dataset/2024/02/15/VideoSwin</id><content type="html" xml:base="http://localhost:4000/dataset/2024/02/15/VideoSwin.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>既存のビデオモデルは、空間的・時間的次元にわたってパッチをグローバルに接続するTransformer Layerを使用</li>
+  <li>提案ビデオアーキテクチャは局所性の帰納バイアスを持ち、従来のアプローチに比べて速度と精度のトレードオフを改善</li>
+  <li>小さな事前学習データセットとモデルサイズを使用しながらも、Kinetics-400とKinetics-600とSomething-Something v2でSoTA
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>ビデオ認識においてCNNからTransformerへのモデリングシフト</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/VideoSwin/1.png" alt="" /></li>
+  <li>各フレームの3Dパッチをトークンとする</li>
+  <li>線形埋め込み層で任意の次元に東映</li>
+  <li>Video Swin Transformer blocks
+    <ul>
+      <li>SwinTransformerのMSAモジュールを3D shifted windowsに基づくMSAモジュールに置き換え
+        <ul>
+          <li><img src="/assets/images/posts/VideoSwin/2.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>3D shifted windows
+        <ul>
+          <li><img src="/assets/images/posts/VideoSwin/3.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>Kinetics-400
+    <ul>
+      <li>84.9%(SoTA)</li>
+      <li><img src="/assets/images/posts/VideoSwin/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Kinetics-600
+    <ul>
+      <li>86.1%(SoTA)</li>
+      <li><img src="/assets/images/posts/VideoSwin/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Something-Something v2
+    <ul>
+      <li>69.6%(SoTA)</li>
+      <li><img src="/assets/images/posts/VideoSwin/6.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Dataset" /><category term="Action Recognition" /><category term="Transformer" /><summary type="html"><![CDATA[概要 既存のビデオモデルは、空間的・時間的次元にわたってパッチをグローバルに接続するTransformer Layerを使用 提案ビデオアーキテクチャは局所性の帰納バイアスを持ち、従来のアプローチに比べて速度と精度のトレードオフを改善 小さな事前学習データセットとモデルサイズを使用しながらも、Kinetics-400とKinetics-600とSomething-Something v2でSoTA]]></summary></entry><entry><title type="html">Music Transformer: Generating music with long-term structure</title><link href="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html" rel="alternate" type="text/html" title="Music Transformer: Generating music with long-term structure" /><published>2023-10-23T20:14:00+09:00</published><updated>2023-10-23T20:14:00+09:00</updated><id>http://localhost:4000/transformer/2023/10/23/MusicTransformer</id><content type="html" xml:base="http://localhost:4000/transformer/2023/10/23/MusicTransformer.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>音楽の長期構造を生成するためのMusic Transformerを提案</li>
@@ -784,79 +842,4 @@
       <li><img src="/assets/images/posts/Unified-IO/Unified-IO-13.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Multimodal Pretraining" /><category term="Multitask Learning" /><category term="Unified Frameworks" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 統一された入力と出力を使用して、姿勢推定、物体検出、深度推定、画像生成などのCVタスク、領域キャプションや参照表現などのVLタスク、質問応答やテキスト要約などのNLタスクを実行する統合モデルUNIFIED-IOを提案 UNIFIED-IOは、単一のtransformerベースのアーキテクチャを使用して、CVとNLの90を超える多様なデータセットを共同でトレーニングできる GRITベンチマークで7つのタスクすべてを実行できる最初のモデルであり、NYUv2-Depth、ImageNet、VQA2.0、OK-VQA、Swig、VizWizGround、BoolQ、およびSciTailなどの16の多様なベンチマークでタスク固有のFinetuningなしで優れた結果]]></summary></entry><entry><title type="html">Neural Machine Translation of Rare Words with Subword Units</title><link href="http://localhost:4000/language/2023/05/04/BPE.html" rel="alternate" type="text/html" title="Neural Machine Translation of Rare Words with Subword Units" /><published>2023-05-04T12:00:00+09:00</published><updated>2023-05-04T12:00:00+09:00</updated><id>http://localhost:4000/language/2023/05/04/BPE</id><content type="html" xml:base="http://localhost:4000/language/2023/05/04/BPE.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>実際の翻訳はopen-vocabularyであるのに対し、ニューラル機械翻訳(NMT)は固定の語彙で動作し、語彙にない単語は辞書で対処してきた（翻訳は1対1とは限らないので不適切）</li>
-  <li>そこでBPEを単語分割のタスクに対応させ、希少や未知の単語をサブワード単位で符号化することで、open-vocabularyに対応した</li>
-  <li>これにより、WMT15の翻訳課題において英→独で最大1.1BLEU、英→露で1.3BLEU向上
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>open-vocabularyでニューラル機械翻訳(NMT)</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li>アルゴリズム
-    <ul>
-      <li><img src="/assets/images/posts/BPE/1.png" alt="" /></li>
-      <li>BPE
-        <ul>
-          <li>シーケンス内で最も頻繁に使用されるバイトのペアを、単一の未使用バイトに繰り返し置き換えていく</li>
-          <li>繰り返す回数はハイパラ</li>
-        </ul>
-      </li>
-      <li>例
-        <ul>
-          <li>「l o w &lt;/w&gt;(5個), l o w e s t &lt;/w&gt;(2個), n e w e r &lt;/w&gt;(6個), w i d e r &lt;/w&gt;(3個)」という辞書がある場合（4回繰り返す）
-            <ul>
-              <li>最も頻繁に出てくるeとrの組み合わせを結合(er)</li>
-              <li>最も頻繁に出てくるerと&lt;/w&gt;の組み合わせを結合(er&lt;/w&gt;)</li>
-              <li>最も頻繁に出てくるlとoの組み合わせを結合(lo)</li>
-              <li>最も頻繁に出てくるloとwの組み合わせを結合(low)</li>
-            </ul>
-          </li>
-          <li>「low &lt;/w&gt;, low e s t &lt;/w&gt;, n e w er&lt;/w&gt;, w i d er&lt;/w&gt;」という辞書になる</li>
-          <li>12(l o w e s t n r w i d &lt;/w&gt;)から10(low e s t n w er&lt;/w&gt; i d &lt;/w&gt;)に減った</li>
-        </ul>
-      </li>
-      <li>ソースとターゲットで独立してEncodingを学習する方法と
-  ソースとターゲットの結合でEncodingを学習する方法(joint BPE)を用意
-        <ul>
-          <li>独立する場合はニューラルモデルがサブワード単位間の翻訳を学習するのが難しくなる</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>newest2015(英→独)
-    <ul>
-      <li><img src="/assets/images/posts/BPE/2.png" alt="" /></li>
-      <li>rareは上位5万語に含まれない単語</li>
-    </ul>
-  </li>
-  <li>newest2015(英→露)
-    <ul>
-      <li><img src="/assets/images/posts/BPE/3.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>単語の分割例(英→独)
-    <ul>
-      <li><img src="/assets/images/posts/BPE/4.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>単語の分割例(英→露)
-    <ul>
-      <li><img src="/assets/images/posts/BPE/5.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Language" /><category term="Language" /><summary type="html"><![CDATA[概要 実際の翻訳はopen-vocabularyであるのに対し、ニューラル機械翻訳(NMT)は固定の語彙で動作し、語彙にない単語は辞書で対処してきた（翻訳は1対1とは限らないので不適切） そこでBPEを単語分割のタスクに対応させ、希少や未知の単語をサブワード単位で符号化することで、open-vocabularyに対応した これにより、WMT15の翻訳課題において英→独で最大1.1BLEU、英→露で1.3BLEU向上]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Multimodal Pretraining" /><category term="Multitask Learning" /><category term="Unified Frameworks" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 統一された入力と出力を使用して、姿勢推定、物体検出、深度推定、画像生成などのCVタスク、領域キャプションや参照表現などのVLタスク、質問応答やテキスト要約などのNLタスクを実行する統合モデルUNIFIED-IOを提案 UNIFIED-IOは、単一のtransformerベースのアーキテクチャを使用して、CVとNLの90を超える多様なデータセットを共同でトレーニングできる GRITベンチマークで7つのタスクすべてを実行できる最初のモデルであり、NYUv2-Depth、ImageNet、VQA2.0、OK-VQA、Swig、VizWizGround、BoolQ、およびSciTailなどの16の多様なベンチマークでタスク固有のFinetuningなしで優れた結果]]></summary></entry></feed>

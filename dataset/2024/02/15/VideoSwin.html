@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="dark_btn()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Video Swin Transformer</title>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/VideoSwin/3.png" class="hero">
+    <h1>Video Swin Transformer</h1>
+    <p><span class="fa fa-link"></span><a href="https://github.com/SwinTransformer/Video-Swin-Transformer" target="_blank"> https://github.com/SwinTransformer/Video-Swin-Transformer</a></p>
+    <p><span class="fa fa-calendar"></span> Feb 15, 2024</p>
+    <p><span class="fa fa-flag"></span> Action Recognition, Transformer, </p>
+    <p><span class="fa fa-graduation-cap"></span> CVPR (2022) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Video Swin Transformer&url=https://absolute-value.github.io/dataset/2024/02/15/VideoSwin.html" class="share-btn share-twitter"><span class="fa-brands fa-x-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/dataset/2024/02/15/VideoSwin.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/dataset/2024/02/15/VideoSwin.html&title=Video Swin Transformer" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Video Swin Transformer&body=Video Swin Transformer https://absolute-value.github.io/dataset/2024/02/15/VideoSwin.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>既存のビデオモデルは、空間的・時間的次元にわたってパッチをグローバルに接続するTransformer Layerを使用</li>
+  <li>提案ビデオアーキテクチャは局所性の帰納バイアスを持ち、従来のアプローチに比べて速度と精度のトレードオフを改善</li>
+  <li>小さな事前学習データセットとモデルサイズを使用しながらも、Kinetics-400とKinetics-600とSomething-Something v2でSoTA
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>ビデオ認識においてCNNからTransformerへのモデリングシフト</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/VideoSwin/1.png" alt="" /></li>
+  <li>各フレームの3Dパッチをトークンとする</li>
+  <li>線形埋め込み層で任意の次元に東映</li>
+  <li>Video Swin Transformer blocks
+    <ul>
+      <li>SwinTransformerのMSAモジュールを3D shifted windowsに基づくMSAモジュールに置き換え
+        <ul>
+          <li><img src="/assets/images/posts/VideoSwin/2.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>3D shifted windows
+        <ul>
+          <li><img src="/assets/images/posts/VideoSwin/3.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>Kinetics-400
+    <ul>
+      <li>84.9%(SoTA)</li>
+      <li><img src="/assets/images/posts/VideoSwin/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Kinetics-600
+    <ul>
+      <li>86.1%(SoTA)</li>
+      <li><img src="/assets/images/posts/VideoSwin/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Something-Something v2
+    <ul>
+      <li>69.6%(SoTA)</li>
+      <li><img src="/assets/images/posts/VideoSwin/6.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa-brands fa-x-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>
