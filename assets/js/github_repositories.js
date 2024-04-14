@@ -1,6 +1,6 @@
 const accessToken1 = 'github_pat_'
-const accessToken2 = '11APYI3YQ03hFWc7wie41L_'
-const accessToken3 = 'CccNAXuIzFV5jsqENeiq4ecRF6euBotn81DKha6yycvYVBO6YJEjclwQOjD';
+const accessToken2 = '11APYI3YQ04eWwRwOWMpYb_'
+const accessToken3 = 'rOemdvpAu0nYWxVz65MSABeYZPR6go6xlwjATYk1zNhGLFUXNOIdOKmHWa0';
 
 // リポジトリの情報を読み込む
 fetch(`https://api.github.com/users/Absolute-Value/repos`, {
