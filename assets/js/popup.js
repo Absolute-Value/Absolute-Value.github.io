@@ -28,9 +28,8 @@ function showDetails(button) {
             popupContent.innerHTML += '<li><a href="https://github.com/Absolute-Value/Cloth-Anomaly-Detection-pytorch" class=labo target="_blank"><b>Deep Learning</b></a>で使用しているライブラリです．Tensorflowと比べて柔軟な実装が可能で最新手法の公開が早いです．Tensorflowもある程度使用できます．</li>';
             break
         case 'Java':
-            popupContent.innerHTML += '<li>シューティングゲームや<a href="https://github.com/Absolute-Value/PinBall" class="other" target="_blank"><b>ピンボール</b></a>を作成しました．</li>';
+            popupContent.innerHTML += '<li><a href="https://github.com/Absolute-Value/ShootingGame" class="other" target="_blank"><b>シューティングゲーム</b></a>や<a href="https://github.com/Absolute-Value/PinBall" class="other" target="_blank"><b>ピンボール</b></a>を作成しました．</li>';
             popupContent.innerHTML += '<li><img src="/assets/images/FiShooting.png" width="400"/></li>';
-            popupContent.innerHTML += `<li><img src="https://github.com/Absolute-Value/PinBall/raw/main/top.png" width="400"/></li>`;
             popupContent.innerHTML += '<li>Androidアプリの<a href="https://github.com/gu-info/ToDoCalendar" class="other" target="_blank"><b>TODOリスト付きカレンダー</b></a>も作成しました．</li>';
             break
         case 'Unity':
