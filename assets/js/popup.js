@@ -35,7 +35,8 @@ function showDetails(button) {
             break
         case 'Unity':
             popupContent.innerHTML += '<li>VRで蕎麦運びをするゲームとデバイスを作りました．</li>';
-            popupContent.innerHTML += '<li><img src="/assets/images/VR.png" height="300"/></li>';
+            // popupContent.innerHTML += '<li><img src="/assets/images/VR.png" height="300"/></li>';
+            popupContent.innerHTML += '<li><iframe width="560" height="315" src="https://www.youtube.com/embed/w-wvB5HKACc?si=pbnVa_2gbt5WdpUl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></li>';
             break
         case 'HTML':
         case 'CSS':
