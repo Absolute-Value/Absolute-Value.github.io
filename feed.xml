@@ -1,4 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-05-12T16:39:26+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Video Swin Transformer</title><link href="http://localhost:4000/dataset/2024/02/15/VideoSwin.html" rel="alternate" type="text/html" title="Video Swin Transformer" /><published>2024-02-15T12:00:00+09:00</published><updated>2024-02-15T12:00:00+09:00</updated><id>http://localhost:4000/dataset/2024/02/15/VideoSwin</id><content type="html" xml:base="http://localhost:4000/dataset/2024/02/15/VideoSwin.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-06-03T21:43:50+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Unified-IO 2: Scaling Autoregressive Multimodal Models with Vision, Language, Audio, and Action</title><link href="http://localhost:4000/dataset/2024/02/15/Unified-IO2.html" rel="alternate" type="text/html" title="Unified-IO 2: Scaling Autoregressive Multimodal Models with Vision, Language, Audio, and Action" /><published>2024-02-15T13:00:00+09:00</published><updated>2024-02-15T13:00:00+09:00</updated><id>http://localhost:4000/dataset/2024/02/15/Unified-IO2</id><content type="html" xml:base="http://localhost:4000/dataset/2024/02/15/Unified-IO2.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>マルチモーダルモデルUNIFIED-IO 2を提案</li>
+  <li>異なるモダリティを統合するために、入出力をトークン化し、単一のEncoder Decoder Transformerモデルで意味空間を共有</li>
+  <li>モデルトレーニングの安定化のためにさまざまなアーキテクチャ改善</li>
+  <li>GRITベンチマークで最先端の性能を達成し、画像生成と理解、自然言語理解、ビデオとオーディオの理解、ロボット操作を含む35以上のベンチマークで強力な結果を達成
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>画像、テキスト、音声、アクションを理解し、生成することができる初のマルチモーダルモデル</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li>Architecture
+    <ul>
+      <li><img src="/assets/images/posts/Unified-IO2/1.png" alt="" /></li>
+      <li>モダリティを追加統合するにつれて学習が不安定になるため構造変更
+        <ul>
+          <li>relative positional embeddingではなく2D Rotary Embedding</li>
+          <li>dot-product attentionの前にクエリとキーにLayerNormを適用するQK Normalization</li>
+          <li>画像や音声の圧縮にperceiver resamplerを使用
+            <ul>
+              <li>perceiver resamplerにはScaled Cosine Attentionを用いる</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Multimodal Mixture of Denoisers
+    <ul class="task-list">
+      <li>[R] – 入力画像や音声パッチの特徴のx%をランダムにマスクし、それを再構築</li>
+      <li>[S] – 他の入力モダリティのみを条件として、ターゲットモダリティを生成</li>
+      <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />– 極端な破損</li>
+    </ul>
+  </li>
+  <li>Autoregressive with Dynamic Masking
+    <ul>
+      <li>(a) autoregressive, (b) mask auto-encoder, (c) autoregressive</li>
+      <li><img src="/assets/images/posts/Unified-IO2/2.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>効率化するために、トークンの短い文章を結合して学習</li>
+  <li>Data
+    <ul>
+      <li>pre-training
+        <ul>
+          <li><img src="/assets/images/posts/Unified-IO2/3.png" alt="" /></li>
+          <li>10億の画像とテキストのペア、1兆のテキストトークン、1億8000万のビデオクリップ、1億3000万のインターリーブされた画像とテキスト、300万の3Dアセット、100万のエージェントの軌跡など</li>
+        </ul>
+      </li>
+      <li>instruction tuning
+        <ul>
+          <li><img src="/assets/images/posts/Unified-IO2/4.png" alt="" /></li>
+          <li>視覚、言語、音声、行動など220のタスクをカバーする120以上のデータセット</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>Zero-shot performance
+    <ul>
+      <li><img src="/assets/images/posts/Unified-IO2/5.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>GRIT ablation and test set
+    <ul>
+      <li><img src="/assets/images/posts/Unified-IO2/6.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>text-to-image generation
+    <ul>
+      <li><img src="/assets/images/posts/Unified-IO2/7.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Vision-language results
+    <ul>
+      <li><img src="/assets/images/posts/Unified-IO2/8.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>action classification, video captioning, VQA, visual comprehension, audio classification, and audio captioning
+    <ul>
+      <li><img src="/assets/images/posts/Unified-IO2/9.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>Single-object 3D detection on Objectron
+    <ul>
+      <li><img src="/assets/images/posts/Unified-IO2/10.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Dataset" /><category term="Unified Frameworks" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 マルチモーダルモデルUNIFIED-IO 2を提案 異なるモダリティを統合するために、入出力をトークン化し、単一のEncoder Decoder Transformerモデルで意味空間を共有 モデルトレーニングの安定化のためにさまざまなアーキテクチャ改善 GRITベンチマークで最先端の性能を達成し、画像生成と理解、自然言語理解、ビデオとオーディオの理解、ロボット操作を含む35以上のベンチマークで強力な結果を達成]]></summary></entry><entry><title type="html">Video Swin Transformer</title><link href="http://localhost:4000/dataset/2024/02/15/VideoSwin.html" rel="alternate" type="text/html" title="Video Swin Transformer" /><published>2024-02-15T12:00:00+09:00</published><updated>2024-02-15T12:00:00+09:00</updated><id>http://localhost:4000/dataset/2024/02/15/VideoSwin</id><content type="html" xml:base="http://localhost:4000/dataset/2024/02/15/VideoSwin.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>既存のビデオモデルは、空間的・時間的次元にわたってパッチをグローバルに接続するTransformer Layerを使用</li>
@@ -734,112 +834,4 @@
       <li><img src="/assets/images/posts/ViPLO/CLIP.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction" /><category term="CLIP" /><category term="ViT" /><summary type="html"><![CDATA[概要 MOAモジュールと姿勢条件付きグラフの2段階のHOI検出器ViPROを提案 MOAモジュールにより量子化問題に対処し、ViTを特徴抽出器として利用 人間のプロセスに触発された姿勢条件付きグラフにより、人間の姿勢から豊富な情報を利用 1段階法と比べて、低複雑性と実世界シナリオへの適用性の利点がある]]></summary></entry><entry><title type="html">Unified-IO: A Unified Model for Vision, Language, and Multi-Modal Tasks</title><link href="http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO.html" rel="alternate" type="text/html" title="Unified-IO: A Unified Model for Vision, Language, and Multi-Modal Tasks" /><published>2023-05-08T12:00:00+09:00</published><updated>2023-05-08T12:00:00+09:00</updated><id>http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO</id><content type="html" xml:base="http://localhost:4000/vision%20and%20language/2023/05/08/Unified-IO.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>統一された入力と出力を使用して、姿勢推定、物体検出、深度推定、画像生成などのCVタスク、領域キャプションや参照表現などのVLタスク、質問応答やテキスト要約などのNLタスクを実行する統合モデルUNIFIED-IOを提案</li>
-  <li>UNIFIED-IOは、単一のtransformerベースのアーキテクチャを使用して、CVとNLの90を超える多様なデータセットを共同でトレーニングできる</li>
-  <li>GRITベンチマークで7つのタスクすべてを実行できる最初のモデルであり、NYUv2-Depth、ImageNet、VQA2.0、OK-VQA、Swig、VizWizGround、BoolQ、およびSciTailなどの16の多様なベンチマークでタスク固有のFinetuningなしで優れた結果
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>モダリティ固有のブランチを必要とせずに、GRITベンチマークで7つのタスクをサポートする最初のモデル</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<p><img src="/assets/images/posts/Unified-IO/Unified-IO-2.png" alt="" /></p>
-<ul>
-  <li>アーキテクチャ
-    <ul>
-      <li>Text-to-Text Transfer Transformer (T5)に従って、基本は純粋なTransformer Encoder-Decoder構造</li>
-      <li>画像はViTに倣ってパッチトークンにし、2次元絶対位置埋め込みを追加</li>
-      <li>入力は言語256画像576トークン(384x384画像から24x24パッチ)で、出力は言語128画像256トークン(256x256画像から16x16パッチ)</li>
-      <li>パラメータ
-        <ul>
-          <li><img src="/assets/images/posts/Unified-IO/Unified-IO-3.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>学習
-    <ul>
-      <li>2つの事前学習
-        <ul>
-          <li>言語のノイズ除去(BERTと同様)
-            <ul>
-              <li>半分がテキストデータ(C4とWikipedia)</li>
-              <li>残りがImagenet21kなどの画像とクラスデータや、YFCC15Mなどの画像とキャプションデータ</li>
-            </ul>
-          </li>
-          <li>画像のマスクノイズ除去(MAEと同様)
-            <ul>
-              <li>CVデータの一部の画像を使用</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li>学習とデータセット
-        <ul>
-          <li>62箇所から95の公開データセットを使用
-            <ul>
-              <li><img src="/assets/images/posts/Unified-IO/Unified-IO-4.png" alt="" /></li>
-              <li><img src="/assets/images/posts/Unified-IO/Unified-IO-5.png" alt="" /></li>
-            </ul>
-          </li>
-          <li>バッチにデータセットを混ぜて訓練
-            <ul>
-              <li>データの多い画像合成は3/16、少ない密度ラベリングは1/16、それ以外はグループで均等</li>
-              <li>グループ内ではデータセットサイズの平方根に比例してサンプリング</li>
-              <li>一部のタスクはめったにサンプリングされない（深度推定は0.43％）</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>語彙
-    <ul>
-      <li>言語が32152，場所が1000，画像が16384の計49536</li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>GRIT ベンチマーク
-    <ul>
-      <li>画像分類、物体検出、VQA、参照表現、セグメンテーション、キーポイント、および表面法線推定など7つのタスクで構成</li>
-      <li>既存で最も多いGPV-2が4タスクしかできないのに対し、UNIFIED-IOは7つのタスクすべてをサポート</li>
-      <li>UNIFIED-IO XLは画像分類、VQA、参照表現、セグメンテーションにおいてSOTA</li>
-      <li>キーポイントはMask R-CNNより劣っている（推論が二段階のため）
-        <ul>
-          <li><img src="/assets/images/posts/Unified-IO/Unified-IO-6.png" alt="" /></li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>Detection
-    <ul>
-      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-7.png" alt="" /></li>
-      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-8.png" alt="" /></li>
-      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-9.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>Reration
-    <ul>
-      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-10.png" alt="" /></li>
-    </ul>
-  </li>
-  <li>Other
-    <ul>
-      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-11.png" alt="" /></li>
-      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-12.png" alt="" /></li>
-      <li><img src="/assets/images/posts/Unified-IO/Unified-IO-13.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Multimodal Pretraining" /><category term="Multitask Learning" /><category term="Unified Frameworks" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 統一された入力と出力を使用して、姿勢推定、物体検出、深度推定、画像生成などのCVタスク、領域キャプションや参照表現などのVLタスク、質問応答やテキスト要約などのNLタスクを実行する統合モデルUNIFIED-IOを提案 UNIFIED-IOは、単一のtransformerベースのアーキテクチャを使用して、CVとNLの90を超える多様なデータセットを共同でトレーニングできる GRITベンチマークで7つのタスクすべてを実行できる最初のモデルであり、NYUv2-Depth、ImageNet、VQA2.0、OK-VQA、Swig、VizWizGround、BoolQ、およびSciTailなどの16の多様なベンチマークでタスク固有のFinetuningなしで優れた結果]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction" /><category term="CLIP" /><category term="ViT" /><summary type="html"><![CDATA[概要 MOAモジュールと姿勢条件付きグラフの2段階のHOI検出器ViPROを提案 MOAモジュールにより量子化問題に対処し、ViTを特徴抽出器として利用 人間のプロセスに触発された姿勢条件付きグラフにより、人間の姿勢から豊富な情報を利用 1段階法と比べて、低複雑性と実世界シナリオへの適用性の利点がある]]></summary></entry></feed>
