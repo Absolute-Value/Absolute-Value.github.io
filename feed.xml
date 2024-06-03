@@ -1,4 +1,68 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-06-03T21:43:50+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">Unified-IO 2: Scaling Autoregressive Multimodal Models with Vision, Language, Audio, and Action</title><link href="http://localhost:4000/dataset/2024/02/15/Unified-IO2.html" rel="alternate" type="text/html" title="Unified-IO 2: Scaling Autoregressive Multimodal Models with Vision, Language, Audio, and Action" /><published>2024-02-15T13:00:00+09:00</published><updated>2024-02-15T13:00:00+09:00</updated><id>http://localhost:4000/dataset/2024/02/15/Unified-IO2</id><content type="html" xml:base="http://localhost:4000/dataset/2024/02/15/Unified-IO2.html"><![CDATA[<h1 id="概要">概要</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-06-03T22:02:25+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">軸屋敬介 | Keisuke Jikuya</title><entry><title type="html">ReConPatch : Contrastive Patch Representation Learning for Industrial Anomaly Detection</title><link href="http://localhost:4000/transformer/2024/03/28/ReConPatch.html" rel="alternate" type="text/html" title="ReConPatch : Contrastive Patch Representation Learning for Industrial Anomaly Detection" /><published>2024-03-28T15:37:00+09:00</published><updated>2024-03-28T15:37:00+09:00</updated><id>http://localhost:4000/transformer/2024/03/28/ReConPatch</id><content type="html" xml:base="http://localhost:4000/transformer/2024/03/28/ReConPatch.html"><![CDATA[<h1 id="概要">概要</h1>
+
+<ul>
+  <li>既存手法では、自然画像データセットから事前に学習した視覚表現を活用しているため、産業データセットへの適用にはギャップが存在</li>
+  <li>事前学習モデルからのパッチ特徴の線形変調を訓練し、コントラスト表現学習を用いて異常検出のための識別的特徴を構築</li>
+  <li>MVTec ADデータセットおよびBTADデータセットにおける最先端の異常検出性能
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>ペアワイズおよびコンテクスト類似性を疑似ラベルとして活用し、ラベルのないデータに対するコントラスト学習を可能にした</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<ul>
+  <li><img src="/assets/images/posts/ReConPatch/1.png" alt="" /></li>
+  <li>学習
+    <ul>
+      <li>訓練データを事前学習済みCNNに通して特徴マップを収集
+        <ul>
+          <li>異なる空間解像度は同じ解像度に補間して連結</li>
+        </ul>
+      </li>
+      <li>特定のパッチサイズ内の近傍の特徴ベクトルを集約し、パッチレベルの特徴を生成</li>
+      <li>特徴表現学習のための2つのネットワーク
+        <ol>
+          <li>パッチレベルの特徴表現学習用</li>
+          <li>パッチレベルの特徴ペア間のペアワイズおよびコンテクスト類似性を計算</li>
+        </ol>
+      </li>
+      <li>relaxed contrastive lossに基づいて、特徴表現層と射影層を訓練
+        <ul>
+          <li>似た特徴が近づき、異なる特徴が遠ざかるように学習</li>
+          <li><img src="/assets/images/posts/ReConPatch/2.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>テスト
+    <ul>
+      <li>事前学習済みCNNに通して特徴マップを収集</li>
+      <li>メモリバンク内の代表的な特徴との比較によりピクセルごとの異常スコアを計<strong>算</strong></li>
+      <li>画像レベルの異常スコアは画像内のすべてのパッチ特徴に対して計算された異常スコアの最大値</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>MVTec AD
+    <ul>
+      <li><img src="/assets/images/posts/ReConPatch/3.png" alt="" /></li>
+      <li><img src="/assets/images/posts/ReConPatch/4.png" alt="" /></li>
+    </ul>
+  </li>
+  <li>BTAD
+    <ul>
+      <li><img src="/assets/images/posts/ReConPatch/5.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>]]></content><author><name></name></author><category term="Transformer" /><category term="Anomaly Detection" /><summary type="html"><![CDATA[概要 既存手法では、自然画像データセットから事前に学習した視覚表現を活用しているため、産業データセットへの適用にはギャップが存在 事前学習モデルからのパッチ特徴の線形変調を訓練し、コントラスト表現学習を用いて異常検出のための識別的特徴を構築 MVTec ADデータセットおよびBTADデータセットにおける最先端の異常検出性能]]></summary></entry><entry><title type="html">Unified-IO 2: Scaling Autoregressive Multimodal Models with Vision, Language, Audio, and Action</title><link href="http://localhost:4000/transformer/2024/02/15/Unified-IO2.html" rel="alternate" type="text/html" title="Unified-IO 2: Scaling Autoregressive Multimodal Models with Vision, Language, Audio, and Action" /><published>2024-02-15T13:00:00+09:00</published><updated>2024-02-15T13:00:00+09:00</updated><id>http://localhost:4000/transformer/2024/02/15/Unified-IO2</id><content type="html" xml:base="http://localhost:4000/transformer/2024/02/15/Unified-IO2.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>マルチモーダルモデルUNIFIED-IO 2を提案</li>
@@ -98,7 +162,7 @@
       <li><img src="/assets/images/posts/Unified-IO2/10.png" alt="" /></li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Dataset" /><category term="Unified Frameworks" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 マルチモーダルモデルUNIFIED-IO 2を提案 異なるモダリティを統合するために、入出力をトークン化し、単一のEncoder Decoder Transformerモデルで意味空間を共有 モデルトレーニングの安定化のためにさまざまなアーキテクチャ改善 GRITベンチマークで最先端の性能を達成し、画像生成と理解、自然言語理解、ビデオとオーディオの理解、ロボット操作を含む35以上のベンチマークで強力な結果を達成]]></summary></entry><entry><title type="html">Video Swin Transformer</title><link href="http://localhost:4000/dataset/2024/02/15/VideoSwin.html" rel="alternate" type="text/html" title="Video Swin Transformer" /><published>2024-02-15T12:00:00+09:00</published><updated>2024-02-15T12:00:00+09:00</updated><id>http://localhost:4000/dataset/2024/02/15/VideoSwin</id><content type="html" xml:base="http://localhost:4000/dataset/2024/02/15/VideoSwin.html"><![CDATA[<h1 id="概要">概要</h1>
+</ul>]]></content><author><name></name></author><category term="Transformer" /><category term="Unified Frameworks" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 マルチモーダルモデルUNIFIED-IO 2を提案 異なるモダリティを統合するために、入出力をトークン化し、単一のEncoder Decoder Transformerモデルで意味空間を共有 モデルトレーニングの安定化のためにさまざまなアーキテクチャ改善 GRITベンチマークで最先端の性能を達成し、画像生成と理解、自然言語理解、ビデオとオーディオの理解、ロボット操作を含む35以上のベンチマークで強力な結果を達成]]></summary></entry><entry><title type="html">Video Swin Transformer</title><link href="http://localhost:4000/dataset/2024/02/15/VideoSwin.html" rel="alternate" type="text/html" title="Video Swin Transformer" /><published>2024-02-15T12:00:00+09:00</published><updated>2024-02-15T12:00:00+09:00</updated><id>http://localhost:4000/dataset/2024/02/15/VideoSwin</id><content type="html" xml:base="http://localhost:4000/dataset/2024/02/15/VideoSwin.html"><![CDATA[<h1 id="概要">概要</h1>
 
 <ul>
   <li>既存のビデオモデルは、空間的・時間的次元にわたってパッチをグローバルに接続するTransformer Layerを使用</li>
@@ -747,91 +811,4 @@
       </li>
     </ul>
   </li>
-</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Multimodal Pretraining" /><category term="Vision-Language Pretraining" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 最小限のVision-Language PretrainingフレームワークであるSimple Visual Language Model (SimVLM)を提案 Prefix Language Modelingによって余分なデータやタスク固有のカスタマイズが必要ない 従来の事前学習方法を大幅に上回り、VQA、NLVR2、SNLI-VEなどの幅広いVLタスクでSOTA]]></summary></entry><entry><title type="html">ViPLO: Vision Transformer based Pose-Conditioned Self-Loop Graph for Human-Object Interaction Detection</title><link href="http://localhost:4000/hoi/2023/05/09/ViPLO.html" rel="alternate" type="text/html" title="ViPLO: Vision Transformer based Pose-Conditioned Self-Loop Graph for Human-Object Interaction Detection" /><published>2023-05-09T13:00:00+09:00</published><updated>2023-05-09T13:00:00+09:00</updated><id>http://localhost:4000/hoi/2023/05/09/ViPLO</id><content type="html" xml:base="http://localhost:4000/hoi/2023/05/09/ViPLO.html"><![CDATA[<h1 id="概要">概要</h1>
-
-<ul>
-  <li>MOAモジュールと姿勢条件付きグラフの2段階のHOI検出器ViPROを提案</li>
-  <li>MOAモジュールにより量子化問題に対処し、ViTを特徴抽出器として利用</li>
-  <li>人間のプロセスに触発された姿勢条件付きグラフにより、人間の姿勢から豊富な情報を利用</li>
-  <li>1段階法と比べて、低複雑性と実世界シナリオへの適用性の利点がある
-<!--more--></li>
-</ul>
-
-<h1 id="新規性差分">新規性・差分</h1>
-
-<ul>
-  <li>HICO-DETとV-COCOでSOTA</li>
-</ul>
-
-<h1 id="アイデア">アイデア</h1>
-
-<ul>
-  <li>ViT Backboneを使用した特徴抽出
-    <ul>
-      <li><img src="/assets/images/posts/ViPLO/backbone.png" alt="" /></li>
-      <li>Faster R-CNNを使用して、画像から人間とオブジェクトを検出</li>
-      <li>特徴抽出にResNetではなくViTを使用</li>
-      <li>ViTに対応するためにMOAモジュールを導入
-        <ul>
-          <li>ViT Backboneの出力特徴から、人間とオブジェクトの特徴を抽出する</li>
-          <li>パッチと領域の重なりを利用して、Attention MAPを作成</li>
-          <li>MOAモジュールによりHOI検出で大きなパフォーマンスの向上
-            <ul>
-              <li><img src="/assets/images/posts/ViPLO/moa.png" alt="" /></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-  <li>姿勢条件付きグラフニューラルネットワーク
-    <ul>
-      <li><img src="/assets/images/posts/ViPLO/gnn.png" alt="" /></li>
-      <li>人間とオブジェクト間のインタラクションを検出するために使用</li>
-      <li>空間条件付きグラフ（SCG）ベース
-        <ul>
-          <li>ResNetとROIAlignを使用して抽出した特徴でノードを初期化</li>
-          <li>エッジエンコーディングを人間とオブジェクトの2つの境界ボックスの空間情報に基づく特徴で初期化</li>
-          <li>エッジエンコーディングに条件付けられたノード間で双方向メッセージパッシングを実行</li>
-          <li>更新されたノードエンコーディングとエッジエンコーディングはHOIの分類に使用</li>
-        </ul>
-      </li>
-      <li>姿勢認識エッジエンコーディング
-        <ul>
-          <li>空間情報だけでなく人間の姿勢情報に基づいて初期化する</li>
-          <li>CGと同様にペアワイズ空間特徴（つまり、クエリ）を計算</li>
-          <li>各関節の座標と関節から、ペアワイズ関節特徴（つまり、キー）を計算</li>
-          <li>クエリとキーの内積によって各人間の関節の注意スコアを計算</li>
-        </ul>
-      </li>
-      <li>メッセージパッシングと姿勢
-        <ul>
-          <li>各人間の関節のローカル領域ボックスのViT出力をUnFlattenしてROIAlignを適用してローカル特徴を抽出</li>
-          <li>抽出特徴を人間のノードエンコーディングを更新するために使用</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-<h1 id="結果">結果</h1>
-
-<ul>
-  <li>HICO-DET &amp; V-COCO
-    <ul>
-      <li><img src="/assets/images/posts/ViPLO/HICO.png" alt="" /></li>
-      <li>HICOで2.07 mAP向上</li>
-    </ul>
-  </li>
-  <li>SCGとの比較
-    <ul>
-      <li><img src="/assets/images/posts/ViPLO/SCG.png" alt="" /></li>
-      <li>left: ViPLO, right: SCG</li>
-    </ul>
-  </li>
-  <li>CLIP重みの有効性
-    <ul>
-      <li><img src="/assets/images/posts/ViPLO/CLIP.png" alt="" /></li>
-    </ul>
-  </li>
-</ul>]]></content><author><name></name></author><category term="HOI" /><category term="Human-Object Interaction" /><category term="CLIP" /><category term="ViT" /><summary type="html"><![CDATA[概要 MOAモジュールと姿勢条件付きグラフの2段階のHOI検出器ViPROを提案 MOAモジュールにより量子化問題に対処し、ViTを特徴抽出器として利用 人間のプロセスに触発された姿勢条件付きグラフにより、人間の姿勢から豊富な情報を利用 1段階法と比べて、低複雑性と実世界シナリオへの適用性の利点がある]]></summary></entry></feed>
+</ul>]]></content><author><name></name></author><category term="Vision and Language" /><category term="Multimodal Pretraining" /><category term="Vision-Language Pretraining" /><category term="Zero-shot Learning" /><category term="Vision and Language" /><summary type="html"><![CDATA[概要 最小限のVision-Language PretrainingフレームワークであるSimple Visual Language Model (SimVLM)を提案 Prefix Language Modelingによって余分なデータやタスク固有のカスタマイズが必要ない 従来の事前学習方法を大幅に上回り、VQA、NLVR2、SNLI-VEなどの幅広いVLタスクでSOTA]]></summary></entry></feed>
