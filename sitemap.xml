@@ -300,6 +300,9 @@
 <loc>http://localhost:4000/blogs/Tetris2.html</loc>
 </url>
 <url>
+<loc>http://localhost:4000/bachelor.html</loc>
+</url>
+<url>
 <loc>http://localhost:4000/blogs.html</loc>
 </url>
 <url>
@@ -307,6 +310,9 @@
 </url>
 <url>
 <loc>http://localhost:4000/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/master.html</loc>
 </url>
 <url>
 <loc>http://localhost:4000/notes.html</loc>
@@ -364,6 +370,14 @@
 </url>
 <url>
 <loc>http://localhost:4000/posts/9/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/assets/bachelor.pdf</loc>
+<lastmod>2024-06-05T20:12:54+09:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/assets/master.pdf</loc>
+<lastmod>2024-06-05T20:07:43+09:00</lastmod>
 </url>
 <url>
 <loc>http://localhost:4000/google0b9119188669f2c6.html</loc>
