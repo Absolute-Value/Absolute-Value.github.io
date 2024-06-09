@@ -44,7 +44,7 @@ function showDetails(button) {
             break
         case 'JavaScript':
             popupContent.innerHTML += '<li>本ページにおけるダークモードの実装や下にあるGitHubのリポジトリの取得をしています．</li>';
-            popupContent.innerHTML += '<li>未完成ですが、<a href="https://absolute-value.github.io/blogs/BaseBallGame.html" class="other" target="_blank"><b>野球ゲーム</b></a>を作成したりもしました．</li>';
+            popupContent.innerHTML += '<li>未完成ですが、<a href="https://absolute-value.github.io/blogs/ShootingGame2.html" class="other" target="_blank"><b>シューティングゲーム</b></a>や<a href="https://absolute-value.github.io/blogs/BaseBallGame.html" class="other" target="_blank"><b>野球ゲーム</b></a>を作成したりもしました．</li>';
             break
         case 'Ubuntu':
             popupContent.innerHTML += '<li>DeepLearningの計算用ノードのOSです．無料なのに色々できて便利です．</li>';
