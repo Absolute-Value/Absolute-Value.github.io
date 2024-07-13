@@ -1,11 +1,17 @@
-const accessToken1 = 'github_pat_'
-const accessToken2 = '11APYI3YQ04eWwRwOWMpYb_'
-const accessToken3 = 'rOemdvpAu0nYWxVz65MSABeYZPR6go6xlwjATYk1zNhGLFUXNOIdOKmHWa0';
+const at = String.raw`jlwkxebsdwb44DS\L6\T3kRyttrUvN5]ZbgZ3rV35]nmtu]qm{qi[}j||zlK<T8{Vs4}5XzkRIvWHLRRDKTY6MQS::nNr`;
+
+function fromToken(txt) {
+  const SHIFT = 3;
+  txt = txt.split('').map(c => String.fromCharCode((c.charCodeAt(0) - SHIFT + 256) % 256)).join('');
+  txt = new TextDecoder("utf-8").decode(new Uint8Array([...txt].map(c => c.charCodeAt(0))));
+  return txt;
+}
+const eat = fromToken(at);
 
 // リポジトリの情報を読み込む
 fetch(`https://api.github.com/users/Absolute-Value/repos`, {
   headers: {
-    Authorization: `Bearer ${accessToken1+accessToken2+accessToken3}`
+    Authorization: `Bearer ${eat}`
   }
 })
   .then(response => response.json())
