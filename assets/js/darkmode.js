@@ -1,27 +1,27 @@
-let dark_mode = false;
+let isDarkMode = false;
 
 if (window.matchMedia){
   if (window.matchMedia('(prefers-color-scheme: dark)').matches){
-    dark_mode = true;
+    isDarkMode = true;
   }
 
   //ローカルストレージ判定
   if(localStorage.getItem('dark-mode-settings')==='dark') {
-    dark_mode = true;
-  }else if (localStorage.getItem('dark-mode-settings')==='light') {
-    dark_mode = false;
+    isDarkMode = true;
+  } else if (localStorage.getItem('dark-mode-settings')==='light') {
+    isDarkMode = false;
   }
 
-  change(dark_mode);
+  change(isDarkMode);
 }
  
-function dark_btn() {
-  if (dark_mode) {
-    dark_mode = false;
+function darkButton() {
+  if (isDarkMode) {
+    isDarkMode = false;
   } else {
-    dark_mode = true;
+    isDarkMode = true;
   }
-  change(dark_mode);
+  change(isDarkMode);
 }
 
 function change(mode) {

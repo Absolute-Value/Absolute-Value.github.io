@@ -62,8 +62,8 @@ fetch(`https://api.github.com/users/Absolute-Value/repos`, {
       repo_a.appendChild(disc_p);
       disc_p.appendChild(document.createTextNode(repo.description));
       
-      const detail_p = document.createElement('p');
-      repo_a.appendChild(detail_p)
+      const detailElementP = document.createElement('p');
+      repo_a.appendChild(detailElementP)
       try {
         const col = colors[repo.language].color.replace('#','');
         // FontAwesomeのアイコンを追加する
@@ -72,8 +72,8 @@ fetch(`https://api.github.com/users/Absolute-Value/repos`, {
         log_name = log_name.replace('HTML', 'HTML5');
         code.src = 'https://img.shields.io/github/languages/top/Absolute-Value/'+repo.name+'?color='+col+'&logo='+log_name+'&logoColor='+col+'&style=flat';
         
-        detail_p.appendChild(code)
-        detail_p.appendChild(document.createElement('br'));
+        detailElementP.appendChild(code)
+        detailElementP.appendChild(document.createElement('br'));
       } catch(error) {
         true;
       }
@@ -81,7 +81,7 @@ fetch(`https://api.github.com/users/Absolute-Value/repos`, {
       // // FontAwesomeのアイコンを追加する
       const calendar = document.createElement('img');
       calendar.src = 'https://img.shields.io/github/last-commit/Absolute-Value/'+repo.name+'?logoColor=white&logo=GitHub%20Actions'
-      detail_p.appendChild(calendar);
+      detailElementP.appendChild(calendar);
     });
   });
 })
