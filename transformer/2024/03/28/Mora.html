@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="darkButton()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>Mora: Enabling Generalist Video Generation via A Multi-Agent Framework</title>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      processEscapes: true,
+      tags: "ams",
+      autoload: {
+        color: [],
+        colorV2: ['color']
+      },
+      packages: {'[+]': ['noerrors']}
+    },
+    chtml: {
+      matchFontHeight: false,
+      displayAlign: "left",
+      displayIndent: "2em"
+    },
+    options: {
+      renderActions: {
+        /* add a new named action to render <script type="math/tex"> */
+        find_script_mathtex: [10, function (doc) {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/);
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+            const text = document.createTextNode('');
+            node.parentNode.replaceChild(text, node);
+            math.start = {node: text, delim: '', n: 0};
+            math.end = {node: text, delim: '', n: 0};
+            doc.math.push(math);
+          }
+        }, '']
+      }
+    },
+    loader: {
+      load: ['[tex]/noerrors']
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+  </head>
+  <body>
+    <img src="/assets/images/posts/Mora/5.png" class="hero">
+    <h1>Mora: Enabling Generalist Video Generation via A Multi-Agent Framework</h1>
+    <p><span class="fa fa-link"></span><a href="https://arxiv.org/abs/2403.13248v2" target="_blank"> https://arxiv.org/abs/2403.13248v2</a></p>
+    <p><span class="fa fa-calendar"></span> Mar 28, 2024</p>
+    <p><span class="fa fa-flag"></span> Vision and Language, </p>
+    <p><span class="fa fa-graduation-cap"></span> arXiv (2024) </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=Mora: Enabling Generalist Video Generation via A Multi-Agent Framework&url=https://absolute-value.github.io/transformer/2024/03/28/Mora.html" class="share-btn share-twitter"><span class="fa-brands fa-x-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/transformer/2024/03/28/Mora.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/transformer/2024/03/28/Mora.html&title=Mora: Enabling Generalist Video Generation via A Multi-Agent Framework" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=Mora: Enabling Generalist Video Generation via A Multi-Agent Framework&body=Mora: Enabling Generalist Video Generation via A Multi-Agent Framework https://absolute-value.github.io/transformer/2024/03/28/Mora.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    <h1 id="概要">概要</h1>
+
+<ul>
+  <li>OpenAIによるSoraの影響を受け、新しいマルチエージェントフレームワークであるMoraを提案</li>
+  <li>テキストからビデオへの生成、画像からビデオへの編集、ビデオの接続など、複数のビデオ関連タスクに対応</li>
+  <li>広範な実験を通じて、MoraがSoraに近い性能を示すものの、全体的な性能ギャップが存在することを確認
+<!--more--></li>
+</ul>
+
+<h1 id="新規性差分">新規性・差分</h1>
+
+<ul>
+  <li>さまざまなビデオ生成タスクに対応する最初のオープンソースマルチエージェントフレームワーク</li>
+</ul>
+
+<h1 id="アイデア">アイデア</h1>
+
+<p><img src="/assets/images/posts/Mora/1.png" alt="" /></p>
+<ol>
+  <li>GPT-4などの大規模生成モデルを使用して、高品質なプロンプトを生成</li>
+  <li>大規模テキストから事前学習された画像モデル（例：Stable Diffusion XL）を使用して、最初の画像を生成</li>
+  <li>InstructPix2Pixのようなモデルを使用して、特定のテキスト指示に基づいてソース画像を編集または改善</li>
+  <li>Stable Video Diffusionなどのビデオ生成モデルを使用して、初期画像から動画シーケンスを生成</li>
+  <li>SEINEなどのビデオトランジションエージェントを使用して、2つの入力ビデオを滑らかにつなぎ合わせ
+    <ul>
+      <li>これらの組み合わせによってタスクを実行（例：Text-to-Video 1→2→4または1→2→3→4）</li>
+    </ul>
+  </li>
+</ol>
+
+<h1 id="結果">結果</h1>
+
+<ul>
+  <li>Text-to-Video
+    <ul>
+      <li>Performance
+        <ul>
+          <li><img src="/assets/images/posts/Mora/2.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>Sample
+        <ul>
+          <li><img src="/assets/images/posts/Mora/3.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Text-condtional Image-to-Video Generation
+    <ul>
+      <li>Performance
+        <ul>
+          <li><img src="/assets/images/posts/Mora/4.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>Sample
+        <ul>
+          <li><img src="/assets/images/posts/Mora/5.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Extend Generated Videos
+    <ul>
+      <li>Performance
+        <ul>
+          <li><img src="/assets/images/posts/Mora/6.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>Sample
+        <ul>
+          <li><img src="/assets/images/posts/Mora/7.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Video-to-Video Editing
+    <ul>
+      <li>Performance
+        <ul>
+          <li><img src="/assets/images/posts/Mora/8.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>Sample
+        <ul>
+          <li><img src="/assets/images/posts/Mora/9.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Connect Videos
+    <ul>
+      <li>Performance
+        <ul>
+          <li><img src="/assets/images/posts/Mora/10.png" alt="" /></li>
+        </ul>
+      </li>
+      <li>Sample
+        <ul>
+          <li><img src="/assets/images/posts/Mora/11.png" alt="" /></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+    <div class="btn-wrapper">
+      <a href="/posts" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa-brands fa-x-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>
