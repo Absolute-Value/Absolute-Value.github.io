@@ -1,8 +1,26 @@
-h1, h2, h3, h4, p, ul, .hero, table, .highlight, .gist {
+h1, h2, h3, h4, p, .hero, table, .highlight, .gist {
   margin-left: 5%;
   margin-right: 5%;
   padding-left: 1%;
   padding-right: 1%;
+}
+
+body > ul, body > ol {
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+ul, ol {
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+
+li {
+  margin: 3px 10px;
 }
 
 details {
@@ -61,11 +79,6 @@ a:hover {
 
 img {
   max-width: 90%;
-}
-
-li {
-  margin-left: 5%;
-  margin-right: 5%;
 }
 
 th,td {
