@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/markdown.css">
+    <link rel="stylesheet" href="/assets/css/header.css">
+    <link rel="icon" href="/assets/images/favicon.ico">
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-left">
+          <a href="/index" class="header-logo"><img class="logo" src="/assets/images/kei.png"></a>
+          <a href="/index" class="header-name">軸屋敬介 | Keisuke Jikuya</a>
+        </div>
+        <div class="header-right">
+          <a id="sun_moon" class="fa fa-moon-o" onclick="darkButton()"></a>
+          <script src="/assets/js/darkmode.js"></script>
+          <a href="/index">Home</a>
+          <a href="/blogs">Blog</a>
+          <a href="/notes">Note</a>
+          <a href="/posts">Post</a>
+        </div>
+      </div>
+    </header>
+    <!DOCTYPE html>
+<html>
+  <title>SQL コマンド個人的メモ (SQLite & PostgreSQL)</title>
+  <head>
+    <script src="https://kit.fontawesome.com/314069a903.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+  </head>
+  <body>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/330px-Postgresql_elephant.svg.png" class="hero">
+    <h1>SQL コマンド個人的メモ (SQLite & PostgreSQL)</h1>
+    <p><span class="fa fa-calendar"></span> Sep 12, 2025</p>
+    <p><span class="fa fa-flag"></span> Memo, SQL, SQLite, PostgreSQL, </p>
+    <div class="share-btn-wrapper">
+      <a href="https://twitter.com/share?text=SQL コマンド個人的メモ (SQLite & PostgreSQL)&url=https://absolute-value.github.io/notes/sql_commands_memo.html" class="share-btn share-twitter"><span class="fa-brands fa-x-twitter fa-2x"></span></a>
+      <a href="https://www.facebook.com/sharer.php?u=https://absolute-value.github.io/notes/sql_commands_memo.html" class="share-btn share-facebook"><span class="fa fa-facebook fa-2x"></span></a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://absolute-value.github.io/notes/sql_commands_memo.html&title=SQL コマンド個人的メモ (SQLite & PostgreSQL)" class="share-btn"><span class="fa fa-linkedin fa-2x"></span></a>
+      <a href="mailto:?subject=SQL コマンド個人的メモ (SQLite & PostgreSQL)&body=SQL コマンド個人的メモ (SQLite & PostgreSQL) https://absolute-value.github.io/notes/sql_commands_memo.html" class="share-btn share-email"><span class="fa fa-envelope fa-2x"></span></a>
+    </div>
+    
+    <div id="table-of-contents">
+      <h1 class="table-of-contents-h1">目次</h1>
+      <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h1"><a href="#はじめに">はじめに</a></li>
+<li class="toc-entry toc-h1"><a href="#データベースの接続と起動">データベースの接続と起動</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#sqlite">SQLite</a></li>
+<li class="toc-entry toc-h2"><a href="#postgresql">PostgreSQL</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#データベース操作">データベース操作</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#sqlite-1">SQLite</a></li>
+<li class="toc-entry toc-h2"><a href="#postgresql-1">PostgreSQL</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#テーブル操作">テーブル操作</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#テーブル作成">テーブル作成</a></li>
+<li class="toc-entry toc-h2"><a href="#カラムの追加">カラムの追加</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#メタコマンド操作">メタコマンド操作</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#sqlite-4">SQLite</a></li>
+<li class="toc-entry toc-h2"><a href="#postgresql-4">PostgreSQL</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#データ操作">データ操作</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#データの挿入">データの挿入</a></li>
+<li class="toc-entry toc-h2"><a href="#データの更新">データの更新</a></li>
+<li class="toc-entry toc-h2"><a href="#データの削除">データの削除</a></li>
+<li class="toc-entry toc-h2"><a href="#データの検索">データの検索</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#インデックス操作">インデックス操作</a></li>
+<li class="toc-entry toc-h1"><a href="#バックアップとリストア">バックアップとリストア</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#sqlite-5">SQLite</a></li>
+<li class="toc-entry toc-h2"><a href="#postgresql-5">PostgreSQL</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#トランザクション">トランザクション</a></li>
+<li class="toc-entry toc-h1"><a href="#設定ファイルのカスタマイズ">設定ファイルのカスタマイズ</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#sqlite設定">SQLite設定</a></li>
+<li class="toc-entry toc-h2"><a href="#postgresql設定">PostgreSQL設定</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#よくあるトラブルシューティング">よくあるトラブルシューティング</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#sqlite-6">SQLite</a></li>
+<li class="toc-entry toc-h2"><a href="#postgresql-6">PostgreSQL</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#参考になるurl">参考になるURL</a></li>
+</ul>
+    </div>
+    
+    <div id="markdown-content">
+      <h1 id="はじめに">はじめに</h1>
+
+<p>SQLiteとPostgreSQLで使える基本的なコマンドの個人的メモです。
+SQLiteは軽量でファイルベースのデータベース、PostgreSQLは高機能なサーバー型データベースです。
+データベースの作成からテーブル操作、データの管理まで基本的な操作をまとめています。</p>
+
+<h1 id="データベースの接続と起動">データベースの接続と起動</h1>
+
+<h2 id="sqlite">SQLite</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># データベースファイルを作成/接続</span>
+sqlite3 database_name.db
+
+<span class="c"># メモリ上のデータベース（一時的）</span>
+sqlite3 :memory:
+</code></pre></div></div>
+
+<h2 id="postgresql">PostgreSQL</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># デフォルトデータベースに接続</span>
+psql
+
+<span class="c"># 指定したデータベースに接続</span>
+psql <span class="nt">-d</span> database_name
+
+<span class="c"># ユーザー指定で接続</span>
+psql <span class="nt">-U</span> username <span class="nt">-d</span> database_name
+
+<span class="c"># ホスト指定で接続</span>
+psql <span class="nt">-h</span> <span class="nb">hostname</span> <span class="nt">-U</span> username <span class="nt">-d</span> database_name
+</code></pre></div></div>
+
+<h1 id="データベース操作">データベース操作</h1>
+
+<h2 id="sqlite-1">SQLite</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 現在のデータベース情報</span>
+<span class="p">.</span><span class="n">databases</span>
+
+<span class="c1">-- SQLiteを終了</span>
+<span class="p">.</span><span class="n">quit</span>
+</code></pre></div></div>
+
+<h2 id="postgresql-1">PostgreSQL</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- データベース一覧表示</span>
+<span class="err">\</span><span class="n">l</span>
+
+<span class="c1">-- データベース作成</span>
+<span class="k">CREATE</span> <span class="k">DATABASE</span> <span class="n">database_name</span><span class="p">;</span>
+
+<span class="c1">-- データベース削除</span>
+<span class="k">DROP</span> <span class="k">DATABASE</span> <span class="n">database_name</span><span class="p">;</span>
+
+<span class="c1">-- データベースに接続</span>
+<span class="err">\</span><span class="k">c</span> <span class="n">database_name</span>
+
+<span class="c1">-- PostgreSQLを終了</span>
+<span class="err">\</span><span class="n">q</span>
+</code></pre></div></div>
+
+<h1 id="テーブル操作">テーブル操作</h1>
+
+<h2 id="テーブル作成">テーブル作成</h2>
+
+<h3 id="sqlite-2">SQLite</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">posts</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">INTEGER</span> <span class="k">PRIMARY</span> <span class="k">KEY</span> <span class="n">AUTOINCREMENT</span><span class="p">,</span>
+    <span class="n">title</span> <span class="nb">TEXT</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">content</span> <span class="nb">TEXT</span><span class="p">,</span>
+    <span class="n">user_id</span> <span class="nb">INTEGER</span><span class="p">,</span>
+    <span class="n">created_at</span> <span class="nb">DATETIME</span> <span class="k">DEFAULT</span> <span class="k">CURRENT_TIMESTAMP</span><span class="p">,</span>
+    <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="n">user_id</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="n">users</span><span class="p">(</span><span class="n">id</span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="postgresql-2">PostgreSQL</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">posts</span> <span class="p">(</span>
+    <span class="n">id</span> <span class="nb">SERIAL</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="n">title</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="n">content</span> <span class="nb">TEXT</span><span class="p">,</span>
+    <span class="n">user_id</span> <span class="nb">INTEGER</span> <span class="k">REFERENCES</span> <span class="n">users</span><span class="p">(</span><span class="n">id</span><span class="p">),</span>
+    <span class="n">created_at</span> <span class="nb">TIMESTAMP</span> <span class="k">DEFAULT</span> <span class="k">CURRENT_TIMESTAMP</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="カラムの追加">カラムの追加</h2>
+
+<h3 id="sqlite-3">SQLite</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- カラム追加</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="n">phone</span> <span class="nb">TEXT</span><span class="p">;</span>
+
+<span class="c1">-- カラム追加（デフォルト値付き）</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="n">status</span> <span class="nb">TEXT</span> <span class="k">DEFAULT</span> <span class="s1">'active'</span><span class="p">;</span>
+
+<span class="c1">-- 注意: SQLiteではカラムの削除や変更は制限があります</span>
+</code></pre></div></div>
+
+<h3 id="postgresql-3">PostgreSQL</h3>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- カラム追加</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="n">phone</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+
+<span class="c1">-- カラム追加（デフォルト値付き）</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">ADD</span> <span class="k">COLUMN</span> <span class="n">status</span> <span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">DEFAULT</span> <span class="s1">'active'</span><span class="p">;</span>
+
+<span class="c1">-- カラム削除</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">DROP</span> <span class="k">COLUMN</span> <span class="n">phone</span><span class="p">;</span>
+
+<span class="c1">-- カラム名変更</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">RENAME</span> <span class="k">COLUMN</span> <span class="n">phone</span> <span class="k">TO</span> <span class="n">phone_number</span><span class="p">;</span>
+
+<span class="c1">-- カラムのデータ型変更</span>
+<span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">users</span> <span class="k">ALTER</span> <span class="k">COLUMN</span> <span class="n">age</span> <span class="k">TYPE</span> <span class="nb">BIGINT</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="メタコマンド操作">メタコマンド操作</h1>
+
+<h2 id="sqlite-4">SQLite</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>コマンド</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>.tables</td>
+      <td>テーブル一覧表示</td>
+    </tr>
+    <tr>
+      <td>.schema</td>
+      <td>全テーブルのスキーマ表示</td>
+    </tr>
+    <tr>
+      <td>.schema table_name</td>
+      <td>指定テーブルのスキーマ表示</td>
+    </tr>
+    <tr>
+      <td>.describe table_name</td>
+      <td>テーブル構造表示</td>
+    </tr>
+    <tr>
+      <td>.indexes</td>
+      <td>インデックス一覧表示</td>
+    </tr>
+    <tr>
+      <td>.mode</td>
+      <td>出力モード変更</td>
+    </tr>
+    <tr>
+      <td>.headers on/off</td>
+      <td>ヘッダー表示の切り替え</td>
+    </tr>
+    <tr>
+      <td>.output filename</td>
+      <td>出力をファイルに保存</td>
+    </tr>
+    <tr>
+      <td>.read filename.sql</td>
+      <td>SQLファイルを実行</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="postgresql-4">PostgreSQL</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>コマンド</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>\dt</td>
+      <td>テーブル一覧表示</td>
+    </tr>
+    <tr>
+      <td>\d</td>
+      <td>全オブジェクト一覧表示</td>
+    </tr>
+    <tr>
+      <td>\d table_name</td>
+      <td>指定テーブルの詳細表示</td>
+    </tr>
+    <tr>
+      <td>\di</td>
+      <td>インデックス一覧表示</td>
+    </tr>
+    <tr>
+      <td>\du</td>
+      <td>ユーザー一覧表示</td>
+    </tr>
+    <tr>
+      <td>\dn</td>
+      <td>スキーマ一覧表示</td>
+    </tr>
+    <tr>
+      <td>\df</td>
+      <td>関数一覧表示</td>
+    </tr>
+    <tr>
+      <td>\x</td>
+      <td>拡張表示の切り替え</td>
+    </tr>
+    <tr>
+      <td>\o filename</td>
+      <td>出力をファイルに保存</td>
+    </tr>
+    <tr>
+      <td>\i filename.sql</td>
+      <td>SQLファイルを実行</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="データ操作">データ操作</h1>
+
+<h2 id="データの挿入">データの挿入</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 単一データ挿入</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'田中太郎'</span><span class="p">,</span> <span class="s1">'tanaka@example.com'</span><span class="p">,</span> <span class="mi">30</span><span class="p">);</span>
+
+<span class="c1">-- 複数データ挿入</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">email</span><span class="p">,</span> <span class="n">age</span><span class="p">)</span> <span class="k">VALUES</span> 
+    <span class="p">(</span><span class="s1">'佐藤花子'</span><span class="p">,</span> <span class="s1">'sato@example.com'</span><span class="p">,</span> <span class="mi">25</span><span class="p">),</span>
+    <span class="p">(</span><span class="s1">'鈴木一郎'</span><span class="p">,</span> <span class="s1">'suzuki@example.com'</span><span class="p">,</span> <span class="mi">35</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="データの更新">データの更新</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 条件付き更新</span>
+<span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">31</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">'田中太郎'</span><span class="p">;</span>
+
+<span class="c1">-- 複数カラム更新</span>
+<span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">26</span><span class="p">,</span> <span class="n">email</span> <span class="o">=</span> <span class="s1">'sato_new@example.com'</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">'佐藤花子'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="データの削除">データの削除</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 条件付き削除</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">age</span> <span class="o">&gt;</span> <span class="mi">40</span><span class="p">;</span>
+
+<span class="c1">-- 全データ削除（テーブル構造は残る）</span>
+<span class="k">DELETE</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="データの検索">データの検索</h2>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- 基本的な検索</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span><span class="p">;</span>
+<span class="k">SELECT</span> <span class="n">name</span><span class="p">,</span> <span class="n">email</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">WHERE</span> <span class="n">age</span> <span class="o">&gt;=</span> <span class="mi">30</span><span class="p">;</span>
+
+<span class="c1">-- 並び替え</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">age</span> <span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- 件数制限（SQLiteとPostgreSQL共通）</span>
+<span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="n">users</span> <span class="k">LIMIT</span> <span class="mi">5</span><span class="p">;</span>
+
+<span class="c1">-- 結合</span>
+<span class="k">SELECT</span> <span class="n">u</span><span class="p">.</span><span class="n">name</span><span class="p">,</span> <span class="n">p</span><span class="p">.</span><span class="n">title</span> 
+<span class="k">FROM</span> <span class="n">users</span> <span class="n">u</span> 
+<span class="k">JOIN</span> <span class="n">posts</span> <span class="n">p</span> <span class="k">ON</span> <span class="n">u</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">user_id</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="インデックス操作">インデックス操作</h1>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- インデックス作成</span>
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_users_email</span> <span class="k">ON</span> <span class="n">users</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
+
+<span class="c1">-- 複合インデックス作成</span>
+<span class="k">CREATE</span> <span class="k">INDEX</span> <span class="n">idx_users_name_age</span> <span class="k">ON</span> <span class="n">users</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">);</span>
+
+<span class="c1">-- ユニークインデックス作成</span>
+<span class="k">CREATE</span> <span class="k">UNIQUE</span> <span class="k">INDEX</span> <span class="n">idx_users_unique_email</span> <span class="k">ON</span> <span class="n">users</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
+
+<span class="c1">-- インデックス削除</span>
+<span class="k">DROP</span> <span class="k">INDEX</span> <span class="n">idx_users_email</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="バックアップとリストア">バックアップとリストア</h1>
+
+<h2 id="sqlite-5">SQLite</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># データベースダンプ</span>
+sqlite3 database.db .dump <span class="o">&gt;</span> backup.sql
+
+<span class="c"># データベースリストア</span>
+sqlite3 new_database.db &lt; backup.sql
+
+<span class="c"># データベースファイルコピー（SQLiteは単一ファイル）</span>
+<span class="nb">cp </span>database.db backup_database.db
+</code></pre></div></div>
+
+<h2 id="postgresql-5">PostgreSQL</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># データベースダンプ</span>
+pg_dump database_name <span class="o">&gt;</span> backup.sql
+
+<span class="c"># 特定のテーブルのみダンプ</span>
+pg_dump <span class="nt">-t</span> table_name database_name <span class="o">&gt;</span> table_backup.sql
+
+<span class="c"># データベースリストア</span>
+psql database_name &lt; backup.sql
+
+<span class="c"># カスタムフォーマットでダンプ</span>
+pg_dump <span class="nt">-Fc</span> database_name <span class="o">&gt;</span> backup.dump
+
+<span class="c"># カスタムフォーマットのリストア</span>
+pg_restore <span class="nt">-d</span> database_name backup.dump
+</code></pre></div></div>
+
+<h1 id="トランザクション">トランザクション</h1>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">-- トランザクション開始</span>
+<span class="k">BEGIN</span><span class="p">;</span>
+
+<span class="c1">-- データ操作</span>
+<span class="k">INSERT</span> <span class="k">INTO</span> <span class="n">users</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">email</span><span class="p">)</span> <span class="k">VALUES</span> <span class="p">(</span><span class="s1">'テストユーザー'</span><span class="p">,</span> <span class="s1">'test@example.com'</span><span class="p">);</span>
+<span class="k">UPDATE</span> <span class="n">users</span> <span class="k">SET</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">40</span> <span class="k">WHERE</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">'テストユーザー'</span><span class="p">;</span>
+
+<span class="c1">-- コミット（確定）</span>
+<span class="k">COMMIT</span><span class="p">;</span>
+
+<span class="c1">-- ロールバック（取り消し）</span>
+<span class="k">ROLLBACK</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h1 id="設定ファイルのカスタマイズ">設定ファイルのカスタマイズ</h1>
+
+<h2 id="sqlite設定">SQLite設定</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ~/.sqlitercファイル作成</span>
+<span class="nb">echo</span> <span class="s2">".mode column"</span> <span class="o">&gt;</span> ~/.sqliterc
+<span class="nb">echo</span> <span class="s2">".headers on"</span> <span class="o">&gt;&gt;</span> ~/.sqliterc
+<span class="nb">echo</span> <span class="s2">".nullvalue NULL"</span> <span class="o">&gt;&gt;</span> ~/.sqliterc
+</code></pre></div></div>
+
+<h2 id="postgresql設定">PostgreSQL設定</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ~/.psqlrcファイル作成例</span>
+<span class="se">\s</span>et PROMPT1 <span class="s1">'%M:%&gt; %n@%/%R%#%x '</span>
+<span class="se">\s</span>et HISTSIZE 10000
+<span class="se">\p</span><span class="nb">set </span>null <span class="s1">'NULL'</span>
+<span class="se">\x</span> auto
+</code></pre></div></div>
+
+<h1 id="よくあるトラブルシューティング">よくあるトラブルシューティング</h1>
+
+<h2 id="sqlite-6">SQLite</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># データベースファイルがロックされた場合</span>
+<span class="c"># プロセスを確認して終了</span>
+lsof database.db
+
+<span class="c"># データベースの整合性チェック</span>
+sqlite3 database.db <span class="s2">"PRAGMA integrity_check;"</span>
+</code></pre></div></div>
+
+<h2 id="postgresql-6">PostgreSQL</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 接続できない場合の確認</span>
+<span class="c"># PostgreSQLサービスの状態確認</span>
+<span class="nb">sudo </span>systemctl status postgresql
+
+<span class="c"># ポートの確認</span>
+<span class="nb">sudo </span>netstat <span class="nt">-tlnp</span> | <span class="nb">grep </span>5432
+
+<span class="c"># ログの確認</span>
+<span class="nb">sudo tail</span> <span class="nt">-f</span> /var/log/postgresql/postgresql-<span class="k">*</span>.log
+</code></pre></div></div>
+
+<h1 id="参考になるurl">参考になるURL</h1>
+
+<ul>
+  <li><a href="https://www.sqlite.org/docs.html">SQLite Documentation</a></li>
+  <li><a href="https://www.postgresql.org/docs/">PostgreSQL Documentation</a></li>
+  <li><a href="https://www.sqlite.org/whentouse.html">SQLite vs PostgreSQL比較</a></li>
+  <li><a href="https://www.postgresqltutorial.com/">PostgreSQL Tutorial</a></li>
+</ul>
+
+    </div>
+    <div class="btn-wrapper">
+      <a href="/notes" class="btn back_btn">一覧へ戻る</a>
+    </div>
+  </body>
+</html>
+    <footer>
+      <div class="btn-wrapper">
+        <a href="mailto:jikuya[at]cv.info.gifu-u.ac.jp" class="bottom-btn email"><i class="fa fa-envelope fa-2x"></i></a>
+        <a href="https://twitter.com/jky_kei" class="bottom-btn twitter" target="_blank"><i class="fa-brands fa-x-twitter fa-2x"></i></a>
+        <a href="https://github.com/Absolute-Value" class="bottom-btn github" target="_blank"><i class="fa fa-github fa-2x"></i></a>
+      </div>
+      <div class="container">
+        <p>Copyright © 2022 - 2023 Keisuke JIKUYA</p>
+      </div>
+    </footer>
+  </body>
+</html>
