@@ -1,5 +1,5 @@
 // リポジトリの情報を読み込む（公開リポジトリのみ）
-fetch(`https://api.github.com/users/Absolute-Value/repos`)
+fetch(`https://api.github.com/users/Absolute-Value/repos?per_page=8&sort=pushed`)
   .then(response => response.json())
   .then(repos => {
     repos = repos.map(repo => ({
@@ -14,12 +14,8 @@ fetch(`https://api.github.com/users/Absolute-Value/repos`)
     fetch('/assets/colors.json')
       .then(response => response.json())
       .then(colors => {
-        // リポジトリを日付順にソート
-        repos.sort((a, b) => b.pushedAt - a.pushedAt);
         const repoList = document.getElementById('repoList');
-        const latestRepos = repos.slice(0, 8);
-
-        latestRepos.forEach(repo => {
+        repos.forEach(repo => {
           const repo_div = document.createElement('div');
           repo_div.className = "repo";
           repoList.appendChild(repo_div);
