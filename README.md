@@ -1,13 +1,13 @@
 
-# ホームページ作成用
+# ホームページ
 ![Jekyll][Jekyll.js]
 ![JavaScript][JavaScript.js]
 ![HTML][HTML.js]
 ![CSS][CSS.js]
 ![Ruby][Ruby.js]
 
-[ホームページ](https://absolute-value.github.io/)のJekyllソースを管理するリポジトリです。
-`main`にpushするとGitHub Actions（[.github/workflows/jekyll.yml](.github/workflows/jekyll.yml)）が自動でビルド・デプロイします。
+[ホームページ](https://absolute-value.github.io/)を管理するリポジトリです。
+`main`にpushするとGitHub Actions（[.github/workflows/jekyll.yml](.github/workflows/jekyll.yml)）が自動でビルドし、[ホームページ](https://absolute-value.github.io/)にデプロイします。
 
 ## ローカルで確認する
 
