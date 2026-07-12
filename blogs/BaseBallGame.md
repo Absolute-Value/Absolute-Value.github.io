@@ -18,8 +18,8 @@ Claude Fable 5を使って3Dゲームにしました．
 <head>
 <style>
   :root{--night:#0d1b2e;--gold:#f2b632;--red:#d94f3d;--blue:#7ec8ff;--ink:#e8e4d8;}
-  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-  html,body{height:100%;overflow:hidden;background:var(--night);
+  #wrap,#wrap *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  #wrap{overflow:hidden;background:var(--night);
     font-family:"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif;user-select:none;}
   /* 基本: ページの横幅いっぱいに表示(埋め込み向け) */
   #wrap{position:relative;width:100%;display:flex;align-items:center;justify-content:center;}
@@ -66,10 +66,10 @@ Claude Fable 5を使って3Dゲームにしました．
     letter-spacing:.04em;text-shadow:0 0 30px rgba(242,182,50,.5);}
   .sub{color:#9db2c8;font-size:13.5px;line-height:2;}
   .sub b{color:var(--ink);}
-  .btn{margin-top:8px;padding:14px 46px;font-size:18px;font-weight:800;background:var(--red);
+  #wrap .btn{margin-top:8px;padding:14px 46px;font-size:18px;font-weight:800;background:var(--red);
     color:#fff;border:none;border-radius:999px;cursor:pointer;letter-spacing:.15em;
     box-shadow:0 6px 0 #8f2f22,0 10px 24px rgba(0,0,0,.5);transition:transform .08s;}
-  .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #8f2f22;}
+  #wrap .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #8f2f22;}
   #over{display:none;}
   .final{font-size:min(14vw,80px);font-weight:900;color:#fff;line-height:1;}
   .final small{font-size:16px;color:var(--gold);display:block;letter-spacing:.3em;margin-bottom:6px;}
