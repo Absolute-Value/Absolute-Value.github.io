@@ -9,8 +9,8 @@ layout: blog
 excerpt: '<span style="color: #42b983;">[遊べます！] </span>3D野球ゲーム'
 ---
 
-学生の特権を使ってGithub PROアカウントになり，Github Copilotを試してたら楽しくなって作ってしまった<a href="https://github.com/Absolute-Value/BaseBallGame" target="_blank"><b>コチラ</b></a>の野球ゲームのpythonコードをJavaScriptに移行してみました．
-Claude Fable 5を使って3Dゲームにしました．  
+学生の特権を使ってGithub PROアカウントになり，Github Copilotを試してたら楽しくなって作ってしまった<a href="https://github.com/Absolute-Value/BaseBallGame" target="_blank"><b>コチラ</b></a>の野球ゲームのpythonコードをJavaScriptに移行してみました．  
+話題のClaude Fable 5を使って3Dゲームにしました．ファイルラインとフェアゾーンが一致していなかったり、内野が外野まで追っかけたり、完ぺきではないところがまた良いです。  
 ゲーム画面が表示されない場合はReloadしてみてください．
 
 <a href="https://github.com/Absolute-Value/BaseBallJS" target="_blank"><b>Github リポジトリ</b></a>
