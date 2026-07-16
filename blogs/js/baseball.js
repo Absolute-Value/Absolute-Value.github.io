@@ -6,21 +6,23 @@ const $=id=>document.getElementById(id);
 const msgEl=$('msg');
 
 // ---------- Audio ----------
-let AC=null;
+let AC=null,VOL=1; // マスター音量 1 → .5 → 0(ミュート)
 function ac(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();return AC;}
 function beep(f,dur,type='square',vol=.15,slide=0){
+  if(VOL<=0)return;
   try{const a=ac(),o=a.createOscillator(),g=a.createGain();
   o.type=type;o.frequency.setValueAtTime(f,a.currentTime);
   if(slide)o.frequency.exponentialRampToValueAtTime(Math.max(30,f+slide),a.currentTime+dur);
-  g.gain.setValueAtTime(vol,a.currentTime);
+  g.gain.setValueAtTime(vol*VOL,a.currentTime);
   g.gain.exponentialRampToValueAtTime(.001,a.currentTime+dur);
   o.connect(g).connect(a.destination);o.start();o.stop(a.currentTime+dur);}catch(e){}
 }
 function crack(strong){beep(180,.08,'square',strong?.34:.24,-120);beep(900,.05,'triangle',.2,-500);}
-function crowd(){try{const a=ac(),len=a.sampleRate*1.4,buf=a.createBuffer(1,len,a.sampleRate),d=buf.getChannelData(0);
+function crowd(){if(VOL<=0)return;
+  try{const a=ac(),len=a.sampleRate*1.4,buf=a.createBuffer(1,len,a.sampleRate),d=buf.getChannelData(0);
   for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*(1-i/len)*.5;
   const s=a.createBufferSource(),g=a.createGain(),f=a.createBiquadFilter();
-  f.type='bandpass';f.frequency.value=900;f.Q.value=.6;g.gain.value=.35;
+  f.type='bandpass';f.frequency.value=900;f.Q.value=.6;g.gain.value=.35*VOL;
   s.buffer=buf;s.connect(f).connect(g).connect(a.destination);s.start();}catch(e){}}
 
 // ============================================================
@@ -74,6 +76,7 @@ function isFair(fx,fd){return Math.abs(fx)<=fd*1.05+0.06;}
 const G={
   state:'title',t:0,
   score:0,hr:0,hits:0,balls:0,strikes:0,outs:0,
+  inning:1,userIn:[0,0,0,0,0],cpuIn:[0,0,0,0,0],cpuHits:0,walkoffPending:false,
   bases:[false,false,false],
   viz:[], // 走者アニメ {v:塁パス位置0..4, targetV, run}
   scorePops:[], // 得点演出 {from,to,t}
@@ -120,18 +123,22 @@ function swingInput(){
 $('btnStart').onclick=()=>{$('start').style.display='none';ac();startGame();};
 $('btnRetry').onclick=()=>{$('over').style.display='none';startGame();};
 
+function genCpuInnings(){
+  // 各回0〜4点(0点が最も出やすい重み付き)
+  return [0,0,0,0,0].map(()=>{const r=Math.random();
+    return r<.45?0:r<.70?1:r<.85?2:r<.95?3:4;});
+}
+const INTRO_LEN=190; // 回替わり演出の長さ
 function startGame(){
+  const cpu=genCpuInnings();
   Object.assign(G,{score:0,hr:0,hits:0,balls:0,strikes:0,outs:0,speedMul:1,
+    inning:1,userIn:[0,0,0,0,0],cpuIn:cpu,
+    cpuHits:cpu.reduce((a,b)=>a+b,0)+(Math.random()*4|0),walkoffPending:false,
     bases:[false,false,false],viz:[],scorePops:[],particles:[],fireworks:[],fielders:makeFielders()});
-  updateHUD();toWindup();
+  updateHUD();
+  G.state='inning';G.t=0; // 1回表の演出から開始
 }
-function updateHUD(){
-  $('hScore').textContent=G.score;$('hHR').textContent=G.hr;$('hHits').textContent=G.hits;
-  [...$('hBalls').children].forEach((el,i)=>el.classList.toggle('on',i<G.balls));
-  [...$('hStrikes').children].forEach((el,i)=>el.classList.toggle('on',i<G.strikes));
-  [...$('hOuts').children].forEach((el,i)=>el.classList.toggle('on',i<G.outs));
-  ['b1','b2','b3'].forEach((c,i)=>document.querySelector('#bases .'+c).classList.toggle('on',G.bases[i]));
-}
+function updateHUD(){/* 表示はすべてキャンバス描画(スコアボード+左下パネル)に移行 */}
 function showMsg(text,cls){
   msgEl.textContent=text;msgEl.classList.remove('show','hr','out');void msgEl.offsetWidth;
   if(cls)msgEl.classList.add(cls);msgEl.classList.add('show');
@@ -342,6 +349,8 @@ function stepRunners(){
     if(r.base==='scored'&&!r.counted&&r.v>=3.999){
       r.counted=true;
       const from=G.score; G.score++;
+      G.userIn[G.inning-1]++;
+      if(G.inning===5&&userTotal()>G.cpuIn.reduce((a,b)=>a+b,0))G.walkoffPending=true; // サヨナラ
       G.scorePops.push({from,to:G.score,t:0});
       updateHUD();
       beep(720,.16,'sine',.18,260);
@@ -413,7 +422,7 @@ function finishPlay(outcome){
   showMsg(msg,cls);
   G.speedMul=Math.min(1.8,1+(G.hits+G.hr*2)*.045);
   updateHUD();
-  if(G.outs>=3){setTimeout(gameOver,1100);G.resultDelay=9999;return;}
+  if(G.outs>=3){G.state='result';G.resultDelay=9999;setTimeout(endInning,1100);return;}
   G.resultDelay=outcome==='hr'?95:70;
 }
 function ballOrStrikeAtPlate(){
@@ -425,15 +434,35 @@ function ballOrStrikeAtPlate(){
   }
   if(G.strikes>=3){
     G.strikes=0;G.balls=0;G.outs++;showMsg('三振!','out');
-    if(G.outs>=3){updateHUD();setTimeout(gameOver,900);G.pitch=null;G.state='result';G.resultDelay=9999;return;}
+    if(G.outs>=3){updateHUD();G.pitch=null;G.state='result';G.resultDelay=9999;setTimeout(endInning,900);return;}
   }
   updateHUD();
   G.pitch=null;G.state='result';G.t=0;G.resultDelay=45;
 }
+function userTotal(){return G.userIn.reduce((a,b)=>a+b,0);}
+function cpuTotal(){return G.cpuIn.slice(0,G.inning).reduce((a,b)=>a+b,0);}
+function endInning(){
+  G.balls=0;G.strikes=0;G.outs=0;
+  G.bases=[false,false,false];G.viz=[];G.batterGone=false;
+  if(G.inning>=5){gameOver();return;}
+  G.inning++;updateHUD();
+  G.state='inning';G.t=0;
+  beep(520,.12,'sine',.12);
+}
 function gameOver(){
   G.state='over';
-  $('finalScore').textContent=G.score;
-  $('finalDetail').textContent=`安打 ${G.hits} / ホームラン ${G.hr} 本`;
+  const u=userTotal(),c=G.cpuIn.reduce((a,b)=>a+b,0);
+  const res=u>c?'勝利!!':u<c?'敗北…':'引き分け';
+  $('finalResult').textContent=res;
+  $('finalResult').style.color=u>c?'#f2b632':u<c?'#7ec8ff':'#e8e4d8';
+  $('finalScore').textContent=`${u} - ${c}`;
+  // ラインスコア表
+  let tbl='<table style="margin:8px auto;border-collapse:collapse;font-size:13px;">';
+  tbl+='<tr><td style="padding:3px 8px;"></td>'+[1,2,3,4,5].map(i=>`<td style="padding:3px 8px;color:#9db2c8;">${i}</td>`).join('')+'<td style="padding:3px 8px;color:#f2b632;font-weight:800;">R</td><td style="padding:3px 8px;color:#7ec8ff;font-weight:800;">H</td></tr>';
+  tbl+='<tr><td style="padding:3px 8px;color:#d94f3d;font-weight:700;">あいて</td>'+G.cpuIn.map(v=>`<td style="padding:3px 8px;">${v}</td>`).join('')+`<td style="padding:3px 8px;font-weight:800;">${c}</td><td style="padding:3px 8px;">${G.cpuHits}</td></tr>`;
+  tbl+='<tr><td style="padding:3px 8px;color:#f2b632;font-weight:700;">あなた</td>'+G.userIn.map(v=>`<td style="padding:3px 8px;">${v}</td>`).join('')+`<td style="padding:3px 8px;font-weight:800;">${u}</td><td style="padding:3px 8px;">${G.hits}</td></tr>`;
+  tbl+='</table>';
+  $('finalDetail').innerHTML=tbl+`<div>ホームラン ${G.hr} 本</div>`;
   $('over').style.display='flex';
 }
 function spawnFirework(){
@@ -544,6 +573,90 @@ function drawField(){
   cx.strokeStyle='rgba(232,228,216,.75)';cx.lineWidth=3;
   cx.strokeRect(230,PLATE_Y-18,105,64);
   cx.strokeRect(465,PLATE_Y-18,105,64);
+}
+// 球場スコアボード: 画面上部中央に固定表示(1〜5回の得点 + R/H)
+function drawScoreboard(){
+  const bw=380,bh=64, x0=400-bw/2, y0=8;
+  cx.save();
+  cx.fillStyle='rgba(8,16,28,.9)';
+  cx.strokeStyle='rgba(242,182,50,.55)';cx.lineWidth=2;
+  cx.beginPath();
+  if(cx.roundRect)cx.roundRect(x0,y0,bw,bh,8);else cx.rect(x0,y0,bw,bh);
+  cx.fill();cx.stroke();
+  const colLbl=x0+52, colW=36, colR=x0+52+5*colW+14, colH=colR+40;
+  const rowY=[y0+13,y0+32,y0+51];
+  cx.textAlign='center';cx.textBaseline='middle';
+  // ヘッダー(現在の回は自チーム行のセルだけハイライト)
+  cx.font='bold 11px sans-serif';
+  for(let i=0;i<5;i++){
+    const cur=i===G.inning-1&&G.state!=='over';
+    if(cur){cx.fillStyle='rgba(242,182,50,.16)';cx.fillRect(colLbl+colW*i+2,rowY[2]-9,colW-4,18);}
+    cx.fillStyle=cur?'#f2b632':'#9db2c8';
+    cx.fillText(i+1,colLbl+colW*i+colW/2,rowY[0]);
+  }
+  cx.fillStyle='#f2b632';cx.fillText('R',colR,rowY[0]);
+  cx.fillStyle='#7ec8ff';cx.fillText('H',colH,rowY[0]);
+  // チーム行
+  const rows=[
+    {name:'あいて',color:'#e0776a',vals:G.cpuIn,
+     disp:i=>i<G.inning?G.cpuIn[i]:'-',
+     R:cpuTotal(),H:Math.min(G.cpuHits,cpuTotal()+3)},
+    {name:'あなた',color:'#f2b632',vals:G.userIn,
+     disp:i=>{
+       if(i<G.inning-1)return G.userIn[i];            // 終了した回は0も表示
+       if(i===G.inning-1)return G.userIn[i]>0?G.userIn[i]:''; // 攻撃中: 点が入るまで空欄
+       return '-';
+     },
+     R:userTotal(),H:G.hits},
+  ];
+  rows.forEach((r,ri)=>{
+    const y=rowY[ri+1];
+    cx.textAlign='left';cx.font='bold 11px sans-serif';
+    cx.fillStyle=r.color;cx.fillText(r.name,x0+8,y);
+    cx.textAlign='center';cx.font='bold 13px sans-serif';
+    cx.fillStyle='#e8e4d8';
+    for(let i=0;i<5;i++)cx.fillText(r.disp(i),colLbl+colW*i+colW/2,y);
+    cx.font='bold 14px sans-serif';
+    cx.fillStyle='#fff';cx.fillText(r.R,colR,y);
+    cx.fillStyle='#cfe3f5';cx.fillText(r.H,colH,y);
+  });
+  cx.restore();
+}
+// 画面左下: BSO+塁状況パネル
+function drawStatusPanel(){
+  const x0=10,y0=H-100,bw=140,bh=90;
+  cx.save();
+  cx.fillStyle='rgba(8,16,28,.85)';
+  cx.strokeStyle='rgba(242,182,50,.45)';cx.lineWidth=1.5;
+  cx.beginPath();
+  if(cx.roundRect)cx.roundRect(x0,y0,bw,bh,8);else cx.rect(x0,y0,bw,bh);
+  cx.fill();cx.stroke();
+  // BSOランプ
+  const rows=[
+    {lbl:'B',n:3,on:G.balls,c:'#4caf50'},
+    {lbl:'S',n:2,on:G.strikes,c:'#f2b632'},
+    {lbl:'O',n:2,on:G.outs,c:'#d94f3d'},
+  ];
+  cx.textBaseline='middle';cx.font='bold 13px sans-serif';cx.textAlign='left';
+  rows.forEach((r,i)=>{
+    const y=y0+20+i*24;
+    cx.fillStyle='#9db2c8';cx.fillText(r.lbl,x0+10,y);
+    for(let k=0;k<r.n;k++){
+      cx.beginPath();cx.arc(x0+30+k*16,y,5.5,0,7);
+      if(k<r.on){cx.fillStyle=r.c;cx.fill();}
+      else{cx.strokeStyle='rgba(157,178,200,.6)';cx.lineWidth=1.2;cx.stroke();}
+    }
+  });
+  // 塁状況ダイヤモンド(右側)
+  const dx=x0+108,dy=y0+45,ds=11,gap=13;
+  const basePos=[[dx+gap,dy],[dx,dy-gap],[dx-gap,dy]]; // 1塁(右),2塁(上),3塁(左)
+  for(let i=0;i<3;i++){
+    cx.save();cx.translate(basePos[i][0],basePos[i][1]);cx.rotate(Math.PI/4);
+    if(G.bases[i]){cx.fillStyle='#f2b632';cx.shadowColor='#f2b632';cx.shadowBlur=6;cx.fillRect(-ds/2,-ds/2,ds,ds);}
+    else{cx.fillStyle='#2c3c54';cx.fillRect(-ds/2,-ds/2,ds,ds);cx.strokeStyle='#56708f';cx.lineWidth=1;cx.strokeRect(-ds/2,-ds/2,ds,ds);}
+    cx.restore();
+  }
+  cx.restore();
 }
 // 野手(奥行きスケール付き)
 function drawFielder(fd){
@@ -791,16 +904,50 @@ function step(){
     }
     drawHitBall();
     if(G.fly.judged){
-      if(G.t>(G.fly.outcome==='hr'?95:70)&&runnersSettled()&&G.scorePops.length===0&&G.outs<3&&G.resultDelay!==9999)toWindup();
+      if(G.t>(G.fly.outcome==='hr'?95:70)&&runnersSettled()&&G.scorePops.length===0){
+        if(G.walkoffPending){G.walkoffPending=false;showMsg('サヨナラ!','hr');setTimeout(gameOver,1200);G.state='result';G.resultDelay=9999;}
+        else if(G.outs<3&&G.resultDelay!==9999)toWindup();
+      }
     }
   }
   else if(G.state==='result'){
-    if(G.t>=G.resultDelay&&runnersSettled()&&G.scorePops.length===0&&G.outs<3)toWindup();
+    if(G.t>=G.resultDelay&&runnersSettled()&&G.scorePops.length===0){
+      if(G.walkoffPending){G.walkoffPending=false;showMsg('サヨナラ!','hr');setTimeout(gameOver,1200);G.resultDelay=9999;}
+      else if(G.outs<3)toWindup();
+    }
+  }
+  else if(G.state==='inning'){
+    // 回替わり演出: 「N回表 あいての攻撃 +X点」→「N回裏 あなたの攻撃」
+    const i=G.inning, cpuR=G.cpuIn[i-1];
+    cx.save();
+    cx.textAlign='center';cx.textBaseline='middle';
+    cx.globalAlpha=Math.min(1,G.t/14)*(G.t>INTRO_LEN-16?(INTRO_LEN-G.t)/16:1);
+    cx.font='italic 900 46px sans-serif';
+    cx.lineWidth=8;cx.strokeStyle='rgba(0,0,0,.55)';
+    if(G.t<INTRO_LEN*.55){
+      cx.strokeText(`${i}回表 あいての攻撃`,400,250);
+      cx.fillStyle='#d94f3d';cx.fillText(`${i}回表 あいての攻撃`,400,250);
+      cx.font='italic 900 36px sans-serif';
+      const rt=cpuR>0?`+${cpuR}点 献上…`:'無失点!';
+      cx.lineWidth=6;cx.strokeText(rt,400,306);
+      cx.fillStyle=cpuR>0?'#e8e4d8':'#7ec8ff';cx.fillText(rt,400,306);
+    }else{
+      cx.strokeText(`${i}回裏 あなたの攻撃`,400,270);
+      cx.fillStyle='#f2b632';cx.fillText(`${i}回裏 あなたの攻撃`,400,270);
+    }
+    cx.restore();cx.globalAlpha=1;
+    if(G.t>=INTRO_LEN){
+      // 5回表終了時点でリードしていたら裏を待たず勝利
+      if(G.inning===5&&userTotal()>G.cpuIn.reduce((a,b)=>a+b,0))gameOver();
+      else toWindup();
+    }
   }
   stepRunners();
 
   drawBatter();
   drawCursor();
+  drawScoreboard();
+  drawStatusPanel();
   if(G.swing>=0)G.swing++; // フォロースルーは次の打席まで維持
 
   G.particles=G.particles.filter(p=>{
@@ -886,4 +1033,13 @@ fsBtn.addEventListener('click',async()=>{
 });
 document.addEventListener('fullscreenchange',fit);
 addEventListener('resize',fit);fit();
+
+// ---------- 音量ボタン: 🔊100% → 🔉50% → 🔇ミュート ----------
+const volBtn=$('volBtn');
+volBtn.addEventListener('click',()=>{
+  VOL=VOL===1?0.5:VOL===0.5?0:1;
+  volBtn.textContent=VOL===1?'🔊':VOL===0.5?'🔉':'🔇';
+  volBtn.title=VOL===1?'音量: 大':VOL===0.5?'音量: 小':'ミュート';
+  if(VOL>0){ac();beep(600,.08,'sine',.15);} // 確認音
+});
 })();
