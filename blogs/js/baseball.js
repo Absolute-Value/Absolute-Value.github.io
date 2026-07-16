@@ -134,6 +134,7 @@ function startGame(){
   Object.assign(G,{score:0,hr:0,hits:0,balls:0,strikes:0,outs:0,speedMul:1,
     inning:1,userIn:[0,0,0,0,0],cpuIn:cpu,
     cpuHits:cpu.reduce((a,b)=>a+b,0)+(Math.random()*4|0),walkoffPending:false,
+    skipBottom5:false,walkoffWin:false,
     bases:[false,false,false],viz:[],scorePops:[],particles:[],fireworks:[],fielders:makeFielders()});
   updateHUD();
   G.state='inning';G.t=0; // 1回表の演出から開始
@@ -350,7 +351,7 @@ function stepRunners(){
       r.counted=true;
       const from=G.score; G.score++;
       G.userIn[G.inning-1]++;
-      if(G.inning===5&&userTotal()>G.cpuIn.reduce((a,b)=>a+b,0))G.walkoffPending=true; // サヨナラ
+      if(G.inning===5&&userTotal()>G.cpuIn.reduce((a,b)=>a+b,0)){G.walkoffPending=true;G.walkoffWin=true;} // サヨナラ
       G.scorePops.push({from,to:G.score,t:0});
       updateHUD();
       beep(720,.16,'sine',.18,260);
@@ -460,7 +461,14 @@ function gameOver(){
   let tbl='<table style="margin:8px auto;border-collapse:collapse;font-size:13px;">';
   tbl+='<tr><td style="padding:3px 8px;"></td>'+[1,2,3,4,5].map(i=>`<td style="padding:3px 8px;color:#9db2c8;">${i}</td>`).join('')+'<td style="padding:3px 8px;color:#f2b632;font-weight:800;">R</td><td style="padding:3px 8px;color:#7ec8ff;font-weight:800;">H</td></tr>';
   tbl+='<tr><td style="padding:3px 8px;color:#d94f3d;font-weight:700;">あいて</td>'+G.cpuIn.map(v=>`<td style="padding:3px 8px;">${v}</td>`).join('')+`<td style="padding:3px 8px;font-weight:800;">${c}</td><td style="padding:3px 8px;">${G.cpuHits}</td></tr>`;
-  tbl+='<tr><td style="padding:3px 8px;color:#f2b632;font-weight:700;">あなた</td>'+G.userIn.map(v=>`<td style="padding:3px 8px;">${v}</td>`).join('')+`<td style="padding:3px 8px;font-weight:800;">${u}</td><td style="padding:3px 8px;">${G.hits}</td></tr>`;
+  tbl+='<tr><td style="padding:3px 8px;color:#f2b632;font-weight:700;">あなた</td>'+G.userIn.map((v,i)=>{
+    let cell=v;
+    if(i===4){
+      if(G.skipBottom5)cell='X';                 // 5回裏なし(勝利確定)
+      else if(G.walkoffWin)cell=`${v}x`;         // サヨナラ
+    }
+    return `<td style="padding:3px 8px;">${cell}</td>`;
+  }).join('')+`<td style="padding:3px 8px;font-weight:800;">${u}</td><td style="padding:3px 8px;">${G.hits}</td></tr>`;
   tbl+='</table>';
   $('finalDetail').innerHTML=tbl+`<div>ホームラン ${G.hr} 本</div>`;
   $('over').style.display='flex';
@@ -937,8 +945,8 @@ function step(){
     }
     cx.restore();cx.globalAlpha=1;
     if(G.t>=INTRO_LEN){
-      // 5回表終了時点でリードしていたら裏を待たず勝利
-      if(G.inning===5&&userTotal()>G.cpuIn.reduce((a,b)=>a+b,0))gameOver();
+      // 5回表終了時点でリードしていたら裏を待たず勝利(スコアはX表記)
+      if(G.inning===5&&userTotal()>G.cpuIn.reduce((a,b)=>a+b,0)){G.skipBottom5=true;gameOver();}
       else toWindup();
     }
   }
