@@ -1,0 +1,182 @@
+---
+title: ソートアルゴリズムの可視化
+date: "2026-07-18 11:00:00"
+update: "2026-07-18 11:00:00"
+category: "Blog"
+hero: https://cdn.pixabay.com/photo/2016/11/22/22/17/action-1850887_1280.jpg
+tags: ["JavaScript"]
+layout: blog
+excerpt: '<span style="color: red;">[スターリンソートあり] </span>7種類のソートアルゴリズムをバーのアニメーションで可視化'
+---
+
+<!DOCTYPE html>
+<html>
+<body>
+  <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">7種類のソートアルゴリズムをバーのアニメーションで可視化するウィジェット。スターリンソートでは要素が消滅する演出付き</h2>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:1rem;">
+    <select id="algo" style="min-width:160px;">
+      <option value="bubble">バブルソート</option>
+      <option value="insertion">挿入ソート</option>
+      <option value="merge">マージソート</option>
+      <option value="heap">ヒープソート</option>
+      <option value="quick">クイックソート</option>
+      <option value="bogo">ボゴソート</option>
+      <option value="stalin">スターリンソート</option>
+    </select>
+    <button id="startBtn"><i class="ti ti-player-play" aria-hidden="true"></i> 開始</button>
+    <button id="resetBtn"><i class="ti ti-refresh" aria-hidden="true"></i> リセット</button>
+    <label style="font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;">速度
+      <input type="range" id="speed" min="1" max="100" value="50" step="1" style="flex:1;">
+    </label>
+  </div>
+  <div id="bars" style="display:flex;align-items:flex-end;gap:3px;height:220px;background:var(--surface-1);border-radius:12px;padding:12px;overflow:hidden;"></div>
+  <div style="display:flex;gap:16px;margin-top:0.75rem;font-size:13px;color:var(--text-secondary);">
+    <span>比較: <span id="cmp" style="color:var(--text-primary);font-weight:500;">0</span></span>
+    <span>操作: <span id="ops" style="color:var(--text-primary);font-weight:500;">0</span></span>
+    <span id="status"></span>
+  </div>
+  <script>
+  const N=24, barsEl=document.getElementById('bars');
+  let arr=[], running=false, stopFlag=false, cmp=0, ops=0;
+  const cmpEl=document.getElementById('cmp'), opsEl=document.getElementById('ops'), statusEl=document.getElementById('status');
+  function newArray(){
+    arr=Array.from({length:N},(_,i)=>i+1);
+    for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+    cmp=0;ops=0;statusEl.textContent='';render();
+  }
+  function render(hl={}){
+    barsEl.innerHTML='';
+    arr.forEach((v,i)=>{
+      const d=document.createElement('div');
+      let bg='var(--fill-accent, #378ADD)';
+      if(hl.aux&&hl.aux.includes(i))bg='#7F77DD';
+      if(hl.compare&&hl.compare.includes(i))bg='#EF9F27';
+      if(hl.pivot===i)bg='#D4537E';
+      if(hl.done)bg='#1D9E75';
+      d.style.cssText=`flex:1;border-radius:3px 3px 0 0;height:${(v/N)*100}%;background:${bg};transition:height .12s;`;
+      d.dataset.i=i;
+      barsEl.appendChild(d);
+    });
+    cmpEl.textContent=cmp;opsEl.textContent=ops;
+  }
+  const spd=()=>Math.max(5,510-document.getElementById('speed').value*5);
+  const delay=ms=>new Promise(r=>setTimeout(r,ms??spd()));
+  async function step(hl){render(hl);await delay();if(stopFlag)throw 'stop';}
+  async function bubble(){
+    for(let i=0;i<arr.length;i++)for(let j=0;j<arr.length-1-i;j++){
+      cmp++;await step({compare:[j,j+1]});
+      if(arr[j]>arr[j+1]){[arr[j],arr[j+1]]=[arr[j+1],arr[j]];ops++;await step({compare:[j,j+1]});}
+    }
+  }
+  async function insertion(){
+    for(let i=1;i<arr.length;i++){
+      let j=i;
+      while(j>0){
+        cmp++;await step({compare:[j-1,j],pivot:i});
+        if(arr[j-1]>arr[j]){[arr[j-1],arr[j]]=[arr[j],arr[j-1]];ops++;j--;}
+        else break;
+      }
+    }
+  }
+  async function merge(lo=0,hi=arr.length-1){
+    if(lo>=hi)return;
+    const mid=(lo+hi)>>1;
+    await merge(lo,mid);await merge(mid+1,hi);
+    const tmp=[];let i=lo,j=mid+1;
+    const range=Array.from({length:hi-lo+1},(_,k)=>lo+k);
+    while(i<=mid&&j<=hi){
+      cmp++;await step({compare:[i,j],aux:range});
+      if(arr[i]<=arr[j])tmp.push(arr[i++]);else tmp.push(arr[j++]);
+    }
+    while(i<=mid)tmp.push(arr[i++]);
+    while(j<=hi)tmp.push(arr[j++]);
+    for(let k=0;k<tmp.length;k++){arr[lo+k]=tmp[k];ops++;await step({compare:[lo+k],aux:range});}
+  }
+  async function heap(){
+    const n=arr.length;
+    async function sift(i,size){
+      while(true){
+        let l=2*i+1,r=2*i+2,m=i;
+        if(l<size){cmp++;if(arr[l]>arr[m])m=l;}
+        if(r<size){cmp++;if(arr[r]>arr[m])m=r;}
+        if(m===i)break;
+        await step({compare:[i,m]});
+        [arr[i],arr[m]]=[arr[m],arr[i]];ops++;i=m;
+        await step({compare:[i]});
+      }
+    }
+    for(let i=(n>>1)-1;i>=0;i--)await sift(i,n);
+    for(let end=n-1;end>0;end--){
+      [arr[0],arr[end]]=[arr[end],arr[0]];ops++;
+      await step({pivot:end});
+      await sift(0,end);
+    }
+  }
+  async function quick(lo=0,hi=arr.length-1){
+    if(lo>=hi)return;
+    const p=arr[hi];let i=lo;
+    for(let j=lo;j<hi;j++){
+      cmp++;await step({compare:[j,i],pivot:hi});
+      if(arr[j]<p){[arr[i],arr[j]]=[arr[j],arr[i]];ops++;i++;}
+    }
+    [arr[i],arr[hi]]=[arr[hi],arr[i]];ops++;await step({pivot:i});
+    await quick(lo,i-1);await quick(i+1,hi);
+  }
+  function isSorted(){for(let i=0;i<arr.length-1;i++){cmp++;if(arr[i]>arr[i+1])return false;}return true;}
+  async function bogo(){
+    let tries=0;
+    while(!isSorted()){
+      if(tries>3000){statusEl.textContent='3000回試行…宇宙の熱的死が先かも';break;}
+      for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];ops++;}
+      tries++;statusEl.textContent=`シャッフル ${tries} 回目`;
+      await step({});
+    }
+  }
+  async function purge(i){
+    const d=barsEl.querySelector(`[data-i="${i}"]`);
+    if(d){
+      d.style.transition='all .45s ease';
+      d.style.background='#E24B4A';
+      await delay(200);if(stopFlag)throw 'stop';
+      d.style.opacity='0';
+      d.style.height='0%';
+      d.style.transform='translateY(20px) scaleX(0.2)';
+      d.style.flex='0 0 0px';
+      d.style.margin='0';
+      await delay(500);if(stopFlag)throw 'stop';
+    }
+  }
+  async function stalin(){
+    let last=-Infinity;let i=0;let removed=0;
+    while(i<arr.length){
+      cmp++;
+      if(arr[i]>=last){last=arr[i];await step({compare:[i]});i++;}
+      else{
+        await purge(i);
+        arr.splice(i,1);ops++;removed++;
+        statusEl.textContent=`${removed} 個の要素が粛清されました`;
+        render({});
+        if(stopFlag)throw 'stop';
+      }
+    }
+    await step({});
+  }
+  document.getElementById('startBtn').onclick=async()=>{
+    if(running)return;running=true;stopFlag=false;
+    const a=document.getElementById('algo').value;
+    try{
+      if(a==='bubble')await bubble();
+      else if(a==='insertion')await insertion();
+      else if(a==='merge')await merge();
+      else if(a==='heap')await heap();
+      else if(a==='quick')await quick();
+      else if(a==='bogo')await bogo();
+      else await stalin();
+      render({done:true});
+    }catch(e){}
+    running=false;
+  };
+  document.getElementById('resetBtn').onclick=()=>{stopFlag=true;setTimeout(()=>{running=false;newArray();},80);};
+  newArray();
+  </script>
+</body>
