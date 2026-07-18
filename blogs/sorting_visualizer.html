@@ -3,7 +3,7 @@ title: ソートアルゴリズムの可視化
 date: "2026-07-18 11:00:00"
 update: "2026-07-18 11:00:00"
 category: "Blog"
-hero: https://cdn.pixabay.com/photo/2016/11/22/22/17/action-1850887_1280.jpg
+hero: /blogs/images/sort/hero.jpg
 tags: ["JavaScript"]
 layout: blog
 excerpt: '<span style="color: red;">[スターリンソートあり] </span>7種類のソートアルゴリズムをバーのアニメーションで可視化'
@@ -12,9 +12,35 @@ excerpt: '<span style="color: red;">[スターリンソートあり] </span>7種
 <!DOCTYPE html>
 <html>
 <body>
+  <style>
+    .sort-viz{--sv-accent:#42b983;--sv-bg:var(--entry, #2e2e33);--sv-text:var(--primary, #dadadb);--sv-border:rgba(128,128,128,.28);font-family:inherit;}
+    .sort-viz .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:1rem;background:var(--sv-bg);border:1px solid var(--sv-border);border-radius:12px;padding:10px 14px;}
+    .sort-viz select{
+      appearance:none;-webkit-appearance:none;
+      min-width:150px;background:var(--sv-bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="%2342b983"><path d="M4 6l4 4 4-4"/></svg>') no-repeat right 10px center/12px;
+      color:var(--sv-text);border:1px solid var(--sv-border);border-radius:8px;padding:8px 30px 8px 12px;font-size:13.5px;cursor:pointer;
+    }
+    .sort-viz select:focus{outline:2px solid var(--sv-accent);outline-offset:1px;}
+    .sort-viz button{
+      display:inline-flex;align-items:center;gap:6px;border:none;border-radius:20px;padding:8px 18px;font-size:13.5px;font-weight:600;cursor:pointer;transition:filter .15s,transform .1s;
+    }
+    .sort-viz button:active{transform:scale(.96);}
+    .sort-viz #startBtn{background:var(--sv-accent);color:#fff;}
+    .sort-viz #startBtn:hover{filter:brightness(1.1);}
+    .sort-viz #resetBtn{background:transparent;color:var(--sv-text);border:1px solid var(--sv-border);}
+    .sort-viz #resetBtn:hover{border-color:var(--sv-accent);color:var(--sv-accent);}
+    .sort-viz .speed-label{font-size:13px;color:var(--sv-text);opacity:.75;display:flex;align-items:center;gap:8px;flex:1;min-width:170px;}
+    .sort-viz input[type=range]{flex:1;appearance:none;-webkit-appearance:none;height:4px;border-radius:2px;background:var(--sv-border);outline:none;}
+    .sort-viz input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--sv-accent);cursor:pointer;border:2px solid var(--sv-bg);}
+    .sort-viz input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--sv-accent);cursor:pointer;border:2px solid var(--sv-bg);}
+    .sort-viz #bars{display:flex;align-items:flex-end;gap:3px;height:220px;background:var(--sv-bg);border:1px solid var(--sv-border);border-radius:12px;padding:12px;overflow:hidden;}
+    .sort-viz .stats{display:flex;gap:16px;margin-top:.75rem;font-size:13px;color:var(--sv-text);opacity:.75;}
+    .sort-viz .stats b{color:var(--sv-text);opacity:1;font-weight:600;}
+  </style>
+  <div class="sort-viz">
   <h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">7種類のソートアルゴリズムをバーのアニメーションで可視化するウィジェット。スターリンソートでは要素が消滅する演出付き</h2>
-  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:1rem;">
-    <select id="algo" style="min-width:160px;">
+  <div class="toolbar">
+    <select id="algo">
       <option value="bubble">バブルソート</option>
       <option value="insertion">挿入ソート</option>
       <option value="merge">マージソート</option>
@@ -25,15 +51,16 @@ excerpt: '<span style="color: red;">[スターリンソートあり] </span>7種
     </select>
     <button id="startBtn"><i class="ti ti-player-play" aria-hidden="true"></i> 開始</button>
     <button id="resetBtn"><i class="ti ti-refresh" aria-hidden="true"></i> リセット</button>
-    <label style="font-size:13px;color:var(--text-secondary);display:flex;align-items:center;gap:8px;flex:1;min-width:180px;">速度
-      <input type="range" id="speed" min="1" max="100" value="50" step="1" style="flex:1;">
+    <label class="speed-label">速度
+      <input type="range" id="speed" min="1" max="100" value="50" step="1">
     </label>
   </div>
-  <div id="bars" style="display:flex;align-items:flex-end;gap:3px;height:220px;background:var(--surface-1);border-radius:12px;padding:12px;overflow:hidden;"></div>
-  <div style="display:flex;gap:16px;margin-top:0.75rem;font-size:13px;color:var(--text-secondary);">
-    <span>比較: <span id="cmp" style="color:var(--text-primary);font-weight:500;">0</span></span>
-    <span>操作: <span id="ops" style="color:var(--text-primary);font-weight:500;">0</span></span>
+  <div id="bars"></div>
+  <div class="stats">
+    <span>比較: <b id="cmp">0</b></span>
+    <span>操作: <b id="ops">0</b></span>
     <span id="status"></span>
+  </div>
   </div>
   <script>
   const N=24, barsEl=document.getElementById('bars');
@@ -48,7 +75,7 @@ excerpt: '<span style="color: red;">[スターリンソートあり] </span>7種
     barsEl.innerHTML='';
     arr.forEach((v,i)=>{
       const d=document.createElement('div');
-      let bg='var(--fill-accent, #378ADD)';
+      let bg='var(--sv-accent, #42b983)';
       if(hl.aux&&hl.aux.includes(i))bg='#7F77DD';
       if(hl.compare&&hl.compare.includes(i))bg='#EF9F27';
       if(hl.pivot===i)bg='#D4537E';
